@@ -20,11 +20,11 @@ export const metadata: Metadata = {
     'SEBI registered analyst fees',
     'paid stock advisory India',
   ],
-  alternates: { canonical: 'https://withsahib.com/about' },
+  alternates: { canonical: 'https://www.withsahib.com/about' },
   openGraph: {
     title: 'About Sahib Singh Hora — SEBI RA INH000026266 | withSahib',
     description: 'Verified stock market analyst India. SEBI Registered Research Analyst offering intraday tips, NSE swing trades, options advisory & AI stock research.',
-    url: 'https://withsahib.com/about',
+    url: 'https://www.withsahib.com/about',
   },
 }
 
@@ -32,7 +32,7 @@ const personSchema = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: 'Sahib Singh Hora',
-  url: 'https://withsahib.com',
+  url: 'https://www.withsahib.com',
   jobTitle: 'SEBI Registered Research Analyst',
   description: 'Sahib Singh Hora is a SEBI Registered Research Analyst (INH000026266) providing intraday stock tips, NSE swing trade picks, Nifty & Bank Nifty options calls, and AI-powered stock research reports for Indian retail investors.',
   identifier: { '@type': 'PropertyValue', name: 'SEBI Registration Number', value: 'INH000026266' },

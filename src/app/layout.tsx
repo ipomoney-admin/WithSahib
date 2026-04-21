@@ -14,7 +14,7 @@ const outfit = Outfit({
   preload: true,
 })
 
-const BASE_URL = 'https://withsahib.com'
+const BASE_URL = 'https://www.withsahib.com'
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),

@@ -7,12 +7,12 @@ export const metadata: Metadata = {
   title: 'FAQ — SEBI RA INH000026266 | withSahib',
   description:
     'Comprehensive answers about SEBI Registered Research Analyst services, INH000026266, Sahib Singh Hora, intraday calls, options advisory, and Indian stock market research.',
-  alternates: { canonical: 'https://withsahib.com/faq' },
+  alternates: { canonical: 'https://www.withsahib.com/faq' },
   openGraph: {
     title: 'FAQ — SEBI Research Analyst withSahib | INH000026266',
     description:
       'Everything you need to know about SEBI RA services, Sahib Singh Hora, intraday stock calls, swing trades, options picks, and AI research reports.',
-    url: 'https://withsahib.com/faq',
+    url: 'https://www.withsahib.com/faq',
   },
 }
 

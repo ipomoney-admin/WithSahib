@@ -32,11 +32,11 @@ export const metadata: Metadata = {
     'intraday calls with accuracy',
     'verified stock market analyst',
   ],
-  alternates: { canonical: 'https://withsahib.com/services' },
+  alternates: { canonical: 'https://www.withsahib.com/services' },
   openGraph: {
     title: 'SEBI RA Services — Share Market Tips, Intraday Calls, Options | withSahib',
     description: 'All SEBI-registered stock advisory services: daily intraday tips NSE, Nifty options, Bank Nifty calls, swing trading stocks, AI research reports.',
-    url: 'https://withsahib.com/services',
+    url: 'https://www.withsahib.com/services',
   },
 }
 
@@ -160,7 +160,7 @@ const serviceSchema = {
     '@type': 'ListItem',
     position: i + 1,
     name: s.title,
-    url: `https://withsahib.com/services#${s.id}`,
+    url: `https://www.withsahib.com/services#${s.id}`,
   })),
 }
 

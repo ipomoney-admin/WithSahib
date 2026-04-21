@@ -12,11 +12,11 @@ export const metadata: Metadata = {
     'research analyst India', 'options trading tips', 'Nifty options tips today',
     'Bank Nifty tips', 'swing trading stocks', 'SEBI RA', 'INH000026266',
   ],
-  alternates: { canonical: 'https://withsahib.com/blog' },
+  alternates: { canonical: 'https://www.withsahib.com/blog' },
   openGraph: {
     title: 'Blog — SEBI RA Stock Market Research | withSahib',
     description: 'Intraday tips, options strategies, swing trading and SEBI compliance articles by Sahib Singh Hora (INH000026266).',
-    url: 'https://withsahib.com/blog',
+    url: 'https://www.withsahib.com/blog',
   },
 }
 
@@ -214,14 +214,14 @@ const blogListSchema = {
   '@context': 'https://schema.org',
   '@type': 'Blog',
   name: 'withSahib — SEBI RA Research Blog',
-  url: 'https://withsahib.com/blog',
+  url: 'https://www.withsahib.com/blog',
   description: 'Stock market research, trading education, intraday tips, options strategies, and SEBI compliance articles by Sahib Singh Hora, SEBI RA INH000026266.',
-  author: { '@type': 'Person', name: 'Sahib Singh Hora', url: 'https://withsahib.com' },
+  author: { '@type': 'Person', name: 'Sahib Singh Hora', url: 'https://www.withsahib.com' },
   blogPost: POSTS.map((post) => ({
     '@type': 'BlogPosting',
     headline: post.title,
     description: post.excerpt,
-    url: `https://withsahib.com/blog/${post.slug}`,
+    url: `https://www.withsahib.com/blog/${post.slug}`,
     datePublished: post.date,
     author: { '@type': 'Person', name: 'Sahib Singh Hora', identifier: 'INH000026266' },
     keywords: post.tags.join(', '),
