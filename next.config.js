@@ -21,8 +21,16 @@ const nextConfig = {
   },
   compress: true,
   poweredByHeader: false,
+  generateEtags: true,
   async headers() {
     return [
+      // SWR cache for HTML pages
+      {
+        source: '/:path((?!api|_next|icons|images|sw\\.js).*)',
+        headers: [
+          { key: 'Cache-Control', value: 'public, s-maxage=3600, stale-while-revalidate=86400' },
+        ],
+      },
       // Security headers on all routes
       {
         source: '/(.*)',

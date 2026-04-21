@@ -29,7 +29,7 @@ const SERVICES = [
   {
     icon: TrendingUp,
     title: 'Intraday Calls',
-    desc: 'Pre-market buy/sell levels with entry, target & SL for NSE equities. Delivered by 9 AM every trading day.',
+    desc: 'Daily intraday tips for NSE equities — pre-market entry, target & SL published by 9 AM. The best stock to buy today, every trading day, from a verified SEBI RA.',
     badge: 'Daily',
     badgeColor: 'green',
     tier: 'pro',
@@ -37,7 +37,7 @@ const SERVICES = [
   {
     icon: BarChart2,
     title: 'Stock Options',
-    desc: 'Weekly & monthly options strategies with strike selection, premium targets, and risk-defined setups.',
+    desc: 'Options trading tips with strike selection, premium targets, and risk-defined weekly & monthly setups — SEBI-compliant, fully disclosed.',
     badge: 'Weekly',
     badgeColor: 'gold',
     tier: 'pro',
@@ -45,7 +45,7 @@ const SERVICES = [
   {
     icon: Target,
     title: 'Index Options',
-    desc: 'Nifty & Bank Nifty options with OI analysis, PCR-based directional calls, and expiry plays.',
+    desc: 'Nifty options tips today and Bank Nifty tips with OI analysis, PCR-based directional calls, and expiry plays. Institutional methodology for retail traders.',
     badge: 'Expiry Plays',
     badgeColor: 'gold',
     tier: 'pro',
@@ -53,7 +53,7 @@ const SERVICES = [
   {
     icon: RefreshCw,
     title: 'Swing Trades',
-    desc: '2–10 day positional ideas based on pattern breakouts, volume confirmation & multi-timeframe analysis.',
+    desc: 'Swing trading stocks India — 2–10 day positional ideas based on pattern breakouts, volume confirmation & multi-timeframe analysis. Best stocks to buy this week.',
     badge: '3–5/Week',
     badgeColor: 'green',
     tier: 'basic',
@@ -61,7 +61,7 @@ const SERVICES = [
   {
     icon: BookOpen,
     title: 'Model Portfolio',
-    desc: 'Curated long-term portfolio with quarterly rebalancing, sector allocation & live performance tracking.',
+    desc: 'SEBI RA model portfolio: curated NSE long-term picks with quarterly rebalancing, sector allocation & live performance tracking. Research-backed, not tips.',
     badge: 'Long Term',
     badgeColor: 'blue',
     tier: 'basic',
@@ -69,7 +69,7 @@ const SERVICES = [
   {
     icon: Calendar,
     title: '1-on-1 Sessions',
-    desc: 'Personal 15 or 30-minute sessions — portfolio review, stock deep-dives, or strategy discussions.',
+    desc: 'Book a personal session with a verified stock market advisor India — portfolio review, stock deep-dives, or strategy discussions. 15 or 30-minute slots.',
     badge: 'Book a Slot',
     badgeColor: 'blue',
     tier: 'elite',
@@ -77,7 +77,7 @@ const SERVICES = [
   {
     icon: Brain,
     title: 'AI Research Reports',
-    desc: 'Automated DCF models, quarterly results analysis, and institutional-grade notes — generated on filing.',
+    desc: 'AI stock research reports India — automated DCF models, quarterly results analysis, and institutional-grade notes generated the moment companies file on BSE/NSE.',
     badge: 'AI Powered',
     badgeColor: 'green',
     tier: 'pro',
@@ -85,7 +85,7 @@ const SERVICES = [
   {
     icon: Shield,
     title: 'Courses',
-    desc: 'Structured courses on technical analysis, options theory & building a systematic trading process.',
+    desc: 'Structured courses on technical analysis, options theory & systematic trading process — from a SEBI registered analyst. Learn the method behind every call.',
     badge: 'Self-Paced',
     badgeColor: 'gold',
     tier: 'basic',
@@ -190,6 +190,7 @@ export default function HomePage() {
       <TrackRecordSection />
       <ComplianceSection />
       <AboutSection />
+      <QuickLinksSection />
       <CTASection />
       <Footer />
     </div>
@@ -309,8 +310,7 @@ function HeroSection() {
             lineHeight: 1.7,
           }}
         >
-          Institutional-grade technical analysis, AI-powered research reports,
-          and real-time trade calls — by a SEBI-registered analyst, for serious retail investors.
+          Get SEBI-verified share market tips, intraday stock tips for NSE, options trading calls, and AI research reports — from Sahib Singh Hora, India's trusted SEBI registered research analyst (INH000026266).
         </p>
 
         {/* Actions */}
@@ -1049,6 +1049,42 @@ function AboutSection() {
               </Link>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ─── INTERNAL LINKS / SEO KEYWORD SECTION ─────────────────────────────────────
+function QuickLinksSection() {
+  const links = [
+    { href: '/services/intraday', label: 'Intraday Stock Tips NSE', desc: 'Daily share market tips with entry, target & SL' },
+    { href: '/services', label: 'Stock Market Tips Today', desc: 'All SEBI RA advisory services in one place' },
+    { href: '/reports', label: 'AI Stock Research Reports', desc: 'NSE equity research, DCF models & results analysis' },
+    { href: '/pricing', label: 'Stock Advisory Subscription India', desc: 'Plans from ₹0 — paid stock advisory with SEBI RA' },
+    { href: '/appointments', label: 'Book a Stock Market Advisor', desc: 'One-on-one session with a verified SEBI RA' },
+    { href: '/faq', label: 'SEBI Research Analyst FAQ', desc: 'Everything about INH000026266 & SEBI RA services' },
+    { href: '/about', label: 'About Sahib Singh Hora', desc: 'Best SEBI RA India 2026 — credentials & background' },
+    { href: '/blog', label: 'Stock Market Tips Blog', desc: 'Intraday tips, swing trading & options strategies explained' },
+  ]
+  return (
+    <section style={{ padding: '56px 40px', background: 'var(--bg2)', borderTop: '1px solid var(--border)' }}>
+      <div className="container-wide" style={{ padding: 0 }}>
+        <div style={{ marginBottom: 28 }}>
+          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '2px', color: 'var(--text3)', textTransform: 'uppercase', marginBottom: 8 }}>
+            Explore withSahib
+          </p>
+          <h2 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 'clamp(20px,3vw,28px)', fontWeight: 400, color: 'var(--text)' }}>
+            SEBI registered research analyst services — <em style={{ color: 'var(--emerald)', fontStyle: 'italic' }}>all in one place</em>
+          </h2>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 10 }}>
+          {links.map((l) => (
+            <Link key={l.href} href={l.href} style={{ textDecoration: 'none', padding: '14px 16px', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 10, display: 'block', transition: 'border-color 0.2s' }}>
+              <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--emerald)', marginBottom: 3 }}>{l.label}</div>
+              <div style={{ fontSize: 12, color: 'var(--text3)', lineHeight: 1.5 }}>{l.desc}</div>
+            </Link>
+          ))}
         </div>
       </div>
     </section>

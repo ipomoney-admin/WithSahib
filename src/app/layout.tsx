@@ -327,7 +327,12 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        {/* Resource hints for performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+        <link rel="preconnect" href="https://trtoxawkeququfurddwr.supabase.co" />
+        <link rel="dns-prefetch" href="https://trtoxawkeququfurddwr.supabase.co" />
         <link
           href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap"
           rel="stylesheet"
@@ -336,6 +341,10 @@ export default function RootLayout({
           name="robots"
           content="max-snippet:-1, max-image-preview:large, max-video-preview:-1"
         />
+        {/* TODO: Replace PLACEHOLDER with actual Google Search Console verification code */}
+        <meta name="google-site-verification" content={process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ?? 'PLACEHOLDER'} />
+        {/* TODO: Replace BING_PLACEHOLDER with actual Bing Webmaster Tools verification code */}
+        <meta name="msvalidate.01" content={process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION ?? 'BING_PLACEHOLDER'} />
         {structuredData.map((schema, i) => (
           <script
             key={i}
