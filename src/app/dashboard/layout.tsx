@@ -40,6 +40,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const supabase = createClient()
 
   const [user, setUser] = useState<User | null>(null)
+  const [authLoading, setAuthLoading] = useState(true)
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [notifications, setNotifications] = useState(3)
@@ -52,7 +53,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         .select('*')
         .eq('id', data.user.id)
         .single()
-        .then(({ data: profile }) => { if (profile) setUser(profile) })
+        .then(({ data: profile }) => {
+          if (profile) setUser(profile)
+          setAuthLoading(false)
+        })
     })
   }, [])
 
@@ -231,6 +235,35 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       </div>
     </div>
   )
+
+  // Loading skeleton while auth resolves
+  if (authLoading) {
+    return (
+      <div style={{ display: 'flex', height: '100vh', background: 'var(--bg)' }}>
+        {/* Sidebar skeleton */}
+        <div style={{ width: 240, background: 'var(--bg2)', borderRight: '1px solid var(--border)', padding: '24px 16px', display: 'flex', flexDirection: 'column', gap: 8 }}>
+          <div className="shimmer" style={{ height: 32, borderRadius: 8, marginBottom: 16 }} />
+          <div className="shimmer" style={{ height: 48, borderRadius: 10, marginBottom: 8 }} />
+          {[...Array(7)].map((_, i) => (
+            <div key={i} className="shimmer" style={{ height: 36, borderRadius: 8, opacity: 1 - i * 0.08 }} />
+          ))}
+        </div>
+        {/* Main skeleton */}
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+          <div style={{ height: 64, background: 'var(--bg2)', borderBottom: '1px solid var(--border)' }} />
+          <div style={{ flex: 1, padding: 32, display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <div className="shimmer" style={{ height: 36, width: 260, borderRadius: 8 }} />
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
+              {[...Array(4)].map((_, i) => (
+                <div key={i} className="shimmer" style={{ height: 100, borderRadius: 12 }} />
+              ))}
+            </div>
+            <div className="shimmer" style={{ height: 200, borderRadius: 12 }} />
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div style={{ display: 'flex', height: '100vh', overflow: 'hidden', background: 'var(--bg)' }}>

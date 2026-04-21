@@ -50,8 +50,8 @@
 
   --text: #0D1A28;
   --text2: #3A5068;
-  --text3: #7A90A8;
-  --text4: #AAB8C8;
+  --text3: #6A84A0;
+  --text4: #A0B4C8;
 }
 
 /* ─── BASE ───────────────────────────────────────────────────────────── */
@@ -184,7 +184,10 @@ body {
 .card-hover:hover {
   border-color: var(--emerald);
   transform: translateY(-3px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(0, 200, 150, 0.1);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 200, 150, 0.1);
+}
+.light .card-hover:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 200, 150, 0.15);
 }
 .card-hover::before {
   content: '';
@@ -232,6 +235,9 @@ body {
 .input::placeholder { color: var(--text4); }
 .input:focus { border-color: var(--emerald); box-shadow: 0 0 0 3px rgba(0,200,150,0.08); }
 .input:hover:not(:focus) { border-color: var(--border3); }
+/* Light mode inputs need explicit bg so they don't inherit body bg */
+.light .input { background: var(--surface); border-color: var(--border2); color: var(--text); }
+.light .input::placeholder { color: var(--text4); }
 
 /* ─── GRID BACKGROUNDS ───────────────────────────────────────────────── */
 .grid-bg {
@@ -255,6 +261,8 @@ body {
 }
 .glow-emerald { background: radial-gradient(circle, rgba(0,200,150,0.12), transparent 70%); }
 .glow-gold    { background: radial-gradient(circle, rgba(212,168,67,0.08), transparent 70%); }
+.light .glow-emerald { background: radial-gradient(circle, rgba(0,200,150,0.09), transparent 70%); }
+.light .glow-gold    { background: radial-gradient(circle, rgba(212,168,67,0.06), transparent 70%); }
 
 /* ─── GRADIENT TEXT ──────────────────────────────────────────────────── */
 .text-gradient {
@@ -323,6 +331,11 @@ body {
   border: 1px solid rgba(212, 168, 67, 0.12);
   border-radius: var(--radius-md);
 }
+.light .sebi-disclaimer {
+  background: rgba(212, 168, 67, 0.06);
+  border-color: rgba(180, 130, 30, 0.2);
+  color: var(--text3);
+}
 
 /* ─── DASHBOARD SIDEBAR ──────────────────────────────────────────────── */
 .sidebar-link {
@@ -339,6 +352,8 @@ body {
 }
 .sidebar-link:hover { background: var(--surface2); color: var(--text2); }
 .sidebar-link.active { background: rgba(0,200,150,0.08); color: var(--emerald); font-weight: 500; }
+.light .sidebar-link:hover { background: var(--bg3); color: var(--text); }
+.light .sidebar-link.active { background: rgba(0,200,150,0.1); color: var(--emerald-deep); }
 
 /* ─── PLAN TIERS ─────────────────────────────────────────────────────── */
 .tier-free    { border-color: var(--border2); }
