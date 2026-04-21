@@ -253,6 +253,7 @@ function HeroSection() {
       <div style={{ position: 'relative', zIndex: 1, maxWidth: '900px' }}>
         {/* Tag */}
         <div
+          className="animate-fade-up"
           style={{
             display: 'inline-flex',
             alignItems: 'center',
@@ -266,7 +267,6 @@ function HeroSection() {
             color: 'var(--emerald)',
             letterSpacing: '1.5px',
             marginBottom: '32px',
-            animation: 'fadeUp 0.6s ease both',
           }}
         >
           <span
@@ -281,15 +281,13 @@ function HeroSection() {
 
         {/* H1 */}
         <h1
+          className="animate-fade-up-1"
           style={{
             fontFamily: 'DM Serif Display, serif',
             fontSize: 'clamp(40px, 6vw, 80px)',
             fontWeight: 400,
             lineHeight: 1.08,
             color: 'var(--text)',
-            animation: 'fadeUp 0.6s 0.1s ease both',
-            opacity: 0,
-            animationFillMode: 'forwards',
           }}
         >
           Research with{' '}
@@ -301,6 +299,7 @@ function HeroSection() {
 
         {/* Sub */}
         <p
+          className="animate-fade-up-2"
           style={{
             fontSize: '18px',
             color: 'var(--text2)',
@@ -308,9 +307,6 @@ function HeroSection() {
             margin: '24px auto 0',
             fontWeight: 300,
             lineHeight: 1.7,
-            animation: 'fadeUp 0.6s 0.2s ease both',
-            opacity: 0,
-            animationFillMode: 'forwards',
           }}
         >
           Institutional-grade technical analysis, AI-powered research reports,
@@ -319,6 +315,7 @@ function HeroSection() {
 
         {/* Actions */}
         <div
+          className="animate-fade-up-3"
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -326,9 +323,6 @@ function HeroSection() {
             marginTop: '40px',
             justifyContent: 'center',
             flexWrap: 'wrap',
-            animation: 'fadeUp 0.6s 0.3s ease both',
-            opacity: 0,
-            animationFillMode: 'forwards',
           }}
         >
           <Link href="/pricing" className="btn btn-primary btn-lg" style={{ textDecoration: 'none' }}>
@@ -342,6 +336,7 @@ function HeroSection() {
 
         {/* Stats */}
         <div
+          className="animate-fade-up-4"
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -349,9 +344,6 @@ function HeroSection() {
             gap: '40px',
             marginTop: '56px',
             flexWrap: 'wrap',
-            animation: 'fadeUp 0.6s 0.4s ease both',
-            opacity: 0,
-            animationFillMode: 'forwards',
           }}
         >
           {[
@@ -373,6 +365,7 @@ function HeroSection() {
 
         {/* SEBI strip */}
         <div
+          className="animate-fade-up-5"
           style={{
             marginTop: '40px',
             display: 'inline-block',
@@ -384,9 +377,6 @@ function HeroSection() {
             color: 'var(--gold)',
             letterSpacing: '1px',
             fontFamily: 'Courier New, monospace',
-            animation: 'fadeUp 0.6s 0.5s ease both',
-            opacity: 0,
-            animationFillMode: 'forwards',
           }}
         >
           SEBI REGISTERED · INH000026266 · VALID APR 2026 – APR 2031 · INVESTMENTS SUBJECT TO MARKET RISK
