@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createServerComponentClient } from '@/lib/supabase/client'
+import { createServerComponentClient } from '@/lib/supabase/server'
 
 const PLAN_IDS = {
   basic_monthly:  process.env.RAZORPAY_PLAN_BASIC_MONTHLY  ?? '',

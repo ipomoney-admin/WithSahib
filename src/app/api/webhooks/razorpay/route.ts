@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import crypto from 'crypto'
-import { createServiceRoleClient } from '@/lib/supabase/client'
+import { createServiceRoleClient } from '@/lib/supabase/server'
 
 export async function POST(req: NextRequest) {
   const body = await req.text()

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createServerComponentClient } from '@/lib/supabase/client'
+import { createServerComponentClient } from '@/lib/supabase/server'
 import { generateResearchReport } from '@/lib/ai/reports'
 import type { ReportInput } from '@/lib/ai/reports'
 
