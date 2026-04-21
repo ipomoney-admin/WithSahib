@@ -6,7 +6,7 @@ import { Footer } from '@/components/layout/Footer'
 export const metadata: Metadata = {
   title: 'About Sahib Singh Hora — Best SEBI RA India 2026 | withSahib',
   description:
-    'Sahib Singh Hora is a SEBI Registered Research Analyst (INH000026266), Altitans Intelligence Pvt Ltd. Best SEBI RA India 2026 — verified stock market advisor India for intraday tips, NSE swing trades & options.',
+    'Sahib Singh Hora is a SEBI Registered Research Analyst (INH000026266). Best SEBI RA India 2026 — verified stock market advisor India for intraday tips, NSE swing trades & options.',
   keywords: [
     'Sahib Singh Hora',
     'SEBI registered research analyst',
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     'research analyst India',
     'stock market advisor India',
     'SEBI RA',
-    'Altitans Intelligence',
+    'withSahib',
     'SEBI registered analyst fees',
     'paid stock advisory India',
   ],
@@ -34,9 +34,8 @@ const personSchema = {
   name: 'Sahib Singh Hora',
   url: 'https://withsahib.com',
   jobTitle: 'SEBI Registered Research Analyst',
-  description: 'Sahib Singh Hora is a SEBI Registered Research Analyst (INH000026266) at Altitans Intelligence Private Limited, providing intraday stock tips, NSE swing trade picks, Nifty & Bank Nifty options calls, and AI-powered stock research reports for Indian retail investors.',
+  description: 'Sahib Singh Hora is a SEBI Registered Research Analyst (INH000026266) providing intraday stock tips, NSE swing trade picks, Nifty & Bank Nifty options calls, and AI-powered stock research reports for Indian retail investors.',
   identifier: { '@type': 'PropertyValue', name: 'SEBI Registration Number', value: 'INH000026266' },
-  worksFor: { '@type': 'Organization', name: 'Altitans Intelligence Private Limited' },
   knowsAbout: ['Intraday Trading', 'Stock Options', 'Swing Trading', 'Technical Analysis', 'SEBI Regulations', 'NSE Equities', 'Nifty Options', 'Bank Nifty'],
 }
 
@@ -62,7 +61,7 @@ export default function AboutPage() {
               <p style={{ fontSize: '11px', color: 'var(--emerald)', fontWeight: 500 }}>Valid: Apr 20, 2026 – Apr 19, 2031</p>
             </div>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', justifyContent: 'center' }}>
-              {['SEBI RA', 'NISM Certified', 'Technical Analyst', 'Options Strategist', 'Founder — Altitans Intelligence'].map(tag => (
+              {['SEBI RA', 'NISM Certified', 'Technical Analyst', 'Options Strategist', 'Founder — withSahib'].map(tag => (
                 <span key={tag} style={{ fontSize: '10px', padding: '3px 9px', borderRadius: '6px', background: 'var(--bg2)', border: '1px solid var(--border)', color: 'var(--text2)' }}>{tag}</span>
               ))}
             </div>
@@ -116,9 +115,9 @@ export default function AboutPage() {
             Every swing trade has a rationale. Every options tip has a risk framework.
           </p>
           <p style={{ fontSize: '16px', color: 'var(--text2)', lineHeight: 1.8, fontWeight: 300 }}>
-            I built this under Altitans Intelligence Private Limited with one mission: to make the kind of
-            research that institutional traders use every day accessible to every retail investor in India —
-            under full SEBI regulatory supervision, with transparent SEBI registered analyst fees.
+            I built withSahib with one mission: to make the kind of research that institutional traders
+            use every day accessible to every retail investor in India — under full SEBI regulatory
+            supervision, with transparent SEBI registered analyst fees.
           </p>
         </div>
       </section>
@@ -166,8 +165,6 @@ export default function AboutPage() {
               { label: 'Valid From', value: 'Apr 20, 2026', mono: false },
               { label: 'Valid Until', value: 'Apr 19, 2031', mono: false },
               { label: 'Regulator', value: 'SEBI, Government of India', mono: false },
-              { label: 'Company', value: 'Altitans Intelligence Pvt. Ltd.', mono: false },
-              { label: 'CIN', value: 'U62011MP2026PTC083080', mono: true },
             ].map(item => (
               <div key={item.label} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '12px', padding: '16px' }}>
                 <p style={{ fontSize: '11px', fontWeight: 600, letterSpacing: '1px', color: 'var(--text3)', textTransform: 'uppercase', marginBottom: '6px' }}>{item.label}</p>
@@ -206,7 +203,7 @@ export default function AboutPage() {
         <div className="sebi-disclaimer container-narrow" style={{ padding: '16px 20px' }}>
           <strong style={{ color: 'var(--gold)' }}>Risk Disclaimer: </strong>
           Investments in securities market are subject to market risks. SEBI registration does not guarantee returns.
-          Sahib Singh Hora · SEBI RA · INH000026266 · Altitans Intelligence Private Limited.
+          Sahib Singh Hora · SEBI RA · INH000026266 · withSahib.com
         </div>
       </div>
 

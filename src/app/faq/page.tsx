@@ -47,23 +47,23 @@ const FAQ_SECTIONS = [
     items: [
       {
         q: 'Who is Sahib Singh Hora?',
-        a: 'Sahib Singh Hora is a SEBI Registered Research Analyst (INH000026266) and the founder of Altitans Intelligence Private Limited. He provides institutional-grade technical analysis, intraday calls, swing trades, options strategies, and AI-powered research reports through withSahib.com. He is NISM certified and operates fully under SEBI\'s regulatory framework.',
+        a: 'Sahib Singh Hora is a SEBI Registered Research Analyst (INH000026266). He provides institutional-grade technical analysis, intraday calls, swing trades, options strategies, and AI-powered research reports through withSahib.com. He is NISM certified and operates fully under SEBI\'s regulatory framework.',
       },
       {
         q: 'What is the SEBI registration number INH000026266?',
-        a: 'INH000026266 is the SEBI Research Analyst registration number assigned to Sahib Singh Hora under Altitans Intelligence Private Limited. The registration is valid from April 20, 2026 to April 19, 2031. It can be verified on the official SEBI Intermediary Portal at sebi.gov.in.',
+        a: 'INH000026266 is the SEBI Research Analyst registration number assigned to Sahib Singh Hora. The registration is valid from April 20, 2026 to April 19, 2031. It can be verified on the official SEBI Intermediary Portal at sebi.gov.in.',
       },
       {
         q: 'How do I verify SEBI registration INH000026266?',
-        a: 'Go to sebi.gov.in → Intermediaries/Market Infrastructure Institutions → Registered Intermediaries → Research Analyst. Search for "INH000026266" or "Sahib Singh Hora" or "Altitans Intelligence" to verify the active registration status, validity period, and associated entity.',
+        a: 'Go to sebi.gov.in → Intermediaries/Market Infrastructure Institutions → Registered Intermediaries → Research Analyst. Search for "INH000026266" or "Sahib Singh Hora" to verify the active registration status and validity period.',
       },
       {
         q: 'Where is Sahib Singh Hora based?',
         a: 'Sahib Singh Hora is based in Madhya Pradesh, India, and provides research services to clients across India through withSahib.com. All services are delivered digitally via the platform.',
       },
       {
-        q: 'What is Altitans Intelligence Private Limited?',
-        a: 'Altitans Intelligence Private Limited is the registered entity under which Sahib Singh Hora operates as a SEBI Research Analyst. The company publishes research on NSE-listed equities, options, and indices under the withSahib.com brand.',
+        q: 'What is withSahib.com?',
+        a: 'withSahib.com is the personal research platform of Sahib Singh Hora, SEBI Registered Research Analyst (INH000026266). It publishes research on NSE-listed equities, options, and indices — including daily intraday calls, swing trade picks, and AI-powered research reports.',
       },
     ],
   },
@@ -138,7 +138,7 @@ const FAQ_SECTIONS = [
       },
       {
         q: 'Does the analyst personally hold positions in recommended stocks?',
-        a: 'All conflicts of interest and analyst holdings are disclosed in research reports as required under SEBI RA Regulations 2014. If Sahib Singh Hora or Altitans Intelligence holds a position in a recommended security, this is explicitly disclosed in the research note.',
+        a: 'All conflicts of interest and analyst holdings are disclosed in research reports as required under SEBI RA Regulations 2014. If Sahib Singh Hora holds a position in a recommended security, this is explicitly disclosed in the research note.',
       },
       {
         q: 'How do I lodge a complaint against a SEBI-registered intermediary?',
@@ -403,7 +403,7 @@ export default function FAQPage() {
                 letterSpacing: '1px',
               }}
             >
-              SEBI RA · INH000026266 · Altitans Intelligence Pvt Ltd
+              SEBI RA · INH000026266 · withSahib.com
             </p>
           </div>
         </div>

@@ -44,7 +44,7 @@ const POSTS: Post[] = [
     tags: ['SEBI', 'Research Analyst', 'INH000026266', 'Investor Safety'],
     body: [
       'A SEBI Registered Research Analyst (RA) is licensed under the SEBI (Research Analysts) Regulations, 2014. They are legally permitted to publish investment research, stock market tips, and trade recommendations. Every SEBI RA carries a unique registration number — for example, Sahib Singh Hora\'s SEBI registration is INH000026266.',
-      'Step 1: Check the SEBI Intermediary Portal. Go to sebi.gov.in → Registered Intermediaries → Research Analyst. Search for the registration number or analyst name. Verify: active status, valid licence dates, and registered entity name. For withSahib, search "INH000026266" or "Sahib Singh Hora" or "Altitans Intelligence".',
+      'Step 1: Check the SEBI Intermediary Portal. Go to sebi.gov.in → Registered Intermediaries → Research Analyst. Search for the registration number or analyst name. Verify: active status, valid licence dates, and registered entity name. For withSahib, search "INH000026266" or "Sahib Singh Hora".',
       'Step 2: Every piece of research from a genuine SEBI RA must display the registration number. If a "research service" — on Telegram, WhatsApp, or YouTube — does not show a SEBI registration number, it is operating illegally under Section 12 of SEBI Act, 1992.',
       'Step 3: SEBI RAs must be NISM Series XV certified. This exam tests securities market knowledge, valuation, and ethics. Sahib Singh Hora is NISM certified. If an analyst cannot prove NISM certification, do not subscribe.',
       'Step 4: Genuine SEBI RAs must disclose conflicts of interest. If they hold a position in a stock they recommend, it must be disclosed in the research note itself. No disclosure is a clear red flag and a regulatory violation.',
@@ -105,7 +105,7 @@ const POSTS: Post[] = [
       'What unregistered tipsters do: (1) Operate anonymously — no name, no accountability. (2) Make "guaranteed return" promises (illegal under SEBI Act). (3) Charge fees without any regulatory framework. (4) Cannot be traced or penalised when they vanish with subscriber money. (5) Often operate multiple Telegram channels simultaneously.',
       'The 2025 SEBI crackdown: SEBI issued 47 orders against unregistered investment advisers in Q1 2025 alone. Under Section 12(1)(b) of SEBI Act, operating as an unregistered RA is punishable with up to ₹25 crore fine or 10 years imprisonment or both. Despite this, thousands of services continue.',
       'How to verify SEBI registration in 30 seconds: Go to sebi.gov.in → Intermediaries/Market Infrastructure → Registered Intermediaries → Research Analyst. Enter INH000026266 to verify Sahib Singh Hora\'s registration. If an analyst\'s number does not appear here, do not pay them a rupee.',
-      'withSahib.com operates under full SEBI compliance. Sahib Singh Hora\'s registration INH000026266 is publicly verifiable. Every research note carries the registration number, entity name (Altitans Intelligence Private Limited), and mandatory SEBI risk disclaimer. This is not optional — it is the law.',
+      'withSahib.com operates under full SEBI compliance. Sahib Singh Hora\'s registration INH000026266 is publicly verifiable. Every research note carries the registration number and mandatory SEBI risk disclaimer. This is not optional — it is the law.',
       'The bottom line for 2026: As SEBI enforcement increases, unregistered tip services will face shutdowns with no refunds to subscribers. Your subscription money to an illegal service has zero protection. A SEBI RA subscriber, on the other hand, can file a complaint through SEBI SCORES if they have a grievance.',
     ],
   },
@@ -165,7 +165,7 @@ const POSTS: Post[] = [
       'SEBI registered analyst fees: SEBI RAs are permitted to charge fees for research services. Unlike Investment Advisers (who face fee caps), Research Analysts can set their own fee structures — provided they are disclosed. The withSahib fee structure is: Free (₹0), Basic (₹999/month), Pro (₹2,499/month), Elite (₹5,999/month). All fees are disclosed upfront with no hidden charges.',
       'What legitimate SEBI RA research includes: (1) Full analyst name and SEBI registration number on every report. (2) Clear disclosure of analyst holdings in recommended securities. (3) SEBI-mandated risk disclaimer on every communication. (4) Research records maintained for 5 years. (5) No guaranteed return promises.',
       'Common misconceptions: "SEBI registration means the analyst is good." No — registration means they are legally authorised and accountable. Performance depends on skill and methodology. "SEBI RA can give personalised advice." No — they can only provide general research. Personalised advice requires SEBI IA registration.',
-      'Sahib Singh Hora (INH000026266) at withSahib.com is a SEBI Registered Research Analyst operating under Altitans Intelligence Private Limited. All research on the platform follows SEBI RA regulations — verifiable at sebi.gov.in.',
+      'Sahib Singh Hora (INH000026266) at withSahib.com is a SEBI Registered Research Analyst. All research on the platform follows SEBI RA regulations — verifiable at sebi.gov.in.',
     ],
   },
   {
@@ -202,10 +202,10 @@ const POSTS: Post[] = [
       'Step 1: Go to the official SEBI website. Open sebi.gov.in in your browser. Do not use third-party websites claiming to verify SEBI registrations — only the official SEBI portal is authoritative.',
       'Step 2: Navigate to Registered Intermediaries. On the SEBI homepage, click: "Sebiweb" or "Registered Intermediaries" or go directly to sebi.gov.in/sebiweb/other/OtherAction.do?doRecognisedFpi=yes&intmId=13 — this is the Research Analyst specific search page.',
       'Step 3: Enter the registration number. In the search field, enter "INH000026266" (for Sahib Singh Hora / withSahib.com) or any other registration number you want to verify. Click Search.',
-      'Step 4: Read the results. A valid registration will show: Registration number, Name of analyst/entity, Registration type (Individual RA), Registration date, Validity period, and Status (Active/Suspended/Cancelled). For INH000026266 you will see: Sahib Singh Hora, Altitans Intelligence Private Limited, Active, Valid Apr 2026 – Apr 2031.',
+      'Step 4: Read the results. A valid registration will show: Registration number, Name of analyst/entity, Registration type (Individual RA), Registration date, Validity period, and Status (Active/Suspended/Cancelled). For INH000026266 you will see: Sahib Singh Hora, Active, Valid Apr 2026 – Apr 2031.',
       'Step 5: Cross-verify with the service. The name and entity shown on SEBI\'s portal must match exactly what appears on the research service\'s website, reports, and communications. If there is any discrepancy — wrong name, different entity, or the registration doesn\'t show up — do not subscribe.',
       'Red flags that indicate an unregistered service: (1) No SEBI registration number anywhere on their website or materials. (2) Registration number that returns no results or shows "Cancelled/Suspended" on SEBI portal. (3) Using phrases like "SEBI compliant" or "approved by SEBI" without an actual registration number. (4) Claiming to be a "financial advisor" or "research team" without individual names and SEBI numbers.',
-      'withSahib.com: Sahib Singh Hora, SEBI RA INH000026266, Altitans Intelligence Private Limited. Verify right now at sebi.gov.in. Every research note published on withSahib.com displays this registration number, entity name, and the mandatory SEBI risk disclaimer — as required by law.',
+      'withSahib.com: Sahib Singh Hora, SEBI RA INH000026266. Verify right now at sebi.gov.in. Every research note published on withSahib.com displays this registration number and the mandatory SEBI risk disclaimer — as required by law.',
     ],
   },
 ]
@@ -225,7 +225,7 @@ const blogListSchema = {
     datePublished: post.date,
     author: { '@type': 'Person', name: 'Sahib Singh Hora', identifier: 'INH000026266' },
     keywords: post.tags.join(', '),
-    publisher: { '@type': 'Organization', name: 'Altitans Intelligence Private Limited' },
+    publisher: { '@type': 'Person', name: 'Sahib Singh Hora' },
   })),
 }
 

@@ -109,8 +109,6 @@ export default function ContactPage() {
                   {[
                     { label: 'Analyst', value: 'Sahib Singh Hora' },
                     { label: 'SEBI Reg. No.', value: 'INH000026266' },
-                    { label: 'Entity', value: 'Altitans Intelligence Pvt Ltd' },
-                    { label: 'CIN', value: 'U62011MP2026PTC083080' },
                     { label: 'Valid Until', value: 'April 19, 2031' },
                   ].map((row) => (
                     <div key={row.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 8, fontSize: 13 }}>
@@ -139,9 +137,8 @@ export default function ContactPage() {
                   </span>
                 </div>
                 <p style={{ fontSize: 14, color: 'var(--text2)', lineHeight: 1.7 }}>
-                  Altitans Intelligence Private Limited<br />
-                  Madhya Pradesh, India<br />
-                  CIN: U62011MP2026PTC083080
+                  Sahib Singh Hora<br />
+                  Madhya Pradesh, India
                 </p>
               </div>
 
@@ -348,8 +345,8 @@ export default function ContactPage() {
               <div className="sebi-disclaimer" style={{ marginTop: 24 }}>
                 <strong style={{ color: 'var(--gold)' }}>Disclaimer: </strong>
                 withSahib.com is operated by Sahib Singh Hora, SEBI Registered Research Analyst
-                (INH000026266), Altitans Intelligence Private Limited. Research provided is general in
-                nature and not personalised financial advice. Investments are subject to market risks.
+                (INH000026266). Research provided is general in nature and not personalised financial
+                advice. Investments are subject to market risks.
               </div>
             </div>
           </div>

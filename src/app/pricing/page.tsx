@@ -239,7 +239,7 @@ export default function PricingPage() {
         <div className="sebi-disclaimer container-tight" style={{ padding: '16px 20px' }}>
           <strong style={{ color: 'var(--gold)' }}>Risk Disclaimer: </strong>
           Investments in securities market are subject to market risks. Read all related documents carefully before investing.
-          SEBI RA Registration: Sahib Singh Hora · INH000026266 · Altitans Intelligence Private Limited.
+          SEBI RA Registration: Sahib Singh Hora · INH000026266 · withSahib.com
         </div>
       </div>
 

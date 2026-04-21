@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     template: '%s | withSahib',
   },
   description:
-    'Sahib Singh Hora, SEBI Registered Research Analyst (INH000026266), Altitans Intelligence. Institutional-grade intraday calls, NSE swing trades, index options, AI stock research reports & 1-on-1 advisory for serious Indian investors.',
+    'Sahib Singh Hora, SEBI Registered Research Analyst (INH000026266). Institutional-grade intraday calls, NSE swing trades, index options, AI stock research reports & 1-on-1 advisory for serious Indian investors.',
   keywords: [
     'SEBI registered research analyst India',
     'SEBI RA INH000026266',
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     'top SEBI RA intraday calls',
     'SEBI registered analyst options trading',
     'withsahib.com',
-    'Altitans Intelligence',
+    'withSahib',
     'INH000026266',
     'NISM certified analyst India',
     'Bank Nifty options calls',
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'Sahib Singh Hora', url: BASE_URL }],
   creator: 'Sahib Singh Hora',
-  publisher: 'Altitans Intelligence Private Limited',
+  publisher: 'Sahib Singh Hora',
   category: 'Finance',
   classification: 'Financial Research & Advisory',
   alternates: {
@@ -61,7 +61,7 @@ export const metadata: Metadata = {
     siteName: 'withSahib',
     title: 'withSahib — SEBI Registered Research Analyst INH000026266',
     description:
-      'Institutional-grade intraday calls, NSE swing trades, index options & AI research by Sahib Singh Hora, SEBI RA INH000026266, Altitans Intelligence.',
+      'Institutional-grade intraday calls, NSE swing trades, index options & AI research by Sahib Singh Hora, SEBI RA INH000026266.',
     images: [
       {
         url: '/og-image.png',
@@ -122,16 +122,11 @@ const structuredData = [
     image: `${BASE_URL}/icons/icon-192.png`,
     jobTitle: 'SEBI Registered Research Analyst',
     description:
-      'Sahib Singh Hora is a SEBI Registered Research Analyst (INH000026266) at Altitans Intelligence Private Limited, providing institutional-grade stock research, intraday calls, and options advisory for Indian markets.',
+      'Sahib Singh Hora is a SEBI Registered Research Analyst (INH000026266) providing institutional-grade stock research, intraday calls, and options advisory for Indian markets.',
     identifier: {
       '@type': 'PropertyValue',
       name: 'SEBI Registration Number',
       value: 'INH000026266',
-    },
-    worksFor: {
-      '@type': 'Organization',
-      name: 'Altitans Intelligence Private Limited',
-      url: BASE_URL,
     },
     knowsAbout: [
       'Technical Analysis',
@@ -144,37 +139,6 @@ const structuredData = [
       'Bank Nifty Options',
     ],
     sameAs: [`${BASE_URL}/about`],
-  },
-  // Organization
-  {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    name: 'Altitans Intelligence Private Limited',
-    alternateName: 'withSahib',
-    url: BASE_URL,
-    logo: `${BASE_URL}/icons/icon-192.png`,
-    description:
-      'SEBI registered research analyst firm providing stock research, trade calls, and AI-powered investment analysis for Indian retail investors.',
-    founder: {
-      '@type': 'Person',
-      name: 'Sahib Singh Hora',
-    },
-    contactPoint: {
-      '@type': 'ContactPoint',
-      contactType: 'customer service',
-      url: `${BASE_URL}/appointments`,
-    },
-    areaServed: 'IN',
-    hasCredential: {
-      '@type': 'EducationalOccupationalCredential',
-      credentialCategory: 'SEBI Research Analyst Registration',
-      recognizedBy: {
-        '@type': 'Organization',
-        name: 'Securities and Exchange Board of India',
-        alternateName: 'SEBI',
-      },
-      identifier: 'INH000026266',
-    },
   },
   // WebSite
   {
@@ -248,7 +212,7 @@ const structuredData = [
         name: 'What is Sahib Singh Hora\'s SEBI registration number?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Sahib Singh Hora\'s SEBI Research Analyst registration number is INH000026266, valid from April 20, 2026 to April 19, 2031, registered under Altitans Intelligence Private Limited.',
+          text: 'Sahib Singh Hora\'s SEBI Research Analyst registration number is INH000026266, valid from April 20, 2026 to April 19, 2031. Verify at sebi.gov.in.',
         },
       },
       {

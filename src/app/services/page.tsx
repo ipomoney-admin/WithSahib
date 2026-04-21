@@ -251,7 +251,7 @@ export default function ServicesPage() {
         <div style={{ maxWidth: 860, margin: '0 auto', textAlign: 'center' }}>
           <p style={{ fontSize: 13, color: 'var(--text3)', marginBottom: 8 }}>All services are provided by</p>
           <p style={{ fontSize: 16, fontWeight: 600, color: 'var(--text)', marginBottom: 4 }}>Sahib Singh Hora · SEBI RA · INH000026266</p>
-          <p style={{ fontSize: 13, color: 'var(--text3)', marginBottom: 28 }}>Altitans Intelligence Private Limited · CIN: U62011MP2026PTC083080</p>
+          <p style={{ fontSize: 13, color: 'var(--text3)', marginBottom: 28 }}>withSahib.com · SEBI RA INH000026266</p>
           <div style={{ display: 'flex', justifyContent: 'center', gap: 16, flexWrap: 'wrap' }}>
             <Link href="/pricing" style={{ padding: '12px 28px', background: 'var(--emerald)', color: '#031A13', borderRadius: 10, fontWeight: 700, fontSize: 14, textDecoration: 'none' }}>
               See Pricing

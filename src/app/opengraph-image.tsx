@@ -158,7 +158,7 @@ export default async function Image() {
                 letterSpacing: 1,
               }}
             >
-              Altitans Intelligence Pvt Ltd
+              withSahib.com
             </div>
           </div>
 

@@ -152,7 +152,7 @@ export default function BrandPage() {
                 <rect x="32" y="186" width="140" height="24" rx="4" stroke="rgba(212,168,67,0.25)" strokeWidth="1" />
                 <text x="102" y="202" fill="#D4A843" fontFamily="Courier New, monospace" fontSize="11" fontWeight="600" textAnchor="middle">INH000026266</text>
                 {/* Bottom info */}
-                <text x="32" y="258" fill="#4A6580" fontFamily="Courier New, monospace" fontSize="10">SEBI RA · Altitans Intelligence Pvt Ltd</text>
+                <text x="32" y="258" fill="#4A6580" fontFamily="Courier New, monospace" fontSize="10">SEBI RA · withSahib.com</text>
                 <text x="32" y="274" fill="#4A6580" fontFamily="system-ui" fontSize="10">sahib13singh13@gmail.com</text>
                 {/* Gold corner accent */}
                 <line x1="440" y1="260" x2="478" y2="260" stroke="#D4A843" strokeWidth="1.5" opacity="0.4" />
@@ -190,7 +190,7 @@ export default function BrandPage() {
                 <text x="255" y="218" fill="#E8EDF5" fontFamily="system-ui" fontSize="14" fontWeight="500" textAnchor="middle">withsahib.com</text>
                 <text x="255" y="236" fill="#4A6580" fontFamily="system-ui" fontSize="11" textAnchor="middle">sahib13singh13@gmail.com</text>
                 {/* Disclaimer */}
-                <text x="255" y="274" fill="#2A3E52" fontFamily="system-ui" fontSize="8" textAnchor="middle">Investments subject to market risk · SEBI RA Reg. INH000026266 · Altitans Intelligence Pvt Ltd</text>
+                <text x="255" y="274" fill="#2A3E52" fontFamily="system-ui" fontSize="8" textAnchor="middle">Investments subject to market risk · SEBI RA Reg. INH000026266 · withSahib.com</text>
               </svg>
             </div>
           </div>
@@ -276,7 +276,7 @@ export default function BrandPage() {
               <text x="102" y="62" fill="#E8EDF5" fontFamily="system-ui" fontSize="20" fontWeight="300">withSahib.com</text>
               {/* Headline */}
               <text x="60" y="160" fill="#E8EDF5" fontFamily="Georgia, serif" fontSize="44" fontWeight="400">Sahib Singh Hora</text>
-              <text x="60" y="210" fill="#8FA8C0" fontFamily="system-ui" fontSize="18" fontWeight="300">SEBI Registered Research Analyst · Altitans Intelligence Pvt Ltd</text>
+              <text x="60" y="210" fill="#8FA8C0" fontFamily="system-ui" fontSize="18" fontWeight="300">SEBI Registered Research Analyst · withSahib.com</text>
               {/* SEBI credential */}
               <rect x="60" y="240" width="200" height="34" rx="5" fill="rgba(212,168,67,0.1)" stroke="rgba(212,168,67,0.25)" strokeWidth="1" />
               <text x="160" y="262" fill="#D4A843" fontFamily="Courier New, monospace" fontSize="13" textAnchor="middle">INH000026266</text>
@@ -349,7 +349,7 @@ export default function BrandPage() {
               <text x="126" y="52" fill="#00C896" fontFamily="system-ui" fontSize="18" fontWeight="700">Sahib</text>
               <text x="170" y="52" fill="#E8EDF5" fontFamily="system-ui" fontSize="18" fontWeight="300">.com</text>
               <text x="50" y="140" fill="#E8EDF5" fontFamily="Georgia, serif" fontSize="36" fontWeight="400">Sahib Singh Hora</text>
-              <text x="50" y="175" fill="#8FA8C0" fontFamily="system-ui" fontSize="15">SEBI Registered Research Analyst · Altitans Intelligence Pvt Ltd</text>
+              <text x="50" y="175" fill="#8FA8C0" fontFamily="system-ui" fontSize="15">SEBI Registered Research Analyst · withSahib.com</text>
               <rect x="50" y="198" width="180" height="28" rx="5" fill="rgba(212,168,67,0.1)" stroke="rgba(212,168,67,0.25)" strokeWidth="1" />
               <text x="140" y="217" fill="#D4A843" fontFamily="Courier New, monospace" fontSize="12" textAnchor="middle">INH000026266</text>
               <text x="50" y="268" fill="#4A6580" fontFamily="system-ui" fontSize="12">Intraday Calls · Options Tips · Swing Trades · AI Research · 1-on-1 Advisory</text>
@@ -421,7 +421,7 @@ export default function BrandPage() {
 
         {/* Footer */}
         <div style={{ borderTop: '1px solid #1A2333', paddingTop: 24, display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
-          <p style={{ fontSize: 12, color: '#2A3E52' }}>© 2026 Altitans Intelligence Pvt Ltd · Sahib Singh Hora · SEBI RA INH000026266</p>
+          <p style={{ fontSize: 12, color: '#2A3E52' }}>© 2026 Sahib Singh Hora · SEBI RA INH000026266 · withSahib.com</p>
           <Link href="/" style={{ fontSize: 12, color: '#00C896', textDecoration: 'none' }}>← Back to withSahib.com</Link>
         </div>
       </div>

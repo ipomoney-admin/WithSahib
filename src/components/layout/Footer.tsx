@@ -137,27 +137,36 @@ export function Footer() {
           or provide any assurance of returns to investors. Past performance is not indicative of future results.
           Research Analyst: <strong style={{ color: 'var(--text2)', fontWeight: 500 }}>Sahib Singh Hora</strong> ·
           SEBI RA Registration No. <strong style={{ fontWeight: 600, fontFamily: 'Courier New, monospace' }}>INH000026266</strong> ·
-          Valid: 20th April 2026 – 19th April 2031 ·
-          Registered with Altitans Intelligence Private Limited (CIN: U62011MP2026PTC083080).
+          Valid: 20th April 2026 – 19th April 2031
         </div>
 
         {/* Bottom bar */}
         <div
           style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
             borderTop: '1px solid var(--border)',
             paddingTop: '20px',
-            flexWrap: 'wrap',
-            gap: '12px',
           }}
         >
-          <p style={{ fontSize: '12px', color: 'var(--text3)' }}>
-            © {new Date().getFullYear()} Altitans Intelligence Private Limited. All rights reserved.
-          </p>
-          <p style={{ fontSize: '12px', color: 'var(--text3)' }}>
-            Sahib Singh Hora · SEBI RA · INH000026266
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px' }}>
+            <p style={{ fontSize: '12px', color: 'var(--text3)' }}>
+              © 2026 Sahib Singh Hora. All rights reserved. | withSahib.com
+            </p>
+            <p style={{ fontSize: '12px', color: 'var(--text3)' }}>
+              SEBI RA · INH000026266
+            </p>
+          </div>
+          <p style={{ fontSize: '11px', color: 'var(--text3)', textAlign: 'center', paddingTop: '8px', paddingBottom: '4px' }}>
+            Developed by{' '}
+            <a
+              href="https://www.altitans.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: 'var(--text3)', textDecoration: 'none' }}
+              onMouseEnter={(e) => ((e.target as HTMLElement).style.textDecoration = 'underline')}
+              onMouseLeave={(e) => ((e.target as HTMLElement).style.textDecoration = 'none')}
+            >
+              Altitans Intelligence Private Limited
+            </a>
           </p>
         </div>
       </div>
