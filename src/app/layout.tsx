@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from 'next'
-import { Outfit } from 'next/font/google'
+import { Outfit, JetBrains_Mono } from 'next/font/google'
 import '@/styles/globals.css'
 import { ThemeProvider } from '@/components/layout/ThemeProvider'
+import { WhatsAppButton } from '@/components/ui/WhatsAppButton'
 import { Toaster } from 'sonner'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
@@ -12,6 +13,14 @@ const outfit = Outfit({
   variable: '--font-outfit',
   display: 'swap',
   preload: true,
+})
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  variable: '--font-mono',
+  display: 'swap',
+  preload: false,
 })
 
 const BASE_URL = 'https://www.withsahib.com'
@@ -157,6 +166,26 @@ const structuredData = [
       'query-input': 'required name=search_term_string',
     },
   },
+  // FinancialService
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FinancialService',
+    '@id': `${BASE_URL}/#financialservice`,
+    name: 'withSahib Research Advisory',
+    description: 'SEBI Registered Research Analyst providing intraday picks, options signals, swing picks and model portfolio services',
+    provider: { '@id': `${BASE_URL}/#person` },
+    areaServed: { '@type': 'Country', name: 'India' },
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Research Advisory Services',
+      itemListElement: [
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Intraday Picks' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Options Signals' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Swing Picks' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Model Portfolio' } },
+      ],
+    },
+  },
   // ProfessionalService
   {
     '@context': 'https://schema.org',
@@ -292,6 +321,8 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         {/* Resource hints for performance */}
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="format-detection" content="telephone=no" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
@@ -317,9 +348,10 @@ export default function RootLayout({
           />
         ))}
       </head>
-      <body className={outfit.variable}>
+      <body className={`${outfit.variable} ${jetbrainsMono.variable}`}>
         <ThemeProvider>
           {children}
+          <WhatsAppButton />
           <Toaster
             position="top-right"
             toastOptions={{

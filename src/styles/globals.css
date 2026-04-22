@@ -25,8 +25,12 @@
 
   --text: #E8EDF5;
   --text2: #8FA8C0;
-  --text3: #4A6580;
-  --text4: #2A3E52;
+  --text3: #6B8AAA; /* WCAG AA 4.5:1 on #06090F — was #4A6580 */
+  --text4: #3A5570;
+
+  --ticker-bg: #0C1219;
+
+  --font-mono: 'Courier New';
 
   --radius-xs: 6px;
   --radius-sm: 8px;
@@ -50,8 +54,10 @@
 
   --text: #0D1A28;
   --text2: #3A5068;
-  --text3: #6A84A0;
-  --text4: #A0B4C8;
+  --text3: #4A6580;
+  --text4: #6A84A0;
+
+  --ticker-bg: #1E293B;
 }
 
 /* ─── BASE ───────────────────────────────────────────────────────────── */
@@ -61,6 +67,13 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* WCAG 2.1 AA focus indicator */
+:focus-visible {
+  outline: 2px solid var(--emerald);
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
 body {
@@ -85,7 +98,7 @@ body {
 
 /* ─── TYPOGRAPHY ─────────────────────────────────────────────────────── */
 .font-serif { font-family: 'DM Serif Display', serif; }
-.font-mono  { font-family: 'Courier New', monospace; }
+.font-mono  { font-family: var(--font-mono, 'Courier New'), monospace; }
 
 /* ─── LAYOUT UTILITIES ───────────────────────────────────────────────── */
 .container-wide  { max-width: 1280px; margin: 0 auto; padding: 0 40px; }

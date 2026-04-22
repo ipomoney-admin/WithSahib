@@ -156,6 +156,8 @@ export function Navbar() {
           <button
             className="show-mobile"
             onClick={() => setMenuOpen(!menuOpen)}
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={menuOpen}
             style={{
               background: 'none',
               border: '1px solid var(--border)',

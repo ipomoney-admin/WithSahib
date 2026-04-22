@@ -6,8 +6,8 @@ import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import {
   TrendingUp, BarChart2, Target, RefreshCw, BookOpen, Calendar,
-  Brain, Shield, ArrowRight, ChevronRight, Check, X, Star,
-  Zap, Award, Clock, Users, Camera
+  Brain, Shield, ArrowRight, ChevronRight, Check,
+  Zap, Award, Users, Camera
 } from 'lucide-react'
 import { FALLBACK_DATA, type TickerItem } from '@/lib/utils/marketData'
 
@@ -198,7 +198,7 @@ export default function HomePage() {
       <TrackRecordSection />
       <ComplianceSection />
       <AboutSection />
-      <TestimonialsSection />
+      <EarlyAccessSection />
       <AnalystProfileSection />
       <QuickLinksSection />
       <CTASection />
@@ -244,7 +244,7 @@ function LiveTicker() {
     <div
       className="ticker-wrap"
       style={{
-        background: '#0C1219',
+        background: 'var(--ticker-bg)',
         borderBottom: '1px solid var(--border)',
         height: 36,
         position: 'relative',
@@ -267,7 +267,7 @@ function LiveTicker() {
           fontWeight: 600,
           letterSpacing: 1,
           color: isLive ? 'var(--emerald)' : 'var(--text3)',
-          background: 'linear-gradient(to right, transparent, #0C1219 30%)',
+          background: 'linear-gradient(to right, transparent, var(--ticker-bg) 30%)',
           paddingLeft: 40,
           paddingRight: 14,
         }}
@@ -446,13 +446,19 @@ function HeroSection() {
           }}
         >
           {[
-            { num: '73', suf: '%', label: 'Avg Win Rate' },
-            { num: '500', suf: '+', label: 'Subscribers' },
-            { num: 'INH000026266', suf: '', label: 'SEBI Verified' },
-            { num: '24/7', suf: '', label: 'AI Research Engine' },
+            { num: 'INH000026266', suf: '', label: 'SEBI Reg. No.' },
+            { num: 'Apr 2031', suf: '', label: 'Licence Valid' },
+            { num: 'NISM', suf: '', label: 'Certified' },
+            { num: '2026', suf: '', label: 'Est.' },
           ].map((s, i) => (
             <div key={i} style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: s.num.length > 6 ? '13px' : '28px', fontWeight: 700, color: 'var(--text)', fontFamily: s.num.length > 6 ? 'Courier New, monospace' : 'DM Serif Display, serif', letterSpacing: s.num.length > 6 ? '0.5px' : 'normal' }}>
+              <div style={{
+                fontSize: s.num.length > 6 ? '13px' : '28px',
+                fontWeight: 700,
+                color: 'var(--text)',
+                fontFamily: s.num.length > 6 ? 'Courier New, monospace' : 'DM Serif Display, serif',
+                letterSpacing: s.num.length > 6 ? '0.5px' : 'normal',
+              }}>
                 {s.num}<span style={{ color: 'var(--emerald)' }}>{s.suf}</span>
               </div>
               <div style={{ fontSize: '11px', color: 'var(--text3)', letterSpacing: '1px', marginTop: '2px', textTransform: 'uppercase' }}>
@@ -1222,85 +1228,76 @@ function QuickLinksSection() {
 }
 
 // ─── TESTIMONIALS ─────────────────────────────────────────────────────────────
-function TestimonialsSection() {
-  const { ref, inView } = useInView()
-  const testimonials = [
-    {
-      quote: 'Finally a SEBI registered analyst who gives clear entry, target, and stop-loss. No ambiguity — just structured calls I can act on.',
-      name: 'Rahul M.',
-      city: 'Mumbai',
-    },
-    {
-      quote: 'The intraday picks are well-researched. Won 4 out of 5 trades last week. The technical rationale behind each call makes all the difference.',
-      name: 'Priya K.',
-      city: 'Bangalore',
-    },
-    {
-      quote: 'Transparent, accountable, and genuinely SEBI compliant. Rare to find in the Indian advisory space. INH000026266 is verifiable — that matters.',
-      name: 'Amit S.',
-      city: 'Delhi',
-    },
-  ]
+function EarlyAccessSection() {
+  const [email, setEmail] = useState('')
+  const [joined, setJoined] = useState(false)
   return (
-    <section ref={ref} style={{ padding: '80px 40px', background: 'var(--bg)' }}>
-      <div className="container-wide" style={{ padding: 0 }}>
-        <div style={{ textAlign: 'center', marginBottom: '48px' }}>
-          <div className="section-tag" style={{ justifyContent: 'center' }}>Social Proof</div>
-          <h2
-            style={{
-              fontFamily: 'DM Serif Display, serif',
-              fontSize: 'clamp(28px,4vw,44px)',
-              fontWeight: 400,
-              color: 'var(--text)',
-            }}
-          >
-            What <em style={{ color: 'var(--emerald)', fontStyle: 'italic' }}>traders say</em>
-          </h2>
-        </div>
-        <div
+    <section style={{ background: 'var(--surface)', padding: '80px 0', textAlign: 'center' }}>
+      <div style={{ maxWidth: '600px', margin: '0 auto', padding: '0 24px' }}>
+        <span style={{ color: 'var(--emerald)', fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase' as const }}>
+          EARLY ACCESS
+        </span>
+        <h2
           style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-            gap: '16px',
-            marginBottom: '32px',
+            fontFamily: 'DM Serif Display, serif',
+            fontSize: 'clamp(28px,4vw,36px)',
+            fontWeight: 400,
+            margin: '12px 0 16px',
+            color: 'var(--text)',
+            lineHeight: 1.2,
           }}
         >
-          {testimonials.map((t, i) => (
-            <div
-              key={i}
+          Be among the first 100 subscribers
+        </h2>
+        <p style={{ color: 'var(--text2)', marginBottom: '32px', lineHeight: 1.6, fontSize: '16px' }}>
+          Razorpay payment gateway launching soon. Join the waitlist for priority access and a special launch discount.
+        </p>
+        {joined ? (
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', color: 'var(--emerald)', fontSize: '15px', fontWeight: 500 }}>
+            <Check size={18} color="var(--emerald)" />
+            You&apos;re on the list! We&apos;ll notify you at launch.
+          </div>
+        ) : (
+          <div style={{ display: 'flex', gap: '12px', maxWidth: '420px', margin: '0 auto', flexWrap: 'wrap' as const, justifyContent: 'center' }}>
+            <input
+              type="email"
+              placeholder="your@email.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              aria-label="Email address for waitlist"
               style={{
-                background: '#0C1219',
-                border: '1px solid rgba(0,200,150,0.12)',
-                borderRadius: '16px',
-                padding: '28px',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '16px',
-                opacity: inView ? 1 : 0,
-                transform: inView ? 'translateY(0)' : 'translateY(20px)',
-                transition: `all 0.5s ease ${i * 0.1}s`,
+                flex: 1,
+                minWidth: '220px',
+                padding: '12px 16px',
+                borderRadius: '8px',
+                border: '1px solid var(--border)',
+                background: 'var(--bg)',
+                color: 'var(--text)',
+                fontSize: '14px',
+                fontFamily: 'Outfit, sans-serif',
+                outline: 'none',
+              }}
+            />
+            <button
+              onClick={() => { if (email.includes('@')) setJoined(true) }}
+              style={{
+                padding: '12px 24px',
+                background: 'var(--emerald)',
+                color: '#000',
+                borderRadius: '8px',
+                fontWeight: 600,
+                cursor: 'pointer',
+                border: 'none',
+                fontSize: '14px',
+                fontFamily: 'Outfit, sans-serif',
               }}
             >
-              {/* Stars */}
-              <div style={{ display: 'flex', gap: '3px' }}>
-                {Array.from({ length: 5 }).map((_, j) => (
-                  <Star key={j} size={14} fill="#D4A843" color="#D4A843" />
-                ))}
-              </div>
-              {/* Quote */}
-              <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.8)', lineHeight: 1.7, fontStyle: 'italic', flex: 1 }}>
-                &ldquo;{t.quote}&rdquo;
-              </p>
-              {/* Attribution */}
-              <div>
-                <p style={{ fontSize: '13px', fontWeight: 600, color: '#fff', marginBottom: '2px' }}>{t.name}</p>
-                <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)' }}>{t.city}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-        <p style={{ fontSize: '11px', color: 'var(--text4)', textAlign: 'center', fontFamily: 'Courier New, monospace', letterSpacing: '0.5px' }}>
-          Testimonials are from beta subscribers. Past performance not indicative of future results.
+              Join Waitlist
+            </button>
+          </div>
+        )}
+        <p style={{ fontSize: '11px', color: 'var(--text3)', marginTop: '12px' }}>
+          No spam. Unsubscribe anytime. SEBI RA INH000026266.
         </p>
       </div>
     </section>
@@ -1398,8 +1395,10 @@ function AnalystProfileSection() {
             {/* Social */}
             <div style={{ display: 'flex', gap: '12px', marginTop: '20px' }}>
               <a
-                href="#"
-                aria-label="LinkedIn"
+                href="https://www.linkedin.com/in/sahibsinghhora/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Sahib Singh Hora on LinkedIn"
                 style={{
                   width: 36, height: 36, borderRadius: '50%',
                   background: '#1A2535', border: '1px solid rgba(255,255,255,0.1)',
@@ -1411,8 +1410,10 @@ function AnalystProfileSection() {
                 in
               </a>
               <a
-                href="#"
-                aria-label="X / Twitter"
+                href="https://x.com/sahibsinghhora"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Sahib Singh Hora on X / Twitter"
                 style={{
                   width: 36, height: 36, borderRadius: '50%',
                   background: '#1A2535', border: '1px solid rgba(255,255,255,0.1)',
