@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 import Link from 'next/link'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
@@ -9,20 +9,7 @@ import {
   Brain, Shield, ArrowRight, ChevronRight, Check, X, Star,
   Zap, Award, Clock, Users
 } from 'lucide-react'
-
-// ─── TICKER DATA ──────────────────────────────────────────────────────────────
-const TICKER_ITEMS = [
-  { sym: 'NIFTY 50', val: '24,162.45', chg: '+0.87%', up: true },
-  { sym: 'BANK NIFTY', val: '52,341.80', chg: '-0.18%', up: false },
-  { sym: 'SENSEX', val: '79,823.15', chg: '+0.72%', up: true },
-  { sym: 'RELIANCE', val: '2,847.30', chg: '+1.24%', up: true },
-  { sym: 'HDFC BANK', val: '1,638.90', chg: '-0.32%', up: false },
-  { sym: 'INFOSYS', val: '1,421.55', chg: '+2.14%', up: true },
-  { sym: 'TCS', val: '3,892.20', chg: '+0.56%', up: true },
-  { sym: 'WIPRO', val: '462.75', chg: '+1.90%', up: true },
-  { sym: 'ICICI BANK', val: '1,248.60', chg: '+0.43%', up: true },
-  { sym: 'L&T', val: '3,621.40', chg: '-0.67%', up: false },
-]
+import { FALLBACK_DATA, type TickerItem } from '@/lib/utils/marketData'
 
 // ─── SERVICES DATA ────────────────────────────────────────────────────────────
 const SERVICES = [
@@ -198,10 +185,92 @@ export default function HomePage() {
 }
 
 // ─── TICKER ───────────────────────────────────────────────────────────────────
+const REFRESH_MS = 4 * 60 * 60 * 1000 // 4 hours
+
 function LiveTicker() {
-  const doubled = [...TICKER_ITEMS, ...TICKER_ITEMS]
+  const [items, setItems] = useState<TickerItem[]>(FALLBACK_DATA)
+  const [isLive, setIsLive] = useState(false)
+  const [loading, setLoading] = useState(true)
+
+  const fetchData = useCallback(async () => {
+    try {
+      const res = await fetch('/api/market-data', { cache: 'no-store' })
+      if (!res.ok) throw new Error('fetch failed')
+      const json = await res.json()
+      if (json.tickers?.length) {
+        setItems(json.tickers)
+        setIsLive(json.live ?? false)
+      }
+    } catch {
+      // silently use fallback
+    } finally {
+      setLoading(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    fetchData()
+    const interval = setInterval(fetchData, REFRESH_MS)
+    return () => clearInterval(interval)
+  }, [fetchData])
+
+  const doubled = [...items, ...items]
+
   return (
-    <div style={{ background: 'var(--bg2)', borderBottom: '1px solid var(--border)', padding: '10px 0', overflow: 'hidden' }}>
+    <div
+      style={{
+        background: 'var(--bg2)',
+        borderBottom: '1px solid var(--border)',
+        padding: '10px 0',
+        overflow: 'hidden',
+        position: 'relative',
+      }}
+    >
+      {/* Live / Delayed badge */}
+      <div
+        style={{
+          position: 'absolute',
+          right: 12,
+          top: '50%',
+          transform: 'translateY(-50%)',
+          zIndex: 2,
+          display: 'flex',
+          alignItems: 'center',
+          gap: 5,
+          fontSize: 10,
+          fontWeight: 600,
+          letterSpacing: 1,
+          color: isLive ? 'var(--emerald)' : 'var(--text3)',
+          background: 'var(--bg2)',
+          paddingLeft: 8,
+        }}
+      >
+        <span
+          style={{
+            width: 5,
+            height: 5,
+            borderRadius: '50%',
+            background: isLive ? 'var(--emerald)' : 'var(--text3)',
+            animation: isLive ? 'pulseDot 2s ease-in-out infinite' : 'none',
+          }}
+        />
+        {loading ? 'LOADING' : isLive ? 'LIVE' : 'DELAYED'}
+      </div>
+
+      {/* Shimmer overlay while loading */}
+      {loading && (
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.03) 50%, transparent 100%)',
+            backgroundSize: '200% 100%',
+            animation: 'shimmer 1.5s infinite',
+            pointerEvents: 'none',
+          }}
+        />
+      )}
+
       <div className="ticker-inner">
         {doubled.map((item, i) => (
           <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '8px', whiteSpace: 'nowrap' }}>
