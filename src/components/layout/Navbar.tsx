@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useTheme } from './ThemeProvider'
 import { Menu, X, Sun, Moon, ChevronDown } from 'lucide-react'
+import { Logo } from '@/components/ui/Logo'
 
 const NAV_LINKS = [
   { label: 'Services', href: '/services' },
@@ -56,13 +57,8 @@ export function Navbar() {
         }}
       >
         {/* Logo */}
-        <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <LogoCandles />
-          <span style={{ fontSize: '18px', letterSpacing: '-0.3px' }}>
-            <span style={{ fontWeight: 300, color: 'var(--text)' }}>with</span>
-            <span style={{ fontWeight: 700, color: 'var(--emerald)' }}>Sahib</span>
-            <span style={{ fontWeight: 300, color: 'var(--text)' }}>.com</span>
-          </span>
+        <Link href="/" style={{ textDecoration: 'none' }}>
+          <Logo size={28} showWordmark animated />
         </Link>
 
         {/* Desktop Links */}
@@ -268,41 +264,3 @@ export function Navbar() {
   )
 }
 
-function LogoCandles() {
-  return (
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'flex-end',
-        gap: '3px',
-        height: '26px',
-        position: 'relative',
-      }}
-    >
-      {[{ h: 10, op: 0.35 }, { h: 16, op: 0.65 }, { h: 24, op: 1 }].map(
-        (c, i) => (
-          <div
-            key={i}
-            style={{
-              width: '5px',
-              height: `${c.h}px`,
-              background: `rgba(0,200,150,${c.op})`,
-              borderRadius: '2px',
-            }}
-          />
-        )
-      )}
-      <div
-        style={{
-          width: '6px',
-          height: '6px',
-          borderRadius: '50%',
-          background: 'var(--emerald)',
-          marginBottom: '2px',
-          marginLeft: '1px',
-          animation: 'pulseDot 2s ease-in-out infinite',
-        }}
-      />
-    </div>
-  )
-}

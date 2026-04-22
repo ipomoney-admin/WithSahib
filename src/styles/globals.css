@@ -290,8 +290,18 @@ body {
 }
 
 /* ─── TICKER ─────────────────────────────────────────────────────────── */
+@keyframes ticker {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
 .ticker-wrap { overflow: hidden; }
-.ticker-inner { display: flex; gap: 48px; animation: ticker 30s linear infinite; width: max-content; }
+.ticker-wrap:hover .ticker-inner { animation-play-state: paused; }
+.ticker-inner { display: flex; gap: 48px; animation: ticker 40s linear infinite; width: max-content; }
+
+/* ─── SERVICE CARDS ──────────────────────────────────────────────────── */
+.svc-card { border: 1px solid var(--border); border-radius: 16px; background: var(--surface); }
+.svc-card:hover { border-color: var(--emerald); box-shadow: 0 0 0 1px rgba(0,200,150,0.15), 0 8px 24px rgba(0,200,150,0.08); transform: translateY(-4px) !important; }
+.svc-card:hover .svc-arrow { opacity: 1 !important; transform: translateX(0) !important; }
 
 /* ─── NAV ────────────────────────────────────────────────────────────── */
 .nav-blur {

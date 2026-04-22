@@ -249,7 +249,7 @@ export default function BrandPage() {
               <text x="80" y="200" fill="#E8EDF5" fontFamily="Georgia, serif" fontSize="56" fontWeight="400">Research with clarity.</text>
               <text x="80" y="268" fill="#E8EDF5" fontFamily="Georgia, serif" fontSize="56" fontWeight="400">Trade with <tspan fill="#00C896">conviction.</tspan></text>
               {/* Subline */}
-              <text x="80" y="318" fill="#8FA8C0" fontFamily="system-ui" fontSize="20" fontWeight="300">SEBI Registered Research Analyst · Intraday Tips · Options · Swing Trades · AI Research</text>
+              <text x="80" y="318" fill="#8FA8C0" fontFamily="system-ui" fontSize="20" fontWeight="300">SEBI Registered Research Analyst · Intraday Calls · Options · Swing Trades · AI Research</text>
               {/* SEBI badge */}
               <rect x="80" y="380" width="220" height="40" rx="6" fill="rgba(212,168,67,0.1)" stroke="rgba(212,168,67,0.25)" strokeWidth="1" />
               <text x="190" y="406" fill="#D4A843" fontFamily="Courier New, monospace" fontSize="14" fontWeight="600" textAnchor="middle">SEBI RA · INH000026266</text>
@@ -352,7 +352,7 @@ export default function BrandPage() {
               <text x="50" y="175" fill="#8FA8C0" fontFamily="system-ui" fontSize="15">SEBI Registered Research Analyst · withSahib.com</text>
               <rect x="50" y="198" width="180" height="28" rx="5" fill="rgba(212,168,67,0.1)" stroke="rgba(212,168,67,0.25)" strokeWidth="1" />
               <text x="140" y="217" fill="#D4A843" fontFamily="Courier New, monospace" fontSize="12" textAnchor="middle">INH000026266</text>
-              <text x="50" y="268" fill="#4A6580" fontFamily="system-ui" fontSize="12">Intraday Calls · Options Tips · Swing Trades · AI Research · 1-on-1 Advisory</text>
+              <text x="50" y="268" fill="#4A6580" fontFamily="system-ui" fontSize="12">Intraday Calls · Options Signals · Swing Trades · AI Research · 1-on-1 Advisory</text>
               <text x="50" y="288" fill="#4A6580" fontFamily="system-ui" fontSize="11">sahib13singh13@gmail.com  ·  withsahib.com</text>
             </svg>
           </div>

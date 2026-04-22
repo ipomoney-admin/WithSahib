@@ -27,7 +27,7 @@ const FOOTER_LINKS = {
     { label: 'Privacy Policy', href: '/privacy' },
     { label: 'Terms of Service', href: '/terms' },
     { label: 'Disclaimer', href: '/disclaimer' },
-    { label: 'SEBI Verification', href: 'https://www.sebi.gov.in/sebiweb/other/OtherAction.do?doRecognisedFpi=yes&intmId=13', target: '_blank' },
+    { label: 'SEBI Verification', href: 'https://www.sebi.gov.in/sebiweb/other/OtherAction.do?doRecognisedFpi=yes&intmId=14', target: '_blank' },
   ],
 }
 

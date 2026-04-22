@@ -4,23 +4,23 @@ import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 
 export const metadata: Metadata = {
-  title: 'SEBI RA Services — Intraday Tips, Options, Swing Trades',
+  title: 'SEBI RA Services — Intraday Calls, Options, Swing Trades',
   description:
-    'SEBI registered research analyst services by Sahib Singh Hora (INH000026266): daily intraday tips NSE, stock market tips today, Nifty options tips, Bank Nifty tips, swing trading stocks India, AI research reports & 1-on-1 advisory.',
+    'SEBI registered research analyst services by Sahib Singh Hora (INH000026266): daily intraday calls NSE, market signals today, Nifty options signals, Bank Nifty signals, swing trading stocks India, AI research reports & 1-on-1 advisory.',
   keywords: [
-    'share market tips',
-    'stock market tips today',
-    'intraday tips',
-    'NSE tips',
+    'market intelligence',
+    'market signals today',
+    'intraday calls',
+    'NSE calls',
     'best stock to buy today',
     'Nifty prediction today',
     'SEBI registered analyst',
     'research analyst India',
-    'stock tips free',
-    'intraday stock tips NSE',
-    'options trading tips',
-    'Nifty options tips today',
-    'Bank Nifty tips',
+    'stock picks free',
+    'intraday calls NSE',
+    'options trading signals',
+    'Nifty options signals today',
+    'Bank Nifty signals',
     'swing trading stocks',
     'best stocks to buy',
     'stock market advisor India',
@@ -34,8 +34,8 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: 'https://www.withsahib.com/services' },
   openGraph: {
-    title: 'SEBI RA Services — Share Market Tips, Intraday Calls, Options',
-    description: 'All SEBI-registered stock advisory services: daily intraday tips NSE, Nifty options, Bank Nifty calls, swing trading stocks, AI research reports.',
+    title: 'SEBI RA Services — Market Intelligence, Intraday Calls, Options',
+    description: 'All SEBI-registered stock advisory services: daily intraday calls NSE, Nifty options, Bank Nifty calls, swing trading stocks, AI research reports.',
     url: 'https://www.withsahib.com/services',
   },
 }
@@ -43,11 +43,11 @@ export const metadata: Metadata = {
 const SERVICES_DETAIL = [
   {
     id: 'intraday',
-    title: 'Intraday Stock Tips NSE',
-    keywords: 'intraday tips · share market tips · best stock to buy today · NSE tips',
+    title: 'Intraday Calls NSE',
+    keywords: 'intraday calls · market intelligence · best stock to buy today · NSE calls',
     badge: 'Daily · Pro Plan',
     badgeColor: '#00C896',
-    desc: 'Get SEBI-verified intraday stock tips for NSE equities every trading day before 9 AM. Each call includes the stock symbol, entry range, target price(s), and stop-loss level — calculated using multi-timeframe technical analysis, volume profile, and momentum indicators.',
+    desc: 'Get SEBI-verified intraday stock calls for NSE equities every trading day before 9 AM. Each call includes the stock symbol, entry range, target price(s), and stop-loss level — calculated using multi-timeframe technical analysis, volume profile, and momentum indicators.',
     features: [
       'Published pre-market — before 9:15 AM IST',
       'Entry range, 1–2 targets, strict stop-loss',
@@ -61,14 +61,14 @@ const SERVICES_DETAIL = [
   },
   {
     id: 'options',
-    title: 'Nifty & Bank Nifty Options Tips',
-    keywords: 'options trading tips · Nifty options tips today · Bank Nifty tips',
+    title: 'Nifty & Bank Nifty Options Signals',
+    keywords: 'options trading signals · Nifty options signals today · Bank Nifty signals',
     badge: 'Weekly · Pro Plan',
     badgeColor: '#D4A843',
-    desc: 'Options trading tips for Nifty and Bank Nifty — including strike selection, premium targets, and expiry day plays. Stock options strategies for weekly and monthly contracts with defined risk setups. Built on OI analysis, PCR signals, and volatility frameworks.',
+    desc: 'Options trading signals for Nifty and Bank Nifty — including strike selection, premium targets, and expiry day plays. Stock options strategies for weekly and monthly contracts with defined risk setups. Built on OI analysis, PCR signals, and volatility frameworks.',
     features: [
-      'Nifty options tips today — before expiry sessions',
-      'Bank Nifty tips with OI and PCR analysis',
+      'Nifty options signals today — before expiry sessions',
+      'Bank Nifty signals with OI and PCR analysis',
       'Stock options: weekly and monthly strategies',
       'Risk-defined setups with max loss defined upfront',
       'IV rank and volatility context included',
@@ -116,7 +116,7 @@ const SERVICES_DETAIL = [
   {
     id: 'reports',
     title: 'AI Stock Research Reports India',
-    keywords: 'AI stock research report India · stock market tips today · best research analyst India',
+    keywords: 'AI stock research report India · market signals today · best research analyst India',
     badge: 'On Filing · Pro Plan',
     badgeColor: '#00C896',
     desc: 'Automated institutional-grade research reports generated when BSE/NSE-listed companies publish quarterly results or major filings. DCF models, earnings analysis, management commentary breakdown, and buy/hold/sell recommendations.',
@@ -176,18 +176,18 @@ export default function ServicesPage() {
         <div style={{ maxWidth: 860, margin: '0 auto', position: 'relative' }}>
           <div className="section-tag">SEBI Registered · INH000026266</div>
           <h1 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 'clamp(36px,5vw,64px)', fontWeight: 400, color: 'var(--text)', lineHeight: 1.1, marginBottom: 20 }}>
-            Share market tips &amp;{' '}
+            Market intelligence &amp;{' '}
             <em style={{ color: 'var(--emerald)', fontStyle: 'italic' }}>research services</em>
           </h1>
           <p style={{ fontSize: 18, color: 'var(--text2)', lineHeight: 1.7, maxWidth: 600, marginBottom: 32 }}>
-            SEBI-verified intraday stock tips NSE, Nifty options tips today, Bank Nifty calls, swing trading stocks,
+            SEBI-verified intraday calls NSE, Nifty options signals today, Bank Nifty calls, swing trading stocks,
             and AI research — all under one SEBI registered research analyst platform.
           </p>
 
           {/* Quick keyword links */}
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
             {[
-              { label: 'Intraday Tips', href: '#intraday' },
+              { label: 'Intraday Calls', href: '#intraday' },
               { label: 'Options Calls', href: '#options' },
               { label: 'Swing Trades', href: '#swing' },
               { label: 'Model Portfolio', href: '#portfolio' },

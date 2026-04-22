@@ -45,11 +45,12 @@ function FeatureCell({ val }: { val: boolean | string }) {
 export default function PricingPage() {
   const [billing, setBilling] = useState<'monthly' | 'yearly'>('monthly')
 
+  // Basic: 8% off, Pro: 12% off, Elite: 15% off
   const plans = [
-    { tier: 'free', name: 'Free', monthly: 0, yearly: 0, color: 'var(--text3)', cta: 'Start Free', ctaStyle: 'ghost' },
-    { tier: 'basic', name: 'Basic', monthly: 999, yearly: 799, color: 'var(--sapphire)', cta: 'Start Basic', ctaStyle: 'ghost' },
-    { tier: 'pro', name: 'Pro', monthly: 2499, yearly: 1999, color: 'var(--emerald)', cta: 'Start Pro', ctaStyle: 'primary', featured: true },
-    { tier: 'elite', name: 'Elite', monthly: 5999, yearly: 4799, color: 'var(--gold)', cta: 'Go Elite', ctaStyle: 'gold' },
+    { tier: 'free',  name: 'Free',  monthly: 0,    yearlyMonthly: 0,    yearlyTotal: 0,     discount: 0,  color: 'var(--text3)',    cta: 'Start Free',  ctaStyle: 'ghost'   },
+    { tier: 'basic', name: 'Basic', monthly: 999,  yearlyMonthly: 919,  yearlyTotal: 11029, discount: 8,  color: 'var(--sapphire)', cta: 'Start Basic', ctaStyle: 'ghost'   },
+    { tier: 'pro',   name: 'Pro',   monthly: 2499, yearlyMonthly: 2199, yearlyTotal: 26390, discount: 12, color: 'var(--emerald)',  cta: 'Start Pro',   ctaStyle: 'primary', featured: true },
+    { tier: 'elite', name: 'Elite', monthly: 5999, yearlyMonthly: 5099, yearlyTotal: 61190, discount: 15, color: 'var(--gold)',     cta: 'Go Elite',    ctaStyle: 'gold'    },
   ]
 
   return (
@@ -85,9 +86,7 @@ export default function PricingPage() {
                   display: 'flex', alignItems: 'center', gap: '6px',
                 }}
               >
-                {b === 'monthly' ? 'Monthly' : (
-                  <>Yearly <span style={{ fontSize: '11px', fontWeight: 700, padding: '2px 6px', borderRadius: '4px', background: billing === 'yearly' ? 'rgba(0,0,0,0.15)' : 'rgba(0,200,150,0.12)', color: billing === 'yearly' ? '#031A13' : 'var(--emerald)' }}>SAVE 20%</span></>
-                )}
+                {b === 'monthly' ? 'Monthly' : 'Yearly'}
               </button>
             ))}
           </div>
@@ -98,7 +97,7 @@ export default function PricingPage() {
       <section style={{ padding: '0 40px 60px' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', gap: '16px', alignItems: 'start' }}>
           {plans.map((plan) => {
-            const price = billing === 'yearly' ? plan.yearly : plan.monthly
+            const price = billing === 'yearly' ? plan.yearlyMonthly : plan.monthly
             return (
               <div
                 key={plan.tier}
@@ -124,8 +123,15 @@ export default function PricingPage() {
                   </div>
                 )}
 
-                <div style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '2px', color: plan.color, textTransform: 'uppercase', marginBottom: '12px' }}>
-                  {plan.name}
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+                  <div style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '2px', color: plan.color, textTransform: 'uppercase' }}>
+                    {plan.name}
+                  </div>
+                  {billing === 'yearly' && plan.discount > 0 && (
+                    <span style={{ fontSize: '10px', fontWeight: 700, padding: '2px 7px', borderRadius: '4px', background: 'rgba(0,200,150,0.1)', color: 'var(--emerald)', border: '1px solid rgba(0,200,150,0.2)' }}>
+                      SAVE {plan.discount}%
+                    </span>
+                  )}
                 </div>
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px', marginBottom: '6px' }}>
                   <span style={{ fontFamily: 'DM Serif Display, serif', fontSize: '44px', fontWeight: 400, color: 'var(--text)', lineHeight: 1 }}>
@@ -133,9 +139,9 @@ export default function PricingPage() {
                   </span>
                   <span style={{ fontSize: '14px', color: 'var(--text3)' }}>/mo</span>
                 </div>
-                {billing === 'yearly' && price > 0 && (
+                {billing === 'yearly' && plan.yearlyTotal > 0 && (
                   <p style={{ fontSize: '12px', color: 'var(--emerald)', marginBottom: '4px' }}>
-                    ₹{(price * 12).toLocaleString('en-IN')} billed yearly
+                    ₹{plan.yearlyTotal.toLocaleString('en-IN')} billed yearly
                   </p>
                 )}
                 <p style={{ fontSize: '13px', color: 'var(--text3)', marginBottom: '24px', paddingBottom: '24px', borderBottom: '1px solid var(--border)' }}>

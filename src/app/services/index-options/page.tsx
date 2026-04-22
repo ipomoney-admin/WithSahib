@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   alternates: { canonical: 'https://www.withsahib.com/services/index-options' },
   openGraph: {
     title: 'Index Options — Nifty & Bank Nifty | withSahib SEBI RA',
-    description: 'Nifty options tips today and Bank Nifty calls by SEBI RA INH000026266. OI analysis, PCR signals, expiry strategies.',
+    description: 'Nifty options signals today and Bank Nifty calls by SEBI RA INH000026266. OI analysis, PCR signals, expiry strategies.',
     url: 'https://www.withsahib.com/services/index-options',
   },
 }

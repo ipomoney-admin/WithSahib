@@ -16,26 +16,29 @@ const SERVICES = [
   {
     icon: TrendingUp,
     title: 'Intraday Calls',
-    desc: 'Daily intraday tips for NSE equities — pre-market entry, target & SL published by 9 AM. The best stock to buy today, every trading day, from a verified SEBI RA.',
+    desc: 'Daily intraday calls for NSE equities — pre-market entry, target & SL published by 9 AM. The best stock to buy today, every trading day, from a verified SEBI RA.',
     badge: 'Daily',
     badgeColor: 'green',
     tier: 'pro',
+    href: '/services/intraday',
   },
   {
     icon: BarChart2,
     title: 'Stock Options',
-    desc: 'Options trading tips with strike selection, premium targets, and risk-defined weekly & monthly setups — SEBI-compliant, fully disclosed.',
+    desc: 'Options signals with strike selection, premium targets, and risk-defined weekly & monthly setups — SEBI-compliant, fully disclosed.',
     badge: 'Weekly',
     badgeColor: 'gold',
     tier: 'pro',
+    href: '/services/stock-options',
   },
   {
     icon: Target,
     title: 'Index Options',
-    desc: 'Nifty options tips today and Bank Nifty tips with OI analysis, PCR-based directional calls, and expiry plays. Institutional methodology for retail traders.',
+    desc: 'Nifty options signals today and Bank Nifty signals with OI analysis, PCR-based directional calls, and expiry plays. Institutional methodology for retail traders.',
     badge: 'Expiry Plays',
     badgeColor: 'gold',
     tier: 'pro',
+    href: '/services/index-options',
   },
   {
     icon: RefreshCw,
@@ -44,14 +47,16 @@ const SERVICES = [
     badge: '3–5/Week',
     badgeColor: 'green',
     tier: 'basic',
+    href: '/services/swing',
   },
   {
     icon: BookOpen,
     title: 'Model Portfolio',
-    desc: 'SEBI RA model portfolio: curated NSE long-term picks with quarterly rebalancing, sector allocation & live performance tracking. Research-backed, not tips.',
+    desc: 'SEBI RA model portfolio: curated NSE long-term picks with quarterly rebalancing, sector allocation & live performance tracking. Research-backed, not guesswork.',
     badge: 'Long Term',
     badgeColor: 'blue',
     tier: 'basic',
+    href: '/pricing',
   },
   {
     icon: Calendar,
@@ -60,6 +65,7 @@ const SERVICES = [
     badge: 'Book a Slot',
     badgeColor: 'blue',
     tier: 'elite',
+    href: '/appointments',
   },
   {
     icon: Brain,
@@ -68,6 +74,7 @@ const SERVICES = [
     badge: 'AI Powered',
     badgeColor: 'green',
     tier: 'pro',
+    href: '/research',
   },
   {
     icon: Shield,
@@ -76,15 +83,20 @@ const SERVICES = [
     badge: 'Self-Paced',
     badgeColor: 'gold',
     tier: 'basic',
+    href: '/courses',
   },
 ]
 
 // ─── PRICING DATA ─────────────────────────────────────────────────────────────
+// Yearly prices: Basic 8% off, Pro 12% off, Elite 15% off
 const PLANS = [
   {
     tier: 'free',
     name: 'Free',
-    price: 0,
+    monthly: 0,
+    yearlyMonthly: 0,   // per-month equivalent when billed yearly
+    yearlyTotal: 0,
+    discount: 0,
     sub: 'No card needed. Forever.',
     features: [
       { text: 'Signal previews', ok: true },
@@ -100,7 +112,10 @@ const PLANS = [
   {
     tier: 'basic',
     name: 'Basic',
-    price: 999,
+    monthly: 999,
+    yearlyMonthly: 919,    // ₹919/mo
+    yearlyTotal: 11029,    // ₹999 × 12 × 0.92
+    discount: 8,           // 8% off
     sub: 'Swing traders & beginners.',
     features: [
       { text: '5 swing picks / week', ok: true },
@@ -116,7 +131,10 @@ const PLANS = [
   {
     tier: 'pro',
     name: 'Pro',
-    price: 2499,
+    monthly: 2499,
+    yearlyMonthly: 2199,   // ₹2,199/mo
+    yearlyTotal: 26390,    // ₹2499 × 12 × 0.88
+    discount: 12,          // 12% off
     sub: 'For active traders.',
     features: [
       { text: 'Daily intraday calls', ok: true },
@@ -133,7 +151,10 @@ const PLANS = [
   {
     tier: 'elite',
     name: 'Elite',
-    price: 5999,
+    monthly: 5999,
+    yearlyMonthly: 5099,   // ₹5,099/mo
+    yearlyTotal: 61190,    // ₹5999 × 12 × 0.85
+    discount: 15,          // 15% off
     sub: 'Full access. Serious capital.',
     features: [
       { text: 'Everything in Pro', ok: true },
@@ -177,6 +198,7 @@ export default function HomePage() {
       <TrackRecordSection />
       <ComplianceSection />
       <AboutSection />
+      <AnalystProfileSection />
       <QuickLinksSection />
       <CTASection />
       <Footer />
@@ -214,15 +236,16 @@ function LiveTicker() {
     return () => clearInterval(interval)
   }, [fetchData])
 
+  // Duplicate list for seamless CSS loop (translateX 0 → -50%)
   const doubled = [...items, ...items]
 
   return (
     <div
+      className="ticker-wrap"
       style={{
         background: 'var(--bg2)',
         borderBottom: '1px solid var(--border)',
         padding: '10px 0',
-        overflow: 'hidden',
         position: 'relative',
       }}
     >
@@ -230,9 +253,9 @@ function LiveTicker() {
       <div
         style={{
           position: 'absolute',
-          right: 12,
-          top: '50%',
-          transform: 'translateY(-50%)',
+          right: 0,
+          top: 0,
+          bottom: 0,
           zIndex: 2,
           display: 'flex',
           alignItems: 'center',
@@ -241,8 +264,9 @@ function LiveTicker() {
           fontWeight: 600,
           letterSpacing: 1,
           color: isLive ? 'var(--emerald)' : 'var(--text3)',
-          background: 'var(--bg2)',
-          paddingLeft: 8,
+          background: 'linear-gradient(to right, transparent, var(--bg2) 30%)',
+          paddingLeft: 32,
+          paddingRight: 12,
         }}
       >
         <span
@@ -267,6 +291,7 @@ function LiveTicker() {
             backgroundSize: '200% 100%',
             animation: 'shimmer 1.5s infinite',
             pointerEvents: 'none',
+            zIndex: 1,
           }}
         />
       )}
@@ -274,14 +299,14 @@ function LiveTicker() {
       <div className="ticker-inner">
         {doubled.map((item, i) => (
           <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '8px', whiteSpace: 'nowrap' }}>
-            <span style={{ fontSize: '12px', fontWeight: 500, color: 'var(--text3)', fontFamily: 'Courier New, monospace', letterSpacing: '.5px' }}>
+            <span style={{ fontSize: '11px', fontWeight: 600, color: 'var(--text3)', fontFamily: 'Courier New, monospace', letterSpacing: '.5px' }}>
               {item.sym}
             </span>
             <span style={{ fontSize: '13px', fontWeight: 500, color: 'var(--text)' }}>{item.val}</span>
             <span style={{ fontSize: '12px', fontWeight: 600, color: item.up ? 'var(--emerald)' : 'var(--coral)' }}>
               {item.chg}
             </span>
-            <span style={{ color: 'var(--border2)', fontSize: '12px' }}>·</span>
+            <span style={{ color: 'var(--border2)', fontSize: '10px' }}>▸</span>
           </div>
         ))}
       </div>
@@ -379,7 +404,7 @@ function HeroSection() {
             lineHeight: 1.7,
           }}
         >
-          Get SEBI-verified share market tips, intraday stock tips for NSE, options trading calls, and AI research reports — from Sahib Singh Hora, India's trusted SEBI registered research analyst (INH000026266).
+          Get SEBI-verified market intelligence, intraday stock calls for NSE, options trading calls, and AI research reports — from Sahib Singh Hora, India's trusted SEBI registered research analyst (INH000026266).
         </p>
 
         {/* Actions */}
@@ -494,43 +519,61 @@ function ServicesSection() {
           {SERVICES.map((svc, i) => {
             const Icon = svc.icon
             return (
-              <div
+              <Link
                 key={i}
-                className="card card-hover"
-                style={{
-                  padding: '28px',
-                  position: 'relative',
-                  overflow: 'hidden',
-                  cursor: 'pointer',
-                  opacity: inView ? 1 : 0,
-                  transform: inView ? 'translateY(0)' : 'translateY(20px)',
-                  transition: `all 0.5s ease ${i * 0.07}s`,
-                }}
+                href={svc.href}
+                style={{ textDecoration: 'none', display: 'block' }}
               >
                 <div
+                  className="card svc-card"
                   style={{
-                    width: '44px', height: '44px',
-                    background: 'rgba(0,200,150,0.08)',
-                    borderRadius: '10px',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    marginBottom: '16px',
+                    padding: '28px',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    cursor: 'pointer',
+                    height: '100%',
+                    opacity: inView ? 1 : 0,
+                    transform: inView ? 'translateY(0)' : 'translateY(20px)',
+                    transition: `opacity 0.5s ease ${i * 0.07}s, transform 0.5s ease ${i * 0.07}s, border-color 0.2s, box-shadow 0.2s`,
                   }}
                 >
-                  <Icon size={20} strokeWidth={1.5} color="var(--emerald)" />
+                  {/* Arrow — appears on hover */}
+                  <span
+                    className="svc-arrow"
+                    style={{
+                      position: 'absolute', top: 20, right: 20,
+                      fontSize: 18, color: 'var(--emerald)',
+                      opacity: 0, transition: 'opacity 0.2s, transform 0.2s',
+                      transform: 'translateX(-4px)',
+                    }}
+                  >
+                    →
+                  </span>
+                  <div
+                    style={{
+                      width: '44px', height: '44px',
+                      background: 'rgba(0,200,150,0.08)',
+                      borderRadius: '10px',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      marginBottom: '16px',
+                    }}
+                  >
+                    <Icon size={20} strokeWidth={1.5} color="var(--emerald)" />
+                  </div>
+                  <h3 style={{ fontSize: '16px', fontWeight: 600, color: 'var(--text)', marginBottom: '8px' }}>
+                    {svc.title}
+                  </h3>
+                  <p style={{ fontSize: '13px', color: 'var(--text2)', lineHeight: 1.6, marginBottom: '16px' }}>
+                    {svc.desc}
+                  </p>
+                  <span
+                    className={`badge badge-${svc.badgeColor}`}
+                    style={{ marginRight: '6px' }}
+                  >
+                    {svc.badge}
+                  </span>
                 </div>
-                <h3 style={{ fontSize: '16px', fontWeight: 600, color: 'var(--text)', marginBottom: '8px' }}>
-                  {svc.title}
-                </h3>
-                <p style={{ fontSize: '13px', color: 'var(--text2)', lineHeight: 1.6, marginBottom: '16px' }}>
-                  {svc.desc}
-                </p>
-                <span
-                  className={`badge badge-${svc.badgeColor}`}
-                  style={{ marginRight: '6px' }}
-                >
-                  {svc.badge}
-                </span>
-              </div>
+              </Link>
             )
           })}
         </div>
@@ -647,7 +690,7 @@ function AIEngineSection() {
           every call
         </h2>
         <p style={{ fontSize: '16px', color: 'var(--text2)', maxWidth: '480px', marginBottom: '48px' }}>
-          Not tips. Not gut feel. Every recommendation is backed by automated analysis running 24/7.
+          Not guesswork. Not gut feel. Every recommendation is backed by automated analysis running 24/7.
         </p>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '16px' }}>
           {cards.map((c, i) => (
@@ -763,7 +806,7 @@ function PricingSection() {
                   transition: 'all 0.2s',
                 }}
               >
-                {b === 'yearly' ? 'Yearly (save 20%)' : 'Monthly'}
+                {b === 'monthly' ? 'Monthly' : 'Yearly'}
               </button>
             ))}
           </div>
@@ -771,9 +814,7 @@ function PricingSection() {
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px', alignItems: 'start' }}>
           {PLANS.map((plan, i) => {
-            const price = billing === 'yearly' && plan.price > 0
-              ? Math.round(plan.price * 0.8)
-              : plan.price
+            const displayPrice = billing === 'yearly' ? plan.yearlyMonthly : plan.monthly
             const borderColor =
               plan.color === 'emerald' ? 'var(--emerald)' :
               plan.color === 'gold' ? 'var(--gold)' :
@@ -810,15 +851,30 @@ function PricingSection() {
                     MOST POPULAR
                   </div>
                 )}
-                <div style={{ fontSize: '11px', fontWeight: 600, letterSpacing: '2px', color: 'var(--text3)', textTransform: 'uppercase', marginBottom: '10px' }}>
-                  {plan.name}
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
+                  <div style={{ fontSize: '11px', fontWeight: 600, letterSpacing: '2px', color: 'var(--text3)', textTransform: 'uppercase' }}>
+                    {plan.name}
+                  </div>
+                  {billing === 'yearly' && plan.discount > 0 && (
+                    <span style={{
+                      fontSize: '10px', fontWeight: 700, padding: '2px 7px', borderRadius: '4px',
+                      background: 'rgba(0,200,150,0.12)', color: 'var(--emerald)', border: '1px solid rgba(0,200,150,0.2)',
+                    }}>
+                      SAVE {plan.discount}%
+                    </span>
+                  )}
                 </div>
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px', marginBottom: '4px' }}>
                   <span style={{ fontSize: '38px', fontWeight: 700, color: 'var(--text)', fontFamily: 'DM Serif Display, serif' }}>
-                    {price === 0 ? '₹0' : `₹${price.toLocaleString('en-IN')}`}
+                    {displayPrice === 0 ? '₹0' : `₹${displayPrice.toLocaleString('en-IN')}`}
                   </span>
                   <span style={{ fontSize: '13px', color: 'var(--text3)' }}>/mo</span>
                 </div>
+                {billing === 'yearly' && plan.yearlyTotal > 0 && (
+                  <p style={{ fontSize: '11px', color: 'var(--emerald)', marginBottom: '4px' }}>
+                    ₹{plan.yearlyTotal.toLocaleString('en-IN')} billed yearly
+                  </p>
+                )}
                 <p style={{ fontSize: '12px', color: 'var(--text3)', marginBottom: '20px', paddingBottom: '20px', borderBottom: '1px solid var(--border)' }}>
                   {plan.sub}
                 </p>
@@ -1127,14 +1183,14 @@ function AboutSection() {
 // ─── INTERNAL LINKS / SEO KEYWORD SECTION ─────────────────────────────────────
 function QuickLinksSection() {
   const links = [
-    { href: '/services/intraday', label: 'Intraday Stock Tips NSE', desc: 'Daily share market tips with entry, target & SL' },
-    { href: '/services', label: 'Stock Market Tips Today', desc: 'All SEBI RA advisory services in one place' },
+    { href: '/services/intraday', label: 'Intraday Calls NSE', desc: 'Daily market intelligence with entry, target & SL' },
+    { href: '/services', label: 'Market Signals Today', desc: 'All SEBI RA advisory services in one place' },
     { href: '/reports', label: 'AI Stock Research Reports', desc: 'NSE equity research, DCF models & results analysis' },
     { href: '/pricing', label: 'Stock Advisory Subscription India', desc: 'Plans from ₹0 — paid stock advisory with SEBI RA' },
     { href: '/appointments', label: 'Book a Stock Market Advisor', desc: 'One-on-one session with a verified SEBI RA' },
     { href: '/faq', label: 'SEBI Research Analyst FAQ', desc: 'Everything about INH000026266 & SEBI RA services' },
     { href: '/about', label: 'About Sahib Singh Hora', desc: 'Best SEBI RA India 2026 — credentials & background' },
-    { href: '/blog', label: 'Stock Market Tips Blog', desc: 'Intraday tips, swing trading & options strategies explained' },
+    { href: '/blog', label: 'Market Intelligence Blog', desc: 'Intraday tips, swing trading & options strategies explained' },
   ]
   return (
     <section style={{ padding: '56px 40px', background: 'var(--bg2)', borderTop: '1px solid var(--border)' }}>
@@ -1154,6 +1210,175 @@ function QuickLinksSection() {
               <div style={{ fontSize: 12, color: 'var(--text3)', lineHeight: 1.5 }}>{l.desc}</div>
             </Link>
           ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ─── ANALYST PROFILE ─────────────────────────────────────────────────────────
+function AnalystProfileSection() {
+  const { ref, inView } = useInView()
+  return (
+    <section ref={ref} style={{ padding: '80px 40px', background: 'var(--bg)', borderTop: '1px solid var(--border)' }}>
+      <div className="container-wide" style={{ padding: 0 }}>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '2fr 3fr',
+            gap: '60px',
+            alignItems: 'start',
+            opacity: inView ? 1 : 0,
+            transform: inView ? 'translateY(0)' : 'translateY(24px)',
+            transition: 'all 0.7s ease',
+          }}
+        >
+          {/* Left — identity card */}
+          <div
+            style={{
+              background: 'var(--surface)',
+              border: '1px solid var(--border)',
+              borderRadius: '24px',
+              padding: '36px',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '16px',
+              textAlign: 'center',
+              position: 'relative',
+              overflow: 'hidden',
+            }}
+          >
+            <div
+              className="glow-orb glow-emerald"
+              style={{ width: '250px', height: '200px', top: '-40%', left: '50%', transform: 'translateX(-50%)' }}
+            />
+            {/* Monogram */}
+            <div
+              style={{
+                width: '88px', height: '88px',
+                borderRadius: '50%',
+                background: 'rgba(0,200,150,0.06)',
+                border: '2px solid rgba(0,200,150,0.3)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontFamily: 'DM Serif Display, serif',
+                fontSize: '36px', color: 'var(--emerald)',
+                position: 'relative', zIndex: 1,
+              }}
+            >
+              S
+            </div>
+
+            <div style={{ position: 'relative', zIndex: 1 }}>
+              <h3 style={{ fontFamily: 'DM Serif Display, serif', fontSize: '22px', fontWeight: 400, color: 'var(--text)', marginBottom: '6px' }}>
+                Sahib Singh Hora
+              </h3>
+              <p style={{ fontSize: '13px', color: 'var(--text2)', marginBottom: '8px' }}>
+                SEBI Registered Research Analyst
+              </p>
+              <p style={{ fontSize: '12px', color: 'var(--gold)', fontFamily: 'Courier New, monospace', letterSpacing: '1px', fontWeight: 600 }}>
+                INH000026266
+              </p>
+            </div>
+
+            {/* Valid badge */}
+            <div
+              style={{
+                width: '100%', padding: '10px 14px',
+                background: 'rgba(0,200,150,0.05)',
+                border: '1px solid rgba(0,200,150,0.15)',
+                borderRadius: '8px',
+                fontSize: '12px', color: 'var(--emerald)', fontWeight: 500,
+                position: 'relative', zIndex: 1,
+              }}
+            >
+              Valid: Apr 20, 2026 – Apr 19, 2031
+            </div>
+
+            {/* Tags */}
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', justifyContent: 'center', position: 'relative', zIndex: 1 }}>
+              {['NISM Certified', 'Technical Analyst', 'Options Strategist', 'Market Speaker'].map((tag) => (
+                <span
+                  key={tag}
+                  style={{
+                    fontSize: '10px', fontWeight: 500, padding: '4px 10px', borderRadius: '20px',
+                    background: 'var(--bg2)', border: '1px solid var(--border)',
+                    color: 'var(--text3)',
+                  }}
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+
+            {/* Social links */}
+            <div style={{ display: 'flex', gap: '12px', position: 'relative', zIndex: 1 }}>
+              <a
+                href="#"
+                aria-label="LinkedIn"
+                style={{
+                  width: 36, height: 36, borderRadius: '50%',
+                  background: 'var(--bg2)', border: '1px solid var(--border)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  color: 'var(--text3)', textDecoration: 'none', fontSize: 14,
+                  transition: 'border-color 0.2s, color 0.2s',
+                }}
+              >
+                in
+              </a>
+              <a
+                href="#"
+                aria-label="X / Twitter"
+                style={{
+                  width: 36, height: 36, borderRadius: '50%',
+                  background: 'var(--bg2)', border: '1px solid var(--border)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  color: 'var(--text3)', textDecoration: 'none', fontSize: 13, fontWeight: 700,
+                  transition: 'border-color 0.2s, color 0.2s',
+                }}
+              >
+                𝕏
+              </a>
+            </div>
+          </div>
+
+          {/* Right — editorial copy */}
+          <div>
+            <div className="section-tag" style={{ marginBottom: 20 }}>The Analyst Behind withSahib</div>
+            <h2
+              style={{
+                fontFamily: 'DM Serif Display, serif',
+                fontSize: 'clamp(28px,3.5vw,44px)',
+                fontWeight: 400,
+                color: 'var(--text)',
+                lineHeight: 1.15,
+                marginBottom: '28px',
+              }}
+            >
+              Research-first.{' '}
+              <em style={{ color: 'var(--emerald)', fontStyle: 'italic' }}>Compliance-first.</em>{' '}
+              You-first.
+            </h2>
+
+            <p style={{ fontSize: '16px', color: 'var(--text2)', lineHeight: 1.85, marginBottom: '20px' }}>
+              I&apos;m Sahib Singh Hora — a SEBI Registered Research Analyst who believes retail investors deserve the same quality of research that institutions get. Every call I publish comes with a clear entry, target, and stop-loss — no ambiguity, no excuses.
+            </p>
+            <p style={{ fontSize: '16px', color: 'var(--text2)', lineHeight: 1.85, marginBottom: '20px' }}>
+              I built withSahib.com because I was tired of seeing retail investors fall prey to unregistered tipsters and WhatsApp fraud. With SEBI registration INH000026266, every recommendation here is compliant, documented, and accountable.
+            </p>
+            <p style={{ fontSize: '16px', color: 'var(--text2)', lineHeight: 1.85, marginBottom: '36px' }}>
+              Whether you&apos;re an intraday trader looking for morning picks, or a long-term investor building a model portfolio — I&apos;m here to research, so you can trade with conviction.
+            </p>
+
+            <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+              <Link href="/about" className="btn btn-ghost btn-md" style={{ textDecoration: 'none' }}>
+                Read my story →
+              </Link>
+              <Link href="/appointments" className="btn btn-primary btn-md" style={{ textDecoration: 'none' }}>
+                Book a session →
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -1195,7 +1420,7 @@ function CTASection() {
             <em style={{ color: 'var(--emerald)', fontStyle: 'italic' }}>real research?</em>
           </h2>
           <p style={{ color: 'var(--text2)', fontSize: '16px', marginBottom: '32px', lineHeight: 1.7 }}>
-            Join investors who trust SEBI-registered analysis over anonymous tips.
+            Join investors who trust SEBI-registered analysis over anonymous signals.
             Start free — upgrade when you're ready.
           </p>
           <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
