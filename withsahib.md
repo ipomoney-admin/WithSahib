@@ -979,7 +979,7 @@ Items that require manual action before the platform is fully operational:
 
 8. **Volume ratio approximation** — In capture-features.ts, average volume is approximated as `volume * 0.8` instead of using a real historical average.
 
-9. **`/admin/signals` 404 in production** — Pages exist in code and build correctly (confirmed via `npm run build`). Build output: `/admin/signals` 8.11 kB, `/admin/intelligence` 5.46 kB. 404 is a Vercel deployment issue — latest commit may not be deployed. Fix: check Vercel dashboard and trigger redeploy.
+9. ✅ **FIXED Session 3 — `/admin/signals` 404 in production** — Admin folder was missing from git, never committed. Deployed via `npx vercel --prod` with crons stripped temporarily. All three admin pages now live: /admin/signals, /admin/intelligence, /admin/settings.
 
 10. **Dashboard greeting shows "Investor" not user name** — `/dashboard` shows hardcoded "Welcome back, Investor" instead of the user's actual name. Fix: fetch `subscriptions` or `auth.users` metadata and display real name.
 
@@ -1162,7 +1162,7 @@ src/
 
 When starting a new session on this project, read this file first. It is the complete project context.
 
-### CURRENT STATE AS OF 22 APR 2026 (Session 2)
+### CURRENT STATE AS OF 22 APR 2026 (Session 3)
 
 **Platform is LIVE** at withsahib.com — DNS propagated, SSL active, Vercel deployed.
 
@@ -1182,10 +1182,13 @@ When starting a new session on this project, read this file first. It is the com
 - Admin pages exist in code and build: /admin/signals, /admin/intelligence
 - 18 Vercel env vars set (CRON_SECRET, Supabase, Anthropic, Resend, etc.)
 - npm run build passes cleanly — no TypeScript errors
+- Admin pages restored and live: /admin/signals, /admin/intelligence, /admin/settings
+- Admin folder was missing from git (never committed) — fixed by deploying via npx vercel --prod
+- Vercel GitHub webhook missed commit 109a85aa — workaround: strip crons from vercel.json for CLI deploy
 
-**FIRST TASK for next session:** Fix `/admin/signals` 404 in production (Bug #9 in Section 15). Pages build fine — likely a Vercel deployment issue. Check Vercel deployment tab and trigger redeploy if the latest commit isn't deployed.
+**FIRST TASK for next session:** Fix dashboard greeting — shows 'Welcome back, Investor' instead of real user name (Bug #10 in Section 15). Fetch user name from auth.users metadata or subscriptions table and display it.
 
-**Second task:** Create `src/app/admin/settings/page.tsx` — the admin sidebar links to `/admin/settings` but the page doesn't exist (will 404).
+**Second task:** Set up Fyers API — create app at myapi.fyers.in, get FYERS_APP_ID + FYERS_SECRET_KEY, add to Vercel env vars, complete OAuth handshake. See Section 14 item 2.
 
 **Key facts:**
 1. Platform: withsahib.com — SEBI Registered Research Analyst advisory platform
