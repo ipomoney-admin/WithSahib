@@ -13,7 +13,7 @@ const FOOTER_LINKS = {
   ],
   Research: [
     { label: 'AI Reports', href: '/reports' },
-    { label: 'Company Pages', href: '/companies' },
+    { label: 'Track Record', href: '/track-record' },
     { label: 'Trade History', href: '/track-record' },
     { label: 'Blog', href: '/blog' },
   ],

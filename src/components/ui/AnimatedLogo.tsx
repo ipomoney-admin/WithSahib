@@ -12,30 +12,6 @@ export function AnimatedLogo() {
 
   return (
     <>
-      <style>{`
-        @keyframes barRise {
-          from { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
-          to   { transform: scaleY(1); transform-origin: bottom; opacity: 1; }
-        }
-        @keyframes dotPop {
-          0%   { transform: scale(0.1); opacity: 0; }
-          60%  { transform: scale(2.0); opacity: 1; }
-          100% { transform: scale(1.0); opacity: 1; }
-        }
-        @keyframes dotPulse {
-          0%, 100% { transform: scale(1.0); }
-          50%       { transform: scale(1.25); }
-        }
-        @keyframes wordFade {
-          from { opacity: 0; transform: translateX(-4px); }
-          to   { opacity: 1; transform: translateX(0); }
-        }
-        .ws-anim-bar1 { animation: barRise 0.35s ease-out 0s forwards; opacity: 0; transform-origin: bottom; transform-box: fill-box; }
-        .ws-anim-bar2 { animation: barRise 0.35s ease-out 0.15s forwards; opacity: 0; transform-origin: bottom; transform-box: fill-box; }
-        .ws-anim-bar3 { animation: barRise 0.35s ease-out 0.30s forwards; opacity: 0; transform-origin: bottom; transform-box: fill-box; }
-        .ws-anim-dot  { animation: dotPop 0.5s ease-out 0.55s forwards, dotPulse 2s ease-in-out 1.1s infinite; opacity: 0; transform-origin: center; transform-box: fill-box; }
-        .ws-anim-word { animation: wordFade 0.4s ease-out 0.9s forwards; opacity: 0; }
-      `}</style>
       <svg
         width="120"
         height="32"

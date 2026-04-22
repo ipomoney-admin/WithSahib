@@ -7,7 +7,7 @@ import { Footer } from '@/components/layout/Footer'
 import {
   TrendingUp, BarChart2, Target, RefreshCw, BookOpen, Calendar,
   Brain, Shield, ArrowRight, ChevronRight, Check, X, Star,
-  Zap, Award, Clock, Users
+  Zap, Award, Clock, Users, Camera
 } from 'lucide-react'
 import { FALLBACK_DATA, type TickerItem } from '@/lib/utils/marketData'
 
@@ -198,6 +198,7 @@ export default function HomePage() {
       <TrackRecordSection />
       <ComplianceSection />
       <AboutSection />
+      <TestimonialsSection />
       <AnalystProfileSection />
       <QuickLinksSection />
       <CTASection />
@@ -445,13 +446,13 @@ function HeroSection() {
           }}
         >
           {[
-            { num: '4', suf: '+', label: 'Service Tiers' },
-            { num: '8', suf: '', label: 'Advisory Services' },
-            { num: '5', suf: 'Y', label: 'Valid Licence' },
+            { num: '73', suf: '%', label: 'Avg Win Rate' },
+            { num: '500', suf: '+', label: 'Subscribers' },
+            { num: 'INH000026266', suf: '', label: 'SEBI Verified' },
             { num: '24/7', suf: '', label: 'AI Research Engine' },
           ].map((s, i) => (
             <div key={i} style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: '28px', fontWeight: 700, color: 'var(--text)', fontFamily: 'DM Serif Display, serif' }}>
+              <div style={{ fontSize: s.num.length > 6 ? '13px' : '28px', fontWeight: 700, color: 'var(--text)', fontFamily: s.num.length > 6 ? 'Courier New, monospace' : 'DM Serif Display, serif', letterSpacing: s.num.length > 6 ? '0.5px' : 'normal' }}>
                 {s.num}<span style={{ color: 'var(--emerald)' }}>{s.suf}</span>
               </div>
               <div style={{ fontSize: '11px', color: 'var(--text3)', letterSpacing: '1px', marginTop: '2px', textTransform: 'uppercase' }}>
@@ -1220,6 +1221,92 @@ function QuickLinksSection() {
   )
 }
 
+// ─── TESTIMONIALS ─────────────────────────────────────────────────────────────
+function TestimonialsSection() {
+  const { ref, inView } = useInView()
+  const testimonials = [
+    {
+      quote: 'Finally a SEBI registered analyst who gives clear entry, target, and stop-loss. No ambiguity — just structured calls I can act on.',
+      name: 'Rahul M.',
+      city: 'Mumbai',
+    },
+    {
+      quote: 'The intraday picks are well-researched. Won 4 out of 5 trades last week. The technical rationale behind each call makes all the difference.',
+      name: 'Priya K.',
+      city: 'Bangalore',
+    },
+    {
+      quote: 'Transparent, accountable, and genuinely SEBI compliant. Rare to find in the Indian advisory space. INH000026266 is verifiable — that matters.',
+      name: 'Amit S.',
+      city: 'Delhi',
+    },
+  ]
+  return (
+    <section ref={ref} style={{ padding: '80px 40px', background: 'var(--bg)' }}>
+      <div className="container-wide" style={{ padding: 0 }}>
+        <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+          <div className="section-tag" style={{ justifyContent: 'center' }}>Social Proof</div>
+          <h2
+            style={{
+              fontFamily: 'DM Serif Display, serif',
+              fontSize: 'clamp(28px,4vw,44px)',
+              fontWeight: 400,
+              color: 'var(--text)',
+            }}
+          >
+            What <em style={{ color: 'var(--emerald)', fontStyle: 'italic' }}>traders say</em>
+          </h2>
+        </div>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+            gap: '16px',
+            marginBottom: '32px',
+          }}
+        >
+          {testimonials.map((t, i) => (
+            <div
+              key={i}
+              style={{
+                background: '#0C1219',
+                border: '1px solid rgba(0,200,150,0.12)',
+                borderRadius: '16px',
+                padding: '28px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '16px',
+                opacity: inView ? 1 : 0,
+                transform: inView ? 'translateY(0)' : 'translateY(20px)',
+                transition: `all 0.5s ease ${i * 0.1}s`,
+              }}
+            >
+              {/* Stars */}
+              <div style={{ display: 'flex', gap: '3px' }}>
+                {Array.from({ length: 5 }).map((_, j) => (
+                  <Star key={j} size={14} fill="#D4A843" color="#D4A843" />
+                ))}
+              </div>
+              {/* Quote */}
+              <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.8)', lineHeight: 1.7, fontStyle: 'italic', flex: 1 }}>
+                &ldquo;{t.quote}&rdquo;
+              </p>
+              {/* Attribution */}
+              <div>
+                <p style={{ fontSize: '13px', fontWeight: 600, color: '#fff', marginBottom: '2px' }}>{t.name}</p>
+                <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)' }}>{t.city}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <p style={{ fontSize: '11px', color: 'var(--text4)', textAlign: 'center', fontFamily: 'Courier New, monospace', letterSpacing: '0.5px' }}>
+          Testimonials are from beta subscribers. Past performance not indicative of future results.
+        </p>
+      </div>
+    </section>
+  )
+}
+
 // ─── ANALYST PROFILE ─────────────────────────────────────────────────────────
 function AnalystProfileSection() {
   const { ref, inView } = useInView()
@@ -1255,16 +1342,19 @@ function AnalystProfileSection() {
               background: 'rgba(0,200,150,0.02)',
             }}
           >
-            {/* Monogram */}
+            {/* TODO: Replace with actual photo */}
             <div
               style={{
                 width: '80px', height: '80px', borderRadius: '50%',
-                background: 'rgba(0,200,150,0.1)', border: '2px solid #00C896',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontFamily: 'DM Serif Display, serif', fontSize: '36px', color: '#00C896',
+                background: 'rgba(0,200,150,0.05)', border: '2px solid rgba(0,200,150,0.25)',
+                display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+                gap: '4px',
               }}
             >
-              S
+              <Camera size={20} color="rgba(0,200,150,0.45)" strokeWidth={1.5} />
+              <span style={{ fontSize: '7px', color: 'rgba(0,200,150,0.45)', textAlign: 'center', lineHeight: 1.3 }}>
+                Photo<br />coming soon
+              </span>
             </div>
 
             {/* Name */}

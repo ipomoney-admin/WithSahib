@@ -9,13 +9,9 @@ import { AnimatedLogo } from '@/components/ui/AnimatedLogo'
 
 const NAV_LINKS = [
   { label: 'Services', href: '/services' },
-  { label: 'Research', href: '/research' },
   { label: 'Pricing', href: '/pricing' },
-  { label: 'Courses', href: '/courses' },
   { label: 'Blog', href: '/blog' },
   { label: 'About', href: '/about' },
-  { label: 'FAQ', href: '/faq' },
-  { label: 'Contact', href: '/contact' },
 ]
 
 export function Navbar() {
@@ -149,7 +145,7 @@ export function Navbar() {
 
           {/* CTA */}
           <Link
-            href="/pricing"
+            href="/auth/register"
             className="btn btn-primary btn-sm"
             style={{ textDecoration: 'none' }}
           >
@@ -234,7 +230,7 @@ export function Navbar() {
               Log in
             </Link>
             <Link
-              href="/pricing"
+              href="/auth/register"
               onClick={() => setMenuOpen(false)}
               className="btn btn-primary btn-lg"
               style={{ textDecoration: 'none', justifyContent: 'center' }}

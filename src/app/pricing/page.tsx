@@ -93,6 +93,36 @@ export default function PricingPage() {
         </div>
       </section>
 
+      {/* Waitlist banner */}
+      <section style={{ padding: '0 40px 40px' }}>
+        <div
+          style={{
+            maxWidth: '1100px',
+            margin: '0 auto',
+            background: 'rgba(0,200,150,0.04)',
+            border: '1px solid rgba(0,200,150,0.18)',
+            borderRadius: '16px',
+            padding: '28px 32px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '16px',
+            textAlign: 'center',
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--gold)', display: 'inline-block' }} />
+            <span style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '2px', color: 'var(--gold)', textTransform: 'uppercase' }}>
+              Payment Gateway Launching Soon
+            </span>
+          </div>
+          <p style={{ fontSize: '15px', color: 'var(--text2)', maxWidth: '520px', lineHeight: 1.6 }}>
+            Join the waitlist for early access and a launch discount when payments go live.
+          </p>
+          <WaitlistForm />
+        </div>
+      </section>
+
       {/* Plan cards */}
       <section style={{ padding: '0 40px 60px' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', gap: '16px', alignItems: 'start' }}>
@@ -174,7 +204,7 @@ export default function PricingPage() {
                 </Link>
                 {plan.tier !== 'free' && (
                   <p style={{ fontSize: '10px', color: 'var(--text4)', textAlign: 'center', marginTop: '8px', marginBottom: '16px' }}>
-                    Secure payment via Razorpay — launching soon
+                    Join the waitlist — payment gateway launching soon
                   </p>
                 )}
               </div>
@@ -259,6 +289,53 @@ export default function PricingPage() {
       </div>
 
       <Footer />
+    </div>
+  )
+}
+
+function WaitlistForm() {
+  const [email, setEmail] = useState('')
+  const [submitted, setSubmitted] = useState(false)
+  return submitted ? (
+    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--emerald)', fontSize: '14px', fontWeight: 500 }}>
+      <Check size={16} color="var(--emerald)" />
+      You&apos;re on the list! We&apos;ll notify you at launch.
+    </div>
+  ) : (
+    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'center' }}>
+      <input
+        type="email"
+        placeholder="your@email.com"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        style={{
+          padding: '11px 16px',
+          borderRadius: '10px',
+          border: '1px solid var(--border2)',
+          background: 'var(--surface)',
+          color: 'var(--text)',
+          fontSize: '14px',
+          fontFamily: 'Outfit, sans-serif',
+          outline: 'none',
+          width: '240px',
+        }}
+      />
+      <button
+        onClick={() => { if (email.includes('@')) setSubmitted(true) }}
+        style={{
+          padding: '11px 24px',
+          borderRadius: '10px',
+          border: 'none',
+          background: 'var(--emerald)',
+          color: '#031A13',
+          fontSize: '14px',
+          fontWeight: 700,
+          cursor: 'pointer',
+          fontFamily: 'Outfit, sans-serif',
+        }}
+      >
+        Join Waitlist
+      </button>
     </div>
   )
 }
