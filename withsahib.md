@@ -1,5 +1,5 @@
 # withSahib — Complete Project Documentation
-*Last updated: 2026-04-22*
+*Last updated: 2026-04-22 (Session 2 — auth, DB, admin 404 fixes)*
 
 ---
 
@@ -925,21 +925,17 @@ SEBI RA: INH000026266 | Not investment advice
 
 Items that require manual action before the platform is fully operational:
 
-1. **SQL Migration** — Run `supabase/migrations/001_signal_system.sql` in Supabase SQL editor. Current known issue: possible conflict if `subscriptions` table already exists with a `plan` column of a different type. Fix: drop existing table first, or run with `CREATE TABLE IF NOT EXISTS`.
+1. ✅ **SQL Migration** — `supabase/migrations/001_signal_system.sql` made fully idempotent (wrapped all CREATE TYPEs, added ALTER TABLE guards, fixed NULL comparison, added DROP TRIGGER/POLICY IF EXISTS). Safe to re-run. Session 2: ran successfully.
 
-2. **Fyers API setup** — Create app at myapi.fyers.in → get FYERS_APP_ID + FYERS_SECRET_KEY → add to Vercel env vars. Set redirect URI to `https://withsahib.com/api/fyers/callback`. Must complete OAuth handshake to populate fyers_tokens table.
+2. ❌ **Fyers API setup** — Create app at myapi.fyers.in → get FYERS_APP_ID + FYERS_SECRET_KEY → add to Vercel env vars. Set redirect URI to `https://withsahib.com/api/fyers/callback`. Must complete OAuth handshake to populate fyers_tokens table.
 
-3. **Telegram Bot** — Create via @BotFather → get TELEGRAM_BOT_TOKEN → add to Vercel env vars.
+3. ❌ **Telegram Bot** — Create via @BotFather → get TELEGRAM_BOT_TOKEN → add to Vercel env vars.
 
-4. **Telegram Channels** — Create 2 channels (1 free, 1 paid) → get channel IDs → add TELEGRAM_FREE_CHANNEL_ID + TELEGRAM_PAID_CHANNEL_ID to Vercel env vars. Add bot as admin in both channels.
+4. ❌ **Telegram Channels** — Create 2 channels (1 free, 1 paid) → get channel IDs → add TELEGRAM_FREE_CHANNEL_ID + TELEGRAM_PAID_CHANNEL_ID to Vercel env vars. Add bot as admin in both channels.
 
-5. **AiSensy setup** — Create account at aisensy.com → get AISENSY_API_KEY → create campaign `withsahib_signal` → add keys to Vercel env vars.
+5. ❌ **AiSensy setup** — Create account at aisensy.com → get AISENSY_API_KEY → create campaign `withsahib_signal` → add keys to Vercel env vars.
 
-6. **Admin role setup** — After Sahib signs up on the platform, run this SQL in Supabase:
-   ```sql
-   INSERT INTO admin_roles (user_id, role)
-   VALUES ('<SAHIB_USER_UUID>', 'super_admin');
-   ```
+6. ✅ **Admin role setup** — Sahib signed up. User ID: `53c2ff99-f6d3-45d4-9fe9-2a4fe3d313cd`. Email confirmed. `super_admin` row inserted into admin_roles.
 
 7. **Supabase Edge Function** — Deploy Fyers price feed function:
    ```bash
@@ -947,25 +943,27 @@ Items that require manual action before the platform is fully operational:
    ```
    (Note: Edge function code not yet written — this feeds live prices into the live_prices table)
 
-8. **Replace PLACEHOLDER env vars** — Multiple env vars currently set to PLACEHOLDER in Vercel. Replace with real values once services are set up.
+8. ✅ **Replace PLACEHOLDER env vars** — 18 Vercel env vars set (Session 2). Remaining PLACEHOLDERs: Fyers, Telegram, AiSensy, Razorpay.
 
-9. **Razorpay** — Account pending approval. Once approved, replace PLACEHOLDER keys with real RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET in Vercel env vars.
+9. ❌ **Razorpay** — Account pending approval. Once approved, replace PLACEHOLDER keys with real RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET in Vercel env vars.
 
-10. **Professional photo** — Upload real photo to About page at `/about`.
+10. ❌ **Professional photo** — Upload real photo to About page at `/about`.
 
-11. **LinkedIn profile** — Create at linkedin.com/in/sahibsinghhora → update href in footer.
+11. ❌ **LinkedIn profile** — Create at linkedin.com/in/sahibsinghhora → update href in footer.
 
-12. **Twitter/X profile** — Create at x.com/sahibsinghhora → update href in footer.
+12. ❌ **Twitter/X profile** — Create at x.com/sahibsinghhora → update href in footer.
 
 13. **Market Holidays** — Insert NSE holidays for the year into market_holidays table.
 
 14. **Bing Search Console** — Add NEXT_PUBLIC_BING_SITE_VERIFICATION env var with real code.
 
+15. ✅ **handle_new_user() trigger** — Fixed to insert into `public.subscriptions` instead of non-existent `public.profiles`. Auth signup now works without "Database error saving new user".
+
 ---
 
 ## 15. CURRENT BUGS / KNOWN ISSUES
 
-1. **SQL migration conflict** — `ERROR 42703: column "plan" does not exist` — occurs if subscriptions table already exists from an older schema. Fix: wrap migration in a transaction, drop old table first, or check if ENUMs already exist before re-creating them.
+1. ✅ **SQL migration conflict** — `ERROR 42703: column "plan" does not exist` — FIXED in Session 2. Migration now fully idempotent with ALTER TABLE IF NOT EXISTS guards for all new columns.
 
 2. **DNS propagation** — CNAME updated to `01a8d991bd3b8c7e.vercel-dns-017.com`. May take up to 48 hours to propagate fully. SSL certificate will auto-provision after DNS is confirmed.
 
@@ -980,6 +978,12 @@ Items that require manual action before the platform is fully operational:
 7. **Fyers VWAP proxy** — In capture-features.ts, nifty_vs_20ema uses VWAP as proxy for 20 EMA. This is an approximation — not a true 20-day EMA calculation.
 
 8. **Volume ratio approximation** — In capture-features.ts, average volume is approximated as `volume * 0.8` instead of using a real historical average.
+
+9. **`/admin/signals` 404 in production** — Pages exist in code and build correctly (confirmed via `npm run build`). Build output: `/admin/signals` 8.11 kB, `/admin/intelligence` 5.46 kB. 404 is a Vercel deployment issue — latest commit may not be deployed. Fix: check Vercel dashboard and trigger redeploy.
+
+10. **Dashboard greeting shows "Investor" not user name** — `/dashboard` shows hardcoded "Welcome back, Investor" instead of the user's actual name. Fix: fetch `subscriptions` or `auth.users` metadata and display real name.
+
+11. **Email confirmation required on signup** — New users must confirm email before they can log in. For early testing, disable in Supabase Auth settings: Authentication → Settings → "Enable email confirmations" → toggle OFF.
 
 ---
 
@@ -1158,17 +1162,41 @@ src/
 
 When starting a new session on this project, read this file first. It is the complete project context.
 
+### CURRENT STATE AS OF 22 APR 2026 (Session 2)
+
+**Platform is LIVE** at withsahib.com — DNS propagated, SSL active, Vercel deployed.
+
+**Sahib's account:**
+- Email: sahib13singh13@gmail.com
+- User ID: `53c2ff99-f6d3-45d4-9fe9-2a4fe3d313cd`
+- Role: `super_admin` (in admin_roles table)
+- Email confirmed: YES
+
+**External dashboards:**
+- Supabase: https://supabase.com/dashboard/project/[project-ref] (check .env.local for project ref from NEXT_PUBLIC_SUPABASE_URL)
+- Vercel: https://vercel.com/sahibs-projects (or search "withsahib" in Vercel dashboard)
+
+**What works:**
+- Auth signup/login (handle_new_user trigger fixed → inserts into subscriptions)
+- SQL migration fully idempotent — safe to re-run
+- Admin pages exist in code and build: /admin/signals, /admin/intelligence
+- 18 Vercel env vars set (CRON_SECRET, Supabase, Anthropic, Resend, etc.)
+- npm run build passes cleanly — no TypeScript errors
+
+**FIRST TASK for next session:** Fix `/admin/signals` 404 in production (Bug #9 in Section 15). Pages build fine — likely a Vercel deployment issue. Check Vercel deployment tab and trigger redeploy if the latest commit isn't deployed.
+
+**Second task:** Create `src/app/admin/settings/page.tsx` — the admin sidebar links to `/admin/settings` but the page doesn't exist (will 404).
+
 **Key facts:**
 1. Platform: withsahib.com — SEBI Registered Research Analyst advisory platform
 2. Stack: Next.js 14 (App Router) + Supabase + Vercel + Fyers API v3 + TypeScript ML
 3. Design tokens: DO NOT CHANGE — locked in Section 4 (colors, fonts, logo)
-4. Current status: Signal Management System built. SQL migration may need re-running. Several env vars still PLACEHOLDER.
-5. First task in new session: Check pending items in Section 14
-6. SEBI compliance is non-negotiable — every signal needs rationale + disclaimer
-7. Sahib is non-technical — explain clearly, give complete commands to copy-paste
-8. All monetary values in Indian Rupees (INR). Use en-IN locale formatting.
-9. Market hours: 9:00 AM – 3:30 PM IST, Mon–Fri, excluding NSE holidays
-10. IST = UTC + 5:30 — all UTC times in vercel.json need +5:30 to convert to IST
+4. Current status: Auth working, signal system built, admin pages built. Fyers/Telegram/AiSensy/Razorpay still need setup.
+5. SEBI compliance is non-negotiable — every signal needs rationale + disclaimer
+6. Sahib is non-technical — explain clearly, give complete commands to copy-paste
+7. All monetary values in Indian Rupees (INR). Use en-IN locale formatting.
+8. Market hours: 9:00 AM – 3:30 PM IST, Mon–Fri, excluding NSE holidays
+9. IST = UTC + 5:30 — all UTC times in vercel.json need +5:30 to convert to IST
 
 **Architecture decisions made:**
 - ML is 100% TypeScript (no Python) — by design, to run on Vercel serverless without Python runtime
@@ -1183,3 +1211,53 @@ When starting a new session on this project, read this file first. It is the com
 - Allow entry range to be modified after publish
 - Skip rationale field when creating signals
 - Push signals without admin approval (screener → alert_queue → admin approve → publish)
+
+---
+
+## 21. SIGNAL SYSTEM BUILD REFERENCE
+
+The complete signal management system was built in Session 1 (21 Apr 2026). It includes:
+
+**Critical files that MUST exist (all confirmed present):**
+- `src/app/admin/signals/page.tsx` — Alert queue, open signals, history, manual create tabs
+- `src/app/admin/intelligence/page.tsx` — Performance matrix, postmortems, weekly reports
+- `src/app/admin/layout.tsx` — Admin sidebar + auth guard (redirects non-admins)
+- `src/middleware.ts` — Route protection for /admin, /dashboard, /api/admin/, /api/signals, /api/ml/, /api/fyers/
+- `src/lib/signal-utils.ts` — validateModification() enforces SEBI immutability rules
+- `src/lib/ml/decision-tree.ts` — Full CART decision tree (Gini impurity, trainTree, predictProba)
+- `src/lib/ml/random-forest.ts` — 50-tree ensemble with bootstrap sampling
+- `src/lib/ml/feature-extractor.ts` — 14-feature numeric vector from signal data
+- `src/lib/ml/model-store.ts` — Load/save model from Supabase ml_models table, confidence tiers
+- `supabase/migrations/001_signal_system.sql` — Complete schema (17 tables, RLS, triggers, functions)
+
+**API routes (all under src/app/api/):**
+- `/api/screener/[segment]/route.ts` — Cron: scans Fyers data, generates signal_alerts
+- `/api/signals/route.ts` — GET list (member), POST create (admin)
+- `/api/signals/[id]/route.ts` — GET detail, PATCH modify (SEBI-compliant), DELETE cancel
+- `/api/signals/check-status/route.ts` — Cron: check open signals against live prices
+- `/api/signals/expire-intraday/route.ts` — Cron: expire stale intraday signals at 3:20 PM IST
+- `/api/admin/alerts/route.ts` — GET alert queue for admin dashboard
+- `/api/admin/alerts/[id]/approve/route.ts` — POST approve alert → publish signal
+- `/api/admin/alerts/[id]/reject/route.ts` — POST reject alert
+- `/api/ml/train/route.ts` — GET train model on historical data (cron weekly)
+- `/api/ml/generate-predictions/route.ts` — GET generate predictions for all open signals (cron)
+- `/api/ml/score/[alertId]/route.ts` — GET ML score for a specific alert
+- `/api/intelligence/weekly-report/route.ts` — GET generate weekly AI report (cron)
+- `/api/distribution/process-queue/route.ts` — GET process signal_push_queue (cron every 2 min)
+- `/api/distribution/daily-recap/route.ts` — GET send daily recap to channels (cron)
+- `/api/fyers/refresh-token/route.ts` — GET refresh Fyers OAuth token (cron 8 AM IST)
+- `/api/fyers/status/route.ts` — GET Fyers connection status for admin
+- `/api/performance/route.ts` — GET public performance data (used by /performance page)
+
+**Vercel cron schedule (vercel.json):**
+- 8:55 AM IST: fyers/refresh-token
+- 9:00 AM IST: screener (intraday)
+- 9:15 AM IST: screener (stock_options, index_options)
+- 10:00 AM IST: screener (swing)
+- Every 2 min (9–4 IST): signals/check-status
+- 3:20 PM IST: signals/expire-intraday
+- Every 2 min: distribution/process-queue
+- 4:00 PM IST: distribution/daily-recap
+- 4:30 PM IST: intelligence/weekly-report
+- Sunday midnight IST: ml/train
+- Monday 7 AM IST: ml/generate-predictions
