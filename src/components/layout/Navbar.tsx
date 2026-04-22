@@ -8,11 +8,13 @@ import { Menu, X, Sun, Moon, ChevronDown } from 'lucide-react'
 
 const NAV_LINKS = [
   { label: 'Services', href: '/services' },
-  { label: 'Research', href: '/reports' },
+  { label: 'Research', href: '/research' },
   { label: 'Pricing', href: '/pricing' },
   { label: 'Courses', href: '/courses' },
-  { label: 'About', href: '/about' },
   { label: 'Blog', href: '/blog' },
+  { label: 'About', href: '/about' },
+  { label: 'FAQ', href: '/faq' },
+  { label: 'Contact', href: '/contact' },
 ]
 
 export function Navbar() {

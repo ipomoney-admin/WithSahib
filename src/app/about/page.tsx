@@ -4,7 +4,7 @@ import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 
 export const metadata: Metadata = {
-  title: 'About Sahib Singh Hora — Best SEBI RA India 2026 | withSahib',
+  title: 'About Sahib Singh Hora — Best SEBI RA India 2026',
   description:
     'Sahib Singh Hora is a SEBI Registered Research Analyst (INH000026266). Best SEBI RA India 2026 — verified stock market advisor India for intraday tips, NSE swing trades & options.',
   keywords: [
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: 'https://www.withsahib.com/about' },
   openGraph: {
-    title: 'About Sahib Singh Hora — SEBI RA INH000026266 | withSahib',
+    title: 'About Sahib Singh Hora — SEBI RA INH000026266',
     description: 'Verified stock market analyst India. SEBI Registered Research Analyst offering intraday tips, NSE swing trades, options advisory & AI stock research.',
     url: 'https://www.withsahib.com/about',
   },
@@ -61,7 +61,7 @@ export default function AboutPage() {
               <p style={{ fontSize: '11px', color: 'var(--emerald)', fontWeight: 500 }}>Valid: Apr 20, 2026 – Apr 19, 2031</p>
             </div>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', justifyContent: 'center' }}>
-              {['SEBI RA', 'NISM Certified', 'Technical Analyst', 'Options Strategist', 'Founder — withSahib'].map(tag => (
+              {['SEBI RA', 'NISM Certified', 'Technical Analyst', 'Options Strategist'].map(tag => (
                 <span key={tag} style={{ fontSize: '10px', padding: '3px 9px', borderRadius: '6px', background: 'var(--bg2)', border: '1px solid var(--border)', color: 'var(--text2)' }}>{tag}</span>
               ))}
             </div>

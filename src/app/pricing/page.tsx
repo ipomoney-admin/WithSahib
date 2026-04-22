@@ -157,11 +157,15 @@ export default function PricingPage() {
                       plan.ctaStyle === 'gold' ? 'var(--gold)' : 'var(--text2)',
                     border: plan.ctaStyle === 'primary' ? 'none' :
                       plan.ctaStyle === 'gold' ? '1px solid rgba(212,168,67,0.3)' : '1px solid var(--border)',
-                    marginBottom: '24px',
                   }}
                 >
                   {plan.cta}
                 </Link>
+                {plan.tier !== 'free' && (
+                  <p style={{ fontSize: '10px', color: 'var(--text4)', textAlign: 'center', marginTop: '8px', marginBottom: '16px' }}>
+                    Secure payment via Razorpay — launching soon
+                  </p>
+                )}
               </div>
             )
           })}

@@ -4,7 +4,7 @@ import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 
 export const metadata: Metadata = {
-  title: 'SEBI RA Services — Intraday Tips, Options, Swing Trades | withSahib',
+  title: 'SEBI RA Services — Intraday Tips, Options, Swing Trades',
   description:
     'SEBI registered research analyst services by Sahib Singh Hora (INH000026266): daily intraday tips NSE, stock market tips today, Nifty options tips, Bank Nifty tips, swing trading stocks India, AI research reports & 1-on-1 advisory.',
   keywords: [
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: 'https://www.withsahib.com/services' },
   openGraph: {
-    title: 'SEBI RA Services — Share Market Tips, Intraday Calls, Options | withSahib',
+    title: 'SEBI RA Services — Share Market Tips, Intraday Calls, Options',
     description: 'All SEBI-registered stock advisory services: daily intraday tips NSE, Nifty options, Bank Nifty calls, swing trading stocks, AI research reports.',
     url: 'https://www.withsahib.com/services',
   },

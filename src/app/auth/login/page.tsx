@@ -186,6 +186,9 @@ export default function LoginPage() {
       >
         SEBI RA · INH000026266 · Sahib Singh Hora
       </p>
+      <p style={{ marginTop: '8px', fontSize: '11px', color: 'var(--text4)', textAlign: 'center', maxWidth: '320px' }}>
+        withSahib.com is operated by Sahib Singh Hora, SEBI RA INH000026266. Investments subject to market risk.
+      </p>
     </div>
   )
 }

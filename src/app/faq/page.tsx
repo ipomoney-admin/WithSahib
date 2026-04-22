@@ -4,7 +4,7 @@ import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 
 export const metadata: Metadata = {
-  title: 'FAQ — SEBI RA INH000026266 | withSahib',
+  title: 'FAQ — SEBI RA INH000026266',
   description:
     'Comprehensive answers about SEBI Registered Research Analyst services, INH000026266, Sahib Singh Hora, intraday calls, options advisory, and Indian stock market research.',
   alternates: { canonical: 'https://www.withsahib.com/faq' },
