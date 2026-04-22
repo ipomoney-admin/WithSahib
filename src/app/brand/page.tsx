@@ -173,7 +173,7 @@ export default function BrandPage() {
                 {/* Services */}
                 <text x="255" y="100" fill="#00C896" fontFamily="system-ui" fontSize="11" fontWeight="600" textAnchor="middle" letterSpacing="3">RESEARCH ADVISORY SERVICES</text>
                 {/* Service tags */}
-                {['Intraday Calls', 'Nifty Options', 'Bank Nifty', 'Swing Trades', 'Model Portfolio', 'AI Research'].map((svc, i) => {
+                {['Intraday Picks', 'Nifty Options', 'Bank Nifty', 'Swing Trades', 'Model Portfolio', 'AI Research'].map((svc, i) => {
                   const cols = 3
                   const col = i % cols
                   const row = Math.floor(i / cols)
@@ -249,7 +249,7 @@ export default function BrandPage() {
               <text x="80" y="200" fill="#E8EDF5" fontFamily="Georgia, serif" fontSize="56" fontWeight="400">Research with clarity.</text>
               <text x="80" y="268" fill="#E8EDF5" fontFamily="Georgia, serif" fontSize="56" fontWeight="400">Trade with <tspan fill="#00C896">conviction.</tspan></text>
               {/* Subline */}
-              <text x="80" y="318" fill="#8FA8C0" fontFamily="system-ui" fontSize="20" fontWeight="300">SEBI Registered Research Analyst · Intraday Calls · Options · Swing Trades · AI Research</text>
+              <text x="80" y="318" fill="#8FA8C0" fontFamily="system-ui" fontSize="20" fontWeight="300">SEBI Registered Research Analyst · Intraday Picks · Options · Swing Trades · AI Research</text>
               {/* SEBI badge */}
               <rect x="80" y="380" width="220" height="40" rx="6" fill="rgba(212,168,67,0.1)" stroke="rgba(212,168,67,0.25)" strokeWidth="1" />
               <text x="190" y="406" fill="#D4A843" fontFamily="Courier New, monospace" fontSize="14" fontWeight="600" textAnchor="middle">SEBI RA · INH000026266</text>
@@ -281,7 +281,7 @@ export default function BrandPage() {
               <rect x="60" y="240" width="200" height="34" rx="5" fill="rgba(212,168,67,0.1)" stroke="rgba(212,168,67,0.25)" strokeWidth="1" />
               <text x="160" y="262" fill="#D4A843" fontFamily="Courier New, monospace" fontSize="13" textAnchor="middle">INH000026266</text>
               {/* Services line */}
-              <text x="60" y="330" fill="#4A6580" fontFamily="system-ui" fontSize="14">Intraday Calls  ·  Nifty Options  ·  Bank Nifty  ·  Swing Trades  ·  AI Research Reports</text>
+              <text x="60" y="330" fill="#4A6580" fontFamily="system-ui" fontSize="14">Intraday Picks  ·  Nifty Options  ·  Bank Nifty  ·  Swing Trades  ·  AI Research Reports</text>
               {/* Right */}
               <text x="1500" y="340" fill="rgba(0,200,150,0.06)" fontFamily="Georgia, serif" fontSize="200" fontWeight="700" textAnchor="end">RA</text>
             </svg>
@@ -352,7 +352,7 @@ export default function BrandPage() {
               <text x="50" y="175" fill="#8FA8C0" fontFamily="system-ui" fontSize="15">SEBI Registered Research Analyst · withSahib.com</text>
               <rect x="50" y="198" width="180" height="28" rx="5" fill="rgba(212,168,67,0.1)" stroke="rgba(212,168,67,0.25)" strokeWidth="1" />
               <text x="140" y="217" fill="#D4A843" fontFamily="Courier New, monospace" fontSize="12" textAnchor="middle">INH000026266</text>
-              <text x="50" y="268" fill="#4A6580" fontFamily="system-ui" fontSize="12">Intraday Calls · Options Signals · Swing Trades · AI Research · 1-on-1 Advisory</text>
+              <text x="50" y="268" fill="#4A6580" fontFamily="system-ui" fontSize="12">Intraday Picks · Options Signals · Swing Trades · AI Research · 1-on-1 Advisory</text>
               <text x="50" y="288" fill="#4A6580" fontFamily="system-ui" fontSize="11">sahib13singh13@gmail.com  ·  withsahib.com</text>
             </svg>
           </div>

@@ -12,33 +12,18 @@ export default function Icon() {
           width: 32,
           height: 32,
           background: '#06090F',
-          borderRadius: 6,
           display: 'flex',
-          alignItems: 'flex-end',
-          justifyContent: 'center',
-          paddingBottom: 5,
-          paddingLeft: 4,
-          paddingRight: 4,
-          gap: 3,
           position: 'relative',
         }}
       >
-        {/* Ascending bars */}
-        <div style={{ width: 5, height: 8,  background: 'rgba(0,200,150,0.45)', borderRadius: 2, marginBottom: 0 }} />
-        <div style={{ width: 5, height: 13, background: 'rgba(0,200,150,0.72)', borderRadius: 2, marginBottom: 0 }} />
-        <div style={{ width: 5, height: 19, background: '#00C896', borderRadius: 2, marginBottom: 0 }} />
-        {/* Pulse dot — top right */}
-        <div
-          style={{
-            position: 'absolute',
-            top: 5,
-            right: 5,
-            width: 5,
-            height: 5,
-            borderRadius: '50%',
-            background: '#00C896',
-          }}
-        />
+        {/* Bar 1: x=4, y=20, width=6, height=8, opacity 0.4 */}
+        <div style={{ position: 'absolute', left: 4, top: 20, width: 6, height: 8, background: '#00C896', opacity: 0.4, borderRadius: 1 }} />
+        {/* Bar 2: x=13, y=14, width=6, height=14, opacity 0.7 */}
+        <div style={{ position: 'absolute', left: 13, top: 14, width: 6, height: 14, background: '#00C896', opacity: 0.7, borderRadius: 1 }} />
+        {/* Bar 3: x=22, y=6, width=6, height=22, opacity 1.0 */}
+        <div style={{ position: 'absolute', left: 22, top: 6, width: 6, height: 22, background: '#00C896', opacity: 1, borderRadius: 1 }} />
+        {/* Dot: cx=28, cy=6, r=2.5 */}
+        <div style={{ position: 'absolute', left: 25.5, top: 3.5, width: 5, height: 5, borderRadius: '50%', background: '#00C896' }} />
       </div>
     ),
     { ...size }

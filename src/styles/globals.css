@@ -296,7 +296,7 @@ body {
 }
 .ticker-wrap { overflow: hidden; }
 .ticker-wrap:hover .ticker-inner { animation-play-state: paused; }
-.ticker-inner { display: flex; gap: 48px; animation: ticker 40s linear infinite; width: max-content; }
+.ticker-inner { display: flex; gap: 48px; animation: ticker 60s linear infinite; width: max-content; align-items: center; }
 
 /* ─── SERVICE CARDS ──────────────────────────────────────────────────── */
 .svc-card { border: 1px solid var(--border); border-radius: 16px; background: var(--surface); }

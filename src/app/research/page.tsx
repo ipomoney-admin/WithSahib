@@ -164,7 +164,7 @@ export default function ResearchPage() {
         <h2 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 36, fontWeight: 400, color: 'var(--text)', marginBottom: 16 }}>
           Start reading full reports
         </h2>
-        <p style={{ fontSize: 16, color: 'var(--text2)', marginBottom: 32 }}>Pro plan — ₹2,499/month. Includes all AI research reports, intraday calls, and options picks.</p>
+        <p style={{ fontSize: 16, color: 'var(--text2)', marginBottom: 32 }}>Pro plan — ₹2,499/month. Includes all AI research reports, intraday picks, and options picks.</p>
         <Link href="/pricing" style={{ padding: '14px 36px', background: 'var(--emerald)', color: '#031A13', borderRadius: 12, fontWeight: 700, fontSize: 15, textDecoration: 'none' }}>
           View Pricing
         </Link>

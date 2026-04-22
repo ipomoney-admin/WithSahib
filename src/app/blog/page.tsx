@@ -5,18 +5,18 @@ import { Footer } from '@/components/layout/Footer'
 import { POSTS, type Post } from '@/lib/data/posts'
 
 export const metadata: Metadata = {
-  title: 'Blog — SEBI RA Research, Intraday Calls & Trading Insights',
+  title: 'Blog — SEBI RA Research, Intraday Picks & Trading Insights',
   description:
-    'In-depth articles on SEBI registered analyst services, intraday calls NSE, Nifty options signals, Bank Nifty calls, swing trading stocks India — by Sahib Singh Hora, SEBI RA INH000026266.',
+    'In-depth articles on SEBI registered analyst services, intraday picks NSE, Nifty options signals, Bank Nifty calls, swing trading stocks India — by Sahib Singh Hora, SEBI RA INH000026266.',
   keywords: [
-    'market intelligence', 'intraday calls', 'NSE calls', 'SEBI registered analyst',
+    'market intelligence', 'intraday picks', 'NSE picks', 'SEBI registered analyst',
     'research analyst India', 'options trading signals', 'Nifty options signals today',
     'Bank Nifty signals', 'swing trading stocks', 'SEBI RA', 'INH000026266',
   ],
   alternates: { canonical: 'https://www.withsahib.com/blog' },
   openGraph: {
     title: 'Blog — SEBI RA Stock Market Research',
-    description: 'Intraday tips, options strategies, swing trading and SEBI compliance articles by Sahib Singh Hora (INH000026266).',
+    description: 'Intraday picks, options strategies, swing trading and SEBI compliance articles by Sahib Singh Hora (INH000026266).',
     url: 'https://www.withsahib.com/blog',
   },
 }
@@ -25,7 +25,7 @@ const blogListSchema = {
   '@context': 'https://schema.org',
   '@type': 'Blog',
   name: 'withSahib Blog',
-  description: 'Stock market research, intraday calls, and trading insights by SEBI RA Sahib Singh Hora',
+  description: 'Stock market research, intraday picks, and trading insights by SEBI RA Sahib Singh Hora',
   url: 'https://www.withsahib.com/blog',
   author: {
     '@type': 'Person',

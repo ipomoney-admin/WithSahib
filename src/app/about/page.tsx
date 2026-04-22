@@ -6,7 +6,7 @@ import { Footer } from '@/components/layout/Footer'
 export const metadata: Metadata = {
   title: 'About Sahib Singh Hora — Best SEBI RA India 2026',
   description:
-    'Sahib Singh Hora is a SEBI Registered Research Analyst (INH000026266). Best SEBI RA India 2026 — verified stock market advisor India for intraday calls, NSE swing trades & options.',
+    'Sahib Singh Hora is a SEBI Registered Research Analyst (INH000026266). Best SEBI RA India 2026 — verified stock market advisor India for intraday picks, NSE swing trades & options.',
   keywords: [
     'Sahib Singh Hora',
     'SEBI registered research analyst',
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   alternates: { canonical: 'https://www.withsahib.com/about' },
   openGraph: {
     title: 'About Sahib Singh Hora — SEBI RA INH000026266',
-    description: 'Verified stock market analyst India. SEBI Registered Research Analyst offering intraday calls, NSE swing trades, options advisory & AI stock research.',
+    description: 'Verified stock market analyst India. SEBI Registered Research Analyst offering intraday picks, NSE swing trades, options advisory & AI stock research.',
     url: 'https://www.withsahib.com/about',
   },
 }
@@ -100,7 +100,7 @@ export default function AboutPage() {
             Why I built <em style={{ color: 'var(--emerald)', fontStyle: 'italic' }}>withSahib</em>
           </h2>
           <p style={{ fontSize: '16px', color: 'var(--text)', lineHeight: 1.8, marginBottom: '20px', fontWeight: 400 }}>
-            The Indian stock market is drowning in noise. Telegram channels selling intraday calls with no accountability.
+            The Indian stock market is drowning in noise. Telegram channels selling intraday picks with no accountability.
             YouTube &quot;analysts&quot; calling themselves research analysts without SEBI registration. Unverified tipsters
             running paid stock advisory services with zero regulatory oversight.
           </p>
@@ -111,7 +111,7 @@ export default function AboutPage() {
           </p>
           <p style={{ fontSize: '16px', color: 'var(--text2)', lineHeight: 1.8, marginBottom: '20px', fontWeight: 300 }}>
             withSahib.com combines systematic technical analysis with AI-powered research to deliver the best stock
-            tips in India — not because of hype, but because of methodology. Every intraday call has a stop-loss.
+            picks in India — not because of hype, but because of methodology. Every intraday call has a stop-loss.
             Every swing trade has a rationale. Every options tip has a risk framework.
           </p>
           <p style={{ fontSize: '16px', color: 'var(--text2)', lineHeight: 1.8, fontWeight: 300 }}>
@@ -131,9 +131,9 @@ export default function AboutPage() {
           </h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             {[
-              { title: 'Intraday Calls NSE', desc: 'Daily pre-market market intelligence — best stock to buy today with entry, target & SL. Available to Pro & Elite subscribers.', href: '/services/intraday' },
+              { title: 'Intraday Picks NSE', desc: 'Daily pre-market market intelligence — best stock to buy today with entry, target & SL. Available to Pro & Elite subscribers.', href: '/services/intraday' },
               { title: 'Nifty & Bank Nifty Options Signals', desc: 'Index options calls using OI analysis and PCR-based signals. Options trading signals with defined risk setups.', href: '/services' },
-              { title: 'Swing Trading Stocks India', desc: '2–10 day positional trade ideas — NSE calls for swing traders. 3–5 picks per week with full technical rationale.', href: '/services' },
+              { title: 'Swing Trading Stocks India', desc: '2–10 day positional trade ideas — NSE picks for swing traders. 3–5 picks per week with full technical rationale.', href: '/services' },
               { title: 'AI Research Reports', desc: 'Automated stock research reports India — DCF models and earnings analysis generated on BSE/NSE filings.', href: '/reports' },
               { title: 'Model Portfolio', desc: 'SEBI RA-curated long-term portfolio of best stocks to buy — quarterly rebalanced with published reasoning.', href: '/services' },
               { title: '1-on-1 Advisory Sessions', desc: 'Book a personal session with a verified stock market advisor India. Portfolio review or strategy deep-dive.', href: '/appointments' },
@@ -185,7 +185,7 @@ export default function AboutPage() {
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
             {[
               { href: '/pricing', label: 'Subscription Plans & Fees' },
-              { href: '/services/intraday', label: 'Intraday Calls NSE' },
+              { href: '/services/intraday', label: 'Intraday Picks NSE' },
               { href: '/reports', label: 'AI Research Reports' },
               { href: '/appointments', label: 'Book Advisory Session' },
               { href: '/faq', label: 'SEBI RA FAQ' },

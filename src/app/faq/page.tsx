@@ -6,7 +6,7 @@ import { Footer } from '@/components/layout/Footer'
 export const metadata: Metadata = {
   title: 'FAQ — SEBI RA INH000026266',
   description:
-    'Comprehensive answers about SEBI Registered Research Analyst services, INH000026266, Sahib Singh Hora, intraday calls, options advisory, and Indian stock market research.',
+    'Comprehensive answers about SEBI Registered Research Analyst services, INH000026266, Sahib Singh Hora, intraday picks, options advisory, and Indian stock market research.',
   alternates: { canonical: 'https://www.withsahib.com/faq' },
   openGraph: {
     title: 'FAQ — SEBI Research Analyst withSahib | INH000026266',
@@ -47,7 +47,7 @@ const FAQ_SECTIONS = [
     items: [
       {
         q: 'Who is Sahib Singh Hora?',
-        a: 'Sahib Singh Hora is a SEBI Registered Research Analyst (INH000026266). He provides institutional-grade technical analysis, intraday calls, swing trades, options strategies, and AI-powered research reports through withSahib.com. He is NISM certified and operates fully under SEBI\'s regulatory framework.',
+        a: 'Sahib Singh Hora is a SEBI Registered Research Analyst (INH000026266). He provides institutional-grade technical analysis, intraday picks, swing trades, options strategies, and AI-powered research reports through withSahib.com. He is NISM certified and operates fully under SEBI\'s regulatory framework.',
       },
       {
         q: 'What is the SEBI registration number INH000026266?',
@@ -63,7 +63,7 @@ const FAQ_SECTIONS = [
       },
       {
         q: 'What is withSahib.com?',
-        a: 'withSahib.com is the personal research platform of Sahib Singh Hora, SEBI Registered Research Analyst (INH000026266). It publishes research on NSE-listed equities, options, and indices — including daily intraday calls, swing trade picks, and AI-powered research reports.',
+        a: 'withSahib.com is the personal research platform of Sahib Singh Hora, SEBI Registered Research Analyst (INH000026266). It publishes research on NSE-listed equities, options, and indices — including daily intraday picks, swing trade picks, and AI-powered research reports.',
       },
     ],
   },
@@ -72,7 +72,7 @@ const FAQ_SECTIONS = [
     items: [
       {
         q: 'What intraday stock calls does withSahib provide?',
-        a: 'withSahib publishes daily intraday calls for NSE-listed equities before 9 AM on every trading day. Each call includes: stock name, recommended entry range, target price(s), and stop-loss level. Calls are based on technical analysis including price action, volume, momentum indicators, and multi-timeframe analysis.',
+        a: 'withSahib publishes daily intraday picks for NSE-listed equities before 9 AM on every trading day. Each call includes: stock name, recommended entry range, target price(s), and stop-loss level. Calls are based on technical analysis including price action, volume, momentum indicators, and multi-timeframe analysis.',
       },
       {
         q: 'What types of options calls does withSahib offer?',
@@ -105,7 +105,7 @@ const FAQ_SECTIONS = [
     items: [
       {
         q: 'What are the subscription plans on withSahib?',
-        a: 'There are 4 plans: Free (₹0/month) — signal previews and market data; Basic (₹999/month) — swing trades, model portfolio, weekly outlook; Pro (₹2,499/month) — daily intraday calls, options picks, AI reports, 1 session/month; Elite (₹5,999/month) — everything in Pro plus unlimited sessions, priority WhatsApp alerts, all courses, and HNI research. Annual billing saves 20%.',
+        a: 'There are 4 plans: Free (₹0/month) — signal previews and market data; Basic (₹999/month) — swing trades, model portfolio, weekly outlook; Pro (₹2,499/month) — daily intraday picks, options picks, AI reports, 1 session/month; Elite (₹5,999/month) — everything in Pro plus unlimited sessions, priority WhatsApp alerts, all courses, and HNI research. Annual billing saves 20%.',
       },
       {
         q: 'Is there a free plan available?',

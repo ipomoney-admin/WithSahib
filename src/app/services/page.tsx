@@ -4,20 +4,20 @@ import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 
 export const metadata: Metadata = {
-  title: 'SEBI RA Services — Intraday Calls, Options, Swing Trades',
+  title: 'SEBI RA Services — Intraday Picks, Options, Swing Trades',
   description:
-    'SEBI registered research analyst services by Sahib Singh Hora (INH000026266): daily intraday calls NSE, market signals today, Nifty options signals, Bank Nifty signals, swing trading stocks India, AI research reports & 1-on-1 advisory.',
+    'SEBI registered research analyst services by Sahib Singh Hora (INH000026266): daily intraday picks NSE, market signals today, Nifty options signals, Bank Nifty signals, swing trading stocks India, AI research reports & 1-on-1 advisory.',
   keywords: [
     'market intelligence',
     'market signals today',
-    'intraday calls',
-    'NSE calls',
+    'intraday picks',
+    'NSE picks',
     'best stock to buy today',
     'Nifty prediction today',
     'SEBI registered analyst',
     'research analyst India',
     'stock picks free',
-    'intraday calls NSE',
+    'intraday picks NSE',
     'options trading signals',
     'Nifty options signals today',
     'Bank Nifty signals',
@@ -29,13 +29,13 @@ export const metadata: Metadata = {
     'Sahib Singh Hora',
     'paid stock advisory India',
     'stock market subscription India',
-    'intraday calls with accuracy',
+    'intraday picks with accuracy',
     'verified stock market analyst',
   ],
   alternates: { canonical: 'https://www.withsahib.com/services' },
   openGraph: {
-    title: 'SEBI RA Services — Market Intelligence, Intraday Calls, Options',
-    description: 'All SEBI-registered stock advisory services: daily intraday calls NSE, Nifty options, Bank Nifty calls, swing trading stocks, AI research reports.',
+    title: 'SEBI RA Services — Market Intelligence, Intraday Picks, Options',
+    description: 'All SEBI-registered stock advisory services: daily intraday picks NSE, Nifty options, Bank Nifty calls, swing trading stocks, AI research reports.',
     url: 'https://www.withsahib.com/services',
   },
 }
@@ -43,8 +43,8 @@ export const metadata: Metadata = {
 const SERVICES_DETAIL = [
   {
     id: 'intraday',
-    title: 'Intraday Calls NSE',
-    keywords: 'intraday calls · market intelligence · best stock to buy today · NSE calls',
+    title: 'Intraday Picks NSE',
+    keywords: 'intraday picks · market intelligence · best stock to buy today · NSE picks',
     badge: 'Daily · Pro Plan',
     badgeColor: '#00C896',
     desc: 'Get SEBI-verified intraday stock calls for NSE equities every trading day before 9 AM. Each call includes the stock symbol, entry range, target price(s), and stop-loss level — calculated using multi-timeframe technical analysis, volume profile, and momentum indicators.',
@@ -57,7 +57,7 @@ const SERVICES_DETAIL = [
     ],
     why: 'Unlike anonymous Telegram tipsters, every intraday call from withSahib comes with the SEBI registration number INH000026266 — legally accountable, publicly verifiable.',
     href: '/services/intraday',
-    cta: 'See Intraday Calls →',
+    cta: 'See Intraday Picks →',
   },
   {
     id: 'options',
@@ -180,14 +180,14 @@ export default function ServicesPage() {
             <em style={{ color: 'var(--emerald)', fontStyle: 'italic' }}>research services</em>
           </h1>
           <p style={{ fontSize: 18, color: 'var(--text2)', lineHeight: 1.7, maxWidth: 600, marginBottom: 32 }}>
-            SEBI-verified intraday calls NSE, Nifty options signals today, Bank Nifty calls, swing trading stocks,
+            SEBI-verified intraday picks NSE, Nifty options signals today, Bank Nifty calls, swing trading stocks,
             and AI research — all under one SEBI registered research analyst platform.
           </p>
 
           {/* Quick keyword links */}
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
             {[
-              { label: 'Intraday Calls', href: '#intraday' },
+              { label: 'Intraday Picks', href: '#intraday' },
               { label: 'Options Calls', href: '#options' },
               { label: 'Swing Trades', href: '#swing' },
               { label: 'Model Portfolio', href: '#portfolio' },

@@ -125,7 +125,7 @@ export default function IntradayPage() {
       <div style={{ marginBottom: '28px' }}>
         <div className="section-tag">Intraday</div>
         <h1 style={{ fontFamily: 'DM Serif Display, serif', fontSize: '32px', fontWeight: 400, color: 'var(--text)', marginBottom: '8px' }}>
-          Intraday Calls
+          Intraday Picks
         </h1>
         <p style={{ fontSize: '14px', color: 'var(--text2)', lineHeight: 1.6 }}>
           Pre-market buy/sell levels with entry range, targets, and stop-loss. Published by 9:00 AM every trading day.
@@ -139,7 +139,7 @@ export default function IntradayPage() {
         <div style={{ padding: '20px 24px', background: 'rgba(0,200,150,0.04)', border: '1px solid rgba(0,200,150,0.15)', borderRadius: '14px', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
           <Crown size={22} color="var(--gold)" style={{ flexShrink: 0 }} />
           <div style={{ flex: 1 }}>
-            <p style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text)', marginBottom: '3px' }}>Pro plan required for live intraday calls</p>
+            <p style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text)', marginBottom: '3px' }}>Pro plan required for live intraday picks</p>
             <p style={{ fontSize: '13px', color: 'var(--text3)' }}>Showing blurred preview. Upgrade to Pro (₹2,499/mo) for real-time access.</p>
           </div>
           <Link href="/pricing?tier=pro" className="btn btn-primary btn-sm" style={{ textDecoration: 'none', flexShrink: 0 }}>
@@ -198,7 +198,7 @@ export default function IntradayPage() {
       {/* Disclaimer */}
       <div className="sebi-disclaimer" style={{ marginTop: '32px' }}>
         <strong style={{ color: 'var(--gold)' }}>Disclaimer: </strong>
-        All intraday calls are published by Sahib Singh Hora, SEBI Registered Research Analyst (INH000026266).
+        All intraday picks are published by Sahib Singh Hora, SEBI Registered Research Analyst (INH000026266).
         These are for informational purposes only and not investment advice. Intraday trading involves significant risk.
         Please read all risk disclosures. Investments are subject to market risk.
       </div>

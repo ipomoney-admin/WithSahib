@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useTheme } from './ThemeProvider'
 import { Menu, X, Sun, Moon, ChevronDown } from 'lucide-react'
-import { Logo } from '@/components/ui/Logo'
+import { AnimatedLogo } from '@/components/ui/AnimatedLogo'
 
 const NAV_LINKS = [
   { label: 'Services', href: '/services' },
@@ -58,7 +58,7 @@ export function Navbar() {
       >
         {/* Logo */}
         <Link href="/" style={{ textDecoration: 'none' }}>
-          <Logo size={28} showWordmark animated />
+          <AnimatedLogo />
         </Link>
 
         {/* Desktop Links */}

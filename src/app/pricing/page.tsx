@@ -47,10 +47,10 @@ export default function PricingPage() {
 
   // Basic: 8% off, Pro: 12% off, Elite: 15% off
   const plans = [
-    { tier: 'free',  name: 'Free',  monthly: 0,    yearlyMonthly: 0,    yearlyTotal: 0,     discount: 0,  color: 'var(--text3)',    cta: 'Start Free',  ctaStyle: 'ghost'   },
-    { tier: 'basic', name: 'Basic', monthly: 999,  yearlyMonthly: 919,  yearlyTotal: 11029, discount: 8,  color: 'var(--sapphire)', cta: 'Start Basic', ctaStyle: 'ghost'   },
-    { tier: 'pro',   name: 'Pro',   monthly: 2499, yearlyMonthly: 2199, yearlyTotal: 26390, discount: 12, color: 'var(--emerald)',  cta: 'Start Pro',   ctaStyle: 'primary', featured: true },
-    { tier: 'elite', name: 'Elite', monthly: 5999, yearlyMonthly: 5099, yearlyTotal: 61190, discount: 15, color: 'var(--gold)',     cta: 'Go Elite',    ctaStyle: 'gold'    },
+    { tier: 'free',  name: 'Free',  monthly: 0,    yearlyMonthly: 0,    yearlyTotal: 0,     discount: 0,  color: 'var(--text3)',    cta: 'Start Free',  ctaStyle: 'ghost',   badgeColor: 'grey'    },
+    { tier: 'basic', name: 'Basic', monthly: 999,  yearlyMonthly: 919,  yearlyTotal: 11029, discount: 8,  color: 'var(--sapphire)', cta: 'Start Basic', ctaStyle: 'ghost',   badgeColor: 'grey'    },
+    { tier: 'pro',   name: 'Pro',   monthly: 2499, yearlyMonthly: 2199, yearlyTotal: 26390, discount: 12, color: 'var(--emerald)',  cta: 'Start Pro',   ctaStyle: 'primary', featured: true, badgeColor: 'emerald' },
+    { tier: 'elite', name: 'Elite', monthly: 5999, yearlyMonthly: 5099, yearlyTotal: 61190, discount: 15, color: 'var(--gold)',     cta: 'Go Elite',    ctaStyle: 'gold',    badgeColor: 'gold'    },
   ]
 
   return (
@@ -128,8 +128,13 @@ export default function PricingPage() {
                     {plan.name}
                   </div>
                   {billing === 'yearly' && plan.discount > 0 && (
-                    <span style={{ fontSize: '10px', fontWeight: 700, padding: '2px 7px', borderRadius: '4px', background: 'rgba(0,200,150,0.1)', color: 'var(--emerald)', border: '1px solid rgba(0,200,150,0.2)' }}>
-                      SAVE {plan.discount}%
+                    <span style={{
+                      fontSize: '10px', fontWeight: 700, padding: '2px 7px', borderRadius: '4px',
+                      background: plan.badgeColor === 'gold' ? 'rgba(212,168,67,0.12)' : plan.badgeColor === 'emerald' ? 'rgba(0,200,150,0.1)' : 'rgba(148,163,184,0.1)',
+                      color: plan.badgeColor === 'gold' ? 'var(--gold)' : plan.badgeColor === 'emerald' ? 'var(--emerald)' : 'var(--text3)',
+                      border: plan.badgeColor === 'gold' ? '1px solid rgba(212,168,67,0.25)' : plan.badgeColor === 'emerald' ? '1px solid rgba(0,200,150,0.2)' : '1px solid rgba(148,163,184,0.2)',
+                    }}>
+                      Save {plan.discount}%
                     </span>
                   )}
                 </div>
