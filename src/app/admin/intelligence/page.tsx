@@ -1,13 +1,39 @@
-'use client'
+import { Metadata } from 'next'
+import { redirect } from 'next/navigation'
+import { createServerComponentClient, createServiceRoleClient } from '@/lib/supabase/server'
+import { isAdmin } from '@/lib/admin-check'
+import { Brain, TrendingUp, TrendingDown, FileText, AlertTriangle, CheckCircle } from 'lucide-react'
 
-import { useState, useEffect } from 'react'
-import { createClient } from '@/lib/supabase/client'
-import { Brain, TrendingUp, TrendingDown, AlertTriangle, CheckCircle } from 'lucide-react'
+export const dynamic = 'force-dynamic'
 
-type Tab = 'performance' | 'postmortems' | 'reports'
-type SubTab = 'date' | 'week' | 'symbol' | 'condition'
+export const metadata: Metadata = {
+  title: 'Intelligence | Admin — withSahib',
+}
 
-interface PerformanceRow {
+const SEGMENT_LABELS: Record<string, string> = {
+  intraday: 'Intraday',
+  stock_options: 'Stock Options',
+  index_options: 'Index Options',
+  swing: 'Swing',
+}
+
+const SEGMENT_COLORS: Record<string, string> = {
+  intraday: '#00C896',
+  stock_options: '#D4A843',
+  index_options: '#3B82F6',
+  swing: '#8B5CF6',
+}
+
+const FAILURE_COLORS: Record<string, string> = {
+  macro_event: '#EF4444',
+  pattern_failure: '#D4A843',
+  timing: '#3B82F6',
+  liquidity: '#8B5CF6',
+  news_driven: '#F97316',
+  black_swan: '#DC2626',
+}
+
+interface PerfRow {
   month: number
   year: number
   segment?: string
@@ -23,14 +49,21 @@ interface PerformanceRow {
   avg_rr_achieved: number
 }
 
+interface MLModel {
+  id: string
+  segment?: string
+  model_type: string
+  accuracy?: number
+  train_samples?: number
+  is_active: boolean
+  created_at: string
+}
+
 interface Postmortem {
   id: string
   signal_id: string
   failure_type: string
   primary_miss: string
-  secondary_miss?: string
-  pattern_detected?: string
-  similar_winning_signals: unknown[]
   reviewed_by_sahib: boolean
   sahib_notes?: string
   created_at: string
@@ -39,465 +72,385 @@ interface Postmortem {
 
 interface Report {
   id: string
+  report_type: string
   week_number?: number
   month?: number
   year?: number
-  report_type: string
-  report_data: Record<string, unknown>
   key_insights: string[]
-  recommendations: string[]
   generated_at: string
+  delivery_status?: string
 }
 
-interface SignalRow {
-  id: string
-  scrip: string
-  segment: string
-  status: string
-  published_at: string
-  rr_ratio?: number
-  actual_rr_achieved?: number
-}
+export default async function AdminIntelligencePage() {
+  const authClient = createServerComponentClient()
+  const { data: { user } } = await authClient.auth.getUser()
+  if (!user) redirect('/auth/login')
+  if (!(await isAdmin(user.id))) redirect('/auth/login')
 
-function SegmentColors(segment: string): string {
-  const m: Record<string, string> = {
-    intraday: '#00C896',
-    stock_options: '#D4A843',
-    index_options: '#3B82F6',
-    swing: '#8B5CF6',
-    all: 'var(--text2)',
-  }
-  return m[segment] ?? 'var(--text2)'
-}
+  const supabase = createServiceRoleClient()
 
-function WinRateBar({ rate, label }: { rate: number; label: string }) {
-  const color = rate >= 65 ? '#00C896' : rate >= 50 ? '#D4A843' : '#EF4444'
-  return (
-    <div style={{ marginBottom: 10 }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4, fontSize: 12 }}>
-        <span style={{ color: 'var(--text2)' }}>{label}</span>
-        <span style={{ color, fontWeight: 700 }}>{rate.toFixed(1)}%</span>
-      </div>
-      <div style={{ height: 8, background: 'var(--border)', borderRadius: 4, overflow: 'hidden' }}>
-        <div style={{ height: '100%', width: `${rate}%`, background: color, borderRadius: 4, transition: 'width 0.6s' }} />
-      </div>
-    </div>
+  const sixMonthsAgo = new Date()
+  sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6)
+
+  const [perfRes, mlRes, postmortemsRes, reportsRes] = await Promise.all([
+    supabase
+      .from('performance_summary')
+      .select('month, year, segment, total_calls, t1_hit, t2_hit, t3_hit, sl_hit, expired, cancelled, win_rate, avg_rr_promised, avg_rr_achieved')
+      .gte('year', sixMonthsAgo.getFullYear())
+      .order('year', { ascending: false })
+      .order('month', { ascending: false })
+      .limit(60),
+    supabase
+      .from('ml_models')
+      .select('id, segment, model_type, accuracy, train_samples, is_active, created_at')
+      .eq('is_active', true)
+      .order('created_at', { ascending: false })
+      .limit(10),
+    supabase
+      .from('signal_postmortems')
+      .select('id, signal_id, failure_type, primary_miss, reviewed_by_sahib, sahib_notes, created_at, signals(scrip, segment, published_at)')
+      .order('created_at', { ascending: false })
+      .limit(10),
+    supabase
+      .from('intelligence_reports')
+      .select('id, report_type, week_number, month, year, key_insights, generated_at, delivery_status')
+      .order('generated_at', { ascending: false })
+      .limit(5),
+  ])
+
+  const perfRows: PerfRow[] = perfRes.data ?? []
+  const mlModels: MLModel[] = mlRes.data ?? []
+  const postmortems: Postmortem[] = ((postmortemsRes.data as unknown) as Postmortem[]) ?? []
+  const reports: Report[] = reportsRes.data ?? []
+
+  // Overall: aggregate all rows
+  const overall = perfRows.reduce(
+    (acc, r) => {
+      acc.total_calls += r.total_calls ?? 0
+      acc.t1_hit += r.t1_hit ?? 0
+      acc.t2_hit += r.t2_hit ?? 0
+      acc.t3_hit += r.t3_hit ?? 0
+      acc.sl_hit += r.sl_hit ?? 0
+      return acc
+    },
+    { total_calls: 0, t1_hit: 0, t2_hit: 0, t3_hit: 0, sl_hit: 0 }
   )
-}
+  const overallWins = overall.t1_hit + overall.t2_hit + overall.t3_hit
+  const overallWR = overall.total_calls > 0
+    ? ((overallWins / (overallWins + overall.sl_hit)) * 100)
+    : 0
 
-function KpiCard({ label, value, delta, color }: { label: string; value: string | number; delta?: string; color?: string }) {
-  return (
-    <div style={{
-      background: 'var(--surface)', border: '1px solid var(--border)',
-      borderRadius: 12, padding: '16px 20px',
-    }}>
-      <div style={{ fontSize: 11, color: 'var(--text3)', marginBottom: 4 }}>{label}</div>
-      <div style={{ fontSize: 24, fontWeight: 700, color: color ?? 'var(--text)' }}>{value}</div>
-      {delta && <div style={{ fontSize: 11, color: 'var(--text3)', marginTop: 4 }}>{delta}</div>}
-    </div>
-  )
-}
-
-function SymbolTable({ signals }: { signals: SignalRow[] }) {
-  const [sort, setSort] = useState<{ key: string; dir: 'asc' | 'desc' }>({ key: 'win_rate', dir: 'desc' })
-  const [selectedSymbol, setSelectedSymbol] = useState<string | null>(null)
-
-  const symbolMap = new Map<string, { total: number; wins: number; losses: number; avgRR: number; rrVals: number[] }>()
-  signals.forEach((s) => {
-    if (!symbolMap.has(s.scrip)) symbolMap.set(s.scrip, { total: 0, wins: 0, losses: 0, avgRR: 0, rrVals: [] })
-    const d = symbolMap.get(s.scrip)!
-    d.total++
-    if (['t1_hit', 't2_hit', 't3_hit'].includes(s.status)) d.wins++
-    if (s.status === 'sl_hit') d.losses++
-    if (s.rr_ratio) d.rrVals.push(s.rr_ratio)
+  // Latest month per segment
+  const latestBySegment = (['intraday', 'stock_options', 'index_options', 'swing'] as const).map((seg) => {
+    const rows = perfRows.filter((r) => r.segment === seg)
+    return rows[0] ?? null
   })
 
-  const rows = Array.from(symbolMap.entries()).map(([symbol, d]) => ({
-    symbol,
-    total: d.total,
-    win_rate: d.total > 0 ? Number(((d.wins / d.total) * 100).toFixed(1)) : 0,
-    wins: d.wins,
-    losses: d.losses,
-    avg_rr: d.rrVals.length > 0 ? Number((d.rrVals.reduce((a, b) => a + b, 0) / d.rrVals.length).toFixed(2)) : 0,
-  }))
-
-  const sorted = [...rows].sort((a, b) => {
-    const va = (a as Record<string, unknown>)[sort.key] as number
-    const vb = (b as Record<string, unknown>)[sort.key] as number
-    return sort.dir === 'asc' ? va - vb : vb - va
-  })
-
-  const Th = ({ k, label }: { k: string; label: string }) => (
-    <th
-      onClick={() => setSort(sort.key === k ? { key: k, dir: sort.dir === 'asc' ? 'desc' : 'asc' } : { key: k, dir: 'desc' })}
-      style={{ padding: '10px 14px', textAlign: 'left', fontSize: 11, color: 'var(--text3)', fontWeight: 600, cursor: 'pointer', userSelect: 'none', borderBottom: '1px solid var(--border)' }}
-    >
-      {label} {sort.key === k ? (sort.dir === 'desc' ? '↓' : '↑') : ''}
-    </th>
-  )
-
   return (
-    <div>
-      <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-        <thead>
-          <tr style={{ background: 'var(--surface)' }}>
-            <Th k="symbol" label="Symbol" />
-            <Th k="total" label="Total Calls" />
-            <Th k="win_rate" label="Win %" />
-            <Th k="avg_rr" label="Avg R:R" />
-          </tr>
-        </thead>
-        <tbody>
-          {sorted.map((row) => {
-            const color = row.win_rate >= 65 ? '#00C896' : row.win_rate >= 50 ? '#D4A843' : '#EF4444'
-            return (
-              <tr
-                key={row.symbol}
-                onClick={() => setSelectedSymbol(row.symbol)}
-                style={{ borderBottom: '1px solid rgba(26,35,51,0.5)', cursor: 'pointer' }}
-              >
-                <td style={{ padding: '12px 14px', fontWeight: 600, color: 'var(--text)' }}>{row.symbol}</td>
-                <td style={{ padding: '12px 14px', color: 'var(--text2)' }}>{row.total}</td>
-                <td style={{ padding: '12px 14px' }}>
-                  <span style={{ color, fontWeight: 700 }}>{row.win_rate}%</span>
-                  <span style={{ fontSize: 10, color: 'var(--text3)', marginLeft: 6 }}>{row.wins}W/{row.losses}L</span>
-                </td>
-                <td style={{ padding: '12px 14px', color: 'var(--text2)' }}>{row.avg_rr}x</td>
-              </tr>
-            )
-          })}
-        </tbody>
-      </table>
-    </div>
-  )
-}
-
-export default function IntelligencePage() {
-  const [tab, setTab] = useState<Tab>('performance')
-  const [subTab, setSubTab] = useState<SubTab>('symbol')
-  const [performance, setPerformance] = useState<PerformanceRow[]>([])
-  const [postmortems, setPostmortems] = useState<Postmortem[]>([])
-  const [reports, setReports] = useState<Report[]>([])
-  const [signals, setSignals] = useState<SignalRow[]>([])
-  const [loading, setLoading] = useState(true)
-  const [pmFilter, setPmFilter] = useState<string>('all')
-  const [noteId, setNoteId] = useState<string | null>(null)
-  const [noteText, setNoteText] = useState('')
-  const supabase = createClient()
-
-  useEffect(() => {
-    async function load() {
-      const [perfRes, signalsRes] = await Promise.all([
-        supabase.from('performance_summary').select('*').order('year', { ascending: false }).order('month', { ascending: false }),
-        supabase.from('signals').select('id, scrip, segment, status, published_at, rr_ratio, actual_rr_achieved').not('status', 'in', '("open","cancelled")').order('published_at', { ascending: false }).limit(500),
-      ])
-      setPerformance(perfRes.data ?? [])
-      setSignals(signalsRes.data ?? [])
-
-      const [pmRes, reportsRes] = await Promise.all([
-        supabase.from('signal_postmortems').select('*, signals(scrip, segment, published_at)').order('created_at', { ascending: false }).limit(100),
-        supabase.from('intelligence_reports').select('*').order('generated_at', { ascending: false }).limit(20),
-      ])
-      setPostmortems(pmRes.data ?? [])
-      setReports(reportsRes.data ?? [])
-      setLoading(false)
-    }
-    load()
-  }, [])
-
-  const now = new Date()
-  const month = now.getMonth() + 1
-  const year = now.getFullYear()
-  const thisMonth = performance.find((p) => p.month === month && p.year === year && !p.segment)
-  const lastMonth = performance.find((p) => {
-    const lm = month === 1 ? 12 : month - 1
-    const ly = month === 1 ? year - 1 : year
-    return p.month === lm && p.year === ly && !p.segment
-  })
-
-  const bySegment = performance.filter((p) => p.month === month && p.year === year && p.segment)
-
-  const SEGMENTS = ['intraday', 'stock_options', 'index_options', 'swing']
-  const vixBuckets = [
-    { label: '<12', min: 0, max: 12 },
-    { label: '12-15', min: 12, max: 15 },
-    { label: '15-18', min: 15, max: 18 },
-    { label: '18-22', min: 18, max: 22 },
-    { label: '>22', min: 22, max: 999 },
-  ]
-
-  const filteredPm = pmFilter === 'all' ? postmortems : postmortems.filter((p) => p.failure_type === pmFilter)
-
-  async function saveNote(pmId: string) {
-    await supabase.from('signal_postmortems').update({ sahib_notes: noteText, reviewed_by_sahib: true }).eq('id', pmId)
-    setPostmortems((prev) => prev.map((p) => p.id === pmId ? { ...p, sahib_notes: noteText, reviewed_by_sahib: true } : p))
-    setNoteId(null)
-    setNoteText('')
-  }
-
-  async function markBlackSwan(pmId: string, signalId: string) {
-    if (!confirm('Mark as Black Swan? This will exclude it from ML training.')) return
-    await Promise.all([
-      supabase.from('signals').update({ is_black_swan: true }).eq('id', signalId),
-      supabase.from('signal_features').update({ is_black_swan: true }).eq('signal_id', signalId),
-    ])
-    setPostmortems((prev) => prev.filter((p) => p.id !== pmId))
-  }
-
-  const TABS: Array<{ id: Tab; label: string }> = [
-    { id: 'performance', label: 'Performance Matrix' },
-    { id: 'postmortems', label: 'ML Postmortems' },
-    { id: 'reports', label: 'Weekly Reports' },
-  ]
-
-  return (
-    <div style={{ minHeight: '100vh', background: 'var(--bg)', padding: 24 }}>
-      <div style={{ marginBottom: 24 }}>
-        <h1 style={{ fontSize: 24, fontWeight: 700, color: 'var(--text)', marginBottom: 4 }}>Intelligence Dashboard</h1>
-        <p style={{ fontSize: 13, color: 'var(--text3)' }}>SEBI RA: INH000026266 — Performance analytics and ML insights</p>
+    <div style={{ minHeight: '100vh', background: 'var(--bg)', padding: '32px 32px 64px' }}>
+      {/* Header */}
+      <div style={{ marginBottom: 32 }}>
+        <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 2, color: '#00C896', textTransform: 'uppercase', marginBottom: 6 }}>
+          Intelligence
+        </div>
+        <h1 style={{ fontSize: 28, fontWeight: 700, color: 'var(--text)', fontFamily: 'var(--font-outfit)', margin: 0 }}>
+          Performance Matrix
+        </h1>
       </div>
 
-      {/* Tabs */}
-      <div style={{ display: 'flex', gap: 4, borderBottom: '1px solid var(--border)', marginBottom: 24 }}>
-        {TABS.map((t) => (
-          <button
-            key={t.id}
-            onClick={() => setTab(t.id)}
-            style={{
-              padding: '10px 16px', border: 'none', cursor: 'pointer', background: 'none',
-              fontSize: 13, fontWeight: tab === t.id ? 600 : 400,
-              color: tab === t.id ? 'var(--emerald)' : 'var(--text2)',
-              borderBottom: tab === t.id ? '2px solid var(--emerald)' : '2px solid transparent',
-            }}
-          >
-            {t.label}
-          </button>
+      {/* ── KPI CARDS ── */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 40 }}>
+        {[
+          {
+            label: 'Overall Win Rate (6mo)',
+            value: `${overallWR.toFixed(1)}%`,
+            color: overallWR >= 60 ? '#00C896' : '#D4A843',
+          },
+          {
+            label: 'Total Calls (6mo)',
+            value: overall.total_calls.toLocaleString('en-IN'),
+            color: 'var(--text)',
+          },
+          {
+            label: 'Wins / Losses',
+            value: `${overallWins}W / ${overall.sl_hit}L`,
+            color: 'var(--text)',
+          },
+          {
+            label: 'Active ML Models',
+            value: mlModels.length.toString(),
+            color: '#3B82F6',
+          },
+        ].map((kpi) => (
+          <div key={kpi.label} style={{
+            background: 'var(--surface)', border: '1px solid var(--border)',
+            borderRadius: 14, padding: '20px 18px',
+          }}>
+            <div style={{ fontSize: 28, fontWeight: 800, color: kpi.color, marginBottom: 4 }}>
+              {kpi.value}
+            </div>
+            <div style={{ fontSize: 11, color: 'var(--text3)' }}>{kpi.label}</div>
+          </div>
         ))}
       </div>
 
-      {loading ? (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
-          {[1, 2, 3, 4].map((i) => <div key={i} className="shimmer" style={{ height: 100, borderRadius: 12 }} />)}
+      {/* ── SEGMENT BREAKDOWN ── */}
+      <section style={{ marginBottom: 40 }}>
+        <h2 style={{ fontSize: 16, fontWeight: 700, color: 'var(--text)', marginBottom: 16, margin: '0 0 16px' }}>
+          Segment Breakdown — Latest Month
+        </h2>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 14 }}>
+          {latestBySegment.map((row, idx) => {
+            const seg = (['intraday', 'stock_options', 'index_options', 'swing'] as const)[idx]
+            const color = SEGMENT_COLORS[seg]
+            if (!row) {
+              return (
+                <div key={seg} style={{
+                  background: 'var(--surface)', border: '1px solid var(--border)',
+                  borderRadius: 12, padding: 18,
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+                    <div style={{ width: 8, height: 8, borderRadius: '50%', background: color }} />
+                    <span style={{ fontWeight: 600, color: 'var(--text)', fontSize: 13 }}>{SEGMENT_LABELS[seg]}</span>
+                  </div>
+                  <div style={{ fontSize: 12, color: 'var(--text3)' }}>No data this period</div>
+                </div>
+              )
+            }
+            const wins = (row.t1_hit ?? 0) + (row.t2_hit ?? 0) + (row.t3_hit ?? 0)
+            const wr = row.win_rate ?? 0
+            const wrColor = wr >= 65 ? '#00C896' : wr >= 50 ? '#D4A843' : '#EF4444'
+            return (
+              <div key={seg} style={{
+                background: 'var(--surface)', border: '1px solid var(--border)',
+                borderRadius: 12, padding: 18,
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
+                  <div style={{ width: 8, height: 8, borderRadius: '50%', background: color }} />
+                  <span style={{ fontWeight: 600, color: 'var(--text)', fontSize: 13 }}>{SEGMENT_LABELS[seg]}</span>
+                  <span style={{ fontSize: 11, color: 'var(--text3)', marginLeft: 'auto' }}>
+                    {row.month}/{row.year}
+                  </span>
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8, marginBottom: 10 }}>
+                  <div style={{ textAlign: 'center' }}>
+                    <div style={{ fontSize: 20, fontWeight: 700, color: wrColor }}>{wr.toFixed(1)}%</div>
+                    <div style={{ fontSize: 9, color: 'var(--text3)' }}>Win Rate</div>
+                  </div>
+                  <div style={{ textAlign: 'center' }}>
+                    <div style={{ fontSize: 20, fontWeight: 700, color: 'var(--text)' }}>{row.total_calls}</div>
+                    <div style={{ fontSize: 9, color: 'var(--text3)' }}>Total</div>
+                  </div>
+                  <div style={{ textAlign: 'center' }}>
+                    <div style={{ fontSize: 20, fontWeight: 700, color: 'var(--text)' }}>{wins}W/{row.sl_hit}L</div>
+                    <div style={{ fontSize: 9, color: 'var(--text3)' }}>W/L</div>
+                  </div>
+                </div>
+                <div style={{ height: 5, background: 'var(--border)', borderRadius: 3, overflow: 'hidden' }}>
+                  <div style={{ height: '100%', width: `${wr}%`, background: wrColor, borderRadius: 3 }} />
+                </div>
+                <div style={{ display: 'flex', gap: 16, marginTop: 8 }}>
+                  <span style={{ fontSize: 10, color: 'var(--text3)' }}>
+                    Avg R:R {row.avg_rr_promised?.toFixed(2) ?? '—'}x promised / {row.avg_rr_achieved?.toFixed(2) ?? '—'}x achieved
+                  </span>
+                </div>
+              </div>
+            )
+          })}
         </div>
-      ) : (
-        <>
-          {/* Performance Matrix */}
-          {tab === 'performance' && (
-            <div>
-              {/* KPI Cards */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 24 }}>
-                <KpiCard label="This Month Win Rate" value={`${thisMonth?.win_rate?.toFixed(1) ?? 0}%`} color={thisMonth?.win_rate && thisMonth.win_rate >= 60 ? '#00C896' : '#D4A843'} delta={lastMonth ? `Last month: ${lastMonth.win_rate?.toFixed(1) ?? 0}%` : undefined} />
-                <KpiCard label="Total Calls (Month)" value={thisMonth?.total_calls ?? 0} delta={`T1: ${thisMonth?.t1_hit ?? 0} | T2: ${thisMonth?.t2_hit ?? 0} | T3: ${thisMonth?.t3_hit ?? 0}`} />
-                <KpiCard label="SL Hits (Month)" value={thisMonth?.sl_hit ?? 0} color="#EF4444" />
-                <KpiCard label="Avg R:R Promised" value={`${thisMonth?.avg_rr_promised?.toFixed(2) ?? '—'}x`} delta={`Achieved: ${thisMonth?.avg_rr_achieved?.toFixed(2) ?? '—'}x`} />
-              </div>
+      </section>
 
-              {/* Sub-tabs */}
-              <div style={{ display: 'flex', gap: 4, borderBottom: '1px solid var(--border)', marginBottom: 20 }}>
-                {(['symbol', 'week', 'condition'] as SubTab[]).map((st) => (
-                  <button
-                    key={st}
-                    onClick={() => setSubTab(st)}
-                    style={{
-                      padding: '8px 14px', border: 'none', cursor: 'pointer', background: 'none',
-                      fontSize: 12, color: subTab === st ? 'var(--text)' : 'var(--text3)',
-                      borderBottom: subTab === st ? '2px solid var(--gold)' : '2px solid transparent',
-                      textTransform: 'capitalize',
-                    }}
-                  >
-                    {st === 'symbol' ? 'Symbol View' : st === 'week' ? 'Week View' : 'Condition View'}
-                  </button>
-                ))}
-              </div>
+      {/* ── ML MODELS ── */}
+      <section style={{ marginBottom: 40 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
+          <Brain size={16} color="#3B82F6" />
+          <h2 style={{ fontSize: 16, fontWeight: 700, color: 'var(--text)', margin: 0 }}>
+            Active ML Models
+          </h2>
+        </div>
 
-              {subTab === 'symbol' && (
-                <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, overflow: 'hidden' }}>
-                  <SymbolTable signals={signals} />
-                </div>
-              )}
-
-              {subTab === 'week' && (
-                <div>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16 }}>
-                    {bySegment.map((seg) => (
-                      <div key={seg.segment} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, padding: 16 }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
-                          <div style={{ width: 10, height: 10, borderRadius: '50%', background: SegmentColors(seg.segment ?? 'all') }} />
-                          <span style={{ fontWeight: 600, color: 'var(--text)', textTransform: 'capitalize' }}>{seg.segment?.replace('_', ' ')}</span>
-                        </div>
-                        <WinRateBar rate={seg.win_rate ?? 0} label={`Win Rate`} />
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8, marginTop: 10 }}>
-                          {[
-                            { l: 'Total', v: seg.total_calls },
-                            { l: 'Wins', v: seg.t1_hit + seg.t2_hit + seg.t3_hit },
-                            { l: 'SL', v: seg.sl_hit },
-                          ].map((item) => (
-                            <div key={item.l} style={{ textAlign: 'center' }}>
-                              <div style={{ fontSize: 18, fontWeight: 700, color: 'var(--text)' }}>{item.v}</div>
-                              <div style={{ fontSize: 10, color: 'var(--text3)' }}>{item.l}</div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {subTab === 'condition' && (
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-                  <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, padding: 16 }}>
-                    <h3 style={{ fontSize: 14, fontWeight: 600, color: 'var(--text)', marginBottom: 16 }}>VIX Range vs Win Rate</h3>
-                    {vixBuckets.map((bucket) => (
-                      <WinRateBar key={bucket.label} rate={Math.random() * 40 + 40} label={`VIX ${bucket.label}`} />
-                    ))}
-                    <p style={{ fontSize: 10, color: 'var(--text3)', marginTop: 8 }}>*Requires more data for accurate VIX-based statistics</p>
-                  </div>
-                  <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, padding: 16 }}>
-                    <h3 style={{ fontSize: 14, fontWeight: 600, color: 'var(--text)', marginBottom: 16 }}>Segment Performance</h3>
-                    {bySegment.map((seg) => (
-                      <WinRateBar key={seg.segment} rate={seg.win_rate ?? 0} label={seg.segment?.replace(/_/g, ' ') ?? 'All'} />
-                    ))}
-                  </div>
-                </div>
-              )}
+        <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, overflow: 'hidden' }}>
+          {mlModels.length === 0 ? (
+            <div style={{ padding: '24px', textAlign: 'center', fontSize: 13, color: 'var(--text3)' }}>
+              No trained models yet — run <code style={{ background: 'var(--bg)', padding: '2px 6px', borderRadius: 4, fontSize: 11 }}>/api/ml/train</code> to generate.
             </div>
-          )}
-
-          {/* Postmortems */}
-          {tab === 'postmortems' && (
-            <div>
-              <div style={{ display: 'flex', gap: 8, marginBottom: 20, flexWrap: 'wrap' }}>
-                {['all', 'clean_loss', 'stop_hunt', 'premature_entry', 'sector_against'].map((ft) => (
-                  <button
-                    key={ft}
-                    onClick={() => setPmFilter(ft)}
-                    style={{
-                      padding: '6px 12px', borderRadius: 8, border: '1px solid var(--border)',
-                      cursor: 'pointer', background: pmFilter === ft ? 'var(--emerald)' : 'none',
-                      color: pmFilter === ft ? '#000' : 'var(--text2)', fontSize: 11, fontWeight: pmFilter === ft ? 700 : 400,
-                    }}
-                  >
-                    {ft.replace(/_/g, ' ')}
-                  </button>
-                ))}
-              </div>
-
-              {filteredPm.length === 0 ? (
-                <div style={{ textAlign: 'center', padding: '60px 0', color: 'var(--text3)' }}>
-                  <Brain size={32} style={{ marginBottom: 12, opacity: 0.4 }} />
-                  <p>No postmortems found</p>
+          ) : (
+            mlModels.map((model, i) => {
+              const seg = model.segment
+              const color = seg ? (SEGMENT_COLORS[seg] ?? '#6B8AAA') : '#6B8AAA'
+              const acc = model.accuracy ?? 0
+              const accColor = acc >= 0.65 ? '#00C896' : acc >= 0.55 ? '#D4A843' : '#EF4444'
+              return (
+                <div
+                  key={model.id}
+                  style={{
+                    display: 'flex', alignItems: 'center', gap: 14, padding: '14px 18px',
+                    borderBottom: i < mlModels.length - 1 ? '1px solid rgba(26,35,51,0.6)' : 'none',
+                  }}
+                >
+                  <Brain size={14} color={color} />
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text)' }}>
+                      {model.model_type} {seg ? `— ${SEGMENT_LABELS[seg] ?? seg}` : '(all)'}
+                    </div>
+                    <div style={{ fontSize: 11, color: 'var(--text3)', marginTop: 1 }}>
+                      {model.train_samples?.toLocaleString('en-IN') ?? '—'} training samples ·{' '}
+                      Trained {new Date(model.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
+                    </div>
+                  </div>
+                  <div style={{ textAlign: 'right' }}>
+                    <div style={{ fontSize: 18, fontWeight: 700, color: accColor }}>
+                      {(acc * 100).toFixed(1)}%
+                    </div>
+                    <div style={{ fontSize: 9, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: 1 }}>Accuracy</div>
+                  </div>
+                  {model.is_active && (
+                    <span style={{
+                      fontSize: 9, fontWeight: 700, letterSpacing: 1, padding: '2px 6px', borderRadius: 4,
+                      background: 'rgba(0,200,150,0.12)', color: '#00C896',
+                    }}>
+                      ACTIVE
+                    </span>
+                  )}
                 </div>
-              ) : (
-                filteredPm.map((pm) => (
-                  <div key={pm.id} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, padding: 16, marginBottom: 12 }}>
-                    <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
-                      <div style={{ flex: 1 }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
-                          <span style={{ fontWeight: 600, color: 'var(--text)' }}>{(pm.signals as { scrip: string } | undefined)?.scrip ?? 'Signal'}</span>
-                          <span style={{
-                            fontSize: 10, fontWeight: 700, padding: '3px 8px', borderRadius: 4,
-                            background: 'rgba(239,68,68,0.1)', color: '#EF4444',
-                          }}>
-                            {pm.failure_type.replace(/_/g, ' ')}
+              )
+            })
+          )}
+        </div>
+      </section>
+
+      {/* ── POSTMORTEMS ── */}
+      <section style={{ marginBottom: 40 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
+          <AlertTriangle size={16} color="#D4A843" />
+          <h2 style={{ fontSize: 16, fontWeight: 700, color: 'var(--text)', margin: 0 }}>
+            Signal Postmortems
+          </h2>
+          <span style={{ fontSize: 12, color: 'var(--text3)' }}>Last 10</span>
+        </div>
+
+        <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, overflow: 'hidden' }}>
+          {postmortems.length === 0 ? (
+            <div style={{ padding: '24px', textAlign: 'center', fontSize: 13, color: 'var(--text3)' }}>
+              No postmortems yet
+            </div>
+          ) : (
+            postmortems.map((pm, i) => {
+              const fColor = FAILURE_COLORS[pm.failure_type] ?? '#6B8AAA'
+              const signal = pm.signals
+              return (
+                <div
+                  key={pm.id}
+                  style={{
+                    padding: '14px 18px',
+                    borderBottom: i < postmortems.length - 1 ? '1px solid rgba(26,35,51,0.6)' : 'none',
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12, flexWrap: 'wrap' }}>
+                    <div style={{ flex: 1, minWidth: 240 }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4, flexWrap: 'wrap' }}>
+                        {signal && (
+                          <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--text)' }}>
+                            {signal.scrip}
                           </span>
-                          {pm.reviewed_by_sahib && <CheckCircle size={14} color="var(--emerald)" />}
+                        )}
+                        <span style={{
+                          fontSize: 9, fontWeight: 700, letterSpacing: 1, padding: '2px 6px', borderRadius: 4,
+                          background: `${fColor}18`, color: fColor,
+                        }}>
+                          {pm.failure_type.replace(/_/g, ' ').toUpperCase()}
+                        </span>
+                        {pm.reviewed_by_sahib && (
+                          <CheckCircle size={12} color="#00C896" />
+                        )}
+                      </div>
+                      <div style={{ fontSize: 12, color: 'var(--text2)', lineHeight: 1.5 }}>
+                        {pm.primary_miss}
+                      </div>
+                      {pm.sahib_notes && (
+                        <div style={{ fontSize: 11, color: 'var(--text3)', marginTop: 4, fontStyle: 'italic' }}>
+                          Note: {pm.sahib_notes}
                         </div>
-                        <p style={{ fontSize: 13, color: 'var(--text2)', marginBottom: 6 }}>{pm.primary_miss}</p>
-                        {pm.secondary_miss && <p style={{ fontSize: 12, color: 'var(--text3)', marginBottom: 6 }}>{pm.secondary_miss}</p>}
-                        {pm.pattern_detected && (
-                          <div style={{ padding: '6px 10px', background: 'rgba(212,168,67,0.08)', border: '1px solid rgba(212,168,67,0.2)', borderRadius: 6, fontSize: 11, color: 'var(--gold)', marginBottom: 8 }}>
-                            <AlertTriangle size={12} style={{ display: 'inline', marginRight: 4 }} />
-                            {pm.pattern_detected}
-                          </div>
-                        )}
-                        {pm.sahib_notes && (
-                          <div style={{ padding: '8px 12px', background: 'rgba(0,200,150,0.06)', border: '1px solid rgba(0,200,150,0.15)', borderRadius: 8, fontSize: 12, color: 'var(--text2)', marginBottom: 8 }}>
-                            <strong style={{ color: 'var(--emerald)', fontSize: 10 }}>NOTES: </strong>{pm.sahib_notes}
-                          </div>
-                        )}
-                        {noteId === pm.id ? (
-                          <div style={{ marginTop: 8 }}>
-                            <textarea
-                              value={noteText}
-                              onChange={(e) => setNoteText(e.target.value)}
-                              rows={3}
-                              className="input"
-                              placeholder="Add your analysis notes..."
-                              style={{ width: '100%', fontSize: 12, fontFamily: 'Outfit, sans-serif', marginBottom: 8 }}
-                            />
-                            <div style={{ display: 'flex', gap: 8 }}>
-                              <button onClick={() => saveNote(pm.id)} style={{ padding: '6px 12px', borderRadius: 8, background: 'var(--emerald)', color: '#000', border: 'none', cursor: 'pointer', fontSize: 11, fontWeight: 600 }}>Save Note</button>
-                              <button onClick={() => { setNoteId(null); setNoteText('') }} style={{ padding: '6px 12px', borderRadius: 8, background: 'none', border: '1px solid var(--border)', color: 'var(--text2)', cursor: 'pointer', fontSize: 11 }}>Cancel</button>
-                            </div>
-                          </div>
-                        ) : (
-                          <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
-                            <button onClick={() => { setNoteId(pm.id); setNoteText(pm.sahib_notes ?? '') }} style={{ padding: '5px 10px', borderRadius: 8, background: 'none', border: '1px solid var(--border)', color: 'var(--text2)', cursor: 'pointer', fontSize: 11 }}>
-                              {pm.sahib_notes ? 'Edit Notes' : 'Add Notes'}
-                            </button>
-                            <button onClick={() => markBlackSwan(pm.id, pm.signal_id)} style={{ padding: '5px 10px', borderRadius: 8, background: 'rgba(239,68,68,0.08)', color: '#EF4444', border: 'none', cursor: 'pointer', fontSize: 11 }}>
-                              Mark Black Swan
-                            </button>
-                          </div>
-                        )}
-                      </div>
-                      <div style={{ fontSize: 11, color: 'var(--text3)', whiteSpace: 'nowrap' }}>
-                        {new Date(pm.created_at).toLocaleDateString('en-IN')}
-                      </div>
+                      )}
+                    </div>
+                    <div style={{ fontSize: 10, color: 'var(--text3)', flexShrink: 0 }}>
+                      {new Date(pm.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
                     </div>
                   </div>
-                ))
-              )}
-            </div>
-          )}
-
-          {/* Reports */}
-          {tab === 'reports' && (
-            <div>
-              {reports.length === 0 ? (
-                <div style={{ textAlign: 'center', padding: '60px 0', color: 'var(--text3)' }}>
-                  <Brain size={32} style={{ marginBottom: 12, opacity: 0.4 }} />
-                  <p>No weekly reports yet — runs every Sunday</p>
                 </div>
-              ) : (
-                reports.map((report) => (
-                  <div key={report.id} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, padding: 16, marginBottom: 12 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
-                      <span style={{ fontWeight: 600, color: 'var(--text)' }}>
-                        {report.week_number ? `Week ${report.week_number}` : 'Monthly'} Report
-                      </span>
-                      <span style={{ fontSize: 11, color: 'var(--text3)' }}>
-                        {report.month}/{report.year}
-                      </span>
-                      <span style={{ marginLeft: 'auto', fontSize: 11, color: 'var(--text3)' }}>
-                        {new Date(report.generated_at).toLocaleDateString('en-IN')}
-                      </span>
-                    </div>
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 12 }}>
-                      {(report.key_insights ?? []).map((insight, i) => (
-                        <div key={i} style={{ fontSize: 12, color: 'var(--text2)', padding: '4px 10px', background: 'rgba(26,35,51,0.6)', borderRadius: 6 }}>
-                          {insight}
-                        </div>
-                      ))}
-                    </div>
-                    {report.recommendations && report.recommendations.length > 0 && (
-                      <div>
-                        <div style={{ fontSize: 10, color: 'var(--text3)', marginBottom: 6, fontWeight: 600 }}>RECOMMENDATIONS</div>
-                        {report.recommendations.map((rec, i) => (
-                          <div key={i} style={{ fontSize: 12, color: 'var(--emerald)', marginBottom: 4 }}>
-                            → {rec}
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ))
-              )}
-            </div>
+              )
+            })
           )}
-        </>
-      )}
+        </div>
+      </section>
+
+      {/* ── INTELLIGENCE REPORTS ── */}
+      <section>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
+          <FileText size={16} color="#8B5CF6" />
+          <h2 style={{ fontSize: 16, fontWeight: 700, color: 'var(--text)', margin: 0 }}>
+            Intelligence Reports
+          </h2>
+          <span style={{ fontSize: 12, color: 'var(--text3)' }}>Last 5</span>
+        </div>
+
+        <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, overflow: 'hidden' }}>
+          {reports.length === 0 ? (
+            <div style={{ padding: '24px', textAlign: 'center', fontSize: 13, color: 'var(--text3)' }}>
+              No reports generated yet
+            </div>
+          ) : (
+            reports.map((report, i) => {
+              const delivered = report.delivery_status === 'sent'
+              return (
+                <div
+                  key={report.id}
+                  style={{
+                    padding: '16px 18px',
+                    borderBottom: i < reports.length - 1 ? '1px solid rgba(26,35,51,0.6)' : 'none',
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6, flexWrap: 'wrap' }}>
+                        <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--text)' }}>
+                          {report.report_type.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())}
+                          {report.week_number ? ` — Week ${report.week_number}` : ''}
+                          {report.month && report.year ? ` — ${report.month}/${report.year}` : ''}
+                        </span>
+                        <span style={{
+                          fontSize: 9, fontWeight: 700, letterSpacing: 1, padding: '2px 6px', borderRadius: 4,
+                          background: delivered ? 'rgba(0,200,150,0.12)' : 'rgba(107,138,170,0.12)',
+                          color: delivered ? '#00C896' : 'var(--text3)',
+                        }}>
+                          {delivered ? 'DELIVERED' : (report.delivery_status?.toUpperCase() ?? 'PENDING')}
+                        </span>
+                      </div>
+                      {report.key_insights && report.key_insights.length > 0 && (
+                        <ul style={{ margin: 0, paddingLeft: 16 }}>
+                          {report.key_insights.slice(0, 3).map((insight, idx) => (
+                            <li key={idx} style={{ fontSize: 12, color: 'var(--text2)', lineHeight: 1.5, marginBottom: 2 }}>
+                              {insight}
+                            </li>
+                          ))}
+                          {report.key_insights.length > 3 && (
+                            <li style={{ fontSize: 11, color: 'var(--text3)', listStyle: 'none', marginLeft: -16, marginTop: 2 }}>
+                              +{report.key_insights.length - 3} more insights
+                            </li>
+                          )}
+                        </ul>
+                      )}
+                    </div>
+                    <div style={{ fontSize: 10, color: 'var(--text3)', flexShrink: 0 }}>
+                      {new Date(report.generated_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
+                    </div>
+                  </div>
+                </div>
+              )
+            })
+          )}
+        </div>
+      </section>
     </div>
   )
 }
