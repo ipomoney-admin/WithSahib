@@ -1,0 +1,36 @@
+import { NextResponse } from 'next/server'
+import { generateAuthenticationOptions } from '@simplewebauthn/server'
+import { createServerComponentClient, createServiceRoleClient } from '@/lib/supabase/server'
+import { isAdmin } from '@/lib/admin-check'
+import { RP_ID } from '@/lib/webauthn'
+
+export const dynamic = 'force-dynamic'
+
+export async function GET() {
+  const authClient = createServerComponentClient()
+  const { data: { user } } = await authClient.auth.getUser()
+  if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!(await isAdmin(user.id))) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+
+  const supabase = createServiceRoleClient()
+
+  const { data: credentials } = await supabase
+    .from('admin_passkeys')
+    .select('credential_id')
+    .eq('user_id', user.id)
+
+  const options = await generateAuthenticationOptions({
+    rpID: RP_ID,
+    userVerification: 'required',
+    allowCredentials: (credentials ?? []).map((c) => ({ id: c.credential_id })),
+  })
+
+  // Store challenge
+  await supabase.from('admin_passkey_challenges').delete().eq('user_id', user.id)
+  await supabase.from('admin_passkey_challenges').insert({
+    user_id: user.id,
+    challenge: options.challenge,
+  })
+
+  return NextResponse.json(options)
+}

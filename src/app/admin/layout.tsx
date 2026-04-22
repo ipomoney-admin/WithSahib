@@ -1,8 +1,10 @@
 import { redirect } from 'next/navigation'
+import { cookies, headers } from 'next/headers'
 import Link from 'next/link'
 import { Zap, BarChart2, Settings, Home } from 'lucide-react'
-import { createServerComponentClient } from '@/lib/supabase/server'
+import { createServerComponentClient, createServiceRoleClient } from '@/lib/supabase/server'
 import { isAdmin } from '@/lib/admin-check'
+import { isPasskeySessionValid } from '@/lib/webauthn'
 
 export const dynamic = 'force-dynamic'
 
@@ -12,12 +14,44 @@ const NAV = [
   { label: 'Settings', href: '/admin/settings', icon: Settings },
 ]
 
+// Passkey setup and verify pages must bypass the passkey check to avoid infinite redirect
+const PASSKEY_ROUTES = ['/admin/passkey']
+
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const authClient = createServerComponentClient()
   const { data: { user } } = await authClient.auth.getUser()
 
   if (!user) redirect('/auth/login')
   if (!(await isAdmin(user.id))) redirect('/auth/login')
+
+  // Determine current path from x-pathname header set by middleware
+  const headersList = headers()
+  const pathname = headersList.get('x-pathname') ?? ''
+  const isPasskeyRoute = PASSKEY_ROUTES.some((p) => pathname.startsWith(p))
+
+  if (!isPasskeyRoute) {
+    const supabase = createServiceRoleClient()
+
+    // Check if user has any registered passkeys
+    const { data: passkeys } = await supabase
+      .from('admin_passkeys')
+      .select('id')
+      .eq('user_id', user.id)
+      .limit(1)
+
+    const hasPasskeys = (passkeys?.length ?? 0) > 0
+
+    if (!hasPasskeys) {
+      redirect('/admin/passkey')
+    }
+
+    // Check if passkey session cookie is valid
+    const cookieStore = cookies()
+    if (!isPasskeySessionValid(cookieStore)) {
+      const encodedRedirect = encodeURIComponent(pathname || '/admin/signals')
+      redirect(`/admin/passkey/verify?redirect=${encodedRedirect}`)
+    }
+  }
 
   return (
     <div style={{ display: 'flex', height: '100vh', overflow: 'hidden', background: 'var(--bg)' }}>
