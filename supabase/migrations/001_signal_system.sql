@@ -1,19 +1,78 @@
--- ENUMS
-CREATE TYPE signal_segment AS ENUM ('intraday','stock_options','index_options','swing');
-CREATE TYPE signal_status AS ENUM ('open','partial_exit','t1_hit','t2_hit','t3_hit','sl_hit','expired','cancelled','modified');
-CREATE TYPE subscription_plan AS ENUM ('free','basic','pro','elite');
-CREATE TYPE subscription_status AS ENUM ('active','expired','cancelled','grace_period');
-CREATE TYPE push_channel AS ENUM ('whatsapp','telegram_paid','telegram_free');
-CREATE TYPE push_status AS ENUM ('queued','sent','delivered','failed','opted_out');
-CREATE TYPE admin_role_type AS ENUM ('super_admin','viewer_admin');
-CREATE TYPE alert_review_status AS ENUM ('pending','approved','rejected');
-CREATE TYPE audit_action AS ENUM ('alert_generated','alert_approved','alert_rejected','signal_published','signal_modified','signal_cancelled','status_changed','pushed_whatsapp','pushed_telegram','ml_score_generated','postmortem_generated');
-CREATE TYPE failure_type AS ENUM ('clean_loss','stop_hunt','premature_entry','sector_against','black_swan');
-CREATE TYPE ml_confidence AS ENUM ('HIGH','MEDIUM','LOW','LEARNING');
-CREATE TYPE model_status AS ENUM ('training','active','deprecated');
-CREATE TYPE admin_alert_type AS ENUM ('fyers_disconnected','token_expired','new_signal','sl_hit','target_hit','system_error');
-CREATE TYPE intelligence_report_type AS ENUM ('weekly','monthly');
-CREATE TYPE modification_type AS ENUM ('sl_tightened','target_raised','cancelled','other');
+-- ENUMS (wrapped in exception handlers — safe to re-run)
+DO $$ BEGIN
+  CREATE TYPE signal_segment AS ENUM ('intraday','stock_options','index_options','swing');
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
+
+DO $$ BEGIN
+  CREATE TYPE signal_status AS ENUM ('open','partial_exit','t1_hit','t2_hit','t3_hit','sl_hit','expired','cancelled','modified');
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
+
+DO $$ BEGIN
+  CREATE TYPE subscription_plan AS ENUM ('free','basic','pro','elite');
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
+
+DO $$ BEGIN
+  CREATE TYPE subscription_status AS ENUM ('active','expired','cancelled','grace_period');
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
+
+DO $$ BEGIN
+  CREATE TYPE push_channel AS ENUM ('whatsapp','telegram_paid','telegram_free');
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
+
+DO $$ BEGIN
+  CREATE TYPE push_status AS ENUM ('queued','sent','delivered','failed','opted_out');
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
+
+DO $$ BEGIN
+  CREATE TYPE admin_role_type AS ENUM ('super_admin','viewer_admin');
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
+
+DO $$ BEGIN
+  CREATE TYPE alert_review_status AS ENUM ('pending','approved','rejected');
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
+
+DO $$ BEGIN
+  CREATE TYPE audit_action AS ENUM ('alert_generated','alert_approved','alert_rejected','signal_published','signal_modified','signal_cancelled','status_changed','pushed_whatsapp','pushed_telegram','ml_score_generated','postmortem_generated');
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
+
+DO $$ BEGIN
+  CREATE TYPE failure_type AS ENUM ('clean_loss','stop_hunt','premature_entry','sector_against','black_swan');
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
+
+DO $$ BEGIN
+  CREATE TYPE ml_confidence AS ENUM ('HIGH','MEDIUM','LOW','LEARNING');
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
+
+DO $$ BEGIN
+  CREATE TYPE model_status AS ENUM ('training','active','deprecated');
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
+
+DO $$ BEGIN
+  CREATE TYPE admin_alert_type AS ENUM ('fyers_disconnected','token_expired','new_signal','sl_hit','target_hit','system_error');
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
+
+DO $$ BEGIN
+  CREATE TYPE intelligence_report_type AS ENUM ('weekly','monthly');
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
+
+DO $$ BEGIN
+  CREATE TYPE modification_type AS ENUM ('sl_tightened','target_raised','cancelled','other');
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
 
 -- CORE TABLES
 
@@ -28,6 +87,16 @@ CREATE TABLE IF NOT EXISTS subscriptions (
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
+
+-- Ensure all required columns exist (safe if table already existed with different schema)
+DO $$ BEGIN
+  ALTER TABLE subscriptions ADD COLUMN IF NOT EXISTS plan TEXT DEFAULT 'free';
+  ALTER TABLE subscriptions ADD COLUMN IF NOT EXISTS status TEXT DEFAULT 'active';
+  ALTER TABLE subscriptions ADD COLUMN IF NOT EXISTS razorpay_subscription_id TEXT;
+  ALTER TABLE subscriptions ADD COLUMN IF NOT EXISTS current_period_end TIMESTAMPTZ;
+  ALTER TABLE subscriptions ADD COLUMN IF NOT EXISTS grace_period_end TIMESTAMPTZ;
+EXCEPTION WHEN others THEN NULL;
+END $$;
 
 CREATE TABLE IF NOT EXISTS admin_roles (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -220,9 +289,17 @@ CREATE TABLE IF NOT EXISTS performance_summary (
   avg_gain_pct DECIMAL(8,4),
   avg_loss_pct DECIMAL(8,4),
   expectancy DECIMAL(6,4),
-  updated_at TIMESTAMPTZ DEFAULT NOW(),
-  UNIQUE(month, year, COALESCE(segment, 'all'))
+  updated_at TIMESTAMPTZ DEFAULT NOW()
 );
+
+-- Partial unique indexes for performance_summary (no COALESCE — uses WHERE clause instead)
+CREATE UNIQUE INDEX IF NOT EXISTS idx_perf_summary_overall
+  ON performance_summary(month, year)
+  WHERE segment IS NULL;
+
+CREATE UNIQUE INDEX IF NOT EXISTS idx_perf_summary_segment
+  ON performance_summary(month, year, segment)
+  WHERE segment IS NOT NULL;
 
 -- ML TABLES
 
@@ -349,9 +426,7 @@ DECLARE
   v_win_rate DECIMAL := 0;
   v_avg_rr_promised DECIMAL := 0;
   v_avg_rr_achieved DECIMAL := 0;
-  v_seg TEXT;
 BEGIN
-  v_seg := COALESCE(p_segment, 'all');
   SELECT
     COUNT(*)::INT,
     COUNT(*) FILTER (WHERE status = 't1_hit')::INT,
@@ -372,15 +447,15 @@ BEGIN
   IF (v_t1 + v_t2 + v_t3 + v_sl) > 0 THEN
     v_win_rate := ROUND(((v_t1 + v_t2 + v_t3)::DECIMAL / (v_t1 + v_t2 + v_t3 + v_sl)) * 100, 2);
   END IF;
-  INSERT INTO performance_summary (month, year, segment, total_calls, t1_hit, t2_hit, t3_hit, sl_hit, expired, cancelled, win_rate, avg_rr_promised, avg_rr_achieved, updated_at)
-  VALUES (p_month, p_year, v_seg, v_total, v_t1, v_t2, v_t3, v_sl, v_expired, v_cancelled, v_win_rate, v_avg_rr_promised, v_avg_rr_achieved, NOW())
-  ON CONFLICT (month, year, COALESCE(segment, 'all')) DO UPDATE SET
-    total_calls = EXCLUDED.total_calls, t1_hit = EXCLUDED.t1_hit,
-    t2_hit = EXCLUDED.t2_hit, t3_hit = EXCLUDED.t3_hit,
-    sl_hit = EXCLUDED.sl_hit, expired = EXCLUDED.expired,
-    cancelled = EXCLUDED.cancelled, win_rate = EXCLUDED.win_rate,
-    avg_rr_promised = EXCLUDED.avg_rr_promised, avg_rr_achieved = EXCLUDED.avg_rr_achieved,
-    updated_at = NOW();
+  DELETE FROM performance_summary
+  WHERE month = p_month AND year = p_year
+    AND (segment IS NOT DISTINCT FROM p_segment);
+  INSERT INTO performance_summary
+    (month, year, segment, total_calls, t1_hit, t2_hit, t3_hit,
+     sl_hit, expired, cancelled, win_rate, avg_rr_promised, avg_rr_achieved, updated_at)
+  VALUES
+    (p_month, p_year, p_segment, v_total, v_t1, v_t2, v_t3,
+     v_sl, v_expired, v_cancelled, v_win_rate, v_avg_rr_promised, v_avg_rr_achieved, NOW());
 END;
 $$ LANGUAGE plpgsql;
 
@@ -399,6 +474,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+DROP TRIGGER IF EXISTS on_signal_status_change ON signals;
 CREATE TRIGGER on_signal_status_change
   AFTER UPDATE ON signals FOR EACH ROW
   EXECUTE FUNCTION trigger_performance_recalc();
@@ -415,6 +491,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+DROP TRIGGER IF EXISTS on_sl_hit ON signals;
 CREATE TRIGGER on_sl_hit
   AFTER UPDATE ON signals FOR EACH ROW
   EXECUTE FUNCTION auto_generate_postmortem();
@@ -431,6 +508,20 @@ ALTER TABLE signal_push_queue ENABLE ROW LEVEL SECURITY;
 ALTER TABLE performance_summary ENABLE ROW LEVEL SECURITY;
 ALTER TABLE admin_alerts ENABLE ROW LEVEL SECURITY;
 ALTER TABLE admin_roles ENABLE ROW LEVEL SECURITY;
+
+-- RLS POLICIES (drop first so re-runs don't error)
+DROP POLICY IF EXISTS "public_read_performance" ON performance_summary;
+DROP POLICY IF EXISTS "users_own_subscription" ON subscriptions;
+DROP POLICY IF EXISTS "users_own_contacts" ON subscriber_contacts;
+DROP POLICY IF EXISTS "basic_swing_signals" ON signals;
+DROP POLICY IF EXISTS "pro_all_signals" ON signals;
+DROP POLICY IF EXISTS "admin_signals_all" ON signals;
+DROP POLICY IF EXISTS "admin_alerts_all" ON signal_alerts;
+DROP POLICY IF EXISTS "admin_features_all" ON signal_features;
+DROP POLICY IF EXISTS "admin_ml_scores_all" ON signal_ml_scores;
+DROP POLICY IF EXISTS "admin_push_queue_all" ON signal_push_queue;
+DROP POLICY IF EXISTS "admin_alerts_read" ON admin_alerts;
+DROP POLICY IF EXISTS "admin_roles_read" ON admin_roles;
 
 -- Public: performance_summary (read only, no sensitive data)
 CREATE POLICY "public_read_performance" ON performance_summary FOR SELECT USING (true);
