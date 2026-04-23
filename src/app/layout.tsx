@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Outfit, JetBrains_Mono } from 'next/font/google'
+import { Outfit, JetBrains_Mono, DM_Serif_Display } from 'next/font/google'
 import Script from 'next/script'
 import '@/styles/globals.css'
 import { ThemeProvider } from '@/components/layout/ThemeProvider'
@@ -20,6 +20,15 @@ const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
   weight: ['400', '500'],
   variable: '--font-mono',
+  display: 'swap',
+  preload: false,
+})
+
+const dmSerifDisplay = DM_Serif_Display({
+  subsets: ['latin'],
+  weight: ['400'],
+  style: ['normal'],
+  variable: '--font-dm-serif',
   display: 'swap',
   preload: false,
 })
@@ -365,10 +374,6 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
         <link rel="preconnect" href="https://trtoxawkeququfurddwr.supabase.co" />
         <link rel="dns-prefetch" href="https://trtoxawkeququfurddwr.supabase.co" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap"
-          rel="stylesheet"
-        />
         <meta
           name="robots"
           content="max-snippet:-1, max-image-preview:large, max-video-preview:-1"
@@ -387,7 +392,7 @@ export default function RootLayout({
           />
         ))}
       </head>
-      <body className={`${outfit.variable} ${jetbrainsMono.variable}`}>
+      <body className={`${outfit.variable} ${jetbrainsMono.variable} ${dmSerifDisplay.variable}`}>
         <ThemeProvider>
           {children}
           <WhatsAppButton />
