@@ -376,6 +376,8 @@ export default function RootLayout({
         <meta name="google-site-verification" content={process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ?? 'PLACEHOLDER'} />
         {/* TODO: Replace BING_PLACEHOLDER with actual Bing Webmaster Tools verification code */}
         <meta name="msvalidate.01" content={process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION ?? 'BING_PLACEHOLDER'} />
+        {/* Microsoft Clarity */}
+        <script type="text/javascript" dangerouslySetInnerHTML={{ __html: `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src='https://www.clarity.ms/tag/'+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, document, 'clarity', 'script', 'wg1eq65ef5');` }} />
         {/* AI crawler reference — https://llmstxt.org */}
         <link rel="alternate" type="text/plain" title="LLM Reference" href="/llms.txt" />
         {structuredData.map((schema, i) => (
