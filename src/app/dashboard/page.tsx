@@ -1,9 +1,6 @@
-'use client'
-
-import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { createClient } from '@/lib/supabase/client'
-import type { User, TradeCall, ResearchReport } from '@/types'
+import { createServerComponentClient, createServiceRoleClient } from '@/lib/supabase/server'
+import type { User, TradeCall } from '@/types'
 import {
   TrendingUp, TrendingDown, ArrowRight, Crown, Zap,
   FileText, Calendar, Target, CheckCircle, Clock, AlertCircle,
@@ -71,23 +68,36 @@ const SAMPLE_CALLS: Partial<TradeCall>[] = [
   { symbol: 'INFY', direction: 'SELL', service_type: 'intraday', entry_price: 1440, target_1: 1400, stop_loss: 1460, status: 'sl_hit' },
 ]
 
-export default function DashboardPage() {
-  const supabase = createClient()
-  const [user, setUser] = useState<User | null>(null)
-  const [greeting, setGreeting] = useState('')
+export default async function DashboardPage() {
+  // Fetch user server-side
+  const authClient = createServerComponentClient()
+  const { data: { user: authUser } } = await authClient.auth.getUser()
 
-  useEffect(() => {
-    const h = new Date().getHours()
-    setGreeting(h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening')
-    supabase.auth.getUser().then(({ data }) => {
-      if (data.user) {
-        supabase.from('users').select('*').eq('id', data.user.id).single()
-          .then(({ data: profile }) => { if (profile) setUser(profile) })
-      }
-    })
-  }, [])
+  // Derive name: full_name → name → email prefix
+  const displayName =
+    authUser?.user_metadata?.full_name ||
+    authUser?.user_metadata?.name ||
+    authUser?.email?.split('@')[0] ||
+    'Investor'
 
-  const tierLevel = { free: 0, basic: 1, pro: 2, elite: 3 }[user?.tier ?? 'free']
+  // Get subscription tier from subscriptions table
+  let userTier: User['tier'] = 'free'
+  if (authUser) {
+    const supabase = createServiceRoleClient()
+    const { data: sub } = await supabase
+      .from('subscriptions')
+      .select('plan')
+      .eq('user_id', authUser.id)
+      .single()
+    if (sub?.plan) userTier = sub.plan as User['tier']
+  }
+
+  // Time-based greeting in IST
+  const nowIST = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }))
+  const h = nowIST.getHours()
+  const greeting = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening'
+
+  const tierLevel = { free: 0, basic: 1, pro: 2, elite: 3 }[userTier]
   const isProPlus = tierLevel >= 2
 
   return (
@@ -96,18 +106,18 @@ export default function DashboardPage() {
       <div style={{ marginBottom: '32px' }}>
         <p style={{ fontSize: '13px', color: 'var(--text3)', marginBottom: '4px' }}>{greeting},</p>
         <h1 style={{ fontFamily: 'DM Serif Display, serif', fontSize: '32px', fontWeight: 400, color: 'var(--text)', marginBottom: '8px' }}>
-          {user?.name ?? 'Investor'} 👋
+          {displayName} 👋
         </h1>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
           <span style={{
             fontSize: '11px', fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase',
             padding: '4px 10px', borderRadius: '6px',
-            background: user?.tier === 'elite' ? 'rgba(212,168,67,0.1)' : user?.tier === 'pro' ? 'rgba(0,200,150,0.1)' : 'rgba(100,160,255,0.1)',
-            color: user?.tier === 'elite' ? 'var(--gold)' : user?.tier === 'pro' ? 'var(--emerald)' : 'var(--sapphire)',
+            background: userTier === 'elite' ? 'rgba(212,168,67,0.1)' : userTier === 'pro' ? 'rgba(0,200,150,0.1)' : 'rgba(100,160,255,0.1)',
+            color: userTier === 'elite' ? 'var(--gold)' : userTier === 'pro' ? 'var(--emerald)' : 'var(--sapphire)',
           }}>
-            {user?.tier ?? 'free'} plan
+            {userTier} plan
           </span>
-          {user?.tier !== 'elite' && (
+          {userTier !== 'elite' && (
             <Link href="/pricing" style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '12px', color: 'var(--gold)', textDecoration: 'none', fontWeight: 500 }}>
               <Crown size={12} /> Upgrade
             </Link>
@@ -194,7 +204,7 @@ export default function DashboardPage() {
                 { label: 'Model Portfolio', href: '/portfolio', icon: TrendingUp, tier: 'basic' },
               ].map((action) => {
                 const Icon = action.icon
-                const canAccess = tierLevel >= ({ free: 0, basic: 1, pro: 2, elite: 3 } as any)[action.tier]
+                const canAccess = tierLevel >= ({ free: 0, basic: 1, pro: 2, elite: 3 } as Record<string, number>)[action.tier]
                 return (
                   <Link
                     key={action.href}
