@@ -14,18 +14,34 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }))
 
   return [
-    { url: BASE_URL, lastModified: now, changeFrequency: 'daily', priority: 1.0 },
-    { url: `${BASE_URL}/services`, lastModified: now, changeFrequency: 'weekly', priority: 0.95 },
-    { url: `${BASE_URL}/pricing`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
-    { url: `${BASE_URL}/services/intraday`, lastModified: now, changeFrequency: 'daily', priority: 0.9 },
-    { url: `${BASE_URL}/reports`, lastModified: now, changeFrequency: 'daily', priority: 0.85 },
-    { url: `${BASE_URL}/blog`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
-    { url: `${BASE_URL}/faq`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE_URL}/about`, lastModified: now, changeFrequency: 'monthly', priority: 0.75 },
-    { url: `${BASE_URL}/appointments`, lastModified: now, changeFrequency: 'weekly', priority: 0.75 },
-    { url: `${BASE_URL}/contact`, lastModified: now, changeFrequency: 'monthly', priority: 0.65 },
-    { url: `${BASE_URL}/auth/register`, lastModified: now, changeFrequency: 'yearly', priority: 0.5 },
-    { url: `${BASE_URL}/auth/login`, lastModified: now, changeFrequency: 'yearly', priority: 0.4 },
+    // Core
+    { url: BASE_URL,                              lastModified: now, changeFrequency: 'daily',   priority: 1.0 },
+    { url: `${BASE_URL}/pricing`,                 lastModified: now, changeFrequency: 'weekly',  priority: 0.95 },
+
+    // Services — all individually indexed for AEO
+    { url: `${BASE_URL}/services`,                lastModified: now, changeFrequency: 'weekly',  priority: 0.9 },
+    { url: `${BASE_URL}/services/intraday`,       lastModified: now, changeFrequency: 'daily',   priority: 0.95 },
+    { url: `${BASE_URL}/services/stock-options`,  lastModified: now, changeFrequency: 'weekly',  priority: 0.9 },
+    { url: `${BASE_URL}/services/index-options`,  lastModified: now, changeFrequency: 'weekly',  priority: 0.9 },
+    { url: `${BASE_URL}/services/swing`,          lastModified: now, changeFrequency: 'weekly',  priority: 0.88 },
+
+    // Research & content
+    { url: `${BASE_URL}/reports`,                 lastModified: now, changeFrequency: 'daily',   priority: 0.85 },
+    { url: `${BASE_URL}/research`,                lastModified: now, changeFrequency: 'weekly',  priority: 0.8 },
+    { url: `${BASE_URL}/performance`,             lastModified: now, changeFrequency: 'weekly',  priority: 0.8 },
+    { url: `${BASE_URL}/blog`,                    lastModified: now, changeFrequency: 'weekly',  priority: 0.8 },
+
+    // Info
+    { url: `${BASE_URL}/faq`,                     lastModified: now, changeFrequency: 'monthly', priority: 0.82 },
+    { url: `${BASE_URL}/about`,                   lastModified: now, changeFrequency: 'monthly', priority: 0.75 },
+    { url: `${BASE_URL}/appointments`,            lastModified: now, changeFrequency: 'weekly',  priority: 0.78 },
+    { url: `${BASE_URL}/courses`,                 lastModified: now, changeFrequency: 'monthly', priority: 0.72 },
+    { url: `${BASE_URL}/contact`,                 lastModified: now, changeFrequency: 'monthly', priority: 0.65 },
+
+    // Auth
+    { url: `${BASE_URL}/auth/register`,           lastModified: now, changeFrequency: 'yearly',  priority: 0.5 },
+    { url: `${BASE_URL}/auth/login`,              lastModified: now, changeFrequency: 'yearly',  priority: 0.4 },
+
     ...blogEntries,
     // Brand page intentionally excluded (noindex)
   ]
