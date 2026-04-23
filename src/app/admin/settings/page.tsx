@@ -68,7 +68,7 @@ export default async function AdminSettingsPage({
       icon: Wifi,
       connected: fyersConnected,
       detail: fyersConnected
-        ? `Token valid until ${new Date(fyersToken!.expires_at!).toLocaleString('en-IN', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}`
+        ? `Token valid until ${new Date(fyersToken!.expires_at!).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', hour12: true })} IST`
         : 'Not connected — visit myapi.fyers.in to set up',
       setupPath: 'myapi.fyers.in → create app → add FYERS_APP_ID + FYERS_SECRET_KEY in Vercel',
     },
