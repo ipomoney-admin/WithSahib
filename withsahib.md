@@ -1,5 +1,5 @@
 # withSahib — Complete Project Documentation
-*Last updated: 2026-04-22 (Session 2 — auth, DB, admin 404 fixes)*
+*Last updated: 2026-04-23 (Session 5 — Fyers connected, Razorpay live, swing screener strategy defined)*
 
 ---
 
@@ -1162,7 +1162,7 @@ src/
 
 When starting a new session on this project, read this file first. It is the complete project context.
 
-### CURRENT STATE AS OF 22 APR 2026 (Session 3)
+### CURRENT STATE AS OF 23 APR 2026 (Session 5)
 
 **Platform is LIVE** at withsahib.com — DNS propagated, SSL active, Vercel deployed.
 
@@ -1173,42 +1173,140 @@ When starting a new session on this project, read this file first. It is the com
 - Email confirmed: YES
 
 **External dashboards:**
-- Supabase: https://supabase.com/dashboard/project/[project-ref] (check .env.local for project ref from NEXT_PUBLIC_SUPABASE_URL)
-- Vercel: https://vercel.com/sahibs-projects (or search "withsahib" in Vercel dashboard)
+- Supabase: https://supabase.com/dashboard/project/trtoxawkeququfurddwr
+- Vercel: https://vercel.com/sahibs-projects (search "withsahib")
 
-**What works:**
-- Auth signup/login (handle_new_user trigger fixed → inserts into subscriptions)
-- SQL migration fully idempotent — safe to re-run
-- Admin pages exist in code and build: /admin/signals, /admin/intelligence
-- 18 Vercel env vars set (CRON_SECRET, Supabase, Anthropic, Resend, etc.)
-- npm run build passes cleanly — no TypeScript errors
-- Admin pages restored and live: /admin/signals, /admin/intelligence, /admin/settings
-- Admin folder was missing from git (never committed) — fixed by deploying via npx vercel --prod
-- Vercel GitHub webhook missed commit 109a85aa — workaround: strip crons from vercel.json for CLI deploy
+---
 
-**FIRST TASK for next session:** Fix dashboard greeting — shows 'Welcome back, Investor' instead of real user name (Bug #10 in Section 15). Fetch user name from auth.users metadata or subscriptions table and display it.
+### What's working ✅
 
-**Second task:** Set up Fyers API — create app at myapi.fyers.in, get FYERS_APP_ID + FYERS_SECRET_KEY, add to Vercel env vars, complete OAuth handshake. See Section 14 item 2.
+- **Fyers API:** CONNECTED ✅ — token valid 23.5 hours, auto-refresh cron at 8 AM IST
+- **Razorpay:** CONNECTED ✅
+- **GitHub Actions Build Check:** PASSING ✅ (Build #23 green)
+- **Admin pages live:** /admin/signals, /admin/intelligence, /admin/settings ✅
+- **Passkey (Touch ID):** Working on Safari ✅ (Chrome shows 'Not Secure' on Sahib's Mac only — use Safari)
+- **Bing Webmaster Tools:** Verified, sitemap submitted, 21 URLs crawled, 0 errors ✅
+- **Microsoft Clarity:** Script added (tag `wg1eq65ef5`), IP blocked (122.181.101.113), Copilot ON, smart event 'Pricing Page Visit' created ✅
+- **SPF record:** Added to Spaceship DNS — `v=spf1 include:_spf.google.com ~all` ✅
+- **MX record:** Added to Spaceship DNS — SMTP.GOOGLE.COM priority 1 ✅ (Google Workspace Gmail activating)
+- **Google Workspace:** 'Getting your domain ready' — MX verification in progress ✅
+- **Admin/user toggle:** 'View as User' button working ✅
+- **Akshay admin access:** akgupta7501@gmail.com — super_admin ✅
+- **Social links:** LinkedIn, X, Instagram, Facebook all updated ✅
+- **Dashboard greeting:** Shows real user name ✅
+- **FYERS_REDIRECT_URI:** `https://withsahib.com/api/fyers/callback` ✅
 
-**Key facts:**
+---
+
+### Lighthouse Scores (Apr 23, 2026)
+
+- **Mobile:** Performance 72, Accessibility 93, Best Practices 100, SEO 92
+- **Desktop:** Performance 95–98, Accessibility 93, Best Practices 92, SEO 92
+- **SEO 92→100 fix:** 1 icon-only link missing aria-label (Claude Code command given, pending deploy)
+
+---
+
+### Current Architecture — Signal Flow
+
+- `fyers-client.ts` reads from `live_prices` Supabase table (NOT directly from Fyers API)
+- `live_prices` table is **EMPTY** — no Edge Function deployed yet to feed it
+- Screener (`src/app/api/screener/run/route.ts`) scans only 15 stocks (`INTRADAY_SYMBOLS`)
+- Only Intraday + Swing screeners exist — Stock Options and Index Options screeners NOT built yet
+- Swing screener uses basic '52-week high proximity' logic — needs complete rewrite with real patterns
+- Supabase Edge Function `fyers-price-feed`: code written but **NOT deployed**
+
+---
+
+### CRITICAL NEXT TASK — Signal Strategy (decided in Session 5)
+
+**Focus ONLY on Swing Trades first.** Other 3 segments after swing is perfected.
+
+**Swing Trade parameters decided:**
+- Universe: All NSE listed stocks EXCEPT SME board (1500+ stocks)
+- Target: 8–10 trades per month, return target 10–15% per trade
+- Minimum R:R: 3x
+- Timeframe: Weekly charts primary
+- Pattern strategy: **TO BE DEFINED in next session** — Sahib will share chart screenshots showing exact patterns he likes to pick
+
+---
+
+### Pending — Tumhe manually karna hai
+
+- **DKIM:** Google Workspace Admin → Apps → Gmail → Authenticate email → generate DKIM key → add TXT record to Spaceship (after MX fully verifies)
+- **DMARC:** Spaceship mein add karo — Host: `_dmarc`, Type: TXT, Value: `v=DMARC1; p=none; rua=mailto:sahib13singh13@gmail.com`, TTL: 1 min
+- **Professional photo:** Upload `IMG_1922.PNG` to Supabase Storage → update `/about` page
+- **NSE Market Holidays 2026:** Insert into `market_holidays` table in Supabase
+- **Telegram:** @BotFather → bot + 2 channels (free + paid) + 4 env vars in Vercel (`TELEGRAM_BOT_TOKEN`, `TELEGRAM_FREE_CHANNEL_ID`, `TELEGRAM_PAID_CHANNEL_ID`, `SAHIB_TELEGRAM_ID`)
+- **AiSensy:** aisensy.com account + `AISENSY_API_KEY` + campaign `withsahib_signal` + add to Vercel
+
+---
+
+### Pending — Claude Code commits given but NOT yet verified deployed
+
+- Fyers token expiry IST timezone fix (commit given)
+- SEO 92→100: aria-labels on icon-only links (commit given)
+- SWE-III full code audit + DSA fixes (running)
+- AEO: llms.txt, structured data, robots.ts AI crawlers (commit given)
+- IndexNow: `public/withsahib2026indexnow.txt` + `/api/indexnow` route (commit given)
+- Clarity script properly added via `next/script` afterInteractive (commit given)
+- Admin/user toggle + pricing flow fix (commit given)
+
+---
+
+### Key Technical Facts
+
+| Key | Value |
+|---|---|
+| FYERS_APP_ID | `4CN81VDZUO-100` |
+| FYERS_REDIRECT_URI | `https://withsahib.com/api/fyers/callback` |
+| Fyers correct endpoint | `api-t1.fyers.in` (NOT api-t2) |
+| appIdHash formula | `SHA256(appId + ':' + secretKey)` in hex |
+| Supabase Project ID | `trtoxawkeququfurddwr` |
+| Admin users | sahib13singh13@gmail.com (super_admin), akgupta7501@gmail.com (super_admin) |
+| Sahib password | `Sahib@2026` |
+| Akshay password | `Temp@2026` |
+| Microsoft Clarity tag | `wg1eq65ef5` |
+| IndexNow key | `withsahib2026indexnow` |
+| Spaceship DNS — A | @ → 76.76.21.21 |
+| Spaceship DNS — CNAME www | `01a8d991bd3b8c7e.vercel-dns-017.com` |
+| Spaceship DNS — CNAME Google | `ywyhg3t7m... → gv-b2kgfyfgr3rmjg.dv.googlehosted.com` |
+
+---
+
+### FIRST TASK for next session
+
+1. Verify all pending Claude Code commits actually deployed (check Vercel deployments)
+2. Sahib will share chart screenshots showing swing trade patterns he likes
+3. Based on those patterns — define exact technical conditions for swing screener:
+   - Which patterns to scan for (breakout, pullback, reversal, etc.)
+   - Entry trigger conditions
+   - SL placement logic
+   - Target calculation logic
+4. Build real swing screener for 1500+ stock universe using Fyers API
+
+---
+
+### Permanent Key Facts
+
 1. Platform: withsahib.com — SEBI Registered Research Analyst advisory platform
 2. Stack: Next.js 14 (App Router) + Supabase + Vercel + Fyers API v3 + TypeScript ML
 3. Design tokens: DO NOT CHANGE — locked in Section 4 (colors, fonts, logo)
-4. Current status: Auth working, signal system built, admin pages built. Fyers/Telegram/AiSensy/Razorpay still need setup.
-5. SEBI compliance is non-negotiable — every signal needs rationale + disclaimer
-6. Sahib is non-technical — explain clearly, give complete commands to copy-paste
-7. All monetary values in Indian Rupees (INR). Use en-IN locale formatting.
-8. Market hours: 9:00 AM – 3:30 PM IST, Mon–Fri, excluding NSE holidays
-9. IST = UTC + 5:30 — all UTC times in vercel.json need +5:30 to convert to IST
+4. SEBI compliance is non-negotiable — every signal needs rationale + disclaimer
+5. Sahib is non-technical — explain clearly, give complete commands to copy-paste
+6. All monetary values in Indian Rupees (INR). Use en-IN locale formatting.
+7. Market hours: 9:00 AM – 3:30 PM IST, Mon–Fri, excluding NSE holidays
+8. IST = UTC + 5:30 — all UTC times in vercel.json need +5:30 to convert to IST
 
-**Architecture decisions made:**
+### Architecture decisions (permanent)
+
 - ML is 100% TypeScript (no Python) — by design, to run on Vercel serverless without Python runtime
 - Signal screener generates signal_alerts (queue) — admin reviews and approves before publishing to signals table
 - No direct screener-to-signal pipeline — everything requires human approval
 - Performance metrics exclude black swan signals (is_black_swan = true)
 - Win rate denominator excludes expired signals (only counts actionable outcomes)
 
-**Do NOT:**
+### Do NOT
+
 - Change the color palette, fonts, or logo
 - Remove SEBI disclaimer from any signal-related component
 - Allow entry range to be modified after publish
