@@ -23,11 +23,12 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    // Fyers v3: appIdHash = SHA256(appId:secretKey)
-    const appIdHash = crypto
-      .createHash('sha256')
-      .update(`${appId}:${secretKey}`)
-      .digest('hex')
+    // Fyers v3: appIdHash = SHA256(appId:secretKey) in hex
+    const hashInput = `${appId}:${secretKey}`
+    const appIdHash = crypto.createHash('sha256').update(hashInput).digest('hex')
+
+    console.log('[fyers-callback] appId:', appId)
+    console.log('[fyers-callback] appIdHash:', appIdHash)
 
     const res = await fetch('https://api-t2.fyers.in/api/v3/validate-authcode', {
       method: 'POST',
@@ -36,9 +37,11 @@ export async function GET(req: NextRequest) {
     })
 
     const json = await res.json()
+    console.log('[fyers-callback] fyers response:', JSON.stringify(json))
 
     if (!res.ok || json.code !== 200 || !json.access_token) {
       settingsUrl.searchParams.set('fyers', 'error')
+      settingsUrl.searchParams.set('reason', json.message ?? json.code ?? 'unknown')
       return NextResponse.redirect(settingsUrl)
     }
 
