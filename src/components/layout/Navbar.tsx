@@ -53,7 +53,7 @@ export function Navbar() {
         }}
       >
         {/* Logo */}
-        <Link href="/" style={{ textDecoration: 'none' }}>
+        <Link href="/" style={{ textDecoration: 'none' }} aria-label="Go to withSahib homepage">
           <AnimatedLogo />
         </Link>
 
