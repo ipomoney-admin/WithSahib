@@ -21,7 +21,11 @@ function StatusDot({ ok }: { ok: boolean }) {
   )
 }
 
-export default async function AdminSettingsPage() {
+export default async function AdminSettingsPage({
+  searchParams,
+}: {
+  searchParams: { fyers?: string; reason?: string }
+}) {
   const authClient = createServerComponentClient()
   const { data: { user } } = await authClient.auth.getUser()
   if (!user) redirect('/auth/login')
@@ -100,8 +104,48 @@ export default async function AdminSettingsPage() {
     },
   ]
 
+  const fyersToast = searchParams.fyers
+
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg)', padding: '32px 32px 64px' }}>
+      {/* Fyers OAuth toast */}
+      {fyersToast === 'connected' && (
+        <div style={{
+          marginBottom: 24,
+          padding: '12px 18px',
+          borderRadius: 10,
+          background: 'rgba(0,200,150,0.1)',
+          border: '1px solid rgba(0,200,150,0.25)',
+          color: '#00C896',
+          fontSize: 13,
+          fontWeight: 500,
+          display: 'flex',
+          alignItems: 'center',
+          gap: 8,
+        }}>
+          <CheckCircle size={16} />
+          Fyers connected successfully. Token is valid for ~23.5 hours.
+        </div>
+      )}
+      {fyersToast === 'error' && (
+        <div style={{
+          marginBottom: 24,
+          padding: '12px 18px',
+          borderRadius: 10,
+          background: 'rgba(239,68,68,0.08)',
+          border: '1px solid rgba(239,68,68,0.2)',
+          color: '#EF4444',
+          fontSize: 13,
+          fontWeight: 500,
+          display: 'flex',
+          alignItems: 'center',
+          gap: 8,
+        }}>
+          <XCircle size={16} />
+          Fyers connection failed. Check that FYERS_APP_ID, FYERS_SECRET_KEY, and FYERS_REDIRECT_URI are set in Vercel.
+        </div>
+      )}
+
       {/* Header */}
       <div style={{ marginBottom: 32 }}>
         <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 2, color: '#00C896', textTransform: 'uppercase', marginBottom: 6 }}>
@@ -156,7 +200,25 @@ export default async function AdminSettingsPage() {
                 </div>
                 <div style={{ fontSize: 12, color: 'var(--text3)', marginBottom: 4 }}>{description}</div>
                 <div style={{ fontSize: 12, color: connected ? 'var(--text2)' : 'var(--text3)' }}>{detail}</div>
-                {!connected && (
+                {!connected && name === 'Fyers API' ? (
+                  <a
+                    href="/api/fyers/auth"
+                    style={{
+                      display: 'inline-block',
+                      marginTop: 10,
+                      padding: '7px 16px',
+                      borderRadius: 8,
+                      background: '#00C896',
+                      color: '#06090F',
+                      fontSize: 12,
+                      fontWeight: 700,
+                      textDecoration: 'none',
+                      letterSpacing: 0.3,
+                    }}
+                  >
+                    Connect Fyers
+                  </a>
+                ) : !connected && (
                   <div style={{ fontSize: 11, color: 'var(--text3)', marginTop: 4, fontStyle: 'italic' }}>
                     Setup: {setupPath}
                   </div>
