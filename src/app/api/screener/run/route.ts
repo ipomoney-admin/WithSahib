@@ -3,6 +3,9 @@ import { createServiceRoleClient } from '@/lib/supabase/server'
 import { isMarketOpen } from '@/lib/market-hours'
 import { fetchLivePrice, fetchLivePrices } from '@/lib/fyers-client'
 import { calculateRR } from '@/lib/signal-utils'
+import { runScreener } from '@/lib/screener/screener-engine'
+import { captureToML } from '@/lib/screener/ml-capture'
+import type { OHLCV } from '@/lib/screener/types'
 
 function cronGuard(req: NextRequest): boolean {
   return req.headers.get('x-cron-secret') === process.env.CRON_SECRET
@@ -221,4 +224,36 @@ export async function GET(req: NextRequest) {
       total: intradayAlerts.length + swingAlerts.length,
     },
   })
+}
+
+export async function POST(req: NextRequest) {
+  const body = await req.json().catch(() => null)
+  if (!body || !body.segment || !body.candles) {
+    return NextResponse.json({ success: false, error: 'Missing segment or candles' }, { status: 400 })
+  }
+
+  const allowedSegments = ['swing', 'intraday_1h', 'intraday_15m'] as const
+  type Segment = typeof allowedSegments[number]
+  if (!allowedSegments.includes(body.segment as Segment)) {
+    return NextResponse.json({ success: false, error: 'Invalid segment' }, { status: 400 })
+  }
+
+  const segment = body.segment as Segment
+  const candlesMap = new Map<string, OHLCV[]>()
+  for (const [symbol, data] of Object.entries(body.candles as Record<string, OHLCV[]>)) {
+    if (Array.isArray(data) && data.length > 0) {
+      candlesMap.set(symbol, data)
+    }
+  }
+
+  const results = await runScreener(candlesMap, segment)
+  await captureToML(results, segment)
+
+  const grouped: Record<string, typeof results> = {}
+  for (const r of results) {
+    if (!grouped[r.bucketCode]) grouped[r.bucketCode] = []
+    ;(grouped[r.bucketCode] as typeof results).push(r)
+  }
+
+  return NextResponse.json({ success: true, data: { total: results.length, grouped } })
 }

@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS admin_passkeys (
   last_used_at TIMESTAMPTZ
 );
 ALTER TABLE admin_passkeys ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS admin_passkeys_own ON admin_passkeys;
 CREATE POLICY admin_passkeys_own ON admin_passkeys FOR ALL USING (user_id = auth.uid());
 
 CREATE TABLE IF NOT EXISTS admin_passkey_challenges (

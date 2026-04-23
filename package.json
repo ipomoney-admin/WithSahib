@@ -24,6 +24,7 @@
     "date-fns": "^3.6.0",
     "framer-motion": "^11.2.6",
     "jose": "^5.2.4",
+    "lightweight-charts": "^5.1.0",
     "lucide-react": "^0.383.0",
     "next": "14.2.3",
     "next-pwa": "^5.6.0",

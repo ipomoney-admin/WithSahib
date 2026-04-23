@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation'
 import { cookies, headers } from 'next/headers'
 import Link from 'next/link'
-import { Zap, BarChart2, Settings, Home, Eye } from 'lucide-react'
+import { Zap, BarChart2, Settings, Home, Eye, ScanSearch } from 'lucide-react'
 import { createServerComponentClient, createServiceRoleClient } from '@/lib/supabase/server'
 import { isAdmin } from '@/lib/admin-check'
 import { isPasskeySessionValid } from '@/lib/webauthn'
@@ -10,6 +10,7 @@ export const dynamic = 'force-dynamic'
 
 const NAV = [
   { label: 'Signals', href: '/admin/signals', icon: Zap },
+  { label: 'Screener', href: '/admin/screener', icon: ScanSearch },
   { label: 'Intelligence', href: '/admin/intelligence', icon: BarChart2 },
   { label: 'Settings', href: '/admin/settings', icon: Settings },
 ]
