@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
@@ -16,6 +16,17 @@ export default function ResetPasswordPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [done, setDone] = useState(false)
+  const [sessionReady, setSessionReady] = useState(false)
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (!session) {
+        router.replace('/auth/login')
+      } else {
+        setSessionReady(true)
+      }
+    })
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -81,7 +92,11 @@ export default function ResetPasswordPage() {
         zIndex: 1,
         animation: 'fadeUp 0.5s ease',
       }}>
-        {done ? (
+        {!sessionReady && !done ? (
+          <div style={{ textAlign: 'center', padding: '24px 0', color: '#6B8AAA', fontSize: 14 }}>
+            Verifying session…
+          </div>
+        ) : done ? (
           <div style={{ textAlign: 'center', padding: '16px 0' }}>
             <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'rgba(0,200,150,0.1)', border: '1.5px solid rgba(0,200,150,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
               <CheckCircle size={28} color="#00C896" />
