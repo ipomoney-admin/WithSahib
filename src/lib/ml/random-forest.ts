@@ -5,6 +5,7 @@ export interface RandomForest {
   featureImportances: number[]
   nTrees: number
   nFeatures: number
+  trainingSamples?: number
 }
 
 function bootstrapSample(X: number[][], y: number[]): [number[][], number[]] {
@@ -13,8 +14,8 @@ function bootstrapSample(X: number[][], y: number[]): [number[][], number[]] {
   const sampledY: number[] = []
   for (let i = 0; i < n; i++) {
     const idx = Math.floor(Math.random() * n)
-    sampledX.push(X[idx])
-    sampledY.push(y[idx])
+    sampledX.push(X[idx]!)
+    sampledY.push(y[idx]!)
   }
   return [sampledX, sampledY]
 }
@@ -27,10 +28,10 @@ export function trainForest(
   minSamples = 5
 ): RandomForest {
   if (X.length === 0) {
-    return { trees: [], featureImportances: [], nTrees: 0, nFeatures: 0 }
+    return { trees: [], featureImportances: [], nTrees: 0, nFeatures: 0, trainingSamples: 0 }
   }
 
-  const nFeatures = X[0].length
+  const nFeatures = X[0]!.length
   const trees: TrainedTree[] = []
 
   for (let i = 0; i < nTrees; i++) {
@@ -40,18 +41,20 @@ export function trainForest(
   }
 
   // Average feature importances across trees
-  const avgImportances = new Array(nFeatures).fill(0)
+  const avgImportances = new Array<number>(nFeatures).fill(0)
   trees.forEach((tree) => {
     tree.featureImportances.forEach((imp, idx) => {
-      avgImportances[idx] += imp / nTrees
+      avgImportances[idx] = (avgImportances[idx] ?? 0) + imp / nTrees
     })
   })
 
-  return { trees, featureImportances: avgImportances, nTrees, nFeatures }
+  return { trees, featureImportances: avgImportances, nTrees, nFeatures, trainingSamples: X.length }
 }
 
 export function forestPredictProba(forest: RandomForest, x: number[]): number {
   if (forest.trees.length === 0) return 0.5
+  // If trained on fewer than 5 samples, return neutral probability
+  if ((forest.trainingSamples ?? forest.trees.length) < 5) return 0.5
   const probs = forest.trees.map((tree) => predictProba(tree, x))
   return probs.reduce((s, p) => s + p, 0) / probs.length
 }
@@ -68,10 +71,10 @@ export function serializeForest(forest: RandomForest): string {
 }
 
 export function deserializeForest(json: string): RandomForest {
-  const parsed = JSON.parse(json)
+  const parsed = JSON.parse(json) as RandomForest & { trees: string[] }
   return {
     ...parsed,
-    trees: (parsed.trees as string[]).map(deserializeTree),
+    trees: (parsed.trees as unknown as string[]).map(deserializeTree),
   }
 }
 
@@ -85,7 +88,7 @@ export function calculateAccuracy(
   let tp = 0, fp = 0, tn = 0, fn = 0
   X.forEach((x, i) => {
     const pred = forestPredict(forest, x)
-    const actual = y[i]
+    const actual = y[i] ?? 0
     if (pred === 1 && actual === 1) tp++
     else if (pred === 1 && actual === 0) fp++
     else if (pred === 0 && actual === 0) tn++

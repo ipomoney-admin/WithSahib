@@ -23,19 +23,20 @@ function topRiskFactors(
     let label = name.replace(/_/g, ' ')
     let direction: 'risk' | 'positive' = winProb >= 0.5 ? 'positive' : 'risk'
 
+    const featureVal = featureVector[i] ?? 0
     // VIX risk
-    if (name === 'vix' && featureVector[i] > 18) {
-      label = `High VIX (${featureVector[i].toFixed(1)})`
+    if (name === 'vix' && featureVal > 18) {
+      label = `High VIX (${featureVal.toFixed(1)})`
       direction = 'risk'
     }
     // Volume low
-    if (name === 'volume_ratio' && featureVector[i] < 0.8) {
-      label = `Low volume ratio (${featureVector[i].toFixed(2)}x)`
+    if (name === 'volume_ratio' && featureVal < 0.8) {
+      label = `Low volume ratio (${featureVal.toFixed(2)}x)`
       direction = 'risk'
     }
     // Historical win rate
-    if (name === 'symbol_historical_winrate' && featureVector[i] < 50) {
-      label = `Low symbol win rate (${featureVector[i].toFixed(0)}%)`
+    if (name === 'symbol_historical_winrate' && featureVal < 50) {
+      label = `Low symbol win rate (${featureVal.toFixed(0)}%)`
       direction = 'risk'
     }
 

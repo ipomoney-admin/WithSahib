@@ -64,7 +64,9 @@ export const FALLBACK_DATA: TickerItem[] = [
 // ─── FORMAT IN INDIAN NUMBER SYSTEM ────────────────────────────────────────
 export function formatIndianPrice(price: number): string {
   if (price >= 1000) {
-    const [intPart, decPart] = price.toFixed(2).split('.')
+    const parts = price.toFixed(2).split('.')
+    const intPart = parts[0] ?? ''
+    const decPart = parts[1] ?? '00'
     const lastThree = intPart.slice(-3)
     const rest = intPart.slice(0, -3)
     const formatted = rest

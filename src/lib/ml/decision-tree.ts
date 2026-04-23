@@ -42,19 +42,19 @@ function bestSplit(
   const parentGini = gini(y)
 
   for (let f = 0; f < nFeatures; f++) {
-    const values = Array.from(new Set(X.map((row) => row[f]))).sort((a, b) => a - b)
+    const values = Array.from(new Set(X.map((row) => row[f] ?? 0))).sort((a, b) => a - b)
     for (let i = 0; i < values.length - 1; i++) {
-      const threshold = (values[i] + values[i + 1]) / 2
+      const threshold = ((values[i] ?? 0) + (values[i + 1] ?? 0)) / 2
       const leftIdx = X.reduce<number[]>((acc, row, idx) => {
-        if (row[f] <= threshold) acc.push(idx)
+        if ((row[f] ?? 0) <= threshold) acc.push(idx)
         return acc
       }, [])
       const rightIdx = X.reduce<number[]>((acc, row, idx) => {
-        if (row[f] > threshold) acc.push(idx)
+        if ((row[f] ?? 0) > threshold) acc.push(idx)
         return acc
       }, [])
-      const leftLabels = leftIdx.map((i) => y[i])
-      const rightLabels = rightIdx.map((i) => y[i])
+      const leftLabels = leftIdx.map((i) => y[i] ?? 0)
+      const rightLabels = rightIdx.map((i) => y[i] ?? 0)
       const gain = parentGini - weightedGini(leftLabels, rightLabels)
       if (gain > bestGain) {
         bestGain = gain
@@ -90,7 +90,7 @@ function buildTree(
   const leftIdx: number[] = []
   const rightIdx: number[] = []
   X.forEach((row, idx) => {
-    if (row[split.featureIndex] <= split.threshold) leftIdx.push(idx)
+    if ((row[split.featureIndex] ?? 0) <= split.threshold) leftIdx.push(idx)
     else rightIdx.push(idx)
   })
 
@@ -98,10 +98,10 @@ function buildTree(
     return { value: prob, samples: y.length }
   }
 
-  const leftX = leftIdx.map((i) => X[i])
-  const leftY = leftIdx.map((i) => y[i])
-  const rightX = rightIdx.map((i) => X[i])
-  const rightY = rightIdx.map((i) => y[i])
+  const leftX = leftIdx.map((i) => X[i] ?? [])
+  const leftY = leftIdx.map((i) => y[i] ?? 0)
+  const rightX = rightIdx.map((i) => X[i] ?? [])
+  const rightY = rightIdx.map((i) => y[i] ?? 0)
 
   return {
     featureIndex: split.featureIndex,
@@ -132,7 +132,8 @@ export function trainTree(
 export function predictProba(tree: TrainedTree, x: number[]): number {
   let node = tree.root
   while (node.value === undefined) {
-    if (x[node.featureIndex!] <= node.threshold!) {
+    const featureVal = x[node.featureIndex!] ?? 0
+    if (featureVal <= node.threshold!) {
       node = node.left!
     } else {
       node = node.right!

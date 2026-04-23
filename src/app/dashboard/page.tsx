@@ -240,7 +240,8 @@ export default async function DashboardPage() {
                 { label: 'Model Portfolio', href: '/portfolio', icon: TrendingUp, tier: 'basic' },
               ].map((action) => {
                 const Icon = action.icon
-                const canAccess = tierLevel >= ({ free: 0, basic: 1, pro: 2, elite: 3 } as Record<string, number>)[action.tier]
+                const tierMap: Record<string, number> = { free: 0, basic: 1, pro: 2, elite: 3 }
+                const canAccess = tierLevel >= (tierMap[action.tier] ?? 0)
                 return (
                   <Link
                     key={action.href}

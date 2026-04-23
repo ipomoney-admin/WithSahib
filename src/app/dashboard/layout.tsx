@@ -83,12 +83,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     router.push('/')
   }
 
-  const userTierLevel = TIER_ORDER[user?.tier ?? 'free']
+  const userTierLevel = TIER_ORDER[user?.tier ?? 'free'] ?? 0
   // Admins get elite-level nav access unless in "view as user" mode
-  const effectiveTierLevel = isAdminUser && !viewingAsUser ? 3 : userTierLevel
+  const effectiveTierLevel = isAdminUser && !viewingAsUser ? 3 : (userTierLevel ?? 0)
 
   function canAccess(requiredTier: string) {
-    return effectiveTierLevel >= TIER_ORDER[requiredTier]
+    return effectiveTierLevel >= (TIER_ORDER[requiredTier] ?? 0)
   }
 
   const Sidebar = ({ mobile = false }) => (

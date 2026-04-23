@@ -4,7 +4,8 @@ export function calculateRR(
   sl: number,
   target1: number
 ): number {
-  const midEntry = (entryLow + entryHigh) / 2
+  // Handle edge case where entry_low === entry_high
+  const midEntry = entryLow === entryHigh ? entryLow : (entryLow + entryHigh) / 2
   const risk = Math.abs(midEntry - sl)
   const reward = Math.abs(target1 - midEntry)
   if (risk === 0) return 0
@@ -151,7 +152,7 @@ export function formatTelegramMessage(
   type: 'new' | 'outcome' | 'modification'
 ): string {
   // Telegram MarkdownV2 — escape special chars
-  const esc = (s: string) =>
+  const esc = (s: string): string =>
     s.replace(/[_*[\]()~`>#+\-=|{}.!]/g, '\\$&')
 
   const sebi = esc('SEBI RA: INH000026266 | Not investment advice')

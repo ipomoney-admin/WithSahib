@@ -11,7 +11,7 @@ const nextConfig = {
   reactStrictMode: true,
   experimental: {
     optimizeCss: true,
-    optimizePackageImports: ['lucide-react', '@supabase/supabase-js'],
+    optimizePackageImports: ['lucide-react', 'date-fns', '@supabase/supabase-js'],
   },
   images: {
     remotePatterns: [
@@ -19,13 +19,19 @@ const nextConfig = {
       { protocol: 'https', hostname: 'images.unsplash.com' },
     ],
     formats: ['image/avif', 'image/webp'],
-    minimumCacheTTL: 60 * 60 * 24 * 30, // 30 days
+    minimumCacheTTL: 86400,
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
   compress: true,
   poweredByHeader: false,
+  productionBrowserSourceMaps: false,
   generateEtags: true,
+  ...(process.env.NODE_ENV === 'production' && {
+    compiler: {
+      removeConsole: { exclude: ['error', 'warn'] },
+    },
+  }),
   async headers() {
     return [
       // SWR cache for HTML pages

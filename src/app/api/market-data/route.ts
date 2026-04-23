@@ -117,7 +117,8 @@ export async function GET() {
   const tickers: TickerItem[] = SYMBOLS.map(({ sym }, i) => {
     const result = allResults[i]
     if (result) return result
-    return FALLBACK_DATA.find((f) => f.sym === sym) ?? FALLBACK_DATA[0]
+    const fallback = FALLBACK_DATA.find((f) => f.sym === sym) ?? FALLBACK_DATA[0]
+    return fallback!
   })
 
   const successCount = allResults.filter(Boolean).length

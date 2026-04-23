@@ -201,7 +201,8 @@ export default async function AdminIntelligencePage() {
         </h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 14 }}>
           {latestBySegment.map((row, idx) => {
-            const seg = (['intraday', 'stock_options', 'index_options', 'swing'] as const)[idx]
+            const segs = ['intraday', 'stock_options', 'index_options', 'swing'] as const
+            const seg = segs[idx] ?? 'intraday'
             const color = SEGMENT_COLORS[seg]
             if (!row) {
               return (

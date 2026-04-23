@@ -76,9 +76,9 @@ export function Logo({ size = 28, showWordmark = true, animated = true }: LogoPr
         <rect
           className="ws-bar"
           x={0}
-          y={svgH - heights[0]}
+          y={svgH - (heights[0] ?? 0)}
           width={barW}
-          height={heights[0]}
+          height={heights[0] ?? 0}
           rx={barW * 0.35}
           fill="rgba(0,200,150,0.38)"
           style={animated ? {
@@ -89,9 +89,9 @@ export function Logo({ size = 28, showWordmark = true, animated = true }: LogoPr
         <rect
           className="ws-bar"
           x={barW + gap}
-          y={svgH - heights[1]}
+          y={svgH - (heights[1] ?? 0)}
           width={barW}
-          height={heights[1]}
+          height={heights[1] ?? 0}
           rx={barW * 0.35}
           fill="rgba(0,200,150,0.68)"
           style={animated ? {
@@ -102,9 +102,9 @@ export function Logo({ size = 28, showWordmark = true, animated = true }: LogoPr
         <rect
           className="ws-bar"
           x={(barW + gap) * 2}
-          y={svgH - heights[2]}
+          y={svgH - (heights[2] ?? 0)}
           width={barW}
-          height={heights[2]}
+          height={heights[2] ?? 0}
           rx={barW * 0.35}
           fill="rgba(0,200,150,1)"
           style={animated ? {

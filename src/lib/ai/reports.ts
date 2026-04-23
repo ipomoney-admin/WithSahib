@@ -46,7 +46,8 @@ NEVER:
     messages: [{ role: 'user', content: userPrompt }],
   })
 
-  const text = response.content[0].type === 'text' ? response.content[0].text : ''
+  const firstBlock = response.content[0]
+  const text = firstBlock?.type === 'text' ? firstBlock.text : ''
 
   try {
     const clean = text.replace(/```json|```/g, '').trim()
@@ -114,7 +115,8 @@ Be specific, technical, and professional. No fluff. Include risk-reward context.
 End with: "SEBI RA INH000026266. Not investment advice."`,
     }],
   })
-  return response.content[0].type === 'text' ? response.content[0].text : ''
+  const ratBlock = response.content[0]
+  return ratBlock?.type === 'text' ? ratBlock.text : ''
 }
 
 // ─── GENERATE COMPANY UPDATE SUMMARY ──────────────────────────────────────────
@@ -139,7 +141,8 @@ Return JSON only:
     }],
   })
 
-  const text = response.content[0].type === 'text' ? response.content[0].text : '{}'
+  const summBlock = response.content[0]
+  const text = summBlock?.type === 'text' ? summBlock.text : '{}'
   try {
     return JSON.parse(text.replace(/```json|```/g, '').trim())
   } catch {

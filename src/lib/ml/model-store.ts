@@ -2,6 +2,8 @@ import { createServiceRoleClient } from '@/lib/supabase/server'
 import { trainForest, deserializeForest, serializeForest, calculateAccuracy, type RandomForest } from './random-forest'
 import { encodeFeature, encodeOutcome, computeMedians, FEATURE_NAMES, type RawFeature } from './feature-encoder'
 
+export const MODEL_VERSION = 2
+
 export interface ModelMetrics {
   accuracy: number
   precision: number
@@ -27,7 +29,7 @@ export async function saveModel(
     .eq('status', 'active')
     .single()
 
-  const newVersion = (existing?.model_version ?? 0) + 1
+  const newVersion = Math.max((existing?.model_version ?? 0) + 1, MODEL_VERSION)
 
   if (existing) {
     await supabase
@@ -53,6 +55,7 @@ export async function saveModel(
     model_params: {
       forest: serializeForest(forest),
       medians,
+      schema_version: MODEL_VERSION,
     },
     status: 'active',
     trained_at: new Date().toISOString(),
@@ -75,7 +78,14 @@ export async function loadModel(
 
   if (!data?.model_params) return null
 
-  const params = data.model_params as { forest: string; medians: Record<string, number> }
+  const params = data.model_params as { forest: string; medians: Record<string, number>; schema_version?: number }
+
+  // If stored model schema version is older than current MODEL_VERSION, trigger retrain
+  const storedSchemaVersion = params.schema_version ?? 1
+  if (storedSchemaVersion < MODEL_VERSION) {
+    return null
+  }
+
   return {
     forest: deserializeForest(params.forest),
     medians: params.medians,

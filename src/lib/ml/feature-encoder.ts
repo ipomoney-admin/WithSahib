@@ -64,28 +64,35 @@ export interface RawFeature {
   similar_setup_count?: number | null
 }
 
+// Clamp a value within [min, max] and replace NaN with fallback
+function safe(value: number, min: number, max: number, fallback: number): number {
+  if (!isFinite(value) || isNaN(value)) return fallback
+  return Math.min(max, Math.max(min, value))
+}
+
 export function encodeFeature(raw: RawFeature, medians: Record<string, number>): number[] {
-  const get = (key: keyof RawFeature, fallback: number) => {
+  const get = (key: keyof RawFeature, fallback: number): number => {
     const val = raw[key]
     if (val === null || val === undefined) return medians[key] ?? fallback
-    return Number(val)
+    const n = Number(val)
+    return isNaN(n) ? (medians[key] ?? fallback) : n
   }
 
   return [
-    get('vix', 15),
-    NIFTY_TREND_MAP[raw.nifty_trend ?? ''] ?? 0,
-    NIFTY_EMA_MAP[raw.nifty_vs_20ema ?? ''] ?? 0,
-    get('sector_performance', 0),
-    get('volume_ratio', 1),
-    get('vwap_distance', 0),
-    get('atr_pct', 1),
-    TIME_BUCKET_MAP[raw.time_bucket ?? ''] ?? 0,
-    DAY_MAP[raw.day_of_week ?? ''] ?? 0,
-    get('days_to_expiry', 3),
-    get('iv_percentile', 50),
-    get('signal_rr_promised', 2),
-    get('symbol_historical_winrate', 50),
-    get('similar_setup_count', 0),
+    safe(get('vix', 15), 0, 100, 15),
+    safe(NIFTY_TREND_MAP[raw.nifty_trend ?? ''] ?? 0, -2, 2, 0),
+    safe(NIFTY_EMA_MAP[raw.nifty_vs_20ema ?? ''] ?? 0, 0, 1, 0),
+    safe(get('sector_performance', 0), -20, 20, 0),
+    safe(get('volume_ratio', 1), 0, 50, 1),
+    safe(get('vwap_distance', 0), -20, 20, 0),
+    safe(get('atr_pct', 1), 0, 20, 1),
+    safe(TIME_BUCKET_MAP[raw.time_bucket ?? ''] ?? 0, 0, 3, 0),
+    safe(DAY_MAP[raw.day_of_week ?? ''] ?? 0, 0, 4, 0),
+    safe(get('days_to_expiry', 3), 0, 7, 3),
+    safe(get('iv_percentile', 50), 0, 100, 50),
+    safe(get('signal_rr_promised', 2), 0, 20, 2),
+    safe(get('symbol_historical_winrate', 50), 0, 100, 50),
+    safe(get('similar_setup_count', 0), 0, 10000, 0),
   ]
 }
 
@@ -100,13 +107,13 @@ export function computeMedians(rows: RawFeature[]): Record<string, number> {
   for (const key of keys) {
     const vals = rows
       .map((r) => r[key])
-      .filter((v): v is number => v !== null && v !== undefined)
+      .filter((v): v is number => v !== null && v !== undefined && isFinite(Number(v)) && !isNaN(Number(v)))
       .sort((a, b) => a - b)
     if (vals.length === 0) {
       medians[key] = 0
     } else {
       const mid = Math.floor(vals.length / 2)
-      medians[key] = vals.length % 2 === 0 ? (vals[mid - 1] + vals[mid]) / 2 : vals[mid]
+      medians[key] = vals.length % 2 === 0 ? ((vals[mid - 1] ?? 0) + (vals[mid] ?? 0)) / 2 : (vals[mid] ?? 0)
     }
   }
   return medians
