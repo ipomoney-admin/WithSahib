@@ -53,14 +53,25 @@ export async function GET(req: NextRequest) {
   // Step 2: exchange auth code for access token
   let json: Record<string, unknown>
   try {
-    const res = await fetch('https://api-t2.fyers.in/api/v3/validate-authcode', {
+    const res = await fetch('https://api-t1.fyers.in/api/v3/validate-authcode', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ grant_type: 'authorization_code', appIdHash, code }),
     })
-    json = await res.json()
+    const rawText = await res.text()
     console.log('[fyers-callback] fyers response status:', res.status)
-    console.log('[fyers-callback] fyers response:', JSON.stringify(json))
+    console.log('[fyers-callback] fyers raw response:', rawText.substring(0, 500))
+
+    try {
+      json = JSON.parse(rawText)
+    } catch {
+      console.error('[fyers-callback] fyers returned non-JSON (HTML/text):', rawText.substring(0, 500))
+      settingsUrl.searchParams.set('fyers', 'error')
+      settingsUrl.searchParams.set('reason', 'fyers_returned_html')
+      return NextResponse.redirect(settingsUrl)
+    }
+
+    console.log('[fyers-callback] fyers parsed response:', JSON.stringify(json))
 
     if (!res.ok || json.code !== 200 || !json.access_token) {
       settingsUrl.searchParams.set('fyers', 'error')
