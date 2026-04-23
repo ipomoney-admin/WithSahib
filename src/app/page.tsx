@@ -7,7 +7,8 @@ import { Footer } from '@/components/layout/Footer'
 import {
   TrendingUp, BarChart2, Target, RefreshCw, BookOpen, Calendar,
   Brain, Shield, ArrowRight, ChevronRight, Check,
-  Zap, Award, Users, Camera
+  Zap, Award, Users, Camera,
+  Linkedin, Twitter, Instagram, Facebook
 } from 'lucide-react'
 import { FALLBACK_DATA, type TickerItem } from '@/lib/utils/marketData'
 
@@ -1407,10 +1408,10 @@ function AnalystProfileSection() {
                   transition: 'border-color 0.2s, color 0.2s',
                 }}
               >
-                in
+                <Linkedin size={16} />
               </a>
               <a
-                href="https://x.com/sahibsinghhora"
+                href="https://x.com/WithSahib_"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Sahib Singh Hora on X / Twitter"
@@ -1422,7 +1423,37 @@ function AnalystProfileSection() {
                   transition: 'border-color 0.2s, color 0.2s',
                 }}
               >
-                𝕏
+                <Twitter size={16} />
+              </a>
+              <a
+                href="https://www.instagram.com/withsahib_/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Sahib Singh Hora on Instagram"
+                style={{
+                  width: 36, height: 36, borderRadius: '50%',
+                  background: '#1A2535', border: '1px solid rgba(255,255,255,0.1)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  color: '#94A3B8', textDecoration: 'none', fontSize: 14, fontWeight: 600,
+                  transition: 'border-color 0.2s, color 0.2s',
+                }}
+              >
+                <Instagram size={16} />
+              </a>
+              <a
+                href="https://www.facebook.com/sahib1313"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Sahib Singh Hora on Facebook"
+                style={{
+                  width: 36, height: 36, borderRadius: '50%',
+                  background: '#1A2535', border: '1px solid rgba(255,255,255,0.1)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  color: '#94A3B8', textDecoration: 'none', fontSize: 14, fontWeight: 600,
+                  transition: 'border-color 0.2s, color 0.2s',
+                }}
+              >
+                <Facebook size={16} />
               </a>
             </div>
           </div>
