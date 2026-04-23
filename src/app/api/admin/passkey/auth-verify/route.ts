@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
     verification = await verifyAuthenticationResponse({
       response: authentication,
       expectedChallenge: challengeRow.challenge,
-      expectedOrigin: process.env.NEXT_PUBLIC_APP_URL!,
+      expectedOrigin: ['https://www.withsahib.com', 'https://withsahib.com'],
       expectedRPID: RP_ID,
       authenticator: {
         credentialID: dbCredential.credential_id,

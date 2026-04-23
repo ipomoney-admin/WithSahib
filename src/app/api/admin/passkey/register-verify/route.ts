@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
     verification = await verifyRegistrationResponse({
       response: registration,
       expectedChallenge: challengeRow.challenge,
-      expectedOrigin: process.env.NEXT_PUBLIC_APP_URL!,
+      expectedOrigin: ['https://www.withsahib.com', 'https://withsahib.com'],
       expectedRPID: RP_ID,
     })
   } catch (err) {

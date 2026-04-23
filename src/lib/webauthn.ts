@@ -3,7 +3,7 @@ import type { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension
 
 export const RP_ID = new URL(
   process.env.NEXT_PUBLIC_APP_URL || 'https://www.withsahib.com'
-).hostname
+).hostname.replace(/^www\./, '')
 
 export const RP_NAME = 'withSahib Admin'
 
