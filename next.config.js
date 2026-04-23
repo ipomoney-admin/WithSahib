@@ -12,6 +12,7 @@ const nextConfig = {
   experimental: {
     optimizeCss: true,
     optimizePackageImports: ['lucide-react', 'date-fns', '@supabase/supabase-js'],
+    browsersListForSwc: true,
   },
   images: {
     remotePatterns: [
