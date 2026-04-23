@@ -369,9 +369,6 @@ export default function RootLayout({
         {/* Resource hints for performance */}
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="format-detection" content="telephone=no" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
         <link rel="preconnect" href="https://trtoxawkeququfurddwr.supabase.co" />
         <link rel="dns-prefetch" href="https://trtoxawkeququfurddwr.supabase.co" />
         <meta
