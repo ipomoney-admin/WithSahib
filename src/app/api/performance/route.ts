@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createServiceRoleClient } from '@/lib/supabase/server'
 
-export const revalidate = 300
+export const dynamic = 'force-dynamic'
 
 export async function GET() {
   const supabase = createServiceRoleClient()
