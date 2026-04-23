@@ -366,6 +366,8 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        {/* Blocking theme script — runs before paint to avoid flash of wrong theme */}
+        <script dangerouslySetInnerHTML={{ __html: `try{var t=localStorage.getItem('withsahib-theme')||(window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.classList.add(t);document.documentElement.setAttribute('data-theme',t);}catch(e){}` }} />
         {/* Resource hints for performance */}
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="format-detection" content="telephone=no" />
