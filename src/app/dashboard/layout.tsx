@@ -44,10 +44,28 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [notifications, setNotifications] = useState(3)
+  const [isAdminUser, setIsAdminUser] = useState(false)
+  const [viewingAsUser, setViewingAsUser] = useState(false)
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
       if (!data.user) { router.push('/auth/login'); return }
+
+      // Check admin status
+      supabase
+        .from('admin_roles')
+        .select('id')
+        .eq('user_id', data.user.id)
+        .limit(1)
+        .single()
+        .then(({ data: adminRow }) => {
+          if (adminRow) {
+            setIsAdminUser(true)
+            const cookie = document.cookie.split(';').find((c) => c.trim().startsWith('admin_view_mode='))
+            setViewingAsUser(cookie?.split('=')[1]?.trim() === 'user')
+          }
+        })
+
       supabase
         .from('users')
         .select('*')
@@ -66,9 +84,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   }
 
   const userTierLevel = TIER_ORDER[user?.tier ?? 'free']
+  // Admins get elite-level nav access unless in "view as user" mode
+  const effectiveTierLevel = isAdminUser && !viewingAsUser ? 3 : userTierLevel
 
   function canAccess(requiredTier: string) {
-    return userTierLevel >= TIER_ORDER[requiredTier]
+    return effectiveTierLevel >= TIER_ORDER[requiredTier]
   }
 
   const Sidebar = ({ mobile = false }) => (
@@ -142,7 +162,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               </span>
             </div>
           </div>
-          {user.tier !== 'elite' && (
+          {user.tier !== 'elite' && !(isAdminUser && !viewingAsUser) && (
             <Link
               href="/pricing"
               style={{

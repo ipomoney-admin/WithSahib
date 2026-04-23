@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation'
 import { cookies, headers } from 'next/headers'
 import Link from 'next/link'
-import { Zap, BarChart2, Settings, Home } from 'lucide-react'
+import { Zap, BarChart2, Settings, Home, Eye } from 'lucide-react'
 import { createServerComponentClient, createServiceRoleClient } from '@/lib/supabase/server'
 import { isAdmin } from '@/lib/admin-check'
 import { isPasskeySessionValid } from '@/lib/webauthn'
@@ -94,6 +94,15 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           ))}
 
           <div style={{ height: 1, background: 'var(--border)', margin: '8px 6px' }} />
+
+          <Link
+            href="/api/admin/view-mode?mode=user"
+            className="sidebar-link"
+            style={{ marginBottom: 4, display: 'flex', alignItems: 'center', gap: 10 }}
+          >
+            <Eye size={14} strokeWidth={1.5} />
+            <span style={{ fontSize: 12 }}>View as User</span>
+          </Link>
 
           <Link
             href="/"

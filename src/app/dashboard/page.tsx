@@ -1,5 +1,7 @@
 import Link from 'next/link'
+import { cookies } from 'next/headers'
 import { createServerComponentClient, createServiceRoleClient } from '@/lib/supabase/server'
+import { isAdmin } from '@/lib/admin-check'
 import type { User, TradeCall } from '@/types'
 import {
   TrendingUp, TrendingDown, ArrowRight, Crown, Zap,
@@ -80,16 +82,25 @@ export default async function DashboardPage() {
     authUser?.email?.split('@')[0] ||
     'Investor'
 
+  // Admin bypass: admins get elite access unless they're in "view as user" mode
+  const adminUser = authUser ? await isAdmin(authUser.id) : false
+  const adminViewMode = cookies().get('admin_view_mode')?.value
+  const viewingAsUser = adminViewMode === 'user'
+
   // Get subscription tier from subscriptions table
   let userTier: User['tier'] = 'free'
   if (authUser) {
-    const supabase = createServiceRoleClient()
-    const { data: sub } = await supabase
-      .from('subscriptions')
-      .select('plan')
-      .eq('user_id', authUser.id)
-      .single()
-    if (sub?.plan) userTier = sub.plan as User['tier']
+    if (adminUser && !viewingAsUser) {
+      userTier = 'elite'
+    } else {
+      const supabase = createServiceRoleClient()
+      const { data: sub } = await supabase
+        .from('subscriptions')
+        .select('plan')
+        .eq('user_id', authUser.id)
+        .single()
+      if (sub?.plan) userTier = sub.plan as User['tier']
+    }
   }
 
   // Time-based greeting in IST
@@ -102,6 +113,31 @@ export default async function DashboardPage() {
 
   return (
     <div style={{ maxWidth: '1100px' }}>
+      {/* Admin "viewing as user" banner */}
+      {adminUser && viewingAsUser && (
+        <div style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          padding: '10px 16px', marginBottom: 24,
+          background: 'rgba(212,168,67,0.08)',
+          border: '1px solid rgba(212,168,67,0.25)',
+          borderRadius: 10, gap: 12,
+        }}>
+          <span style={{ fontSize: 13, color: 'var(--gold)', fontWeight: 500 }}>
+            Admin Mode: Viewing as user
+          </span>
+          <Link
+            href="/api/admin/view-mode?mode=admin"
+            style={{
+              fontSize: 12, fontWeight: 700, color: '#06090F',
+              background: 'var(--gold)', borderRadius: 6,
+              padding: '5px 12px', textDecoration: 'none', whiteSpace: 'nowrap',
+            }}
+          >
+            Back to Admin
+          </Link>
+        </div>
+      )}
+
       {/* Header */}
       <div style={{ marginBottom: '32px' }}>
         <p style={{ fontSize: '13px', color: 'var(--text3)', marginBottom: '4px' }}>{greeting},</p>

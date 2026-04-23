@@ -1,10 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { Check, X, HelpCircle, Crown, Zap, Shield, Star } from 'lucide-react'
+import { createClient } from '@/lib/supabase/client'
 
 const FEATURES = [
   { category: 'Advisory Services', items: [
@@ -43,7 +45,54 @@ function FeatureCell({ val }: { val: boolean | string }) {
 }
 
 export default function PricingPage() {
+  const router = useRouter()
   const [billing, setBilling] = useState<'monthly' | 'yearly'>('monthly')
+  const [hasSession, setHasSession] = useState<boolean | null>(null)
+  const [ctaLoading, setCtaLoading] = useState<string | null>(null)
+  const [ctaError, setCtaError] = useState('')
+
+  useEffect(() => {
+    const supabase = createClient()
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setHasSession(!!session)
+    })
+  }, [])
+
+  async function handlePlanClick(e: React.MouseEvent, tier: string) {
+    e.preventDefault()
+    setCtaError('')
+
+    if (tier === 'free') {
+      router.push(hasSession ? '/dashboard' : '/auth/register')
+      return
+    }
+
+    if (!hasSession) {
+      router.push(`/auth/register?plan=${tier}`)
+      return
+    }
+
+    // Logged in — create subscription via Razorpay
+    setCtaLoading(tier)
+    try {
+      const res = await fetch('/api/subscriptions/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tier, billing }),
+      })
+      const data = await res.json()
+      if (!res.ok || data.error) {
+        setCtaError(data.error ?? 'Could not start subscription. Please try again.')
+        return
+      }
+      // Redirect to settings with subscription_id for Razorpay checkout
+      router.push(`/settings?subscription=${data.subscription_id}&plan=${tier}`)
+    } catch {
+      setCtaError('Network error. Please try again.')
+    } finally {
+      setCtaLoading(null)
+    }
+  }
 
   // Basic: 8% off, Pro: 12% off, Elite: 15% off
   const plans = [
@@ -186,12 +235,15 @@ export default function PricingPage() {
                     'Full access. Serious capital.'}
                 </p>
 
-                <Link
-                  href={`/auth/register?plan=${plan.tier}`}
+                <button
+                  onClick={(e) => handlePlanClick(e, plan.tier)}
+                  disabled={ctaLoading === plan.tier}
                   style={{
                     display: 'block', width: '100%', padding: '13px',
-                    borderRadius: '12px', textAlign: 'center', textDecoration: 'none',
-                    fontSize: '14px', fontWeight: 700, cursor: 'pointer', transition: 'all 0.2s',
+                    borderRadius: '12px', textAlign: 'center',
+                    fontSize: '14px', fontWeight: 700, cursor: ctaLoading === plan.tier ? 'not-allowed' : 'pointer',
+                    transition: 'all 0.2s', outline: 'none',
+                    opacity: ctaLoading === plan.tier ? 0.7 : 1,
                     background: plan.ctaStyle === 'primary' ? 'var(--emerald)' :
                       plan.ctaStyle === 'gold' ? 'rgba(212,168,67,0.1)' : 'transparent',
                     color: plan.ctaStyle === 'primary' ? '#031A13' :
@@ -200,11 +252,11 @@ export default function PricingPage() {
                       plan.ctaStyle === 'gold' ? '1px solid rgba(212,168,67,0.3)' : '1px solid var(--border)',
                   }}
                 >
-                  {plan.cta}
-                </Link>
+                  {ctaLoading === plan.tier ? 'Starting…' : plan.cta}
+                </button>
                 {plan.tier !== 'free' && (
                   <p style={{ fontSize: '10px', color: 'var(--text4)', textAlign: 'center', marginTop: '8px', marginBottom: '16px' }}>
-                    Join the waitlist — payment gateway launching soon
+                    {hasSession ? 'Click to subscribe' : 'Register or sign in to subscribe'}
                   </p>
                 )}
               </div>
@@ -212,6 +264,15 @@ export default function PricingPage() {
           })}
         </div>
       </section>
+
+      {/* CTA error */}
+      {ctaError && (
+        <div style={{ maxWidth: '1100px', margin: '-16px auto 24px', padding: '0 40px' }}>
+          <div style={{ padding: '12px 16px', background: 'rgba(244,123,123,0.08)', border: '1px solid rgba(244,123,123,0.2)', borderRadius: 10, fontSize: 13, color: 'var(--coral)', textAlign: 'center' }}>
+            {ctaError}
+          </div>
+        </div>
+      )}
 
       {/* Feature comparison table */}
       <section style={{ padding: '0 40px 80px' }}>
