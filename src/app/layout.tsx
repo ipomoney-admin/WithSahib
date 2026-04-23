@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Outfit, JetBrains_Mono, DM_Serif_Display } from 'next/font/google'
-import Script from 'next/script'
+import { Outfit, JetBrains_Mono } from 'next/font/google'
 import '@/styles/globals.css'
 import { ThemeProvider } from '@/components/layout/ThemeProvider'
 import { WhatsAppButton } from '@/components/ui/WhatsAppButton'
@@ -20,15 +19,6 @@ const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
   weight: ['400', '500'],
   variable: '--font-mono',
-  display: 'swap',
-  preload: false,
-})
-
-const dmSerifDisplay = DM_Serif_Display({
-  subsets: ['latin'],
-  weight: ['400'],
-  style: ['normal', 'italic'],
-  variable: '--font-dm-serif',
   display: 'swap',
   preload: false,
 })
@@ -374,6 +364,10 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
         <link rel="preconnect" href="https://trtoxawkeququfurddwr.supabase.co" />
         <link rel="dns-prefetch" href="https://trtoxawkeququfurddwr.supabase.co" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap"
+          rel="stylesheet"
+        />
         <meta
           name="robots"
           content="max-snippet:-1, max-image-preview:large, max-video-preview:-1"
@@ -382,6 +376,8 @@ export default function RootLayout({
         <meta name="google-site-verification" content={process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ?? 'PLACEHOLDER'} />
         {/* TODO: Replace BING_PLACEHOLDER with actual Bing Webmaster Tools verification code */}
         <meta name="msvalidate.01" content={process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION ?? 'BING_PLACEHOLDER'} />
+        {/* Microsoft Clarity */}
+        <script type="text/javascript" dangerouslySetInnerHTML={{ __html: `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src='https://www.clarity.ms/tag/'+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, document, 'clarity', 'script', 'wg1eq65ef5');` }} />
         {/* AI crawler reference — https://llmstxt.org */}
         <link rel="alternate" type="text/plain" title="LLM Reference" href="/llms.txt" />
         {structuredData.map((schema, i) => (
@@ -392,7 +388,7 @@ export default function RootLayout({
           />
         ))}
       </head>
-      <body className={`${outfit.variable} ${jetbrainsMono.variable} ${dmSerifDisplay.variable}`}>
+      <body className={`${outfit.variable} ${jetbrainsMono.variable}`}>
         <ThemeProvider>
           {children}
           <WhatsAppButton />
@@ -410,14 +406,6 @@ export default function RootLayout({
         </ThemeProvider>
         <Analytics />
         <SpeedInsights />
-        {/* Microsoft Clarity — deferred so it never blocks rendering */}
-        <Script
-          id="clarity"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src='https://www.clarity.ms/tag/'+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, document, 'clarity', 'script', 'wg1eq65ef5');`,
-          }}
-        />
       </body>
     </html>
   )
