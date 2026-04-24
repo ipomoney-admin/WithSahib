@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Terms of Service — withSahib',
+  title: 'Terms of Service — Subscription & Usage',
   description: 'Terms of Service for withSahib.com — SEBI Registered Research Analyst INH000026266',
   robots: 'noindex',
 }

@@ -8,7 +8,7 @@ import { Footer } from '@/components/layout/Footer'
 import {
   TrendingUp, BarChart2, Target, RefreshCw, BookOpen, Calendar,
   Brain, Shield, ArrowRight, ChevronRight, Check,
-  Zap, Award, Users,
+  Zap, Award, Users, ShieldCheck,
   Linkedin, Twitter, Instagram, Facebook
 } from 'lucide-react'
 import { FALLBACK_DATA, type TickerItem } from '@/lib/utils/marketData'
@@ -371,13 +371,7 @@ function HeroSection() {
             marginBottom: '32px',
           }}
         >
-          <span
-            style={{
-              width: '6px', height: '6px', borderRadius: '50%',
-              background: 'var(--emerald)',
-              animation: 'pulseDot 2s ease-in-out infinite',
-            }}
-          />
+          <ShieldCheck size={14} strokeWidth={2.5} />
           SEBI Registered Research Analyst · INH000026266
         </div>
 
@@ -679,14 +673,14 @@ function AIEngineSection() {
   const { ref, inView } = useInView()
   const cards = [
     {
-      tag: 'Live Engine',
+      tag: 'Live Screener Engine',
       title: 'Pattern Recognition & Trade Picks',
-      desc: 'ML model scanning NSE stocks for chart patterns, demand zones, and volume breakouts — rolling picks autonomously.',
+      desc: 'Algorithmic screener scanning NSE stocks for chart patterns, demand zones, and volume breakouts — rolling picks every trading day.',
       status: 'Running live',
     },
     {
-      tag: 'Quarterly Results',
-      title: 'Automated Research Reports',
+      tag: 'Automated Research Reports',
+      title: 'Quarterly Results Analysis',
       desc: 'DCF models, earnings analysis, and management commentary — processed the moment BSE/NSE releases filings.',
       status: 'Auto-generates on filing',
     },
@@ -697,7 +691,7 @@ function AIEngineSection() {
       status: 'Real-time updates',
     },
     {
-      tag: 'Risk Engine',
+      tag: 'Signal Quality Engine',
       title: 'Backtested Signal Quality',
       desc: 'Every signal ranked by tier based on historical win rate, SL hit rate, and hold-period performance across years of data.',
       status: 'Continuously validated',
@@ -706,7 +700,7 @@ function AIEngineSection() {
   return (
     <section ref={ref} style={{ padding: '80px 40px', background: 'var(--bg2)' }}>
       <div className="container-wide" style={{ padding: 0 }}>
-        <div className="section-tag">Powered by AI</div>
+        <div className="section-tag">The Intelligence Behind Every Call</div>
         <h2
           style={{
             fontFamily: 'DM Serif Display, serif',
@@ -718,9 +712,8 @@ function AIEngineSection() {
             marginBottom: '12px',
           }}
         >
-          The intelligence{' '}
-          <em style={{ color: 'var(--emerald)', fontStyle: 'italic' }}>behind</em>{' '}
-          every call
+          Systematic research,{' '}
+          <em style={{ color: 'var(--emerald)', fontStyle: 'italic' }}>not guesswork</em>
         </h2>
         <p style={{ fontSize: '16px', color: 'var(--text2)', maxWidth: '480px', marginBottom: '48px' }}>
           Not guesswork. Not gut feel. Every recommendation is backed by automated analysis running 24/7.
@@ -741,20 +734,6 @@ function AIEngineSection() {
                 transition: `all 0.5s ease ${i * 0.1}s`,
               }}
             >
-              {/* AI watermark */}
-              <div
-                style={{
-                  position: 'absolute',
-                  bottom: '-8px', right: '12px',
-                  fontSize: '80px', fontWeight: 800,
-                  color: 'rgba(0,200,150,0.04)',
-                  lineHeight: 1,
-                  userSelect: 'none',
-                  fontFamily: 'DM Serif Display, serif',
-                }}
-              >
-                AI
-              </div>
               <div
                 style={{
                   fontSize: '10px', fontWeight: 600, letterSpacing: '2px',
@@ -965,8 +944,8 @@ function PricingSection() {
 function TrackRecordSection() {
   const { ref, inView } = useInView()
   const metrics = [
-    { icon: Target, val: '73%', label: 'Avg Win Rate', sub: 'Across all call types' },
-    { icon: Zap, val: '< 24h', label: 'Signal Delivery', sub: 'Before market open' },
+    { icon: Target, val: 'Live from May 2026', label: 'Track Record', sub: 'Auditable — no cherry-picking' },
+    { icon: Zap, val: 'Before 9 AM', label: 'Signal Delivery', sub: 'Every trading day' },
     { icon: Award, val: '5Y', label: 'Licence Valid', sub: 'Apr 2026 – Apr 2031' },
     { icon: Users, val: '100%', label: 'SEBI Compliant', sub: 'Full regulatory framework' },
   ]
@@ -1015,7 +994,7 @@ function TrackRecordSection() {
                 >
                   <Icon size={22} strokeWidth={1.5} color="var(--emerald)" />
                 </div>
-                <div style={{ fontSize: '32px', fontWeight: 700, color: 'var(--text)', fontFamily: 'DM Serif Display, serif', marginBottom: '4px' }}>
+                <div style={{ fontSize: m.val.length > 8 ? '16px' : '32px', fontWeight: 700, color: 'var(--text)', fontFamily: 'DM Serif Display, serif', marginBottom: '4px', lineHeight: 1.2 }}>
                   {m.val}
                 </div>
                 <div style={{ fontSize: '14px', fontWeight: 500, color: 'var(--text2)', marginBottom: '4px' }}>{m.label}</div>
@@ -1254,77 +1233,39 @@ function QuickLinksSection() {
   )
 }
 
-// ─── TESTIMONIALS ─────────────────────────────────────────────────────────────
+// ─── PRE-ANALYST CTA ─────────────────────────────────────────────────────────
 function EarlyAccessSection() {
-  const [email, setEmail] = useState('')
-  const [joined, setJoined] = useState(false)
   return (
     <section style={{ background: 'var(--surface)', padding: '80px 0', textAlign: 'center' }}>
       <div style={{ maxWidth: '600px', margin: '0 auto', padding: '0 24px' }}>
-        <span style={{ color: 'var(--emerald)', fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase' as const }}>
-          EARLY ACCESS
-        </span>
         <h2
           style={{
             fontFamily: 'DM Serif Display, serif',
-            fontSize: 'clamp(28px,4vw,36px)',
+            fontSize: 'clamp(28px,4vw,40px)',
             fontWeight: 400,
-            margin: '12px 0 16px',
+            margin: '0 0 16px',
             color: 'var(--text)',
             lineHeight: 1.2,
           }}
         >
-          Be among the first 100 subscribers
+          Ready to trade with{' '}
+          <em style={{ color: 'var(--emerald)', fontStyle: 'italic' }}>real research?</em>
         </h2>
-        <p style={{ color: 'var(--text2)', marginBottom: '32px', lineHeight: 1.6, fontSize: '16px' }}>
-          Razorpay payment gateway launching soon. Join the waitlist for priority access and a special launch discount.
+        <p style={{ color: 'var(--text2)', marginBottom: '32px', lineHeight: 1.7, fontSize: '16px' }}>
+          Join investors who trust SEBI-registered analysis over anonymous signals.
+          Start free — upgrade when ready.
         </p>
-        {joined ? (
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', color: 'var(--emerald)', fontSize: '15px', fontWeight: 500 }}>
-            <Check size={18} color="var(--emerald)" />
-            You&apos;re on the list! We&apos;ll notify you at launch.
-          </div>
-        ) : (
-          <div style={{ display: 'flex', gap: '12px', maxWidth: '420px', margin: '0 auto', flexWrap: 'wrap' as const, justifyContent: 'center' }}>
-            <input
-              type="email"
-              placeholder="your@email.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              aria-label="Email address for waitlist"
-              style={{
-                flex: 1,
-                minWidth: '220px',
-                padding: '12px 16px',
-                borderRadius: '8px',
-                border: '1px solid var(--border)',
-                background: 'var(--bg)',
-                color: 'var(--text)',
-                fontSize: '14px',
-                fontFamily: 'Outfit, sans-serif',
-                outline: 'none',
-              }}
-            />
-            <button
-              onClick={() => { if (email.includes('@')) setJoined(true) }}
-              style={{
-                padding: '12px 24px',
-                background: 'var(--emerald)',
-                color: '#000',
-                borderRadius: '8px',
-                fontWeight: 600,
-                cursor: 'pointer',
-                border: 'none',
-                fontSize: '14px',
-                fontFamily: 'Outfit, sans-serif',
-              }}
-            >
-              Join Waitlist
-            </button>
-          </div>
-        )}
-        <p style={{ fontSize: '11px', color: 'var(--text3)', marginTop: '12px' }}>
-          No spam. Unsubscribe anytime. SEBI RA INH000026266.
+        <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' as const }}>
+          <Link href="/auth/register" className="btn btn-primary btn-lg" style={{ textDecoration: 'none' }}>
+            Start Free Today
+            <ArrowRight size={16} />
+          </Link>
+          <Link href="/pricing" className="btn btn-ghost btn-lg" style={{ textDecoration: 'none' }}>
+            See Pricing
+          </Link>
+        </div>
+        <p style={{ fontSize: '11px', color: 'var(--text3)', marginTop: '20px', fontFamily: 'Courier New, monospace', letterSpacing: '1px' }}>
+          SEBI RA · INH000026266 · No credit card required for free plan
         </p>
       </div>
     </section>

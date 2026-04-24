@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { POSTS, type Post } from '@/lib/data/posts'
@@ -126,7 +127,12 @@ export default function BlogPage() {
                     {post.excerpt}
                   </p>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <span style={{ fontSize: 11, color: 'var(--text4)' }}>{post.dateDisplay}</span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                      <div style={{ position: 'relative', width: 24, height: 24, borderRadius: '50%', overflow: 'hidden', border: '1px solid rgba(0,200,150,0.2)', flexShrink: 0 }}>
+                        <Image src="/images/sahib-primary.jpg" alt="Sahib Singh Hora" fill sizes="24px" style={{ objectFit: 'cover', objectPosition: 'center top' }} />
+                      </div>
+                      <span style={{ fontSize: 11, color: 'var(--text4)' }}>{post.dateDisplay}</span>
+                    </div>
                     <span style={{ fontSize: 12, color: catColor, fontWeight: 600 }}>Read →</span>
                   </div>
                 </article>

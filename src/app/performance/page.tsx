@@ -114,6 +114,30 @@ export default async function PerformancePage() {
       </div>
 
       <div style={{ maxWidth: 1100, margin: '0 auto', padding: '48px 24px' }}>
+
+        {/* Coming soon notice */}
+        <div style={{
+          background: 'rgba(212,168,67,0.06)',
+          border: '1px solid rgba(212,168,67,0.25)',
+          borderRadius: 16,
+          padding: '20px 24px',
+          marginBottom: 36,
+          display: 'flex',
+          alignItems: 'flex-start',
+          gap: 14,
+        }}>
+          <span style={{ fontSize: 22, flexShrink: 0 }}>📋</span>
+          <div>
+            <p style={{ fontSize: 14, fontWeight: 600, color: 'var(--gold)', marginBottom: 4 }}>
+              Track record publishing begins from May 2026
+            </p>
+            <p style={{ fontSize: 13, color: 'var(--text3)', lineHeight: 1.7, margin: 0 }}>
+              Every signal will be logged here — entries, exits, win/loss, and full rationale. No cherry-picking.
+              All data is publicly auditable under SEBI RA regulations. SEBI RA INH000026266.
+            </p>
+          </div>
+        </div>
+
         {/* Hero Stats */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 48 }}>
           {[

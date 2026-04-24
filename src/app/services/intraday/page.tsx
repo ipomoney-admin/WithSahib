@@ -104,6 +104,18 @@ function CallCard({ call, blur }: { call: TradeCall; blur?: boolean }) {
   )
 }
 
+const howToSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'How to get SEBI-verified intraday stock picks',
+  description: 'Get daily intraday stock calls from SEBI Registered Research Analyst Sahib Singh Hora (INH000026266)',
+  step: [
+    { '@type': 'HowToStep', name: 'Create free account', text: 'Register at withsahib.com/auth/register — no credit card required', url: 'https://www.withsahib.com/auth/register' },
+    { '@type': 'HowToStep', name: 'Choose a plan', text: 'Select Pro or Elite plan for daily intraday calls', url: 'https://www.withsahib.com/pricing' },
+    { '@type': 'HowToStep', name: 'Access dashboard', text: "Log in to your dashboard before 9 AM every trading day for the day's intraday pick", url: 'https://www.withsahib.com/dashboard' },
+  ],
+}
+
 export default function IntradayPage() {
   const supabase = createClient()
   const [user, setUser] = useState<User | null>(null)
@@ -123,6 +135,7 @@ export default function IntradayPage() {
 
   return (
     <div style={{ maxWidth: '820px' }}>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
       {/* Header */}
       <div style={{ marginBottom: '28px' }}>
         <div className="section-tag">Intraday</div>

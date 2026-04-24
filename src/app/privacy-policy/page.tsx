@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy — withSahib',
+  title: 'Privacy Policy — Data Protection',
   description: 'Privacy Policy for withSahib.com — SEBI Registered Research Analyst INH000026266',
   robots: 'noindex',
 }

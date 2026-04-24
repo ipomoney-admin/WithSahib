@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
-import { Send, MessageCircle, MapPin, Clock, Shield } from 'lucide-react'
+import { Send, MessageCircle, MapPin, Clock, Shield, Phone, Mail } from 'lucide-react'
 
 const SUBJECTS = [
   'General Inquiry',
@@ -177,6 +177,44 @@ export default function ContactClient() {
                 >
                   Upgrade to Elite →
                 </Link>
+              </div>
+
+              {/* Phone & Email */}
+              <div
+                style={{
+                  background: 'var(--surface)',
+                  border: '1px solid var(--border)',
+                  borderRadius: 16,
+                  padding: 28,
+                }}
+              >
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+                  <a
+                    href="tel:+919981248888"
+                    style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}
+                  >
+                    <div style={{ width: 36, height: 36, borderRadius: 10, background: 'rgba(0,200,150,0.08)', border: '1px solid rgba(0,200,150,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <Phone size={15} color="var(--emerald)" strokeWidth={1.5} />
+                    </div>
+                    <div>
+                      <p style={{ fontSize: 11, color: 'var(--text3)', fontWeight: 600, letterSpacing: 1, textTransform: 'uppercase', marginBottom: 2 }}>Phone / WhatsApp</p>
+                      <p style={{ fontSize: 14, fontWeight: 600, color: 'var(--text)', fontFamily: 'Courier New, monospace' }}>+91 99812 48888</p>
+                    </div>
+                  </a>
+                  <div style={{ height: 1, background: 'var(--border)' }} />
+                  <a
+                    href="mailto:connect@withsahib.com"
+                    style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}
+                  >
+                    <div style={{ width: 36, height: 36, borderRadius: 10, background: 'rgba(212,168,67,0.08)', border: '1px solid rgba(212,168,67,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <Mail size={15} color="var(--gold)" strokeWidth={1.5} />
+                    </div>
+                    <div>
+                      <p style={{ fontSize: 11, color: 'var(--text3)', fontWeight: 600, letterSpacing: 1, textTransform: 'uppercase', marginBottom: 2 }}>Email</p>
+                      <p style={{ fontSize: 14, fontWeight: 600, color: 'var(--text)' }}>connect@withsahib.com</p>
+                    </div>
+                  </a>
+                </div>
               </div>
 
               {/* Response time */}

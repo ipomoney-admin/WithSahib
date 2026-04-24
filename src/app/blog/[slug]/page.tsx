@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { POSTS } from '@/lib/data/posts'
@@ -43,8 +44,17 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
     description: post.excerpt,
     url: `https://www.withsahib.com/blog/${post.slug}`,
     datePublished: post.date,
-    author: { '@type': 'Person', name: 'Sahib Singh Hora', identifier: 'INH000026266' },
-    publisher: { '@type': 'Person', name: 'Sahib Singh Hora' },
+    image: 'https://www.withsahib.com/og-image.png',
+    author: {
+      '@type': 'Person',
+      name: 'Sahib Singh Hora',
+      identifier: 'INH000026266',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'withSahib',
+      url: 'https://www.withsahib.com',
+    },
     keywords: post.tags.join(', '),
     articleBody: post.body.join(' '),
   }
@@ -68,7 +78,9 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
           <p style={{ fontSize: 17, color: 'var(--text2)', lineHeight: 1.7, marginBottom: 28 }}>{post.excerpt}</p>
           <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-              <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'rgba(0,200,150,0.1)', border: '1px solid rgba(0,200,150,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'DM Serif Display, serif', fontSize: 16, color: 'var(--emerald)' }}>S</div>
+              <div style={{ position: 'relative', width: 36, height: 36, borderRadius: '50%', overflow: 'hidden', border: '1px solid rgba(0,200,150,0.2)', flexShrink: 0 }}>
+                <Image src="/images/sahib-primary.jpg" alt="Sahib Singh Hora" fill sizes="36px" style={{ objectFit: 'cover', objectPosition: 'center top' }} />
+              </div>
               <div>
                 <p style={{ fontSize: 13, fontWeight: 600, color: 'var(--text)' }}>Sahib Singh Hora</p>
                 <p style={{ fontSize: 11, color: 'var(--gold)', fontFamily: 'Courier New, monospace' }}>SEBI RA · INH000026266</p>
@@ -103,7 +115,9 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
 
         {/* Author card */}
         <div style={{ marginTop: 40, padding: 28, background: 'var(--surface)', border: '1px solid rgba(0,200,150,0.15)', borderRadius: 16, display: 'flex', gap: 20, alignItems: 'flex-start' }}>
-          <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'rgba(0,200,150,0.08)', border: '2px solid rgba(0,200,150,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'DM Serif Display, serif', fontSize: 24, color: 'var(--emerald)', flexShrink: 0 }}>S</div>
+          <div style={{ position: 'relative', width: 56, height: 56, borderRadius: '50%', overflow: 'hidden', border: '2px solid rgba(0,200,150,0.2)', flexShrink: 0 }}>
+            <Image src="/images/sahib-primary.jpg" alt="Sahib Singh Hora" fill sizes="56px" style={{ objectFit: 'cover', objectPosition: 'center top' }} />
+          </div>
           <div>
             <p style={{ fontSize: 15, fontWeight: 600, color: 'var(--text)', marginBottom: 4 }}>Sahib Singh Hora</p>
             <p style={{ fontSize: 12, color: 'var(--gold)', fontFamily: 'Courier New, monospace', marginBottom: 8 }}>SEBI Registered Research Analyst · INH000026266</p>

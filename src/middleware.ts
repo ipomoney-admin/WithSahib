@@ -98,17 +98,9 @@ export async function middleware(request: NextRequest) {
     // Admin role check is done in each page/API handler via isAdmin()
   }
 
-  // Member-protected routes
+  // Member-protected routes — only dashboard requires login
   const protectedPaths = [
     '/dashboard',
-    '/services/intraday',
-    '/services/stock-options',
-    '/services/index-options',
-    '/reports',
-    '/portfolio',
-    '/appointments',
-    '/courses',
-    '/settings',
   ]
 
   const authPaths = ['/auth/login', '/auth/register', '/auth/forgot-password']

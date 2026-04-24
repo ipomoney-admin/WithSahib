@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Disclaimer — withSahib',
+  title: 'Disclaimer — SEBI Research Analyst Disclosures',
   description: 'Risk disclaimer and regulatory disclosures for withSahib.com — SEBI Registered Research Analyst INH000026266',
   robots: 'noindex',
 }

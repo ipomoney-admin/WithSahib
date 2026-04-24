@@ -164,7 +164,7 @@ const structuredData = [
     },
     contactPoint: {
       '@type': 'ContactPoint',
-      telephone: '+91-9198887210',
+      telephone: '+91-9981248888',
       contactType: 'customer support',
       availableLanguage: ['English', 'Hindi'],
     },

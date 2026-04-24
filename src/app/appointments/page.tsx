@@ -121,11 +121,8 @@ export default function AppointmentsPage() {
     }
   }
 
-  if (!user) return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '50vh' }}>
-      <div style={{ width: '32px', height: '32px', borderRadius: '50%', border: '2px solid var(--emerald)', borderTopColor: 'transparent', animation: 'spin 0.8s linear infinite' }} />
-    </div>
-  )
+  // Show the page publicly — auth check only happens at booking time
+  const isLoading = user === null && typeof window !== 'undefined'
 
   return (
     <div style={{ maxWidth: '800px' }}>
@@ -141,7 +138,30 @@ export default function AppointmentsPage() {
         </p>
       </div>
 
-      {!canBook && (
+      {/* Session types info — always visible */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '28px' }}>
+        {([15, 30] as const).map((d) => (
+          <div key={d} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '16px', padding: '20px' }}>
+            <p style={{ fontSize: '22px', fontWeight: 700, color: 'var(--emerald)', fontFamily: 'DM Serif Display, serif', marginBottom: '4px' }}>{d} min</p>
+            <p style={{ fontSize: '18px', fontWeight: 600, color: 'var(--text)', marginBottom: '6px' }}>₹{APPOINTMENT_PRICES[d]}</p>
+            <p style={{ fontSize: '13px', color: 'var(--text3)', lineHeight: 1.5 }}>
+              {d === 15 ? 'Quick review: chart analysis, one stock, or a strategy question.' : 'Deep dive: portfolio review, multiple stocks, or strategy session.'}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      {/* Login / upgrade gate if not authenticated or not eligible */}
+      {!user ? (
+        <div style={{ padding: '24px', background: 'rgba(0,200,150,0.04)', border: '1px solid rgba(0,200,150,0.15)', borderRadius: '14px', marginBottom: '28px', textAlign: 'center' }}>
+          <p style={{ fontSize: '15px', fontWeight: 600, color: 'var(--text)', marginBottom: '6px' }}>Log in to book a session</p>
+          <p style={{ fontSize: '13px', color: 'var(--text3)', marginBottom: '16px' }}>Create a free account or log in — then upgrade to Pro or Elite to book.</p>
+          <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <Link href="/auth/register" className="btn btn-primary btn-md" style={{ textDecoration: 'none' }}>Create Free Account</Link>
+            <Link href="/auth/login" className="btn btn-ghost btn-md" style={{ textDecoration: 'none' }}>Log In</Link>
+          </div>
+        </div>
+      ) : !canBook ? (
         <div style={{ padding: '20px 24px', background: 'rgba(212,168,67,0.06)', border: '1px solid rgba(212,168,67,0.2)', borderRadius: '14px', marginBottom: '28px', display: 'flex', alignItems: 'center', gap: '14px', flexWrap: 'wrap' }}>
           <AlertCircle size={20} color="var(--gold)" />
           <div style={{ flex: 1 }}>
@@ -152,7 +172,7 @@ export default function AppointmentsPage() {
             Upgrade to Pro
           </Link>
         </div>
-      )}
+      ) : null}
 
       {success ? (
         <div style={{ textAlign: 'center', padding: '48px', background: 'var(--surface)', border: '1px solid rgba(0,200,150,0.2)', borderRadius: '20px' }}>
