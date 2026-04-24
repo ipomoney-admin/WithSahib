@@ -1,0 +1,22 @@
+# withSahib
+> SEBI Registered Research Analyst platform founded by Sahib Singh Hora (INH000026266)
+
+## About
+withSahib provides structured equity research for Indian stock markets including swing trade setups, intraday picks, and options signals for Nifty, BankNifty, Sensex, FinNifty, and MidcapNifty.
+
+## Founder
+Sahib Singh Hora — SEBI Registered Research Analyst, INH000026266
+
+## Services
+- Swing Trade Research: Daily scans of 1500+ NSE stocks using 15 bullish and 13 bearish technical patterns
+- Intraday Research: Nifty 500 stocks, 1H evening watchlist + 15M real-time alerts
+- Index Options: Nifty (65 units, Tuesday expiry), BankNifty (30 units, Tuesday), FinNifty (60 units, Tuesday), MidcapNifty (120 units, Tuesday), Sensex (20 units, Thursday)
+- Stock Options: F&O eligible NSE stocks (~200 stocks)
+
+## Compliance
+SEBI Research Analyst Registration: INH000026266
+Regulated by: Securities and Exchange Board of India (SEBI)
+Compliant with: SEBI (Research Analysts) Regulations, 2014
+
+## Website
+https://www.withsahib.com

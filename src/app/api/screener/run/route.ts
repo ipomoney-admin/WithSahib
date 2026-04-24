@@ -5,6 +5,8 @@ import { fetchLivePrice, fetchLivePrices } from '@/lib/fyers-client'
 import { calculateRR } from '@/lib/signal-utils'
 import { runScreener } from '@/lib/screener/screener-engine'
 import { captureToML } from '@/lib/screener/ml-capture'
+import { fetchOHLCVBatch, sleep } from '@/lib/screener/data/fyers-feed'
+import { NSE_MAIN_BOARD, FNO_STOCKS } from '@/lib/screener/data/nse-universe'
 import type { OHLCV } from '@/lib/screener/types'
 
 function cronGuard(req: NextRequest): boolean {
@@ -197,11 +199,73 @@ async function runSwingScreener(supabase: ReturnType<typeof createServiceRoleCli
   return generated
 }
 
+const SEGMENT_CONFIG = {
+  swing:         { resolution: 'D',  days: 400, universe: NSE_MAIN_BOARD, minTurnover: 5_000_000 },
+  intraday_1h:   { resolution: '60', days: 30,  universe: FNO_STOCKS,     minTurnover: 0 },
+  intraday_15m:  { resolution: '15', days: 15,  universe: FNO_STOCKS,     minTurnover: 0 },
+} as const
+
+type Segment = keyof typeof SEGMENT_CONFIG
+
+async function runFyersScreener(segment: Segment) {
+  const { resolution, days, universe, minTurnover } = SEGMENT_CONFIG[segment]
+  const BATCH = 50
+  const candlesMap = new Map<string, OHLCV[]>()
+
+  for (let i = 0; i < universe.length; i += BATCH) {
+    const batch = universe.slice(i, i + BATCH)
+    const batchData = await fetchOHLCVBatch(batch, resolution, days)
+
+    for (const [sym, data] of Array.from(batchData.entries())) {
+      if (data.length < 100) continue
+      if (minTurnover > 0) {
+        const last20 = data.slice(-20)
+        const avgTurnover = last20.reduce((s, c) => s + c.close * c.volume, 0) / last20.length
+        if (avgTurnover < minTurnover) continue
+      }
+      candlesMap.set(sym, data)
+    }
+
+    // Polite pause between batches to respect Fyers rate limits
+    if (i + BATCH < universe.length) await sleep(1500)
+  }
+
+  const results = await runScreener(candlesMap, segment)
+  await captureToML(results, segment)
+  return results
+}
+
 export async function GET(req: NextRequest) {
   if (!cronGuard(req)) {
     return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 })
   }
 
+  const { searchParams } = new URL(req.url)
+  const segmentParam = searchParams.get('segment')
+
+  // --- New: Fyers-backed pattern screener ---
+  if (segmentParam) {
+    const allowedSegments = ['swing', 'intraday_1h', 'intraday_15m'] as const
+    if (!allowedSegments.includes(segmentParam as Segment)) {
+      return NextResponse.json({ success: false, error: 'Invalid segment' }, { status: 400 })
+    }
+    const segment = segmentParam as Segment
+
+    try {
+      const results = await runFyersScreener(segment)
+      const grouped: Record<string, typeof results> = {}
+      for (const r of results) {
+        if (!grouped[r.bucketCode]) grouped[r.bucketCode] = []
+        ;(grouped[r.bucketCode] as typeof results).push(r)
+      }
+      return NextResponse.json({ success: true, data: { segment, total: results.length, grouped } })
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : 'Unknown error'
+      return NextResponse.json({ success: false, error: msg }, { status: 500 })
+    }
+  }
+
+  // --- Legacy: VWAP cron screener ---
   const open = await isMarketOpen()
   const mins = istMins()
   // Allow pre-market for swing screener

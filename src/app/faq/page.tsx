@@ -4,15 +4,21 @@ import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 
 export const metadata: Metadata = {
-  title: 'FAQ — SEBI RA INH000026266',
+  title: 'FAQ — withSahib | SEBI Registered Research Analyst INH000026266',
   description:
-    'Comprehensive answers about SEBI Registered Research Analyst services, INH000026266, Sahib Singh Hora, intraday picks, options advisory, and Indian stock market research.',
+    'Answers to all questions about withSahib, SEBI registered research analyst Sahib Singh Hora, swing trading, intraday picks, options signals, and Indian stock market research.',
   alternates: { canonical: 'https://www.withsahib.com/faq' },
   openGraph: {
-    title: 'FAQ — SEBI Research Analyst withSahib | INH000026266',
+    title: 'FAQ — withSahib | SEBI Registered Research Analyst INH000026266',
     description:
-      'Everything you need to know about SEBI RA services, Sahib Singh Hora, intraday stock calls, swing trades, options picks, and AI research reports.',
+      'Answers to all questions about withSahib, SEBI registered research analyst Sahib Singh Hora, swing trading, intraday picks, options signals, and Indian stock market research.',
     url: 'https://www.withsahib.com/faq',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'FAQ — withSahib | SEBI Registered Research Analyst INH000026266',
+    description:
+      'Answers to all questions about withSahib, SEBI RA Sahib Singh Hora (INH000026266), swing trading, intraday picks, and options signals.',
   },
 }
 
@@ -22,7 +28,7 @@ const FAQ_SECTIONS = [
     items: [
       {
         q: 'What is a SEBI Registered Research Analyst (RA)?',
-        a: 'A SEBI Registered Research Analyst is a SEBI-licensed professional authorised to provide investment research, stock recommendations, and trade ideas to retail and institutional clients. They operate under the SEBI (Research Analysts) Regulations, 2014 and must follow strict disclosure, conflict-of-interest, and compliance norms. Each RA carries a unique registration number (e.g. INH000026266) that is publicly verifiable on SEBI\'s portal.',
+        a: "A SEBI Registered Research Analyst is a SEBI-licensed professional authorised to provide investment research, stock recommendations, and trade ideas to retail and institutional clients. They operate under the SEBI (Research Analysts) Regulations, 2014 and must follow strict disclosure, conflict-of-interest, and compliance norms. Each RA carries a unique registration number (e.g. INH000026266) that is publicly verifiable on SEBI's portal.",
       },
       {
         q: 'Why should I only take research from a SEBI Registered RA?',
@@ -30,7 +36,7 @@ const FAQ_SECTIONS = [
       },
       {
         q: 'How is a SEBI RA different from a SEBI Investment Adviser (IA)?',
-        a: 'A SEBI Research Analyst provides research reports and general trade recommendations that are not tailored to individual circumstances. A SEBI Investment Adviser provides personalised advice based on a client\'s risk profile, goals, and financial situation. Sahib Singh Hora is a SEBI RA — the research published on withSahib.com is general in nature and not personal financial advice.',
+        a: "A SEBI Research Analyst provides research reports and general trade recommendations that are not tailored to individual circumstances. A SEBI Investment Adviser provides personalised advice based on a client's risk profile, goals, and financial situation. Sahib Singh Hora is a SEBI RA — the research published on withSahib.com is general in nature and not personal financial advice.",
       },
       {
         q: 'What are the SEBI RA Regulations 2014?',
@@ -38,128 +44,299 @@ const FAQ_SECTIONS = [
       },
       {
         q: 'What is NISM certification and why does it matter?',
-        a: 'NISM (National Institute of Securities Markets) is SEBI\'s educational arm. Research Analysts are required to pass the NISM Series XV: Research Analyst Certification Examination as a prerequisite for SEBI registration. This ensures all registered analysts have a baseline understanding of securities markets, valuation, and ethics. Sahib Singh Hora is NISM certified.',
+        a: "NISM (National Institute of Securities Markets) is SEBI's educational arm. Research Analysts are required to pass the NISM Series XV: Research Analyst Certification Examination as a prerequisite for SEBI registration. This ensures all registered analysts have a baseline understanding of securities markets, valuation, and ethics. Sahib Singh Hora is NISM certified.",
+      },
+      {
+        q: 'What is SEBI Registration No. INH000026266?',
+        a: 'INH000026266 is the SEBI Research Analyst registration number of Sahib Singh Hora, founder of withSahib. This registration authorises the provision of equity research and investment recommendations to clients in India. It was issued under SEBI (Research Analysts) Regulations, 2014 and is valid from April 20, 2026 to April 19, 2031. Verifiable at sebi.gov.in.',
       },
     ],
   },
   {
-    heading: 'About Sahib Singh Hora & INH000026266',
+    heading: 'About withSahib & Sahib Singh Hora',
     items: [
       {
-        q: 'Who is Sahib Singh Hora?',
-        a: 'Sahib Singh Hora is a SEBI Registered Research Analyst (INH000026266). He provides institutional-grade technical analysis, intraday picks, swing trades, options strategies, and AI-powered research reports through withSahib.com. He is NISM certified and operates fully under SEBI\'s regulatory framework.',
+        q: 'What is withSahib?',
+        a: 'withSahib is a SEBI Registered Research Analyst platform founded by Sahib Singh Hora (Registration No. INH000026266). It provides structured equity research including swing trade setups, intraday stock picks, and options signals for Indian stock markets — backed by data and detailed rationale.',
       },
       {
-        q: 'What is the SEBI registration number INH000026266?',
-        a: 'INH000026266 is the SEBI Research Analyst registration number assigned to Sahib Singh Hora. The registration is valid from April 20, 2026 to April 19, 2031. It can be verified on the official SEBI Intermediary Portal at sebi.gov.in.',
+        q: 'Who is Sahib Singh Hora?',
+        a: 'Sahib Singh Hora is a SEBI Registered Research Analyst (INH000026266) and the founder of withSahib. He specialises in technical analysis, swing trading, intraday strategies, and options research for Indian equity markets.',
+      },
+      {
+        q: 'Is withSahib SEBI registered?',
+        a: 'Yes. withSahib operates under SEBI Research Analyst Registration No. INH000026266, issued by the Securities and Exchange Board of India (SEBI). All research and recommendations comply with SEBI (Research Analysts) Regulations, 2014.',
+      },
+      {
+        q: 'What services does withSahib offer?',
+        a: 'withSahib offers four core research services: (1) Swing trade setups — daily scans across 1500+ NSE stocks, (2) Intraday picks — Nifty 500 stocks with 1H watchlist and 15-minute live alerts, (3) Index options signals — Nifty, BankNifty, Sensex, FinNifty, MidcapNifty, and (4) Stock options signals for F&O eligible NSE stocks.',
+      },
+      {
+        q: 'Is withSahib legitimate?',
+        a: 'Yes. withSahib is a legally registered research analyst service under SEBI. Unlike unregistered tip providers, withSahib operates with full regulatory compliance, transparent track records, and detailed research rationale for every recommendation.',
+      },
+      {
+        q: 'How is withSahib different from other stock tip services?',
+        a: 'withSahib provides structured research — not tips. Every signal comes with data-backed rationale, entry/exit levels, and stop-loss. All signals are tracked publicly, including ones that were not shared, to maintain full accountability. withSahib is SEBI registered, which most tip providers are not.',
+      },
+      {
+        q: 'Where is withSahib based?',
+        a: 'withSahib is based in Jabalpur, Madhya Pradesh, India, and serves clients across the country through its digital platform at withsahib.com.',
+      },
+      {
+        q: 'How can I contact withSahib?',
+        a: 'You can reach withSahib through the website at withsahib.com, or via WhatsApp and email listed on the contact page.',
+      },
+      {
+        q: 'What makes Sahib Singh Hora qualified to give stock market research?',
+        a: 'Sahib Singh Hora holds a SEBI Research Analyst registration (INH000026266), which requires passing NISM Series XV examination and meeting SEBI\'s eligibility criteria. He specialises in technical analysis with a focus on pattern recognition, momentum strategies, and options pricing.',
       },
       {
         q: 'How do I verify SEBI registration INH000026266?',
         a: 'Go to sebi.gov.in → Intermediaries/Market Infrastructure Institutions → Registered Intermediaries → Research Analyst. Search for "INH000026266" or "Sahib Singh Hora" to verify the active registration status and validity period.',
       },
+    ],
+  },
+  {
+    heading: 'Swing Trading Research',
+    items: [
       {
-        q: 'Where is Sahib Singh Hora based?',
-        a: 'Sahib Singh Hora is based in Madhya Pradesh, India, and provides research services to clients across India through withSahib.com. All services are delivered digitally via the platform.',
+        q: 'What is swing trading?',
+        a: 'Swing trading is a medium-term trading style where positions are held for 2 to 15 days, capturing price swings within a trend. It requires identifying stocks at key technical levels before a significant move.',
       },
       {
-        q: 'What is withSahib.com?',
-        a: 'withSahib.com is the personal research platform of Sahib Singh Hora, SEBI Registered Research Analyst (INH000026266). It publishes research on NSE-listed equities, options, and indices — including daily intraday picks, swing trade picks, and AI-powered research reports.',
+        q: 'How does withSahib identify swing trade setups?',
+        a: 'withSahib uses a proprietary screener scanning 1500+ NSE stocks daily at 4 PM. It detects 15 bullish and 13 bearish patterns including EMA crossovers, Darvas Box breakouts, RSI divergence, VCP (Volatility Contraction Pattern), Cup & Handle, Double/Triple bottoms, Base breakouts, and SMC patterns like Order Blocks, FVGs, and Liquidity Sweeps.',
+      },
+      {
+        q: 'What patterns does the swing screener detect?',
+        a: 'The screener detects: EMA 10x20 and 20x50 crossovers and retests, Darvas Box breakout/breakdown (10D and 20D), RSI Bullish/Bearish Divergence (10, 14, 21 day), Double and Triple Bottom/Top with neckline breakout, Base Breakout with volume surge (10, 15, 20 day), VCP (Volatility Contraction Pattern), Rounding Bottom, Cup & Handle, Inverse Head & Shoulders, Head & Shoulders, SMC Order Blocks, Fair Value Gaps (FVG), and Liquidity Sweeps.',
+      },
+      {
+        q: 'How many stocks does withSahib scan for swing trades?',
+        a: 'withSahib scans 1200 to 1500 NSE Main Board stocks daily, filtered for liquidity (average daily turnover above ₹50 lakhs over 20 days). SME stocks and illiquid stocks are excluded.',
+      },
+      {
+        q: 'What timeframe is used for swing trade research?',
+        a: 'Swing trade research uses daily (1D) candles as the primary timeframe, with weekly trend confirmation. Scans run at 4 PM daily after market prices settle.',
+      },
+      {
+        q: 'What is a Darvas Box breakout?',
+        a: 'A Darvas Box is a tight price consolidation pattern where the stock trades within a defined range (box) for several days. A breakout occurs when price closes above the box top with significant volume — signalling institutional accumulation and potential for a strong move.',
+      },
+      {
+        q: 'What is VCP — Volatility Contraction Pattern?',
+        a: 'VCP is a pattern identified by Mark Minervini where a stock makes progressively smaller price corrections with decreasing volume — indicating institutional accumulation. The final breakout from VCP often produces explosive moves.',
+      },
+      {
+        q: 'What is RSI divergence and why does it matter?',
+        a: 'RSI divergence occurs when price makes a lower low but RSI makes a higher low (bullish divergence) — indicating weakening selling pressure and potential reversal. Bearish divergence is the opposite. withSahib uses 10, 14, and 21-day lookback windows to detect divergence across different timeframes.',
+      },
+      {
+        q: 'Does withSahib give both bullish and bearish swing setups?',
+        a: 'Yes. withSahib provides 15 bullish buckets (B1–B15) and 13 bearish buckets (S1–S13) for swing trades, allowing traders to identify both long and short opportunities.',
+      },
+      {
+        q: 'What is the universe of stocks for swing trading research?',
+        a: 'The swing trading universe covers 1200–1500 NSE Main Board stocks. Stocks are filtered by average daily turnover (minimum ₹50 lakhs/day over 20 days) to ensure adequate liquidity.',
       },
     ],
   },
   {
-    heading: 'Services & Products',
+    heading: 'Intraday Research',
     items: [
       {
-        q: 'What intraday stock calls does withSahib provide?',
-        a: 'withSahib publishes daily intraday picks for NSE-listed equities before 9 AM on every trading day. Each call includes: stock name, recommended entry range, target price(s), and stop-loss level. Calls are based on technical analysis including price action, volume, momentum indicators, and multi-timeframe analysis.',
+        q: 'What intraday research does withSahib provide?',
+        a: 'withSahib provides two-stage intraday research: (1) Evening watchlist at 4 PM using 1-hour charts — stocks showing pattern setups for the next trading day, and (2) Real-time 15-minute alerts during market hours (9:15 AM to 3:30 PM) for entry confirmation signals.',
       },
       {
-        q: 'What types of options calls does withSahib offer?',
-        a: 'withSahib offers two types of options calls: (1) Stock Options — weekly and monthly strategies with strike selection, premium targets, and risk-defined setups; (2) Index Options — Nifty and Bank Nifty options using OI analysis, PCR-based directional calls, and expiry day plays. Options require understanding of derivatives risk.',
+        q: 'What is the universe for intraday research?',
+        a: 'Intraday research covers Nifty 500 stocks only — the most liquid, institutionally tracked stocks on NSE.',
       },
       {
-        q: 'What are swing trade picks and how often are they published?',
-        a: 'Swing trade picks are 2–10 day positional trade ideas published 3–5 times per week. They are based on chart pattern breakouts (flags, triangles, cup-and-handle), volume confirmation, and multi-timeframe technical analysis. Each pick includes entry, target, and stop-loss.',
+        q: 'How does the 1H + 15M two-stage system work?',
+        a: 'At 4 PM, withSahib scans 1-hour charts of Nifty 500 stocks to identify pattern setups and build a watchlist for the next day. During market hours, the system scans 15-minute charts every 15 minutes to detect entry confirmation signals on watchlist stocks. The daily trend alignment is verified before any signal is generated.',
       },
       {
-        q: 'What is the Model Portfolio on withSahib?',
-        a: 'The Model Portfolio is a curated long-term stock portfolio published under SEBI RA research guidelines. It includes 10–20 NSE-listed stocks selected for long-term value, sector allocation rationale, and expected holding periods. It is rebalanced quarterly with published reasoning.',
+        q: 'What is the Opening Range Breakout (ORB) strategy?',
+        a: 'ORB involves marking the high and low of the first 15–30 minutes of trading (9:15–9:45 AM). A breakout above the range high signals a long entry; a breakdown below signals a short. This is one of the most reliable intraday setups used by institutional traders.',
       },
       {
-        q: 'What are AI Research Reports?',
-        a: 'AI Research Reports are institutional-grade documents generated automatically when BSE/NSE-listed companies publish quarterly results or filings. The engine runs DCF models, analyses management commentary, and compares results against estimates to produce structured reports with buy/hold/sell recommendations. Available to Pro and Elite subscribers.',
-      },
-      {
-        q: 'How do 1-on-1 sessions work?',
-        a: '1-on-1 sessions are personal video calls with Sahib Singh Hora. Available in 15-minute or 30-minute formats. Topics can include: portfolio review, specific stock deep-dive, options strategy discussion, or general trading process improvement. Pro subscribers get 1 session/month; Elite subscribers get unlimited sessions. Book at withsahib.com/appointments.',
-      },
-      {
-        q: 'What courses are available on withSahib?',
-        a: 'withSahib offers self-paced courses on technical analysis fundamentals, options theory and pricing, and building a systematic trading process. Courses include video modules, quizzes, and downloadable materials. Available to Basic, Pro, and Elite subscribers.',
+        q: 'How does withSahib handle gap-up and gap-down openings for intraday?',
+        a: "Gap openings require special handling. withSahib's intraday system filters out false signals by checking if the gap is supported by volume and trend alignment on the daily chart before generating an alert.",
       },
     ],
   },
   {
-    heading: 'Pricing & Plans',
+    heading: 'Options Research',
     items: [
       {
-        q: 'What are the subscription plans on withSahib?',
-        a: 'There are 4 plans: Free (₹0/month) — signal previews and market data; Basic (₹999/month) — swing trades, model portfolio, weekly outlook; Pro (₹2,499/month) — daily intraday picks, options picks, AI reports, 1 session/month; Elite (₹5,999/month) — everything in Pro plus unlimited sessions, priority WhatsApp alerts, all courses, and HNI research. Annual billing saves 20%.',
+        q: 'What index options does withSahib cover?',
+        a: 'withSahib covers weekly options for all five major indices: Nifty 50 (65 units), Bank Nifty (30 units), Nifty Financial Services/FinNifty (60 units), Nifty Midcap Select (120 units), and Sensex (20 units). Nifty, BankNifty, FinNifty, and MidcapNifty expire on Tuesday. Sensex expires on Thursday.',
       },
       {
-        q: 'Is there a free plan available?',
-        a: 'Yes. The Free plan requires no credit card and gives access to signal previews, market ticker, news feed, and sample research reports — indefinitely. You can upgrade at any time from your dashboard.',
+        q: 'Does withSahib provide options buying or selling signals?',
+        a: 'withSahib provides both — buy-side signals (directional options buying) and sell-side signals (premium collection strategies like Iron Condors, Straddles, Strangles). Sell-side strategies require higher capital and carry different risk profiles.',
+      },
+      {
+        q: 'What stock options does withSahib cover?',
+        a: 'withSahib covers F&O eligible NSE stocks — approximately 180 to 200 stocks that have active options contracts. These are the most liquid, institutionally tracked stocks in India.',
+      },
+      {
+        q: 'What is the key pattern for explosive options moves?',
+        a: 'The highest probability options setups occur when an underlying shows tight price consolidation with RSI resetting from overbought levels to 55–65 zone, volume drying up, and then a sudden breakout. This compression-expansion pattern can produce 30–100x returns on options in minutes due to gamma acceleration near expiry.',
+      },
+      {
+        q: 'Why do options give 50-100x returns sometimes?',
+        a: 'Near expiry, options have very low time value (theta). A small move in the underlying — say 0.5% — can change a deep OTM option from near-zero to significant intrinsic value. Combined with delta and gamma acceleration, this produces exponential returns. This is why withSahib focuses on expiry-week setups.',
+      },
+      {
+        q: 'What is Iron Condor and when does withSahib use it?',
+        a: 'An Iron Condor involves selling an OTM Call and OTM Put while buying further OTM options for protection — profiting when the index stays in a range. withSahib uses this strategy in low-volatility, range-bound market conditions.',
+      },
+      {
+        q: 'What is the difference between ATM, ITM, and OTM options?',
+        a: 'ATM (At The Money) — strike price closest to current market price. ITM (In The Money) — Call with strike below market price, or Put with strike above. OTM (Out of The Money) — Call with strike above market price, or Put with strike below. withSahib primarily uses ATM and 1-strike OTM for directional buying.',
+      },
+      {
+        q: 'What is Gamma and why does it matter for options near expiry?',
+        a: "Gamma measures the rate of change of Delta. Near expiry, Gamma is highest — meaning a small move in the underlying causes a disproportionately large change in the option's delta and price. This is why options explode near expiry on breakouts.",
+      },
+      {
+        q: 'What is IV (Implied Volatility) and how does it affect options pricing?',
+        a: "IV reflects the market's expectation of future price movement. High IV means options are expensive — premium sellers benefit. Low IV means options are cheap — buyers benefit. withSahib monitors IV before recommending buy or sell strategies.",
+      },
+      {
+        q: 'What is Theta decay and how does withSahib manage it?',
+        a: "Theta is time decay — options lose value every day, accelerating near expiry. For options buyers, this is the enemy — entry timing is critical. withSahib's buy-side signals are designed for quick entries and exits, minimising theta impact.",
+      },
+    ],
+  },
+  {
+    heading: 'Platform & Technology',
+    items: [
+      {
+        q: "What technology powers withSahib's screener?",
+        a: 'withSahib uses a custom-built algorithmic screener detecting 28 technical patterns across swing (1500+ stocks), intraday 1H, and intraday 15M timeframes. It is built on Next.js, Supabase, and integrates with Fyers API for live market data.',
+      },
+      {
+        q: 'How does withSahib use AI and machine learning?',
+        a: 'withSahib captures every signal — shared and unshared — in a machine learning database. Price outcomes are tracked at 1, 3, 5, 10, 15, and 30 days post-signal. This data trains ML models to improve pattern detection accuracy and identify which setups have the highest historical win rates.',
+      },
+      {
+        q: 'Does withSahib use automated trading or algo trading?',
+        a: 'No. withSahib is a research and advisory platform — it identifies setups and generates signals. All final trading decisions are made by the subscriber. This complies with SEBI Research Analyst regulations.',
+      },
+      {
+        q: 'How are signals delivered to subscribers?',
+        a: 'Signals are delivered via WhatsApp and email. withSahib reviews all screener outputs before sharing — maintaining research quality and avoiding noise.',
+      },
+      {
+        q: "Is withSahib's track record publicly available?",
+        a: "Yes. withSahib maintains transparent track records of all shared signals including entry price, exit price, and percentage gain/loss. Historical performance data is available to subscribers.",
+      },
+      {
+        q: 'Is withSahib a mobile app?',
+        a: "withSahib.com is a Progressive Web App (PWA) — it works on any device through your browser and can be installed on your phone's home screen for an app-like experience. Native iOS and Android apps are planned.",
+      },
+    ],
+  },
+  {
+    heading: 'Pricing & Subscription',
+    items: [
+      {
+        q: 'How much does withSahib subscription cost?',
+        a: 'There are 4 plans: Free (₹0/month) — signal previews and basic dashboard; Basic (₹999/month) — swing trades, model portfolio, courses; Pro (₹2,499/month) — all signals + AI reports + 1 session/month; Elite (₹5,999/month) — everything in Pro plus unlimited sessions, priority WhatsApp alerts, and HNI research. Annual billing saves 8–15%. Visit withsahib.com/pricing for current offers.',
+      },
+      {
+        q: 'Is there a free trial available?',
+        a: 'The Free plan requires no credit card and gives access to signal previews, market ticker, news feed, and sample research reports — indefinitely. You can upgrade at any time from your dashboard.',
+      },
+      {
+        q: 'What payment methods does withSahib accept?',
+        a: 'withSahib accepts all major payment methods through Razorpay — UPI (GPay, PhonePe, Paytm), credit/debit cards (Visa, Mastercard, RuPay), net banking, and EMI options.',
       },
       {
         q: 'Can I cancel my subscription anytime?',
         a: 'Yes. Subscriptions can be cancelled anytime from your account settings. You retain access until the end of your current billing period. No cancellation fees or lock-in.',
       },
-      {
-        q: 'What payment methods are accepted?',
-        a: 'Payments are processed via Razorpay, which supports all major UPI apps (GPay, PhonePe, Paytm), credit/debit cards (Visa, Mastercard, RuPay), net banking, and EMI options.',
-      },
     ],
   },
   {
-    heading: 'Compliance & Risk',
+    heading: 'Risk & Compliance',
     items: [
       {
-        q: 'Are withSahib\'s recommendations guaranteed to make profit?',
-        a: 'No. Investments in securities markets are subject to market risks. SEBI registration does not guarantee performance or returns to investors. All research on withSahib is for informational and educational purposes, published under SEBI RA regulations. You should assess your own risk tolerance and consult a SEBI Investment Adviser for personalised financial advice.',
+        q: "Are withSahib's recommendations guaranteed to make profit?",
+        a: "No. Stock market investments are subject to market risks. withSahib provides research and analysis — not guaranteed returns. Past performance does not guarantee future results. All investments should be made based on individual risk appetite and financial situation.",
       },
       {
-        q: 'What is the standard SEBI risk disclaimer?',
-        a: 'Investments in securities market are subject to market risks. Read all related documents carefully before investing. Registration granted by SEBI and certification from NISM in no way guarantee performance of the intermediary or provide any assurance of returns to investors. Research Analyst: Sahib Singh Hora, SEBI RA Reg. No. INH000026266.',
+        q: 'What is SEBI Research Analyst Regulation?',
+        a: "SEBI (Research Analysts) Regulations 2014 governs entities providing investment research in India. Registered analysts must pass NISM certification, maintain records, disclose conflicts of interest, and follow a code of conduct. withSahib complies with all these requirements.",
       },
       {
-        q: 'Does withSahib share my personal data?',
-        a: 'No. withSahib does not share client data with any third parties. Client onboarding follows SEBI-compliant procedures. All data is stored securely using Supabase (PostgreSQL) infrastructure with industry-standard encryption.',
+        q: 'Is it safe to follow stock market research from withSahib?',
+        a: 'withSahib provides SEBI-compliant research with transparent track records and full rationale. However, all investment decisions carry risk. Subscribers should do their own due diligence and consult a financial advisor for personalised advice.',
       },
       {
-        q: 'Does the analyst personally hold positions in recommended stocks?',
-        a: 'All conflicts of interest and analyst holdings are disclosed in research reports as required under SEBI RA Regulations 2014. If Sahib Singh Hora holds a position in a recommended security, this is explicitly disclosed in the research note.',
+        q: 'Does withSahib have any conflict of interest in its recommendations?',
+        a: 'withSahib follows SEBI guidelines on conflict of interest disclosure. Any personal positions held in recommended securities are disclosed as required by SEBI regulations.',
       },
       {
         q: 'How do I lodge a complaint against a SEBI-registered intermediary?',
-        a: 'Complaints against SEBI-registered intermediaries can be filed through the SEBI SCORES (SEBI Complaints Redressal System) portal at scores.sebi.gov.in. You can also contact SEBI directly at sebi.gov.in or call 1800 22 7575 (toll-free).',
+        a: 'Complaints can be filed through the SEBI SCORES (SEBI Complaints Redressal System) portal at scores.sebi.gov.in. You can also contact SEBI directly at sebi.gov.in or call 1800 22 7575 (toll-free).',
       },
     ],
   },
   {
-    heading: 'Platform & Technical',
+    heading: 'Financial Literacy & Education',
     items: [
       {
-        q: 'How do I get started on withSahib?',
-        a: 'Sign up at withsahib.com/auth/register — no credit card required. Your free account is created instantly with access to signal previews and market data. Upgrade from your dashboard whenever you\'re ready.',
+        q: 'What is the difference between a Research Analyst and an Investment Advisor?',
+        a: "A Research Analyst (SEBI RA) provides research reports and recommendations on securities. An Investment Advisor (SEBI RIA) provides personalised financial planning advice. withSahib currently operates as a SEBI Registered Research Analyst.",
       },
       {
-        q: 'Is withSahib a mobile app?',
-        a: 'withSahib.com is a Progressive Web App (PWA) — it works on any device through your browser and can be installed on your phone\'s home screen for an app-like experience. Native iOS and Android apps are planned.',
+        q: 'What is technical analysis?',
+        a: 'Technical analysis is the study of price charts, volume, and indicators to forecast future price movements. It assumes that all information is reflected in price and that patterns repeat. withSahib uses technical analysis as the primary tool for generating research.',
       },
       {
-        q: 'How are alerts delivered?',
-        a: 'Trade calls and research are published on your withSahib dashboard. Elite subscribers also receive priority WhatsApp alerts for time-sensitive intraday and options calls.',
+        q: 'What is fundamental analysis and does withSahib use it?',
+        a: 'Fundamental analysis evaluates a company\'s financial health, business model, and growth prospects to determine intrinsic value. withSahib primarily uses technical analysis for timing, with fundamental filters for stock quality in swing research.',
+      },
+      {
+        q: 'What is the difference between NSE and BSE?',
+        a: "NSE (National Stock Exchange) and BSE (Bombay Stock Exchange) are India's two major stock exchanges. NSE has higher trading volumes and is the primary exchange for derivatives (Nifty futures and options). BSE is the oldest exchange in Asia and home to Sensex.",
+      },
+      {
+        q: 'What is Nifty 50?',
+        a: 'Nifty 50 is NSE\'s benchmark index comprising the 50 largest and most liquid Indian companies. It is the most widely tracked index in India and the underlying for the most liquid options contract — Nifty weekly options (expiry: Tuesday, lot size: 65 units).',
+      },
+      {
+        q: 'What is BankNifty?',
+        a: 'Bank Nifty is NSE\'s index of the 12 most liquid and large-cap banking stocks. It is highly volatile compared to Nifty and attracts significant options trading volume. Lot size: 30 units, expiry: Tuesday.',
+      },
+      {
+        q: 'What is the difference between futures and options?',
+        a: "Futures are contracts to buy/sell an asset at a predetermined price on a future date — both buyer and seller are obligated. Options give the buyer the right (not obligation) to buy (Call) or sell (Put) at a predetermined price. Options buyers have limited risk (premium paid) and unlimited reward potential.",
+      },
+      {
+        q: 'What is Open Interest (OI) in options?',
+        a: 'Open Interest is the total number of outstanding options contracts that have not been settled. Rising OI with rising price indicates bullish sentiment; rising OI with falling price indicates bearish sentiment. withSahib monitors OI data for options strategy confirmation.',
+      },
+      {
+        q: 'What is PCR (Put Call Ratio)?',
+        a: 'PCR is the ratio of Put volume/OI to Call volume/OI. A PCR above 1 indicates more puts being bought (bearish sentiment); below 1 indicates more calls (bullish). Extreme PCR readings often signal reversals.',
+      },
+      {
+        q: 'What is Max Pain in options?',
+        a: "Max Pain is the price at which options buyers collectively lose the most money at expiry — and therefore where options writers (sellers) gain the most. Markets tend to gravitate toward Max Pain near expiry. withSahib uses Max Pain levels as reference points for options strategies.",
+      },
+      {
+        q: 'What is the VIX and how does it affect options?',
+        a: 'India VIX (Volatility Index) measures expected market volatility for the next 30 days. High VIX = expensive options (good for sellers, risky for buyers). Low VIX = cheap options (good for buyers). withSahib monitors VIX before recommending options strategies.',
+      },
+      {
+        q: 'What is a Stop Loss and why is it non-negotiable?',
+        a: "A Stop Loss is a pre-determined price at which a losing trade is exited to prevent further loss. In options trading, withSahib recommends a 25–30% stop loss on premium paid for buy-side trades. Discipline in stop losses is what separates profitable traders from unprofitable ones.",
       },
     ],
   },
@@ -184,6 +361,25 @@ export default function FAQPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
+      {/* CSS for smooth accordion animation */}
+      <style>{`
+        details > .faq-answer {
+          display: grid;
+          grid-template-rows: 0fr;
+          overflow: hidden;
+          transition: grid-template-rows 0.3s ease;
+        }
+        details[open] > .faq-answer {
+          grid-template-rows: 1fr;
+        }
+        details > .faq-answer > div {
+          overflow: hidden;
+        }
+        details summary::-webkit-details-marker { display: none; }
+        details summary::marker { display: none; }
+        details[open] .faq-chevron { transform: rotate(45deg); }
+        .faq-chevron { transition: transform 0.3s ease; }
+      `}</style>
       <Navbar />
       <main style={{ background: 'var(--bg)', minHeight: '100vh', padding: '80px 40px' }}>
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
@@ -221,9 +417,12 @@ export default function FAQPage() {
               Frequently Asked{' '}
               <em style={{ color: 'var(--emerald)', fontStyle: 'italic' }}>Questions</em>
             </h1>
-            <p style={{ fontSize: '17px', color: 'var(--text2)', lineHeight: 1.7, maxWidth: '600px' }}>
-              Everything about SEBI Registered Research Analyst services, INH000026266,
-              Sahib Singh Hora, and withSahib — for investors, traders, and AI search engines.
+            <p style={{ fontSize: '17px', color: 'var(--text2)', lineHeight: 1.7, maxWidth: '620px' }}>
+              Everything about SEBI Registered Research Analyst Sahib Singh Hora (INH000026266),
+              withSahib services, swing trading, intraday picks, options signals, and Indian stock markets.
+            </p>
+            <p style={{ marginTop: '10px', fontSize: '13px', color: 'var(--text3)' }}>
+              {allItems.length} questions across {FAQ_SECTIONS.length} sections
             </p>
           </div>
 
@@ -246,13 +445,14 @@ export default function FAQPage() {
                   key={i}
                   href={`#section-${i}`}
                   style={{
-                    fontSize: '13px',
+                    fontSize: '12px',
                     color: 'var(--emerald)',
                     textDecoration: 'none',
                     padding: '4px 12px',
                     borderRadius: '6px',
                     background: 'rgba(0,200,150,0.06)',
                     border: '1px solid rgba(0,200,150,0.15)',
+                    lineHeight: 1.5,
                   }}
                 >
                   {s.heading}
@@ -277,7 +477,7 @@ export default function FAQPage() {
               >
                 {section.heading}
               </h2>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 {section.items.map((item, qi) => (
                   <details
                     key={qi}
@@ -290,7 +490,7 @@ export default function FAQPage() {
                   >
                     <summary
                       style={{
-                        padding: '20px 24px',
+                        padding: '18px 22px',
                         fontSize: '15px',
                         fontWeight: 600,
                         color: 'var(--text)',
@@ -300,38 +500,43 @@ export default function FAQPage() {
                         justifyContent: 'space-between',
                         alignItems: 'center',
                         gap: '12px',
+                        userSelect: 'none',
                       }}
                     >
                       <span>{item.q}</span>
                       <span
+                        className="faq-chevron"
                         style={{
                           flexShrink: 0,
-                          width: '20px',
-                          height: '20px',
+                          width: '22px',
+                          height: '22px',
                           borderRadius: '50%',
                           background: 'rgba(0,200,150,0.1)',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          fontSize: '14px',
+                          fontSize: '16px',
                           color: 'var(--emerald)',
-                          fontWeight: 400,
+                          fontWeight: 300,
+                          lineHeight: 1,
                         }}
                       >
                         +
                       </span>
                     </summary>
-                    <div
-                      style={{
-                        padding: '0 24px 20px',
-                        fontSize: '14px',
-                        color: 'var(--text2)',
-                        lineHeight: 1.8,
-                        borderTop: '1px solid var(--border)',
-                        paddingTop: '16px',
-                      }}
-                    >
-                      {item.a}
+                    <div className="faq-answer">
+                      <div
+                        style={{
+                          padding: '0 22px 18px',
+                          fontSize: '14px',
+                          color: 'var(--text2)',
+                          lineHeight: 1.8,
+                          borderTop: '1px solid var(--border)',
+                          paddingTop: '16px',
+                        }}
+                      >
+                        {item.a}
+                      </div>
                     </div>
                   </details>
                 ))}
@@ -399,11 +604,11 @@ export default function FAQPage() {
                 marginTop: '20px',
                 fontSize: '11px',
                 color: 'var(--text3)',
-                fontFamily: 'Courier New, monospace',
+                fontFamily: 'JetBrains Mono, monospace',
                 letterSpacing: '1px',
               }}
             >
-              SEBI RA · INH000026266 · withSahib.com
+              SEBI RA · INH000026266 · Sahib Singh Hora · withSahib.com
             </p>
           </div>
         </div>

@@ -32,7 +32,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/blog`,                    lastModified: now, changeFrequency: 'weekly',  priority: 0.8 },
 
     // Info
-    { url: `${BASE_URL}/faq`,                     lastModified: now, changeFrequency: 'monthly', priority: 0.82 },
+    { url: `${BASE_URL}/faq`,                     lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${BASE_URL}/about`,                   lastModified: now, changeFrequency: 'monthly', priority: 0.75 },
     { url: `${BASE_URL}/appointments`,            lastModified: now, changeFrequency: 'weekly',  priority: 0.78 },
     { url: `${BASE_URL}/courses`,                 lastModified: now, changeFrequency: 'monthly', priority: 0.72 },
