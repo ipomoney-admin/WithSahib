@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import crypto from 'crypto'
 import { createServiceRoleClient } from '@/lib/supabase/server'
+import { sendSubscriptionConfirmation } from '@/lib/email/send-email'
 
 export async function POST(req: NextRequest) {
   const body = await req.text()
@@ -50,13 +51,37 @@ export async function POST(req: NextRequest) {
           current_period_end: new Date(subscription.current_end * 1000).toISOString(),
         }, { onConflict: 'razorpay_subscription_id' })
 
-        // Notify user
+        // Notify user (in-app)
         await supabase.from('notifications').insert({
           user_id: userId,
           type: 'system',
           title: `${tier.charAt(0).toUpperCase() + tier.slice(1)} plan activated!`,
           message: `Your ${tier} subscription is now active. Welcome to withSahib!`,
         })
+
+        // Send confirmation email (fire-and-forget)
+        if (userId) {
+          const { data: userData } = await supabase.auth.admin.getUserById(userId)
+          const userEmail = userData?.user?.email
+          const userName = (userData?.user?.user_metadata?.name as string | undefined) ?? ''
+          const firstName = userName.split(' ')[0] ?? 'Trader'
+          if (userEmail) {
+            const planFeatures: Record<string, string[]> = {
+              basic: ['Swing trade setups daily', 'Model portfolio access', 'Performance tracker', 'Trading courses (20% off)'],
+              pro: ['All Basic features', 'Daily intraday picks', 'Options signals', 'AI research reports', '1 advisory session/month'],
+              elite: ['All Pro features', 'Priority WhatsApp alerts', 'Unlimited advisory sessions', 'HNI research access', 'Direct analyst access'],
+            }
+            const nextBilling = new Date(subscription.current_end * 1000).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })
+            sendSubscriptionConfirmation(userEmail, {
+              firstName,
+              plan: tier as 'basic' | 'pro' | 'elite',
+              billingCycle: (notes.billing as 'monthly' | 'yearly') ?? 'monthly',
+              amountPaid: Math.round((payment?.amount ?? 0) / 100),
+              nextBillingDate: nextBilling,
+              features: planFeatures[tier] ?? [],
+            }).catch((e) => console.error('[email] subscription confirmation failed:', e))
+          }
+        }
         break
       }
 

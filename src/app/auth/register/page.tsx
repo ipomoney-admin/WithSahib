@@ -33,7 +33,16 @@ export default function RegisterPage() {
       },
     })
     if (error) { setError(error.message); setLoading(false) }
-    else router.push('/dashboard')
+    else {
+      // Send branded welcome email (fire-and-forget — don't block redirect on failure)
+      const firstName = form.name.split(' ')[0] ?? form.name
+      fetch('/api/email/welcome', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: form.email, firstName }),
+      }).catch(() => {/* non-blocking */})
+      router.push('/dashboard')
+    }
   }
 
   return (
