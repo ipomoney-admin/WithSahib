@@ -44,6 +44,10 @@ jobs:
           NEXT_PUBLIC_RAZORPAY_PLAN_ELITE_MONTHLY: ${{ secrets.NEXT_PUBLIC_RAZORPAY_PLAN_ELITE_MONTHLY || 'plan_placeholder' }}
           NEXT_PUBLIC_RAZORPAY_PLAN_ELITE_YEARLY: ${{ secrets.NEXT_PUBLIC_RAZORPAY_PLAN_ELITE_YEARLY || 'plan_placeholder' }}
 
+          # ── Email (Resend) ───────────────────────────────────────────────
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY || 're_placeholder_build_only' }}
+          EMAIL_FROM: ${{ secrets.EMAIL_FROM || 'noreply@withsahib.com' }}
+
           # ── SEO verification tags — optional, don't affect build ─────────
           NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION: ${{ secrets.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || '' }}
           NEXT_PUBLIC_BING_SITE_VERIFICATION: ${{ secrets.NEXT_PUBLIC_BING_SITE_VERIFICATION || '' }}
