@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { cookies } from 'next/headers'
 import { createServerComponentClient, createServiceRoleClient } from '@/lib/supabase/server'
 import { isAdmin } from '@/lib/admin-check'
-import type { User, TradeCall } from '@/types'
+import type { User } from '@/types'
 import {
   TrendingUp, TrendingDown, ArrowRight, Crown, Zap,
   FileText, Calendar, Target, CheckCircle, Clock, AlertCircle,
@@ -26,51 +26,55 @@ function StatCard({ label, value, sub, color = 'var(--emerald)' }: {
   )
 }
 
-function CallRow({ call }: { call: Partial<TradeCall> }) {
-  const isUp = call.direction === 'BUY'
+function CallRow({ signal }: { signal: RecentSignal }) {
+  const isUp = signal.target_1 > signal.entry_low
+  const isOpen = signal.status === 'open'
+  const isWin = ['t1_hit', 't2_hit', 't3_hit'].includes(signal.status)
+  const isLoss = signal.status === 'sl_hit'
+  const statusColor = isOpen ? 'var(--emerald)' : isWin ? '#22D3EE' : isLoss ? '#EF4444' : 'var(--text3)'
+
+  const SEGMENT_LABELS: Record<string, string> = {
+    intraday: 'Intraday', stock_options: 'Stock Options', index_options: 'Index Options', swing: 'Swing'
+  }
+
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '12px 0', borderBottom: '1px solid var(--border)' }}>
       <div style={{
         width: '36px', height: '36px', borderRadius: '8px', flexShrink: 0,
-        background: isUp ? 'rgba(0,200,150,0.08)' : 'rgba(244,123,123,0.08)',
+        background: isUp ? 'rgba(0,200,150,0.08)' : 'rgba(239,68,68,0.08)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
       }}>
-        {isUp ? <TrendingUp size={16} color="var(--emerald)" /> : <TrendingDown size={16} color="var(--coral)" />}
+        {isUp ? <TrendingUp size={16} color="var(--emerald)" /> : <TrendingDown size={16} color="#EF4444" />}
       </div>
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '2px' }}>
-          <span style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text)' }}>{call.symbol}</span>
-          <span style={{ fontSize: '10px', fontWeight: 700, padding: '1px 6px', borderRadius: '4px', background: isUp ? 'rgba(0,200,150,0.1)' : 'rgba(244,123,123,0.1)', color: isUp ? 'var(--emerald)' : 'var(--coral)' }}>
-            {call.direction}
-          </span>
-          <span style={{ fontSize: '10px', color: 'var(--text3)', fontFamily: 'Courier New, monospace' }}>{call.service_type}</span>
+          <span style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text)' }}>{signal.scrip}</span>
+          <span style={{ fontSize: '10px', color: 'var(--text3)', fontFamily: 'Courier New, monospace' }}>{SEGMENT_LABELS[signal.segment] ?? signal.segment}</span>
         </div>
         <div style={{ fontSize: '12px', color: 'var(--text3)', display: 'flex', gap: '12px' }}>
-          <span>Entry: <strong style={{ color: 'var(--text2)' }}>₹{call.entry_price}</strong></span>
-          <span>Target: <strong style={{ color: 'var(--emerald)' }}>₹{call.target_1}</strong></span>
-          <span>SL: <strong style={{ color: 'var(--coral)' }}>₹{call.stop_loss}</strong></span>
+          <span>Entry: <strong style={{ color: 'var(--text2)' }}>₹{signal.entry_low.toLocaleString('en-IN')}</strong></span>
+          <span>Target: <strong style={{ color: 'var(--emerald)' }}>₹{signal.target_1.toLocaleString('en-IN')}</strong></span>
+          <span>SL: <strong style={{ color: '#EF4444' }}>₹{signal.stop_loss.toLocaleString('en-IN')}</strong></span>
         </div>
       </div>
       <div style={{ textAlign: 'right', flexShrink: 0 }}>
-        <div style={{
-          fontSize: '11px', fontWeight: 600, padding: '3px 8px', borderRadius: '6px',
-          background: call.status === 'active' ? 'rgba(0,200,150,0.08)' : call.status === 'target_hit' ? 'rgba(0,200,150,0.15)' : 'rgba(244,123,123,0.08)',
-          color: call.status === 'active' ? 'var(--emerald)' : call.status === 'target_hit' ? 'var(--emerald)' : 'var(--coral)',
-        }}>
-          {call.status?.replace('_', ' ').toUpperCase()}
+        <div style={{ fontSize: '11px', fontWeight: 600, padding: '3px 8px', borderRadius: '6px', background: `${statusColor}15`, color: statusColor }}>
+          {signal.status.replace(/_/g, ' ').toUpperCase()}
         </div>
       </div>
     </div>
   )
 }
 
-// Sample data for demo (will be replaced by real Supabase queries)
-const SAMPLE_CALLS: Partial<TradeCall>[] = [
-  { symbol: 'RELIANCE', direction: 'BUY', service_type: 'intraday', entry_price: 2830, target_1: 2890, stop_loss: 2800, status: 'active' },
-  { symbol: 'NIFTY 24200 CE', direction: 'BUY', service_type: 'index_options', entry_price: 85, target_1: 150, stop_loss: 50, status: 'active' },
-  { symbol: 'HDFC BANK', direction: 'BUY', service_type: 'swing', entry_price: 1620, target_1: 1700, stop_loss: 1590, status: 'target_hit' },
-  { symbol: 'INFY', direction: 'SELL', service_type: 'intraday', entry_price: 1440, target_1: 1400, stop_loss: 1460, status: 'sl_hit' },
-]
+interface RecentSignal {
+  id: string
+  segment: string
+  scrip: string
+  entry_low: number
+  target_1: number
+  stop_loss: number
+  status: string
+}
 
 export default async function DashboardPage() {
   // Fetch user server-side
@@ -91,18 +95,31 @@ export default async function DashboardPage() {
 
   // Get subscription tier from subscriptions table
   let userTier: User['tier'] = 'free'
+  const supabaseService = createServiceRoleClient()
   if (authUser) {
     if (adminUser && !viewingAsUser) {
       userTier = 'elite'
     } else {
-      const supabase = createServiceRoleClient()
-      const { data: sub } = await supabase
+      const { data: sub } = await supabaseService
         .from('subscriptions')
         .select('plan')
         .eq('user_id', authUser.id)
         .single()
       if (sub?.plan) userTier = sub.plan as User['tier']
     }
+  }
+
+  // Fetch real recent signals for Pro+ users
+  let recentSignals: RecentSignal[] = []
+  let activeCount = 0
+  if (authUser && { free: 0, basic: 1, pro: 2, elite: 3 }[userTier] >= 2) {
+    const { data: signalRows } = await supabaseService
+      .from('signals')
+      .select('id, segment, scrip, entry_low, target_1, stop_loss, status')
+      .order('published_at', { ascending: false })
+      .limit(5)
+    recentSignals = (signalRows ?? []) as RecentSignal[]
+    activeCount = recentSignals.filter(s => s.status === 'open').length
   }
 
   // Time-based greeting in IST
@@ -197,10 +214,10 @@ export default async function DashboardPage() {
 
       {/* Stats row */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '14px', marginBottom: '32px' }}>
-        <StatCard label="Active Calls" value={isProPlus ? '4' : '--'} sub="As of today" />
-        <StatCard label="This Month" value={isProPlus ? '+12.4%' : '--'} sub="Portfolio return" color="var(--emerald)" />
-        <StatCard label="Win Rate" value={isProPlus ? '73%' : '--'} sub="Last 30 days" />
-        <StatCard label="Reports" value={isProPlus ? '8' : '--'} sub="New this week" color="var(--sapphire)" />
+        <StatCard label="Active Calls" value={isProPlus ? String(activeCount) : '--'} sub="Open signals now" />
+        <StatCard label="Signals (Recent)" value={isProPlus ? String(recentSignals.length) : '--'} sub="Last fetched" color="var(--emerald)" />
+        <StatCard label="Subscription" value={userTier.toUpperCase()} sub="Current plan" color={userTier === 'elite' ? 'var(--gold)' : 'var(--emerald)'} />
+        <StatCard label="Performance" value="May 2026" sub="Track record begins" color="var(--text3)" />
       </div>
 
       {/* Main grid */}
@@ -209,8 +226,8 @@ export default async function DashboardPage() {
         <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '16px', padding: '24px' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
             <div>
-              <h2 style={{ fontSize: '16px', fontWeight: 600, color: 'var(--text)', marginBottom: '2px' }}>Live Trade Calls</h2>
-              <p style={{ fontSize: '12px', color: 'var(--text3)' }}>Today's active positions</p>
+              <h2 style={{ fontSize: '16px', fontWeight: 600, color: 'var(--text)', marginBottom: '2px' }}>Recent Trade Calls</h2>
+              <p style={{ fontSize: '12px', color: 'var(--text3)' }}>Latest published signals</p>
             </div>
             {isProPlus ? (
               <span style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '11px', color: 'var(--emerald)' }}>
@@ -226,10 +243,20 @@ export default async function DashboardPage() {
 
           {isProPlus ? (
             <div>
-              {SAMPLE_CALLS.map((call, i) => <CallRow key={i} call={call} />)}
-              <Link href="/services/intraday" style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '16px', fontSize: '13px', color: 'var(--emerald)', textDecoration: 'none', fontWeight: 500 }}>
-                View all calls <ArrowRight size={14} />
-              </Link>
+              {recentSignals.length > 0 ? (
+                <>
+                  {recentSignals.map((signal) => <CallRow key={signal.id} signal={signal} />)}
+                  <Link href="/dashboard/signals" style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '16px', fontSize: '13px', color: 'var(--emerald)', textDecoration: 'none', fontWeight: 500 }}>
+                    View all signals <ArrowRight size={14} />
+                  </Link>
+                </>
+              ) : (
+                <div style={{ padding: '32px', textAlign: 'center', background: 'var(--bg2)', borderRadius: '12px' }}>
+                  <AlertCircle size={24} color="var(--text3)" style={{ marginBottom: 12, opacity: 0.5 }} />
+                  <p style={{ fontSize: '14px', color: 'var(--text2)', marginBottom: '4px' }}>No signals yet</p>
+                  <p style={{ fontSize: '12px', color: 'var(--text3)' }}>Signals will appear here once published during market hours.</p>
+                </div>
+              )}
             </div>
           ) : (
             <div style={{ padding: '32px', textAlign: 'center', background: 'var(--bg2)', borderRadius: '12px' }}>
@@ -240,9 +267,8 @@ export default async function DashboardPage() {
           )}
         </div>
 
-        {/* Quick actions + recent reports */}
+        {/* Quick actions */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-          {/* Quick actions */}
           <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '16px', padding: '20px' }}>
             <h2 style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text)', marginBottom: '14px' }}>Quick Actions</h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -250,7 +276,7 @@ export default async function DashboardPage() {
                 { label: 'View Swing Picks', href: '/services/swing', icon: Target, tier: 'basic' },
                 { label: 'Book Appointment', href: '/appointments', icon: Calendar, tier: 'pro' },
                 { label: 'Research Reports', href: '/reports', icon: FileText, tier: 'pro' },
-                { label: 'Model Portfolio', href: '/portfolio', icon: TrendingUp, tier: 'basic' },
+                { label: 'Live Signals Feed', href: '/dashboard/signals', icon: TrendingUp, tier: 'basic' },
               ].map((action) => {
                 const Icon = action.icon
                 const tierMap: Record<string, number> = { free: 0, basic: 1, pro: 2, elite: 3 }
@@ -277,25 +303,21 @@ export default async function DashboardPage() {
             </div>
           </div>
 
-          {/* Market status */}
-          <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '16px', padding: '20px' }}>
-            <h2 style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text)', marginBottom: '14px' }}>Market Pulse</h2>
-            {[
-              { sym: 'NIFTY 50', val: '24,162', chg: '+0.87%', up: true },
-              { sym: 'BANK NIFTY', val: '52,341', chg: '-0.18%', up: false },
-              { sym: 'INDIA VIX', val: '13.42', chg: '-2.1%', up: false },
-            ].map((item) => (
-              <div key={item.sym} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid var(--border)' }}>
-                <span style={{ fontSize: '13px', color: 'var(--text2)', fontFamily: 'Courier New, monospace', fontWeight: 500 }}>{item.sym}</span>
-                <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                  <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text)' }}>{item.val}</span>
-                  <span style={{ fontSize: '12px', fontWeight: 600, color: item.up ? 'var(--emerald)' : 'var(--coral)' }}>{item.chg}</span>
-                </div>
-              </div>
-            ))}
-            <p style={{ fontSize: '10px', color: 'var(--text3)', marginTop: '10px', letterSpacing: '.5px' }}>
-              NSE · Delayed 15 min
+          {/* Telegram CTA */}
+          <div style={{ background: 'var(--surface)', border: '1px solid rgba(0,136,204,0.15)', borderRadius: '16px', padding: '20px' }}>
+            <h2 style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text)', marginBottom: '8px' }}>Get Signal Alerts</h2>
+            <p style={{ fontSize: '12px', color: 'var(--text3)', lineHeight: 1.6, marginBottom: '14px' }}>
+              Join our Telegram channel for real-time signal notifications.
             </p>
+            <a
+              href="https://t.me/withsahib"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '9px 16px', borderRadius: 8, border: '1px solid rgba(0,136,204,0.3)', color: '#0088CC', fontSize: '13px', fontWeight: 600, textDecoration: 'none', background: 'rgba(0,136,204,0.06)' }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+              Join Telegram
+            </a>
           </div>
         </div>
       </div>

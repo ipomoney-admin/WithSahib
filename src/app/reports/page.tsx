@@ -15,11 +15,6 @@ const REPORT_TYPES = [
   { value: 'company_overview', label: 'Company Overview', desc: 'Business model, moat, sector analysis, key risks' },
 ]
 
-const SAMPLE_REPORTS: Partial<ResearchReport>[] = [
-  { id: '1', company_symbol: 'RELIANCE', company_name: 'Reliance Industries', report_type: 'quarterly_results', title: 'Reliance Q3FY25 Results — Telecom drives beat, O2C drag continues', summary: 'Reliance Industries posted a mixed Q3FY25 with consolidated net profit rising 7.4% YoY to ₹18,540 Cr, beating estimates on strong Jio and Retail performance despite continued O2C segment headwinds.', recommendation: 'BUY', target_price: 3200, current_price: 2847, published_at: new Date(Date.now() - 86400000 * 2).toISOString(), tags: ['largecap', 'conglomerate', 'telecom'], ai_generated: true },
-  { id: '2', company_symbol: 'HDFCBANK', company_name: 'HDFC Bank', report_type: 'dcf', title: 'HDFC Bank DCF — NIM pressure priced in, 18-month accumulation zone', summary: 'DCF analysis suggests 15% upside over 18 months. NIM compression post-merger is near bottom. Credit cost normalisation on track. WACC: 12.4%, Terminal growth: 5.5%.', recommendation: 'BUY', target_price: 1900, current_price: 1638, published_at: new Date(Date.now() - 86400000 * 5).toISOString(), tags: ['banking', 'largecap', 'dcf'], ai_generated: true },
-  { id: '3', company_symbol: 'INFY', company_name: 'Infosys', report_type: 'technical', title: 'Infosys — Distribution pattern near ₹1,460 resistance, short-term caution', summary: 'Weekly chart shows distribution near 1,460 resistance. RSI divergence visible. Key support at 1,380. Below that, 1,320. Watch for volume confirmation on any bounce.', recommendation: 'HOLD', target_price: 1500, current_price: 1421, published_at: new Date(Date.now() - 86400000 * 7).toISOString(), tags: ['IT', 'largecap', 'technical'], ai_generated: true },
-]
 
 function ReportCard({ report }: { report: Partial<ResearchReport> }) {
   const rec = report.recommendation
@@ -81,14 +76,36 @@ function ReportCard({ report }: { report: Partial<ResearchReport> }) {
 export default function ReportsPage() {
   const supabase = createClient()
   const [user, setUser] = useState<User | null>(null)
+  const [reports, setReports] = useState<Partial<ResearchReport>[]>([])
   const [generating, setGenerating] = useState(false)
   const [genForm, setGenForm] = useState({ symbol: '', type: 'quarterly_results' })
   const [search, setSearch] = useState('')
+  const [loadingReports, setLoadingReports] = useState(true)
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
-      if (!data.user) return
+      if (!data.user) { setLoadingReports(false); return }
       supabase.from('users').select('*').eq('id', data.user.id).single().then(({ data: p }) => { if (p) setUser(p) })
+      // Fetch real reports from intelligence_reports (weekly/monthly) as supplementary content
+      supabase
+        .from('intelligence_reports')
+        .select('id, report_type, report_data, key_insights, generated_at')
+        .order('generated_at', { ascending: false })
+        .limit(10)
+        .then(({ data: rows }) => {
+          if (rows && rows.length > 0) {
+            setReports(rows.map((r) => ({
+              id: r.id,
+              report_type: r.report_type,
+              title: `${r.report_type === 'weekly' ? 'Weekly' : 'Monthly'} Intelligence Report`,
+              summary: (r.key_insights ?? []).slice(0, 2).join(' '),
+              published_at: r.generated_at,
+              ai_generated: true,
+              tags: [r.report_type],
+            })))
+          }
+          setLoadingReports(false)
+        })
     })
   }, [])
 
@@ -106,13 +123,16 @@ export default function ReportsPage() {
         body: JSON.stringify({ company_symbol: genForm.symbol.toUpperCase(), company_name: genForm.symbol.toUpperCase(), report_type: genForm.type }),
       })
       const { report } = await res.json()
-      if (report) alert(`Report generated: ${report.title}`)
+      if (report) {
+        setReports((prev) => [report, ...prev])
+        setGenForm({ symbol: '', type: 'quarterly_results' })
+      }
     } catch { alert('Generation failed. Please try again.') }
     finally { setGenerating(false) }
   }
 
-  const filtered = SAMPLE_REPORTS.filter(r =>
-    !search || r.company_symbol?.toLowerCase().includes(search.toLowerCase()) || r.company_name?.toLowerCase().includes(search.toLowerCase())
+  const filtered = reports.filter(r =>
+    !search || r.company_symbol?.toLowerCase().includes(search.toLowerCase()) || r.company_name?.toLowerCase().includes(search.toLowerCase()) || r.title?.toLowerCase().includes(search.toLowerCase())
   )
 
   return (
@@ -134,14 +154,13 @@ export default function ReportsPage() {
           <Link href="/pricing?tier=pro" className="btn btn-primary btn-md" style={{ textDecoration: 'none' }}>Upgrade to Pro</Link>
         </div>
       ) : (
-        /* Generate form */
         <div style={{ background: 'var(--surface)', border: '1px solid rgba(0,200,150,0.2)', borderRadius: '16px', padding: '24px', marginBottom: '28px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
             <Brain size={18} color="var(--emerald)" />
             <h2 style={{ fontSize: '15px', fontWeight: 600, color: 'var(--text)' }}>Generate a new report</h2>
           </div>
           <form onSubmit={handleGenerate} style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-            <input className="input" placeholder="NSE symbol e.g. RELIANCE, TATAMOTORS" value={genForm.symbol} onChange={e => setGenForm(f => ({ ...f, symbol: e.target.value }))} style={{ flex: '1', minWidth: '180px' }} />
+            <input className="input" placeholder="NSE symbol e.g. TATAMOTORS, SUNPHARMA" value={genForm.symbol} onChange={e => setGenForm(f => ({ ...f, symbol: e.target.value }))} style={{ flex: '1', minWidth: '180px' }} />
             <select className="input" value={genForm.type} onChange={e => setGenForm(f => ({ ...f, type: e.target.value }))} style={{ minWidth: '200px' }}>
               {REPORT_TYPES.map(t => <option key={t.value} value={t.value}>{t.label}</option>)}
             </select>
@@ -150,25 +169,39 @@ export default function ReportsPage() {
             </button>
           </form>
           <p style={{ fontSize: '11px', color: 'var(--text3)', marginTop: '10px' }}>
-            Uses AI (Claude) to analyse available public data. Generation takes 15–30 seconds. Reports are saved to your account.
+            Uses AI (Claude) to analyse available public data. Generation takes 15–30 seconds.
           </p>
         </div>
       )}
 
       {/* Search */}
-      <div style={{ position: 'relative', marginBottom: '20px' }}>
-        <Search size={15} style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text3)' }} />
-        <input className="input" placeholder="Search by company or symbol..." value={search} onChange={e => setSearch(e.target.value)} style={{ paddingLeft: '40px' }} />
-      </div>
+      {reports.length > 0 && (
+        <div style={{ position: 'relative', marginBottom: '20px' }}>
+          <Search size={15} style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text3)' }} />
+          <input className="input" placeholder="Search by company or symbol..." value={search} onChange={e => setSearch(e.target.value)} style={{ paddingLeft: '40px' }} />
+        </div>
+      )}
 
-      {/* Reports list */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-        {filtered.map((report) => (
-          <div key={report.id} style={{ filter: !canAccess ? 'blur(3px)' : 'none', userSelect: !canAccess ? 'none' : 'auto' }}>
-            <ReportCard report={report} />
-          </div>
-        ))}
-      </div>
+      {/* Reports list or empty state */}
+      {!loadingReports && filtered.length > 0 ? (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+          {filtered.map((report) => (
+            <div key={report.id} style={{ filter: !canAccess ? 'blur(3px)' : 'none', userSelect: !canAccess ? 'none' : 'auto' }}>
+              <ReportCard report={report} />
+            </div>
+          ))}
+        </div>
+      ) : !loadingReports ? (
+        <div style={{ textAlign: 'center', padding: '56px 20px', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 16 }}>
+          <FileText size={32} style={{ color: 'var(--text3)', marginBottom: 16, opacity: 0.4 }} />
+          <h3 style={{ fontSize: 18, fontWeight: 600, color: 'var(--text)', marginBottom: 8 }}>No reports yet</h3>
+          <p style={{ fontSize: 13, color: 'var(--text3)', lineHeight: 1.7, maxWidth: 360, margin: '0 auto' }}>
+            {canAccess
+              ? 'Generate your first report using the form above. Enter any NSE stock symbol to get started.'
+              : 'Upgrade to Pro to generate and access research reports for any NSE-listed company.'}
+          </p>
+        </div>
+      ) : null}
 
       <div className="sebi-disclaimer" style={{ marginTop: '32px' }}>
         <strong style={{ color: 'var(--gold)' }}>Disclaimer: </strong>

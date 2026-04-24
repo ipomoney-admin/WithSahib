@@ -15,35 +15,6 @@ export const metadata: Metadata = {
   },
 }
 
-const SAMPLE_REPORTS = [
-  {
-    ticker: 'RELIANCE',
-    name: 'Reliance Industries Ltd',
-    type: 'DCF Valuation + Earnings Analysis',
-    sector: 'Energy & Retail',
-    date: 'Q4 FY26',
-    preview: 'Revenue beat by 4.2% driven by Jio and Retail segments. EBITDA margins expanded 80bps. DCF model suggests fair value range of ₹1,480–₹1,620 at 8% WACC. Key catalyst: Jio IPO timeline.',
-    locked: true,
-  },
-  {
-    ticker: 'HDFCBANK',
-    name: 'HDFC Bank Ltd',
-    type: 'Earnings Analysis + NIM Outlook',
-    sector: 'Banking & Finance',
-    date: 'Q4 FY26',
-    preview: 'Net interest margin compressed 12bps QoQ on deposit repricing. Loan growth of 14.5% YoY remains healthy. Credit cost guidance maintained at 40–50bps. Stock pricing in recovery.',
-    locked: true,
-  },
-  {
-    ticker: 'INFY',
-    name: 'Infosys Ltd',
-    type: 'Revenue Guidance Analysis',
-    sector: 'Information Technology',
-    date: 'Q4 FY26',
-    preview: 'FY27 revenue guidance of 4.5–7% in constant currency — above street estimates. Large deal TCV of $2.6B signals pipeline strength. Margin band maintained at 20–22%. Watch discretionary spending revival.',
-    locked: true,
-  },
-]
 
 const METHODOLOGY = [
   {
@@ -96,44 +67,30 @@ export default function ResearchPage() {
         </div>
       </section>
 
-      {/* Sample Reports */}
+      {/* Reports status */}
       <section style={{ padding: '60px 40px' }}>
         <div style={{ maxWidth: 1000, margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 40 }}>
-            <div className="section-tag" style={{ justifyContent: 'center', marginBottom: 12 }}>Sample Reports</div>
+            <div className="section-tag" style={{ justifyContent: 'center', marginBottom: 12 }}>Reports</div>
             <h2 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 36, fontWeight: 400, color: 'var(--text)' }}>
-              Latest research — preview
+              Research reports
             </h2>
-            <p style={{ fontSize: 15, color: 'var(--text3)', marginTop: 10 }}>Full content unlocked for Pro and Elite subscribers.</p>
+            <p style={{ fontSize: 15, color: 'var(--text3)', marginTop: 10 }}>Generated automatically when NSE/BSE filings are published. Accessible to Pro and Elite subscribers.</p>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-            {SAMPLE_REPORTS.map((r) => (
-              <div key={r.ticker} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 16, padding: 32, position: 'relative', overflow: 'hidden' }}>
-                <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 20, flexWrap: 'wrap', marginBottom: 20 }}>
-                  <div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
-                      <span style={{ fontFamily: 'Courier New, monospace', fontSize: 14, fontWeight: 700, color: 'var(--emerald)', background: 'rgba(0,200,150,0.08)', border: '1px solid rgba(0,200,150,0.2)', padding: '3px 10px', borderRadius: 6 }}>{r.ticker}</span>
-                      <span style={{ fontSize: 12, color: 'var(--text3)' }}>{r.sector}</span>
-                      <span style={{ fontSize: 12, color: 'var(--text3)' }}>·</span>
-                      <span style={{ fontSize: 12, color: 'var(--text3)' }}>{r.date}</span>
-                    </div>
-                    <h3 style={{ fontSize: 18, fontWeight: 600, color: 'var(--text)', marginBottom: 4 }}>{r.name}</h3>
-                    <p style={{ fontSize: 13, color: 'var(--text3)' }}>{r.type}</p>
-                  </div>
-                  <Link href="/pricing?plan=pro" style={{ padding: '10px 20px', background: 'var(--emerald)', color: '#031A13', borderRadius: 8, fontWeight: 700, fontSize: 13, textDecoration: 'none', whiteSpace: 'nowrap', flexShrink: 0 }}>
-                    Unlock Full Report
-                  </Link>
-                </div>
-                <p style={{ fontSize: 14, color: 'var(--text2)', lineHeight: 1.7, marginBottom: 16 }}>{r.preview}</p>
-                {/* Lock overlay */}
-                <div style={{ background: 'linear-gradient(to bottom, transparent, var(--surface))', position: 'absolute', bottom: 0, left: 0, right: 0, height: 80, display: 'flex', alignItems: 'flex-end', justifyContent: 'center', paddingBottom: 16 }}>
-                  <Link href="/pricing?plan=pro" style={{ fontSize: 13, color: 'var(--emerald)', textDecoration: 'none', fontWeight: 500 }}>
-                    Subscribe to read full DCF analysis →
-                  </Link>
-                </div>
-              </div>
-            ))}
+          <div style={{ textAlign: 'center', padding: '56px 40px', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 20 }}>
+            <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'rgba(0,200,150,0.08)', border: '1px solid rgba(0,200,150,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--emerald)' }}>
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10 9 9 9 8 9" />
+              </svg>
+            </div>
+            <h3 style={{ fontSize: 20, fontWeight: 600, color: 'var(--text)', marginBottom: 8 }}>No reports published yet</h3>
+            <p style={{ fontSize: 14, color: 'var(--text3)', lineHeight: 1.7, maxWidth: 440, margin: '0 auto 24px' }}>
+              Reports are generated automatically when companies file quarterly results on BSE/NSE. Subscribe to get notified when the first reports go live.
+            </p>
+            <Link href="/pricing?plan=pro" style={{ display: 'inline-block', padding: '12px 28px', background: 'var(--emerald)', color: '#031A13', borderRadius: 10, fontWeight: 700, fontSize: 14, textDecoration: 'none' }}>
+              Subscribe for Access
+            </Link>
           </div>
         </div>
       </section>
