@@ -23,26 +23,34 @@ export default function RegisterPage() {
   async function handleRegister(e: React.FormEvent) {
     e.preventDefault()
     if (!agreed) { setError('Please accept the terms and risk disclaimer.'); return }
+    if (!/^\d{10}$/.test(form.phone)) { setError('Please enter a valid 10-digit mobile number.'); return }
     setLoading(true); setError('')
-    const { error } = await supabase.auth.signUp({
+    const phoneFormatted = `+91${form.phone}`
+    const { error: signUpError } = await supabase.auth.signUp({
       email: form.email,
       password: form.password,
       options: {
-        data: { name: form.name, phone: form.phone },
+        data: { name: form.name, phone: phoneFormatted },
         emailRedirectTo: `${window.location.origin}/auth/callback`,
       },
     })
-    if (error) { setError(error.message); setLoading(false) }
-    else {
-      // Send branded welcome email (fire-and-forget — don't block redirect on failure)
-      const firstName = form.name.split(' ')[0] ?? form.name
-      fetch('/api/email/welcome', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: form.email, firstName }),
-      }).catch(() => {/* non-blocking */})
-      router.push('/dashboard')
-    }
+    if (signUpError) { setError(signUpError.message); setLoading(false); return }
+
+    // Auto sign-in immediately after registration
+    const { error: signInError } = await supabase.auth.signInWithPassword({
+      email: form.email,
+      password: form.password,
+    })
+    if (signInError) { setError(signInError.message); setLoading(false); return }
+
+    // Send branded welcome email (fire-and-forget)
+    const firstName = form.name.split(' ')[0] ?? form.name
+    fetch('/api/email/welcome', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: form.email, firstName }),
+    }).catch(() => {/* non-blocking */})
+    router.push('/dashboard')
   }
 
   return (
@@ -90,7 +98,6 @@ export default function RegisterPage() {
           {[
             { key: 'name', label: 'FULL NAME', type: 'text', placeholder: 'Rahul Sharma' },
             { key: 'email', label: 'EMAIL ADDRESS', type: 'email', placeholder: 'you@example.com' },
-            { key: 'phone', label: 'PHONE NUMBER (OPTIONAL)', type: 'tel', placeholder: '+91 98765 43210' },
           ].map((field) => (
             <div key={field.key}>
               <label style={{ fontSize: '11px', fontWeight: 600, color: 'var(--text3)', letterSpacing: '1.5px', display: 'block', marginBottom: '6px' }}>
@@ -100,12 +107,41 @@ export default function RegisterPage() {
                 className="input"
                 type={field.type}
                 placeholder={field.placeholder}
-                value={(form as any)[field.key]}
+                value={(form as Record<string, string>)[field.key]}
                 onChange={(e) => setForm((f) => ({ ...f, [field.key]: e.target.value }))}
-                required={field.key !== 'phone'}
+                required
               />
             </div>
           ))}
+
+          {/* Phone with fixed +91 prefix */}
+          <div>
+            <label style={{ fontSize: '11px', fontWeight: 600, color: 'var(--text3)', letterSpacing: '1.5px', display: 'block', marginBottom: '6px' }}>
+              MOBILE NUMBER
+            </label>
+            <div style={{ display: 'flex', gap: '0' }}>
+              <span style={{
+                display: 'flex', alignItems: 'center', padding: '0 12px',
+                background: 'var(--bg2)', border: '1px solid var(--border)',
+                borderRight: 'none', borderRadius: '10px 0 0 10px',
+                fontSize: '14px', color: 'var(--text2)', fontWeight: 500, whiteSpace: 'nowrap',
+              }}>
+                +91
+              </span>
+              <input
+                className="input"
+                type="tel"
+                placeholder="98765 43210"
+                value={form.phone}
+                onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value.replace(/\D/g, '').slice(0, 10) }))}
+                required
+                inputMode="numeric"
+                maxLength={10}
+                pattern="[0-9]{10}"
+                style={{ borderRadius: '0 10px 10px 0', flex: 1 }}
+              />
+            </div>
+          </div>
 
           {/* Password with strength */}
           <div>
