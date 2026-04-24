@@ -10,7 +10,7 @@ const SUGGESTED = [
   { label: 'Home', href: '/', desc: 'Back to the homepage' },
   { label: 'Pricing', href: '/pricing', desc: 'View subscription plans' },
   { label: 'Intraday Calls', href: '/services/intraday', desc: 'Daily trade signals' },
-  { label: 'Research Reports', href: '/reports', desc: 'AI-powered stock research' },
+  { label: 'Research Reports', href: '/reports', desc: 'Data-driven stock research' },
   { label: 'FAQ', href: '/faq', desc: 'Common questions answered' },
   { label: 'Contact', href: '/contact', desc: 'Get in touch' },
 ]

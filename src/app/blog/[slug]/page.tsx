@@ -108,7 +108,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
             <p style={{ fontSize: 15, fontWeight: 600, color: 'var(--text)', marginBottom: 4 }}>Sahib Singh Hora</p>
             <p style={{ fontSize: 12, color: 'var(--gold)', fontFamily: 'Courier New, monospace', marginBottom: 8 }}>SEBI Registered Research Analyst · INH000026266</p>
             <p style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.6 }}>
-              NISM certified analyst providing intraday calls, swing trade picks, options advisory, and AI-powered research reports through withSahib.com.
+              NISM certified analyst providing intraday calls, swing trade picks, options advisory, and in-depth research reports through withSahib.com.
             </p>
           </div>
         </div>

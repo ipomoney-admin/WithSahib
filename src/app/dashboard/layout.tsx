@@ -20,7 +20,7 @@ const NAV_ITEMS = [
   { label: 'Index Options', href: '/services/index-options', icon: Target, tier: 'pro' },
   { label: 'Swing Trades', href: '/services/swing', icon: RefreshCw, tier: 'basic', badge: 'New' },
   { label: 'Model Portfolio', href: '/portfolio', icon: PieChart, tier: 'basic' },
-  { label: 'AI Reports', href: '/reports', icon: FileText, tier: 'pro' },
+  { label: 'Research Reports', href: '/reports', icon: FileText, tier: 'pro' },
   { label: 'Appointments', href: '/appointments', icon: Calendar, tier: 'pro' },
   { label: 'Courses', href: '/courses', icon: BookOpen, tier: 'basic' },
 ]

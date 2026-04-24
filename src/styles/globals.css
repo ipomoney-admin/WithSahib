@@ -421,6 +421,8 @@ body {
 @media (max-width: 768px) {
   .hide-mobile { display: none !important; }
   body { font-size: 15px; }
+  .footer-grid { grid-template-columns: 1fr 1fr !important; }
+  nav[style] { padding: 0 16px !important; }
 }
 @media (min-width: 769px) {
   .show-mobile { display: none !important; }

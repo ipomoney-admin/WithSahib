@@ -4,13 +4,13 @@ import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 
 export const metadata: Metadata = {
-  title: 'Research — AI Stock Reports & SEBI RA Analysis',
+  title: 'Research — Stock Reports & SEBI RA Analysis',
   description:
-    'Institutional-grade stock research by Sahib Singh Hora, SEBI RA INH000026266. AI-powered DCF models, earnings analysis, and NSE equity research reports. Subscribe for full access.',
+    'Institutional-grade stock research by Sahib Singh Hora, SEBI RA INH000026266. DCF models, earnings analysis, and NSE equity research reports. Subscribe for full access.',
   alternates: { canonical: 'https://www.withsahib.com/research' },
   openGraph: {
     title: 'Research — withSahib SEBI RA Stock Analysis',
-    description: 'AI-powered NSE equity research, DCF models, and earnings analysis by SEBI RA Sahib Singh Hora (INH000026266).',
+    description: 'Data-driven NSE equity research, DCF models, and earnings analysis by SEBI RA Sahib Singh Hora (INH000026266).',
     url: 'https://www.withsahib.com/research',
   },
 }
@@ -49,7 +49,7 @@ const METHODOLOGY = [
   {
     step: '01',
     title: 'Automated Filing Detection',
-    desc: 'The AI engine monitors BSE and NSE filing portals in real time. When a company publishes quarterly results, the report generation pipeline triggers automatically.',
+    desc: 'Our system monitors BSE and NSE filing portals in real time. When a company publishes quarterly results, the report generation pipeline triggers automatically.',
   },
   {
     step: '02',
@@ -80,10 +80,10 @@ export default function ResearchPage() {
           <div className="section-tag" style={{ justifyContent: 'center', marginBottom: 20 }}>Research</div>
           <h1 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 'clamp(36px,5vw,60px)', fontWeight: 400, color: 'var(--text)', lineHeight: 1.1, marginBottom: 20 }}>
             Institutional-grade research.<br />
-            <em style={{ color: 'var(--emerald)', fontStyle: 'italic' }}>SEBI-compliant. AI-powered.</em>
+            <em style={{ color: 'var(--emerald)', fontStyle: 'italic' }}>SEBI-compliant. Data-driven.</em>
           </h1>
           <p style={{ fontSize: 18, color: 'var(--text2)', lineHeight: 1.7, marginBottom: 36, maxWidth: 640, margin: '0 auto 36px' }}>
-            Every time a company files quarterly results on BSE or NSE, the withSahib AI engine generates a full research report — DCF model, earnings analysis, and SEBI-compliant analyst disclosure.
+            Every time a company files quarterly results on BSE or NSE, withSahib generates a full research report — DCF model, earnings analysis, and SEBI-compliant analyst disclosure.
           </p>
           <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link href="/pricing?plan=pro" style={{ padding: '14px 32px', background: 'var(--emerald)', color: '#031A13', borderRadius: 12, fontWeight: 700, fontSize: 15, textDecoration: 'none' }}>
@@ -144,7 +144,7 @@ export default function ResearchPage() {
           <div style={{ textAlign: 'center', marginBottom: 48 }}>
             <div className="section-tag" style={{ justifyContent: 'center', marginBottom: 12 }}>Methodology</div>
             <h2 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 36, fontWeight: 400, color: 'var(--text)' }}>
-              How the AI research engine works
+              How the research engine works
             </h2>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 24 }}>
@@ -164,7 +164,7 @@ export default function ResearchPage() {
         <h2 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 36, fontWeight: 400, color: 'var(--text)', marginBottom: 16 }}>
           Start reading full reports
         </h2>
-        <p style={{ fontSize: 16, color: 'var(--text2)', marginBottom: 32 }}>Pro plan — ₹2,499/month. Includes all AI research reports, intraday picks, and options picks.</p>
+        <p style={{ fontSize: 16, color: 'var(--text2)', marginBottom: 32 }}>Pro plan — ₹2,499/month. Includes all research reports, intraday picks, and options picks.</p>
         <Link href="/pricing" style={{ padding: '14px 36px', background: 'var(--emerald)', color: '#031A13', borderRadius: 12, fontWeight: 700, fontSize: 15, textDecoration: 'none' }}>
           View Pricing
         </Link>

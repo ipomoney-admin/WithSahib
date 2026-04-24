@@ -110,7 +110,7 @@ export default async function Image() {
             }}
           >
             SEBI Registered Research Analyst — institutional-grade intraday calls,
-            NSE swing trades, options picks & AI research.
+            NSE swing trades, options picks & in-depth research.
           </p>
         </div>
 

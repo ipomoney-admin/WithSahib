@@ -6,7 +6,7 @@ import { Footer } from '@/components/layout/Footer'
 export const metadata: Metadata = {
   title: 'SEBI RA Services — Intraday Picks, Options, Swing Trades',
   description:
-    'SEBI registered research analyst services by Sahib Singh Hora (INH000026266): daily intraday picks NSE, market signals today, Nifty options signals, Bank Nifty signals, swing trading stocks India, AI research reports & 1-on-1 advisory.',
+    'SEBI registered research analyst services by Sahib Singh Hora (INH000026266): daily intraday picks NSE, market signals today, Nifty options signals, Bank Nifty signals, swing trading stocks India, research reports & 1-on-1 advisory.',
   keywords: [
     'market intelligence',
     'market signals today',
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   alternates: { canonical: 'https://www.withsahib.com/services' },
   openGraph: {
     title: 'SEBI RA Services — Market Intelligence, Intraday Picks, Options',
-    description: 'All SEBI-registered stock advisory services: daily intraday picks NSE, Nifty options, Bank Nifty calls, swing trading stocks, AI research reports.',
+    description: 'All SEBI-registered stock advisory services: daily intraday picks NSE, Nifty options, Bank Nifty calls, swing trading stocks, research reports.',
     url: 'https://www.withsahib.com/services',
   },
 }
@@ -181,7 +181,7 @@ export default function ServicesPage() {
           </h1>
           <p style={{ fontSize: 18, color: 'var(--text2)', lineHeight: 1.7, maxWidth: 600, marginBottom: 32 }}>
             SEBI-verified intraday picks NSE, Nifty options signals today, Bank Nifty calls, swing trading stocks,
-            and AI research — all under one SEBI registered research analyst platform.
+            and in-depth research reports — all under one SEBI registered research analyst platform.
           </p>
 
           {/* Quick keyword links */}

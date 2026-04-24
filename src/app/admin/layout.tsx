@@ -1,9 +1,9 @@
 import { redirect } from 'next/navigation'
 import { cookies, headers } from 'next/headers'
 import Link from 'next/link'
-import { Zap, BarChart2, Settings, Home, Eye, ScanSearch } from 'lucide-react'
+import { Zap, BarChart2, Settings, Home, Eye, ScanSearch, ShieldCheck } from 'lucide-react'
 import { createServerComponentClient, createServiceRoleClient } from '@/lib/supabase/server'
-import { isAdmin } from '@/lib/admin-check'
+import { isAdmin, isSuperAdmin } from '@/lib/admin-check'
 import { isPasskeySessionValid } from '@/lib/webauthn'
 
 export const dynamic = 'force-dynamic'
@@ -24,6 +24,8 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
   if (!user) redirect('/auth/login')
   if (!(await isAdmin(user.id))) redirect('/auth/login')
+
+  const superAdmin = await isSuperAdmin(user.id)
 
   // TODO: re-enable passkey check once WebAuthn is debugged on production
   // const headersList = headers()
@@ -93,6 +95,20 @@ export default async function AdminLayout({ children }: { children: React.ReactN
               <span>{label}</span>
             </Link>
           ))}
+
+          {superAdmin && (
+            <>
+              <div style={{ height: 1, background: 'var(--border)', margin: '8px 6px' }} />
+              <Link
+                href="/admin/super"
+                className="sidebar-link"
+                style={{ marginBottom: 4, display: 'flex', alignItems: 'center', gap: 10 }}
+              >
+                <ShieldCheck size={14} strokeWidth={1.5} color="#D4A843" />
+                <span style={{ fontSize: 12, color: '#D4A843' }}>Super Admin</span>
+              </Link>
+            </>
+          )}
 
           <div style={{ height: 1, background: 'var(--border)', margin: '8px 6px' }} />
 

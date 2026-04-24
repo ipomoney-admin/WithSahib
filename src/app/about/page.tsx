@@ -34,7 +34,7 @@ const personSchema = {
   name: 'Sahib Singh Hora',
   url: 'https://www.withsahib.com',
   jobTitle: 'SEBI Registered Research Analyst',
-  description: 'Sahib Singh Hora is a SEBI Registered Research Analyst (INH000026266) providing intraday stock calls, NSE swing trade picks, Nifty & Bank Nifty options calls, and AI-powered stock research reports for Indian retail investors.',
+  description: 'Sahib Singh Hora is a SEBI Registered Research Analyst (INH000026266) providing intraday stock calls, NSE swing trade picks, Nifty & Bank Nifty options calls, and in-depth stock research reports for Indian retail investors.',
   identifier: { '@type': 'PropertyValue', name: 'SEBI Registration Number', value: 'INH000026266' },
   knowsAbout: ['Intraday Trading', 'Stock Options', 'Swing Trading', 'Technical Analysis', 'SEBI Regulations', 'NSE Equities', 'Nifty Options', 'Bank Nifty'],
 }
@@ -77,7 +77,7 @@ export default function AboutPage() {
             <p style={{ fontSize: '16px', color: 'var(--text2)', lineHeight: 1.8, marginBottom: '16px' }}>
               I&apos;m Sahib Singh Hora — a SEBI Registered Research Analyst (INH000026266) and one of India&apos;s
               most transparent stock market advisors. I built withSahib.com to give retail investors access
-              to institutional-grade market intelligence, intraday stock calls, and AI-powered research — legally,
+              to institutional-grade market intelligence, intraday stock calls, and data-driven research — legally,
               transparently, and under full SEBI regulation.
             </p>
             <p style={{ fontSize: '16px', color: 'var(--text2)', lineHeight: 1.8 }}>
@@ -110,7 +110,7 @@ export default function AboutPage() {
             seconds. That&apos;s the standard every stock market subscription India deserves.
           </p>
           <p style={{ fontSize: '16px', color: 'var(--text2)', lineHeight: 1.8, marginBottom: '20px', fontWeight: 300 }}>
-            withSahib.com combines systematic technical analysis with AI-powered research to deliver the best stock
+            withSahib.com combines systematic technical analysis with rigorous data-driven research to deliver the best stock
             picks in India — not because of hype, but because of methodology. Every intraday call has a stop-loss.
             Every swing trade has a rationale. Every options tip has a risk framework.
           </p>

@@ -152,8 +152,8 @@ export default function RegisterPage() {
             </div>
             <span style={{ fontSize: '12px', color: 'var(--text3)', lineHeight: 1.6 }}>
               I have read and agree to the{' '}
-              <Link href="/terms" style={{ color: 'var(--emerald)', textDecoration: 'none' }}>Terms of Service</Link>,{' '}
-              <Link href="/privacy" style={{ color: 'var(--emerald)', textDecoration: 'none' }}>Privacy Policy</Link>, and understand that
+              <Link href="/terms-of-service" style={{ color: 'var(--emerald)', textDecoration: 'none' }}>Terms of Service</Link>,{' '}
+              <Link href="/privacy-policy" style={{ color: 'var(--emerald)', textDecoration: 'none' }}>Privacy Policy</Link>, and understand that
               investments are subject to market risk. SEBI RA INH000026266.
             </span>
           </label>

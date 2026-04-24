@@ -129,7 +129,7 @@ export default function ReportsPage() {
       {!canAccess ? (
         <div style={{ padding: '24px', background: 'rgba(0,200,150,0.04)', border: '1px solid rgba(0,200,150,0.15)', borderRadius: '16px', marginBottom: '28px', textAlign: 'center' }}>
           <Crown size={28} color="var(--gold)" style={{ marginBottom: '12px' }} />
-          <p style={{ fontSize: '15px', fontWeight: 600, color: 'var(--text)', marginBottom: '6px' }}>Pro plan required for AI research reports</p>
+          <p style={{ fontSize: '15px', fontWeight: 600, color: 'var(--text)', marginBottom: '6px' }}>Pro plan required for research reports</p>
           <p style={{ fontSize: '13px', color: 'var(--text3)', marginBottom: '16px' }}>Access DCF models, quarterly results analysis, and technical reports for any NSE stock.</p>
           <Link href="/pricing?tier=pro" className="btn btn-primary btn-md" style={{ textDecoration: 'none' }}>Upgrade to Pro</Link>
         </div>
