@@ -3,6 +3,8 @@ name: Build Check
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   build:
@@ -23,15 +25,25 @@ jobs:
       - name: Build
         run: npm run build
         env:
+          # ── Supabase (NEXT_PUBLIC_* keys are intentionally public) ──────────
           NEXT_PUBLIC_SUPABASE_URL: https://trtoxawkeququfurddwr.supabase.co
-          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRydG94YXdrZXF1cXVmdXJkZHdyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3Njc0NzYsImV4cCI6MjA5MjM0MzQ3Nn0.WlgF5hPaoDvBI3naPq5qvKtAgEdIJPQtha19ygEzBMw
+          # Server-only — only needed at runtime, not build time
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+
+          # ── App URLs ────────────────────────────────────────────────────────
           NEXT_PUBLIC_APP_URL: https://www.withsahib.com
-          NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION: ${{ secrets.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }}
-          NEXT_PUBLIC_BING_SITE_VERIFICATION: ${{ secrets.NEXT_PUBLIC_BING_SITE_VERIFICATION }}
-          NEXT_PUBLIC_RAZORPAY_KEY_ID: ${{ secrets.NEXT_PUBLIC_RAZORPAY_KEY_ID }}
-          NEXT_PUBLIC_RAZORPAY_PLAN_BASIC_MONTHLY: ${{ secrets.NEXT_PUBLIC_RAZORPAY_PLAN_BASIC_MONTHLY }}
-          NEXT_PUBLIC_RAZORPAY_PLAN_BASIC_YEARLY: ${{ secrets.NEXT_PUBLIC_RAZORPAY_PLAN_BASIC_YEARLY }}
-          NEXT_PUBLIC_RAZORPAY_PLAN_PRO_MONTHLY: ${{ secrets.NEXT_PUBLIC_RAZORPAY_PLAN_PRO_MONTHLY }}
-          NEXT_PUBLIC_RAZORPAY_PLAN_PRO_YEARLY: ${{ secrets.NEXT_PUBLIC_RAZORPAY_PLAN_PRO_YEARLY }}
-          NEXT_PUBLIC_RAZORPAY_PLAN_ELITE_MONTHLY: ${{ secrets.NEXT_PUBLIC_RAZORPAY_PLAN_ELITE_MONTHLY }}
-          NEXT_PUBLIC_RAZORPAY_PLAN_ELITE_YEARLY: ${{ secrets.NEXT_PUBLIC_RAZORPAY_PLAN_ELITE_YEARLY }}
+          NEXT_PUBLIC_APP_NAME: withSahib
+
+          # ── Razorpay — real keys from secrets, dummy fallback keeps build green ──
+          NEXT_PUBLIC_RAZORPAY_KEY_ID: ${{ secrets.NEXT_PUBLIC_RAZORPAY_KEY_ID || 'rzp_live_placeholder' }}
+          NEXT_PUBLIC_RAZORPAY_PLAN_BASIC_MONTHLY: ${{ secrets.NEXT_PUBLIC_RAZORPAY_PLAN_BASIC_MONTHLY || 'plan_placeholder' }}
+          NEXT_PUBLIC_RAZORPAY_PLAN_BASIC_YEARLY: ${{ secrets.NEXT_PUBLIC_RAZORPAY_PLAN_BASIC_YEARLY || 'plan_placeholder' }}
+          NEXT_PUBLIC_RAZORPAY_PLAN_PRO_MONTHLY: ${{ secrets.NEXT_PUBLIC_RAZORPAY_PLAN_PRO_MONTHLY || 'plan_placeholder' }}
+          NEXT_PUBLIC_RAZORPAY_PLAN_PRO_YEARLY: ${{ secrets.NEXT_PUBLIC_RAZORPAY_PLAN_PRO_YEARLY || 'plan_placeholder' }}
+          NEXT_PUBLIC_RAZORPAY_PLAN_ELITE_MONTHLY: ${{ secrets.NEXT_PUBLIC_RAZORPAY_PLAN_ELITE_MONTHLY || 'plan_placeholder' }}
+          NEXT_PUBLIC_RAZORPAY_PLAN_ELITE_YEARLY: ${{ secrets.NEXT_PUBLIC_RAZORPAY_PLAN_ELITE_YEARLY || 'plan_placeholder' }}
+
+          # ── SEO verification tags — optional, don't affect build ─────────
+          NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION: ${{ secrets.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || '' }}
+          NEXT_PUBLIC_BING_SITE_VERIFICATION: ${{ secrets.NEXT_PUBLIC_BING_SITE_VERIFICATION || '' }}
