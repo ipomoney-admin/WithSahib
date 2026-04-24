@@ -3,6 +3,8 @@ import { createServiceRoleClient } from '@/lib/supabase/server'
 import { isMarketOpen } from '@/lib/market-hours'
 import { fetchLivePrice, fetchLivePrices } from '@/lib/fyers-client'
 import { calculateRR } from '@/lib/signal-utils'
+
+export const dynamic = 'force-dynamic'
 import { runScreener } from '@/lib/screener/screener-engine'
 import { captureToML } from '@/lib/screener/ml-capture'
 import { fetchOHLCVBatch, sleep } from '@/lib/screener/data/fyers-feed'
