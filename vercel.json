@@ -3,6 +3,10 @@
     {
       "path": "/api/indexnow",
       "schedule": "0 0 * * *"
+    },
+    {
+      "path": "/api/fyers/refresh-token",
+      "schedule": "30 2 * * *"
     }
   ]
 }

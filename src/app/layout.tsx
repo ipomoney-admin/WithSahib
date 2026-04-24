@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     template: '%s | withSahib',
   },
   description:
-    'Sahib Singh Hora, SEBI Registered Research Analyst (INH000026266). Institutional-grade intraday calls, NSE swing trades, index options, AI stock research reports & 1-on-1 advisory for serious Indian investors.',
+    'Sahib Singh Hora, SEBI Registered Research Analyst (INH000026266). Institutional-grade intraday calls, NSE swing trades, index options, research reports & 1-on-1 advisory for serious Indian investors.',
   keywords: [
     'SEBI registered research analyst India',
     'SEBI RA INH000026266',
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     'NSE swing trade picks',
     'index options calls India',
     'SEBI RA model portfolio',
-    'AI stock research report India',
+    'stock research report India',
     'research analyst appointment',
     'verified stock market analyst India',
     'SEBI research analyst Madhya Pradesh',
@@ -80,7 +80,7 @@ export const metadata: Metadata = {
     siteName: 'withSahib',
     title: 'withSahib — SEBI Registered Research Analyst INH000026266',
     description:
-      'Institutional-grade intraday calls, NSE swing trades, index options & AI research by Sahib Singh Hora, SEBI RA INH000026266.',
+      'Institutional-grade intraday calls, NSE swing trades, index options & research reports by Sahib Singh Hora, SEBI RA INH000026266.',
     images: [
       {
         url: '/og-image.png',
@@ -96,7 +96,7 @@ export const metadata: Metadata = {
     creator: '@WithSahib_',
     title: 'withSahib — SEBI Registered Research Analyst INH000026266',
     description:
-      'SEBI RA INH000026266 · Sahib Singh Hora · Intraday calls, swing trades, options & AI research for Indian markets.',
+      'SEBI RA INH000026266 · Sahib Singh Hora · Intraday calls, swing trades, options & research reports for Indian markets.',
     images: ['/og-image.png'],
   },
   manifest: '/manifest.json',
@@ -147,7 +147,7 @@ const structuredData = [
       height: 192,
     },
     description:
-      'withSahib is a SEBI Registered Research Analyst platform operated by Sahib Singh Hora (INH000026266), providing institutional-grade intraday calls, options strategies, swing picks, and AI research for Indian retail investors.',
+      'withSahib is a SEBI Registered Research Analyst platform operated by Sahib Singh Hora (INH000026266), providing institutional-grade intraday calls, options strategies, swing picks, and data-driven research reports for Indian retail investors.',
     legalName: 'Altitans Intelligence Private Limited',
     identifier: {
       '@type': 'PropertyValue',
@@ -239,7 +239,7 @@ const structuredData = [
     name: 'withSahib',
     url: BASE_URL,
     description:
-      'SEBI Registered Research Analyst platform — intraday calls, swing trades, options picks, AI research reports, and 1-on-1 advisory by Sahib Singh Hora (INH000026266).',
+      'SEBI Registered Research Analyst platform — intraday calls, swing trades, options picks, research reports, and 1-on-1 advisory by Sahib Singh Hora (INH000026266).',
     potentialAction: {
       '@type': 'SearchAction',
       target: {
@@ -276,7 +276,7 @@ const structuredData = [
     name: 'withSahib Research Advisory',
     url: BASE_URL,
     description:
-      'SEBI Registered Research Analyst services including intraday stock calls, NSE swing trade picks, Nifty & Bank Nifty options, model portfolio, AI research reports, and personal advisory sessions.',
+      'SEBI Registered Research Analyst services including intraday stock calls, NSE swing trade picks, Nifty & Bank Nifty options, model portfolio, research reports, and personal advisory sessions.',
     provider: {
       '@type': 'Person',
       name: 'Sahib Singh Hora',
@@ -324,7 +324,7 @@ const structuredData = [
         name: 'What is withSahib?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'withSahib (withsahib.com) is a SEBI-regulated stock research and advisory platform operated by Sahib Singh Hora (SEBI RA INH000026266). It offers daily intraday equity calls for NSE stocks, Nifty and Bank Nifty options strategies, swing trade picks, a model portfolio, AI-powered research reports, self-paced trading courses, and 1-on-1 advisory sessions. All signals include entry range, stop-loss, and target with a minimum 2x risk-to-reward ratio.',
+          text: 'withSahib (withsahib.com) is a SEBI-regulated stock research and advisory platform operated by Sahib Singh Hora (SEBI RA INH000026266). It offers daily intraday equity calls for NSE stocks, Nifty and Bank Nifty options strategies, swing trade picks, a model portfolio, data-driven research reports, self-paced trading courses, and 1-on-1 advisory sessions. All signals include entry range, stop-loss, and target with a minimum 2x risk-to-reward ratio.',
         },
       },
       {
@@ -340,7 +340,7 @@ const structuredData = [
         name: 'Who is the best SEBI registered analyst for NSE stocks in India?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Sahib Singh Hora (SEBI RA INH000026266) is a SEBI Registered Research Analyst at withsahib.com specialising in NSE equity intraday calls, Nifty and BankNifty options, and swing trades. His registration is valid from April 2026 to April 2031 and is publicly verifiable on the SEBI intermediary portal. withSahib combines SEBI-compliant research with AI-powered analysis for serious Indian retail investors.',
+          text: 'Sahib Singh Hora (SEBI RA INH000026266) is a SEBI Registered Research Analyst at withsahib.com specialising in NSE equity intraday calls, Nifty and BankNifty options, and swing trades. His registration is valid from April 2026 to April 2031 and is publicly verifiable on the SEBI intermediary portal. withSahib provides SEBI-compliant, data-driven research for serious Indian retail investors.',
         },
       },
       {
@@ -348,7 +348,7 @@ const structuredData = [
         name: 'How to subscribe to withSahib trading signals?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'To subscribe to withSahib signals: (1) Visit withsahib.com/auth/register and create a free account. (2) Go to withsahib.com/pricing and choose a plan — Free (₹0), Basic (₹999/mo), Pro (₹2,499/mo), or Elite (₹5,999/mo). (3) Pro and Elite plans unlock intraday calls, options strategies, and AI research reports on your dashboard. All plans include a free tier to start.',
+          text: 'To subscribe to withSahib signals: (1) Visit withsahib.com/auth/register and create a free account. (2) Go to withsahib.com/pricing and choose a plan — Free (₹0), Basic (₹999/mo), Pro (₹2,499/mo), or Elite (₹5,999/mo). (3) Pro and Elite plans unlock intraday calls, options strategies, and research reports on your dashboard. All plans include a free tier to start.',
         },
       },
       {

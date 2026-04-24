@@ -115,8 +115,8 @@ const SERVICES_DETAIL = [
   },
   {
     id: 'reports',
-    title: 'AI Stock Research Reports India',
-    keywords: 'AI stock research report India · market signals today · best research analyst India',
+    title: 'Stock Research Reports India',
+    keywords: 'stock research report India · market signals today · best research analyst India',
     badge: 'On Filing · Pro Plan',
     badgeColor: '#00C896',
     desc: 'Automated institutional-grade research reports generated when BSE/NSE-listed companies publish quarterly results or major filings. DCF models, earnings analysis, management commentary breakdown, and buy/hold/sell recommendations.',
@@ -191,7 +191,7 @@ export default function ServicesPage() {
               { label: 'Options Calls', href: '#options' },
               { label: 'Swing Trades', href: '#swing' },
               { label: 'Model Portfolio', href: '#portfolio' },
-              { label: 'AI Research', href: '#reports' },
+              { label: 'Research', href: '#reports' },
               { label: '1-on-1 Advisory', href: '#appointments' },
             ].map(l => (
               <a key={l.href} href={l.href} style={{ padding: '7px 14px', background: 'rgba(0,200,150,0.07)', border: '1px solid rgba(0,200,150,0.18)', borderRadius: 20, fontSize: 13, color: 'var(--emerald)', textDecoration: 'none', fontWeight: 500 }}>

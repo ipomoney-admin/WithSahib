@@ -68,7 +68,7 @@ export async function POST(req: NextRequest) {
           if (userEmail) {
             const planFeatures: Record<string, string[]> = {
               basic: ['Swing trade setups daily', 'Model portfolio access', 'Performance tracker', 'Trading courses (20% off)'],
-              pro: ['All Basic features', 'Daily intraday picks', 'Options signals', 'AI research reports', '1 advisory session/month'],
+              pro: ['All Basic features', 'Daily intraday picks', 'Options signals', 'In-depth research reports', '1 advisory session/month'],
               elite: ['All Pro features', 'Priority WhatsApp alerts', 'Unlimited advisory sessions', 'HNI research access', 'Direct analyst access'],
             }
             const nextBilling = new Date(subscription.current_end * 1000).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })

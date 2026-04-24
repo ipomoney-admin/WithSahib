@@ -118,10 +118,10 @@ export default function ReportsPage() {
   return (
     <div style={{ maxWidth: '860px' }}>
       <div style={{ marginBottom: '28px' }}>
-        <div className="section-tag">AI Research</div>
+        <div className="section-tag">Research</div>
         <h1 style={{ fontFamily: 'DM Serif Display, serif', fontSize: '32px', fontWeight: 400, color: 'var(--text)', marginBottom: '8px' }}>Research Reports</h1>
         <p style={{ fontSize: '14px', color: 'var(--text2)', lineHeight: 1.6 }}>
-          AI-generated institutional-grade reports — DCF models, quarterly results analysis, and technical notes.
+          Institutional-grade research reports — DCF models, quarterly results analysis, and technical notes.
           <br /><span style={{ fontSize: '12px', color: 'var(--text3)' }}>Published by Sahib Singh Hora, SEBI RA INH000026266</span>
         </p>
       </div>

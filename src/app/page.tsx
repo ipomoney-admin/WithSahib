@@ -2,12 +2,13 @@
 
 import { useEffect, useRef, useState, useCallback } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import {
   TrendingUp, BarChart2, Target, RefreshCw, BookOpen, Calendar,
   Brain, Shield, ArrowRight, ChevronRight, Check,
-  Zap, Award, Users, Camera,
+  Zap, Award, Users,
   Linkedin, Twitter, Instagram, Facebook
 } from 'lucide-react'
 import { FALLBACK_DATA, type TickerItem } from '@/lib/utils/marketData'
@@ -70,9 +71,9 @@ const SERVICES = [
   },
   {
     icon: Brain,
-    title: 'AI Research Reports',
-    desc: 'AI stock research reports India — automated DCF models, quarterly results analysis, and institutional-grade notes generated the moment companies file on BSE/NSE.',
-    badge: 'AI Powered',
+    title: 'Research Reports',
+    desc: 'In-depth stock research reports India — automated DCF models, quarterly results analysis, and institutional-grade notes generated the moment companies file on BSE/NSE.',
+    badge: 'Data-Driven',
     badgeColor: 'green',
     tier: 'pro',
     href: '/research',
@@ -436,12 +437,21 @@ function HeroSection() {
             href="https://t.me/withsahib"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', color: 'var(--text3)', textDecoration: 'none', padding: '10px 18px', border: '1px solid var(--border)', borderRadius: 'var(--radius-sm)', transition: 'all 0.2s' }}
-            onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.borderColor = '#0088CC'; (e.currentTarget as HTMLAnchorElement).style.color = '#0088CC' }}
-            onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.borderColor = 'var(--border)'; (e.currentTarget as HTMLAnchorElement).style.color = 'var(--text3)' }}
+            className="btn btn-lg"
+            style={{
+              textDecoration: 'none',
+              background: '#4ADE80',
+              color: '#052E16',
+              fontWeight: 700,
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+            }}
+            onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = '#22C55E'; (e.currentTarget as HTMLAnchorElement).style.transform = 'translateY(-2px)' }}
+            onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = '#4ADE80'; (e.currentTarget as HTMLAnchorElement).style.transform = 'translateY(0)' }}
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-            Join Telegram
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+            Join Free Telegram
           </a>
         </div>
 
@@ -1105,16 +1115,21 @@ function AboutSection() {
           >
             <div
               style={{
-                width: '96px', height: '96px',
+                position: 'relative',
+                width: '120px', height: '120px',
                 borderRadius: '50%',
-                background: 'rgba(0,200,150,0.08)',
-                border: '2px solid rgba(0,200,150,0.2)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontFamily: 'DM Serif Display, serif',
-                fontSize: '32px', color: 'var(--emerald)',
+                overflow: 'hidden',
+                border: '3px solid rgba(0,200,150,0.3)',
+                flexShrink: 0,
               }}
             >
-              S
+              <Image
+                src="/images/sahib-primary.jpg"
+                alt="Sahib Singh Hora — SEBI Registered Research Analyst"
+                fill
+                sizes="120px"
+                style={{ objectFit: 'cover', objectPosition: 'center top' }}
+              />
             </div>
             <div>
               <h3 style={{ fontSize: '20px', fontWeight: 600, color: 'var(--text)', marginBottom: '4px' }}>
@@ -1208,7 +1223,7 @@ function QuickLinksSection() {
   const links = [
     { href: '/services/intraday', label: 'Intraday Picks NSE', desc: 'Daily market intelligence with entry, target & SL' },
     { href: '/services', label: 'Market Signals Today', desc: 'All SEBI RA advisory services in one place' },
-    { href: '/reports', label: 'AI Stock Research Reports', desc: 'NSE equity research, DCF models & results analysis' },
+    { href: '/reports', label: 'Stock Research Reports', desc: 'NSE equity research, DCF models & results analysis' },
     { href: '/pricing', label: 'Stock Advisory Subscription India', desc: 'Plans from ₹0 — paid stock advisory with SEBI RA' },
     { href: '/appointments', label: 'Book a Stock Market Advisor', desc: 'One-on-one session with a verified SEBI RA' },
     { href: '/faq', label: 'SEBI Research Analyst FAQ', desc: 'Everything about INH000026266 & SEBI RA services' },
@@ -1351,19 +1366,23 @@ function AnalystProfileSection() {
               background: 'rgba(0,200,150,0.02)',
             }}
           >
-            {/* TODO: Replace with actual photo */}
             <div
               style={{
-                width: '80px', height: '80px', borderRadius: '50%',
-                background: 'rgba(0,200,150,0.05)', border: '2px solid rgba(0,200,150,0.25)',
-                display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-                gap: '4px',
+                position: 'relative',
+                width: '100px', height: '100px',
+                borderRadius: '50%',
+                overflow: 'hidden',
+                border: '2px solid rgba(0,200,150,0.35)',
+                flexShrink: 0,
               }}
             >
-              <Camera size={20} color="rgba(0,200,150,0.45)" strokeWidth={1.5} />
-              <span style={{ fontSize: '7px', color: 'rgba(0,200,150,0.45)', textAlign: 'center', lineHeight: 1.3 }}>
-                Photo<br />coming soon
-              </span>
+              <Image
+                src="/images/sahib-primary.jpg"
+                alt="Sahib Singh Hora — SEBI Registered Research Analyst"
+                fill
+                sizes="100px"
+                style={{ objectFit: 'cover', objectPosition: 'center top' }}
+              />
             </div>
 
             {/* Name */}

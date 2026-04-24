@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useTheme } from './ThemeProvider'
-import { Menu, X, Sun, Moon, ChevronDown } from 'lucide-react'
+import { Menu, X, Sun, Moon, ShieldCheck } from 'lucide-react'
 import { AnimatedLogo } from '@/components/ui/AnimatedLogo'
 
 const NAV_LINKS = [
@@ -90,17 +90,21 @@ export function Navbar() {
           <span
             className="hide-mobile"
             style={{
-              fontSize: '10px',
-              fontWeight: 500,
-              letterSpacing: '1px',
-              color: 'var(--text3)',
-              border: '1px solid var(--border)',
-              borderRadius: '4px',
-              padding: '3px 7px',
-              fontFamily: 'Courier New, monospace',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '5px',
+              fontSize: '11px',
+              fontWeight: 600,
+              letterSpacing: '0.5px',
+              color: 'var(--emerald)',
+              border: '1px solid rgba(0,200,150,0.25)',
+              borderRadius: '6px',
+              padding: '4px 10px',
+              background: 'rgba(0,200,150,0.06)',
             }}
           >
-            SEBI · INH000026266
+            <ShieldCheck size={12} strokeWidth={2.5} />
+            SEBI RA · INH000026266
           </span>
 
           {/* Theme toggle */}

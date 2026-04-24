@@ -249,7 +249,7 @@ export default async function DashboardPage() {
               {[
                 { label: 'View Swing Picks', href: '/services/swing', icon: Target, tier: 'basic' },
                 { label: 'Book Appointment', href: '/appointments', icon: Calendar, tier: 'pro' },
-                { label: 'AI Research Reports', href: '/reports', icon: FileText, tier: 'pro' },
+                { label: 'Research Reports', href: '/reports', icon: FileText, tier: 'pro' },
                 { label: 'Model Portfolio', href: '/portfolio', icon: TrendingUp, tier: 'basic' },
               ].map((action) => {
                 const Icon = action.icon

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
   alternates: { canonical: 'https://www.withsahib.com/about' },
   openGraph: {
     title: 'About Sahib Singh Hora — SEBI RA INH000026266',
-    description: 'Verified stock market analyst India. SEBI Registered Research Analyst offering intraday picks, NSE swing trades, options advisory & AI stock research.',
+    description: 'Verified stock market analyst India. SEBI Registered Research Analyst offering intraday picks, NSE swing trades, options advisory & in-depth research reports.',
     url: 'https://www.withsahib.com/about',
   },
 }
@@ -51,7 +52,16 @@ export default function AboutPage() {
         <div style={{ maxWidth: '860px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1.2fr', gap: '60px', alignItems: 'center', position: 'relative', zIndex: 1 }}>
           {/* Avatar card */}
           <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '24px', padding: '40px', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '14px' }}>
-            <div style={{ width: '100px', height: '100px', borderRadius: '50%', background: 'rgba(0,200,150,0.08)', border: '2px solid rgba(0,200,150,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'DM Serif Display, serif', fontSize: '40px', color: 'var(--emerald)' }}>S</div>
+            <div style={{ position: 'relative', width: '140px', height: '140px', borderRadius: '50%', overflow: 'hidden', border: '3px solid rgba(0,200,150,0.3)', flexShrink: 0 }}>
+              <Image
+                src="/images/sahib-primary.jpg"
+                alt="Sahib Singh Hora — SEBI Registered Research Analyst"
+                fill
+                sizes="140px"
+                style={{ objectFit: 'cover', objectPosition: 'center top' }}
+                priority
+              />
+            </div>
             <div>
               <h2 style={{ fontSize: '22px', fontWeight: 600, color: 'var(--text)', marginBottom: '4px' }}>Sahib Singh Hora</h2>
               <p style={{ fontSize: '14px', color: 'var(--text2)' }}>SEBI Registered Research Analyst</p>
@@ -134,7 +144,7 @@ export default function AboutPage() {
               { title: 'Intraday Picks NSE', desc: 'Daily pre-market market intelligence — best stock to buy today with entry, target & SL. Available to Pro & Elite subscribers.', href: '/services/intraday' },
               { title: 'Nifty & Bank Nifty Options Signals', desc: 'Index options calls using OI analysis and PCR-based signals. Options trading signals with defined risk setups.', href: '/services' },
               { title: 'Swing Trading Stocks India', desc: '2–10 day positional trade ideas — NSE picks for swing traders. 3–5 picks per week with full technical rationale.', href: '/services' },
-              { title: 'AI Research Reports', desc: 'Automated stock research reports India — DCF models and earnings analysis generated on BSE/NSE filings.', href: '/reports' },
+              { title: 'Research Reports', desc: 'In-depth stock research reports India — DCF models and earnings analysis on BSE/NSE filings.', href: '/reports' },
               { title: 'Model Portfolio', desc: 'SEBI RA-curated long-term portfolio of best stocks to buy — quarterly rebalanced with published reasoning.', href: '/services' },
               { title: '1-on-1 Advisory Sessions', desc: 'Book a personal session with a verified stock market advisor India. Portfolio review or strategy deep-dive.', href: '/appointments' },
             ].map((svc) => (
@@ -186,7 +196,7 @@ export default function AboutPage() {
             {[
               { href: '/pricing', label: 'Subscription Plans & Fees' },
               { href: '/services/intraday', label: 'Intraday Picks NSE' },
-              { href: '/reports', label: 'AI Research Reports' },
+              { href: '/reports', label: 'Research Reports' },
               { href: '/appointments', label: 'Book Advisory Session' },
               { href: '/faq', label: 'SEBI RA FAQ' },
               { href: '/blog', label: 'Stock Market Blog' },
