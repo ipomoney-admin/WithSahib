@@ -404,8 +404,12 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* Blocking theme script — runs before paint to avoid flash of wrong theme */}
-        <script dangerouslySetInnerHTML={{ __html: `(function(){try{var t=localStorage.getItem('withsahib-theme');if(!t)t='light';document.documentElement.classList.add(t);document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.classList.add('light');document.documentElement.setAttribute('data-theme','light');}})()` }} />
+        {/* Blocking theme script — always forces light on page load */}
+        <script dangerouslySetInnerHTML={{__html: `(function(){
+  document.documentElement.classList.add('light');
+  document.documentElement.setAttribute('data-theme', 'light');
+  document.documentElement.classList.remove('dark');
+})()`}} />
         {/* Resource hints for performance */}
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="format-detection" content="telephone=no" />
