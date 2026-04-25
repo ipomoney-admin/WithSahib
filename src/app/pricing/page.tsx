@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Navbar } from '@/components/layout/Navbar'
+import { BookingBanner } from '@/components/layout/BookingBanner'
 import { Footer } from '@/components/layout/Footer'
 import { Check, X, HelpCircle, Crown, Zap, Shield, Star } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
@@ -388,8 +389,7 @@ export default function PricingPage() {
           SEBI RA Registration: Sahib Singh Hora · INH000026266 · withSahib.com
         </div>
       </div>
-
-      <Footer />
+      <BookingBanner />$1
     </div>
   )
 }

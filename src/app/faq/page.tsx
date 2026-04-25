@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Navbar } from '@/components/layout/Navbar'
+import { BookingBanner } from '@/components/layout/BookingBanner'
 import { Footer } from '@/components/layout/Footer'
 
 export const metadata: Metadata = {
@@ -613,7 +614,7 @@ export default function FAQPage() {
           </div>
         </div>
       </main>
-      <Footer />
+      <BookingBanner />$1
     </>
   )
 }

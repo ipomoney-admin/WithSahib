@@ -1,221 +1,506 @@
-import type { Metadata } from 'next'
+'use client'
+
+import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Navbar } from '@/components/layout/Navbar'
+import { CredentialBar } from '@/components/layout/CredentialBar'
+import { BookingBanner } from '@/components/layout/BookingBanner'
 import { Footer } from '@/components/layout/Footer'
+import { Linkedin, Twitter, Instagram, Facebook } from 'lucide-react'
 
-export const metadata: Metadata = {
-  title: 'About Sahib Singh Hora — Best SEBI RA India 2026',
-  description:
-    'Sahib Singh Hora is a SEBI Registered Research Analyst (INH000026266). Best SEBI RA India 2026 — verified stock market advisor India for intraday picks, NSE swing trades & options.',
-  keywords: [
-    'Sahib Singh Hora',
-    'SEBI registered research analyst',
-    'best SEBI RA India 2026',
-    'verified stock market analyst India',
-    'INH000026266',
-    'research analyst India',
-    'stock market advisor India',
-    'SEBI RA',
-    'withSahib',
-    'SEBI registered analyst fees',
-    'paid stock advisory India',
-  ],
-  alternates: { canonical: 'https://www.withsahib.com/about' },
-  openGraph: {
-    title: 'About Sahib Singh Hora — SEBI RA INH000026266',
-    description: 'Verified stock market analyst India. SEBI Registered Research Analyst offering intraday picks, NSE swing trades, options advisory & in-depth research reports.',
-    url: 'https://www.withsahib.com/about',
+const PROCESS_STEPS = [
+  {
+    time: '5:00 AM',
+    num: '01',
+    title: 'Pre-Market Scan',
+    desc: 'Every trading day begins before dawn. 1500+ Nifty 500 stocks are systematically screened for overnight developments, global market cues, FII/DII data, and gap analysis before the Indian market opens.',
+    stat: '1,500+ stocks screened every morning',
   },
-}
+  {
+    time: '5:45 AM',
+    num: '02',
+    title: 'Technical Filter',
+    desc: 'Chart structure is evaluated across daily, weekly, and intraday timeframes. Volume profile, momentum indicators, and multi-timeframe alignment must converge before a setup progresses to the next stage.',
+    stat: 'Only setups with daily + weekly alignment advance',
+  },
+  {
+    time: '6:30 AM',
+    num: '03',
+    title: 'Fundamental Overlay',
+    desc: 'Technical setups are validated against sector strength, FII/DII flow data, and macro context. A technically strong setup in a fundamentally weak sector carries higher risk — this layer filters it out.',
+    stat: 'Sector strength + FII flow checked on every call',
+  },
+  {
+    time: '7:00 AM',
+    num: '04',
+    title: 'Risk Calibration',
+    desc: 'Before entry is defined, the stop-loss and invalidation criteria are established. A minimum risk-to-reward ratio of 1:2 is required. No recommendation is published without a defined maximum loss.',
+    stat: 'Minimum R:R of 1:2 required before publication',
+  },
+  {
+    time: '7:45 AM',
+    num: '05',
+    title: 'Report Drafted',
+    desc: 'Every qualifying setup is documented: entry range, up to two price targets, stop-loss level, and a written rationale explaining the pattern, catalyst, and timing. The written reasoning is mandatory — not optional.',
+    stat: 'Average 4.2 hours of analysis per published report',
+  },
+  {
+    time: '9:00 AM',
+    num: '06',
+    title: 'Published',
+    desc: 'Calls are published on the platform and distributed to subscribers before 9:00 AM IST — before the market opens. Pro and Elite subscribers also receive WhatsApp alerts for time-sensitive intraday setups.',
+    stat: 'Published before market open every trading day',
+  },
+]
 
-const personSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'Person',
-  name: 'Sahib Singh Hora',
-  url: 'https://www.withsahib.com',
-  jobTitle: 'SEBI Registered Research Analyst',
-  description: 'Sahib Singh Hora is a SEBI Registered Research Analyst (INH000026266) providing intraday stock calls, NSE swing trade picks, Nifty & Bank Nifty options calls, and in-depth stock research reports for Indian retail investors.',
-  identifier: { '@type': 'PropertyValue', name: 'SEBI Registration Number', value: 'INH000026266' },
-  knowsAbout: ['Intraday Trading', 'Stock Options', 'Swing Trading', 'Technical Analysis', 'SEBI Regulations', 'NSE Equities', 'Nifty Options', 'Bank Nifty'],
+function CountUp({ target, suffix = '', duration = 1800 }: { target: number; suffix?: string; duration?: number }) {
+  const [count, setCount] = useState(0)
+  const ref = useRef<HTMLSpanElement>(null)
+  const started = useRef(false)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el || started.current) return
+    const obs = new IntersectionObserver(([entry]) => {
+      if (!entry?.isIntersecting || started.current) return
+      started.current = true
+      const start = performance.now()
+      function frame(now: number) {
+        const progress = Math.min((now - start) / duration, 1)
+        const eased = 1 - Math.pow(1 - progress, 3)
+        setCount(Math.round(eased * target))
+        if (progress < 1) requestAnimationFrame(frame)
+      }
+      requestAnimationFrame(frame)
+    }, { threshold: 0.5 })
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [target, duration])
+
+  return <span ref={ref}>{count}{suffix}</span>
 }
 
 export default function AboutPage() {
   return (
     <div style={{ background: 'var(--bg)' }}>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }} />
       <Navbar />
+      <CredentialBar />
 
-      {/* Hero */}
-      <section style={{ padding: '80px 40px 60px', position: 'relative', overflow: 'hidden' }}>
-        <div className="glow-orb glow-emerald" style={{ width: '500px', height: '400px', top: 0, left: '60%', transform: 'translateX(-50%)' }} />
-        <div style={{ maxWidth: '860px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1.2fr', gap: '60px', alignItems: 'center', position: 'relative', zIndex: 1 }}>
-          {/* Avatar card */}
-          <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '24px', padding: '40px', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '14px' }}>
-            <div style={{ position: 'relative', width: '140px', height: '140px', borderRadius: '50%', overflow: 'hidden', border: '3px solid rgba(0,200,150,0.3)', flexShrink: 0 }}>
-              <Image
-                src="/images/sahib-primary.jpg"
-                alt="Sahib Singh Hora — SEBI Registered Research Analyst"
-                fill
-                sizes="140px"
-                style={{ objectFit: 'cover', objectPosition: 'center top' }}
-                priority
-              />
-            </div>
-            <div>
-              <h2 style={{ fontSize: '22px', fontWeight: 600, color: 'var(--text)', marginBottom: '4px' }}>Sahib Singh Hora</h2>
-              <p style={{ fontSize: '14px', color: 'var(--text2)' }}>SEBI Registered Research Analyst</p>
-              <p style={{ fontSize: '12px', color: 'var(--gold)', fontFamily: 'Courier New, monospace', letterSpacing: '1px', marginTop: '4px' }}>INH000026266</p>
-            </div>
-            <div style={{ width: '100%', padding: '12px', background: 'rgba(26,122,74,0.05)', border: '1px solid rgba(26,122,74,0.15)', borderRadius: '10px' }}>
-              <p style={{ fontSize: '11px', color: 'var(--green)', fontWeight: 500, fontFamily: 'var(--font-mono)', letterSpacing: '0.5px' }}>SEBI RA · INH000026266 · Verify on SEBI.gov.in</p>
-            </div>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', justifyContent: 'center' }}>
-              {['SEBI RA', 'NISM Certified', 'Technical Analyst', 'Options Strategist'].map(tag => (
-                <span key={tag} style={{ fontSize: '10px', padding: '3px 9px', borderRadius: '6px', background: 'var(--bg2)', border: '1px solid var(--border)', color: 'var(--text2)' }}>{tag}</span>
-              ))}
-            </div>
+      {/* ── HERO (dark) ───────────────────────────────────────────── */}
+      <section
+        style={{
+          padding: '96px 40px 80px',
+          background: 'var(--black)',
+          position: 'relative',
+          overflow: 'hidden',
+        }}
+      >
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: 'radial-gradient(ellipse 800px 500px at 70% 50%, rgba(255,107,0,0.06) 0%, transparent 65%)',
+          pointerEvents: 'none',
+        }} />
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: 'radial-gradient(ellipse 600px 400px at 20% 80%, rgba(26,122,74,0.05) 0%, transparent 60%)',
+          pointerEvents: 'none',
+        }} />
+
+        <div style={{ maxWidth: '900px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
+          <div style={{
+            display: 'inline-flex', alignItems: 'center', gap: '8px',
+            background: 'rgba(255,107,0,0.1)', border: '1px solid rgba(255,107,0,0.2)',
+            borderRadius: '20px', padding: '6px 16px', fontSize: '11px',
+            fontWeight: 600, color: '#FF6B00', letterSpacing: '1.5px',
+            marginBottom: '28px', fontFamily: 'var(--font-body)', textTransform: 'uppercase',
+          }}>
+            Methodology
           </div>
 
-          {/* Text */}
-          <div>
-            <div className="section-tag">About</div>
-            <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(32px,4vw,52px)', fontWeight: 400, color: 'var(--text)', lineHeight: 1.15, marginBottom: '24px' }}>
-              India&apos;s verified<br />
-              <em style={{ color: 'var(--emerald)', fontStyle: 'italic' }}>stock market advisor</em>
-            </h1>
-            <p style={{ fontSize: '16px', color: 'var(--text2)', lineHeight: 1.8, marginBottom: '16px' }}>
-              I&apos;m Sahib Singh Hora — a SEBI Registered Research Analyst (INH000026266) and one of India&apos;s
-              most transparent stock market advisors. I built withSahib.com to give retail investors access
-              to institutional-grade market intelligence, intraday stock calls, and data-driven research — legally,
-              transparently, and under full SEBI regulation.
-            </p>
-            <p style={{ fontSize: '16px', color: 'var(--text2)', lineHeight: 1.8 }}>
-              Every intraday call, every NSE swing trade pick, every Nifty options tip on this platform carries
-              my SEBI registration number — because accountability is not optional in financial research.
-            </p>
-            <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 28 }}>
-              <Link href="/pricing" className="btn btn-primary btn-md" style={{ textDecoration: 'none' }}>View Plans</Link>
-              <Link href="/appointments" className="btn btn-ghost btn-md" style={{ textDecoration: 'none' }}>Book a Session</Link>
-            </div>
-          </div>
-        </div>
-      </section>
+          <h1
+            style={{
+              fontFamily: 'var(--font-heading)',
+              fontSize: 'clamp(40px, 5.5vw, 72px)',
+              fontWeight: 700,
+              color: '#FFFFFF',
+              lineHeight: 1.05,
+              marginBottom: '24px',
+              letterSpacing: '-0.5px',
+            }}
+          >
+            The research{' '}
+            <em style={{ color: '#FF6B00', fontStyle: 'italic', fontWeight: 400 }}>process.</em>
+          </h1>
 
-      {/* Story */}
-      <section style={{ padding: '60px 40px', background: 'var(--bg2)' }}>
-        <div style={{ maxWidth: '720px', margin: '0 auto' }}>
-          <div className="section-tag">The Story</div>
-          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '36px', fontWeight: 400, color: 'var(--text)', marginBottom: '28px', lineHeight: 1.2 }}>
-            Why I built <em style={{ color: 'var(--emerald)', fontStyle: 'italic' }}>withSahib</em>
-          </h2>
-          <p style={{ fontSize: '16px', color: 'var(--text)', lineHeight: 1.8, marginBottom: '20px', fontWeight: 400 }}>
-            The Indian stock market is drowning in noise. Telegram channels selling intraday picks with no accountability.
-            YouTube &quot;analysts&quot; calling themselves research analysts without SEBI registration. Unverified tipsters
-            running paid stock advisory services with zero regulatory oversight.
+          <p style={{
+            fontSize: '18px', color: 'rgba(255,255,255,0.55)', lineHeight: 1.75,
+            maxWidth: '620px', fontFamily: 'var(--font-body)', marginBottom: '48px',
+          }}>
+            Every recommendation published on withSahib follows the same six-stage process — documented, time-stamped, and published under SEBI RA registration INH000026266.
           </p>
-          <p style={{ fontSize: '16px', color: 'var(--text2)', lineHeight: 1.8, marginBottom: '20px', fontWeight: 300 }}>
-            I became a SEBI Registered Research Analyst specifically to build something different. When you see
-            INH000026266 on a recommendation from withSahib.com, you can verify it at SEBI&apos;s official portal in 30
-            seconds. That&apos;s the standard every stock market subscription India deserves.
-          </p>
-          <p style={{ fontSize: '16px', color: 'var(--text2)', lineHeight: 1.8, marginBottom: '20px', fontWeight: 300 }}>
-            withSahib.com combines systematic technical analysis with rigorous data-driven research to deliver the best stock
-            picks in India — not because of hype, but because of methodology. Every intraday call has a stop-loss.
-            Every swing trade has a rationale. Every options tip has a risk framework.
-          </p>
-          <p style={{ fontSize: '16px', color: 'var(--text2)', lineHeight: 1.8, fontWeight: 300 }}>
-            I built withSahib with one mission: to make the kind of research that institutional traders
-            use every day accessible to every retail investor in India — under full SEBI regulatory
-            supervision, with transparent SEBI registered analyst fees.
-          </p>
-        </div>
-      </section>
 
-      {/* What I offer */}
-      <section style={{ padding: '60px 40px', background: 'var(--bg)' }}>
-        <div style={{ maxWidth: '720px', margin: '0 auto' }}>
-          <div className="section-tag">Services</div>
-          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '32px', fontWeight: 400, color: 'var(--text)', marginBottom: '28px' }}>
-            What I offer as a SEBI RA
-          </h2>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+          {/* Stats row */}
+          <div style={{
+            display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+            gap: '1px', background: 'rgba(255,255,255,0.07)',
+            border: '1px solid rgba(255,255,255,0.07)', borderRadius: '16px', overflow: 'hidden',
+          }}>
             {[
-              { title: 'Intraday Picks NSE', desc: 'Daily pre-market market intelligence — best stock to buy today with entry, target & SL. Available to Pro & Elite subscribers.', href: '/services/intraday' },
-              { title: 'Nifty & Bank Nifty Options Signals', desc: 'Index options calls using OI analysis and PCR-based signals. Options trading signals with defined risk setups.', href: '/services' },
-              { title: 'Swing Trading Stocks India', desc: '2–10 day positional trade ideas — NSE picks for swing traders. 3–5 picks per week with full technical rationale.', href: '/services' },
-              { title: 'Research Reports', desc: 'In-depth stock research reports India — DCF models and earnings analysis on BSE/NSE filings.', href: '/reports' },
-              { title: 'Model Portfolio', desc: 'SEBI RA-curated long-term portfolio of best stocks to buy — quarterly rebalanced with published reasoning.', href: '/services' },
-              { title: '1-on-1 Advisory Sessions', desc: 'Book a personal session with a verified stock market advisor India. Portfolio review or strategy deep-dive.', href: '/appointments' },
-            ].map((svc) => (
-              <Link key={svc.href + svc.title} href={svc.href} style={{ textDecoration: 'none', display: 'flex', alignItems: 'flex-start', gap: 16, padding: '18px 20px', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, transition: 'border-color 0.2s' }}>
-                <div style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--emerald)', marginTop: 6, flexShrink: 0 }} />
-                <div>
-                  <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text)', marginBottom: 4 }}>{svc.title}</div>
-                  <div style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.6 }}>{svc.desc}</div>
+              { num: 1500, suffix: '+', label: 'Stocks Screened Daily' },
+              { num: 4, suffix: '.2 hrs', label: 'Analysis Per Report' },
+              { num: 6, suffix: ' Layers', label: 'Before Any Call' },
+              { num: 14, suffix: '+ Yrs', label: 'Market Experience' },
+            ].map((s, i) => (
+              <div key={i} style={{ padding: '28px 24px', background: 'rgba(255,255,255,0.02)' }}>
+                <div style={{
+                  fontFamily: 'var(--font-heading)', fontStyle: 'italic',
+                  fontSize: '36px', fontWeight: 700, color: '#FF6B00', lineHeight: 1,
+                  marginBottom: '8px',
+                }}>
+                  <CountUp target={s.num} suffix={s.suffix} />
                 </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* SEBI credentials */}
-      <section style={{ padding: '60px 40px', background: 'var(--bg2)' }}>
-        <div style={{ maxWidth: '720px', margin: '0 auto' }}>
-          <div className="section-tag">Credentials</div>
-          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '32px', fontWeight: 400, color: 'var(--text)', marginBottom: '28px' }}>
-            Fully verifiable SEBI registration
-          </h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '14px' }}>
-            {[
-              { label: 'SEBI Registration Number', value: 'INH000026266', mono: true },
-              { label: 'Registered Name', value: 'Sahib Singh Hora', mono: false },
-              { label: 'Category', value: 'Individual RA', mono: false },
-              { label: 'Experience', value: '14+ Years', mono: false },
-              { label: 'Regulator', value: 'SEBI, Government of India', mono: false },
-            ].map(item => (
-              <div key={item.label} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '12px', padding: '16px' }}>
-                <p style={{ fontSize: '11px', fontWeight: 600, letterSpacing: '1px', color: 'var(--text3)', textTransform: 'uppercase', marginBottom: '6px' }}>{item.label}</p>
-                <p style={{ fontSize: item.mono ? '13px' : '14px', fontWeight: 600, color: 'var(--text)', fontFamily: item.mono ? 'Courier New, monospace' : 'var(--font-body)' }}>{item.value}</p>
+                <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', letterSpacing: '0.5px', fontFamily: 'var(--font-body)' }}>
+                  {s.label}
+                </div>
               </div>
             ))}
           </div>
-          <a href="https://www.sebi.gov.in/sebiweb/other/OtherAction.do?doRecognisedFpi=yes&intmId=14" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginTop: '20px', fontSize: '14px', color: 'var(--emerald)', textDecoration: 'none', fontWeight: 500 }}>
-            Verify on SEBI&apos;s official portal →
-          </a>
         </div>
       </section>
 
-      {/* Internal links */}
-      <section style={{ padding: '48px 40px', background: 'var(--bg)' }}>
-        <div style={{ maxWidth: '720px', margin: '0 auto' }}>
-          <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: '2px', color: 'var(--text3)', textTransform: 'uppercase', marginBottom: 16 }}>Explore withSahib</p>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
+      {/* ── PROCESS TIMELINE ──────────────────────────────────────── */}
+      <section style={{ padding: '96px 40px', background: 'var(--bg)', position: 'relative' }}>
+        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: '64px' }}>
+            <div style={{
+              display: 'inline-flex', alignItems: 'center', gap: '6px',
+              fontSize: '11px', fontWeight: 600, letterSpacing: '2px',
+              color: 'var(--text3)', textTransform: 'uppercase',
+              fontFamily: 'var(--font-body)', marginBottom: '16px',
+            }}>
+              <span style={{ width: '24px', height: '1px', background: 'var(--green)', display: 'inline-block' }} />
+              Research Process
+              <span style={{ width: '24px', height: '1px', background: 'var(--green)', display: 'inline-block' }} />
+            </div>
+            <h2 style={{
+              fontFamily: 'var(--font-heading)', fontSize: 'clamp(28px,4vw,48px)',
+              fontWeight: 700, color: 'var(--text)', lineHeight: 1.15,
+            }}>
+              Six steps from{' '}
+              <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>scan to signal.</em>
+            </h2>
+          </div>
+
+          <div style={{ position: 'relative' }}>
+            {/* Vertical connector line */}
+            <div style={{
+              position: 'absolute', left: '36px', top: '48px', bottom: '48px',
+              width: '2px', background: 'linear-gradient(to bottom, var(--green) 0%, var(--orange) 100%)',
+              opacity: 0.25,
+            }} />
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
+              {PROCESS_STEPS.map((step, i) => (
+                <div
+                  key={i}
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: '72px 1fr',
+                    gap: '32px',
+                    alignItems: 'start',
+                    paddingBottom: i < PROCESS_STEPS.length - 1 ? '48px' : '0',
+                  }}
+                >
+                  {/* Step number circle */}
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+                    <div style={{
+                      width: '48px', height: '48px', borderRadius: '50%',
+                      background: i === 5 ? 'var(--orange)' : 'var(--surface)',
+                      border: `2px solid ${i === 5 ? 'var(--orange)' : 'var(--border)'}`,
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      fontFamily: 'var(--font-heading)', fontSize: '14px', fontWeight: 700,
+                      color: i === 5 ? '#FFFFFF' : 'var(--text3)',
+                      flexShrink: 0, zIndex: 1, position: 'relative',
+                    }}>
+                      {step.num}
+                    </div>
+                    <span style={{
+                      fontSize: '10px', fontWeight: 600, color: 'var(--orange)',
+                      fontFamily: 'var(--font-mono)', letterSpacing: '0.5px', whiteSpace: 'nowrap',
+                    }}>
+                      {step.time}
+                    </span>
+                  </div>
+
+                  {/* Content */}
+                  <div
+                    style={{
+                      background: 'var(--surface)',
+                      border: '1px solid var(--border)',
+                      borderRadius: 'var(--r-lg)',
+                      padding: '28px 32px',
+                    }}
+                  >
+                    <h3 style={{
+                      fontFamily: 'var(--font-heading)', fontSize: '22px',
+                      fontWeight: 700, color: 'var(--text)', marginBottom: '10px', lineHeight: 1.2,
+                    }}>
+                      {step.title}
+                    </h3>
+                    <p style={{
+                      fontSize: '15px', color: 'var(--text2)', lineHeight: 1.8,
+                      fontFamily: 'var(--font-body)', marginBottom: '16px',
+                    }}>
+                      {step.desc}
+                    </p>
+                    <div style={{
+                      display: 'inline-flex', alignItems: 'center', gap: '8px',
+                      padding: '6px 14px',
+                      background: 'rgba(255,107,0,0.06)',
+                      border: '1px solid rgba(255,107,0,0.14)',
+                      borderRadius: '20px',
+                    }}>
+                      <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: 'var(--orange)', flexShrink: 0 }} />
+                      <span style={{ fontSize: '12px', fontWeight: 500, color: 'var(--orange)', fontFamily: 'var(--font-body)' }}>
+                        {step.stat}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── THE ANALYST ───────────────────────────────────────────── */}
+      <section
+        id="analyst"
+        style={{ padding: '96px 40px', background: 'var(--bg2)', borderTop: '1px solid var(--border)' }}
+      >
+        <div style={{ maxWidth: '960px', margin: '0 auto' }}>
+          <div style={{
+            display: 'grid', gridTemplateColumns: '1fr 1.6fr', gap: '72px',
+            alignItems: 'start',
+          }}
+          className="resp-2col">
+            {/* Photo + social */}
+            <div>
+              <div style={{
+                position: 'relative', width: '100%', aspectRatio: '3/4',
+                borderRadius: '20px', overflow: 'hidden',
+                border: '2px solid var(--border)',
+                boxShadow: '0 20px 60px rgba(0,0,0,0.1)',
+              }}>
+                <Image
+                  src="/images/sahib-primary.jpg"
+                  alt="Sahib Singh Hora — SEBI Registered Research Analyst"
+                  fill
+                  sizes="480px"
+                  style={{ objectFit: 'cover', objectPosition: 'center top' }}
+                  priority
+                />
+              </div>
+
+              {/* Social links below photo */}
+              <div style={{ display: 'flex', gap: '10px', marginTop: '20px', flexWrap: 'wrap' }}>
+                {[
+                  { href: 'https://www.linkedin.com/in/sahibsinghhora/', icon: <Linkedin size={16} />, label: 'LinkedIn', handle: 'Sahib Singh Hora' },
+                  { href: 'https://x.com/WithSahib_', icon: <Twitter size={16} />, label: 'Twitter/X', handle: '@withsahib_' },
+                  { href: 'https://www.instagram.com/withsahib_/', icon: <Instagram size={16} />, label: 'Instagram', handle: '@withsahib_' },
+                  { href: 'https://www.facebook.com/sahib1313', icon: <Facebook size={16} />, label: 'Facebook', handle: 'sahib1313' },
+                ].map(({ href, icon, label, handle }) => (
+                  <a
+                    key={href}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    style={{
+                      display: 'flex', alignItems: 'center', gap: '8px',
+                      padding: '8px 14px',
+                      background: 'var(--surface)', border: '1px solid var(--border)',
+                      borderRadius: '8px', textDecoration: 'none',
+                      color: 'var(--text3)', fontSize: '12px',
+                      fontFamily: 'var(--font-body)', fontWeight: 500,
+                      transition: 'color 0.2s, border-color 0.2s',
+                    }}
+                    onMouseEnter={(e) => {
+                      const el = e.currentTarget as HTMLAnchorElement
+                      el.style.color = 'var(--green)'
+                      el.style.borderColor = 'rgba(26,122,74,0.3)'
+                    }}
+                    onMouseLeave={(e) => {
+                      const el = e.currentTarget as HTMLAnchorElement
+                      el.style.color = 'var(--text3)'
+                      el.style.borderColor = 'var(--border)'
+                    }}
+                  >
+                    {icon}
+                    <span>{handle}</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Bio */}
+            <div>
+              <div style={{
+                display: 'inline-flex', alignItems: 'center', gap: '6px',
+                fontSize: '11px', fontWeight: 600, letterSpacing: '2px',
+                color: 'var(--text3)', textTransform: 'uppercase',
+                fontFamily: 'var(--font-body)', marginBottom: '20px',
+              }}>
+                <span style={{ width: '24px', height: '1px', background: 'var(--green)', display: 'inline-block' }} />
+                The Analyst
+              </div>
+
+              <h2 style={{
+                fontFamily: 'var(--font-heading)', fontSize: 'clamp(28px, 3.5vw, 44px)',
+                fontWeight: 700, color: 'var(--text)', lineHeight: 1.15, marginBottom: '8px',
+              }}>
+                Sahib Singh Hora
+              </h2>
+
+              <div style={{
+                display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '28px',
+              }}>
+                <span style={{
+                  background: 'rgba(212,168,67,0.12)', color: '#B8860B',
+                  fontFamily: 'var(--font-mono)', fontSize: '12px', fontWeight: 600,
+                  padding: '3px 10px', borderRadius: '4px', border: '1px solid rgba(212,168,67,0.2)',
+                }}>
+                  INH000026266
+                </span>
+                <span style={{ fontSize: '13px', color: 'var(--text3)', fontFamily: 'var(--font-body)' }}>
+                  SEBI Registered Research Analyst
+                </span>
+              </div>
+
+              <p style={{ fontSize: '16px', color: 'var(--text)', lineHeight: 1.85, marginBottom: '18px', fontFamily: 'var(--font-body)' }}>
+                I built withSahib because the Indian stock market is drowning in unaccountable noise — Telegram tipsters with no regulatory registration, YouTube &quot;analysts&quot; calling themselves research analysts without SEBI authorisation, and paid advisory services operating without oversight.
+              </p>
+              <p style={{ fontSize: '16px', color: 'var(--text2)', lineHeight: 1.85, marginBottom: '18px', fontFamily: 'var(--font-body)' }}>
+                I became a SEBI Registered Research Analyst under INH000026266 to build something structurally different: a research house where every call carries a name, a registration number, and a regulatory consequence. Not a channel. A firm.
+              </p>
+              <p style={{ fontSize: '16px', color: 'var(--text2)', lineHeight: 1.85, marginBottom: '32px', fontFamily: 'var(--font-body)' }}>
+                My market philosophy is simple: process over instinct. A systematic, repeatable methodology — multi-timeframe technical analysis, fundamental validation, defined risk-to-reward — applied consistently every single trading day for 14+ years.
+              </p>
+
+              {/* Credentials */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '12px', marginBottom: '32px' }}>
+                {[
+                  { label: 'SEBI Registration', value: 'INH000026266', mono: true },
+                  { label: 'Certification', value: 'NISM Certified', mono: false },
+                  { label: 'Specialisation', value: 'Technical Analysis', mono: false },
+                  { label: 'Experience', value: '14+ Years', mono: false },
+                  { label: 'Regulator', value: 'SEBI, Govt. of India', mono: false },
+                  { label: 'Category', value: 'Individual RA', mono: false },
+                ].map((item) => (
+                  <div
+                    key={item.label}
+                    style={{
+                      background: 'var(--surface)', border: '1px solid var(--border)',
+                      borderRadius: '10px', padding: '14px 16px',
+                    }}
+                  >
+                    <p style={{ fontSize: '10px', fontWeight: 600, letterSpacing: '1px', color: 'var(--text3)', textTransform: 'uppercase', marginBottom: '5px', fontFamily: 'var(--font-body)' }}>
+                      {item.label}
+                    </p>
+                    <p style={{
+                      fontSize: item.mono ? '12px' : '13px', fontWeight: 600, color: 'var(--text)',
+                      fontFamily: item.mono ? 'var(--font-mono)' : 'var(--font-body)',
+                    }}>
+                      {item.value}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
+              <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                <Link href="/appointments" style={{
+                  display: 'inline-flex', alignItems: 'center', gap: '6px',
+                  padding: '12px 28px', background: 'var(--orange)', color: '#FFFFFF',
+                  borderRadius: '10px', fontSize: '14px', fontWeight: 700,
+                  textDecoration: 'none', fontFamily: 'var(--font-body)',
+                }}>
+                  Book a Session →
+                </Link>
+                <a
+                  href="https://www.sebi.gov.in/sebiweb/other/OtherAction.do?doRecognisedFpi=yes&intmId=14"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: 'inline-flex', alignItems: 'center', gap: '6px',
+                    padding: '12px 22px', border: '1px solid var(--border2)',
+                    color: 'var(--text2)', borderRadius: '10px', fontSize: '13px',
+                    fontWeight: 500, textDecoration: 'none', fontFamily: 'var(--font-body)',
+                  }}
+                >
+                  Verify on SEBI.gov.in →
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── MARKET PHILOSOPHY ─────────────────────────────────────── */}
+      <section style={{ padding: '80px 40px', background: 'var(--black)' }}>
+        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+            <h2 style={{
+              fontFamily: 'var(--font-heading)', fontSize: 'clamp(28px,4vw,44px)',
+              fontWeight: 700, color: '#FFFFFF', lineHeight: 1.2,
+            }}>
+              Market{' '}
+              <em style={{ color: '#FF6B00', fontStyle: 'italic', fontWeight: 400 }}>philosophy.</em>
+            </h2>
+          </div>
+          <div style={{
+            display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '16px',
+          }}>
             {[
-              { href: '/pricing', label: 'Subscription Plans & Fees' },
-              { href: '/services/intraday', label: 'Intraday Picks NSE' },
-              { href: '/reports', label: 'Research Reports' },
-              { href: '/appointments', label: 'Book Advisory Session' },
-              { href: '/faq', label: 'SEBI RA FAQ' },
-              { href: '/blog', label: 'Stock Market Blog' },
-            ].map(l => (
-              <Link key={l.href} href={l.href} style={{ textDecoration: 'none', padding: '8px 14px', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 8, fontSize: 13, color: 'var(--text2)', transition: 'color 0.2s' }}>
-                {l.label}
-              </Link>
+              { title: 'Process over instinct', desc: 'Markets reward consistency. A documented, repeatable methodology outperforms gut feel over any meaningful time horizon.' },
+              { title: 'Risk first, always', desc: 'The stop-loss is not an afterthought. It is defined before the entry. Every recommendation begins with: what is my maximum loss?' },
+              { title: 'Accountability by design', desc: 'Every call is logged. Every outcome is recorded. A research house that hides its losses is not a research house.' },
+              { title: 'Transparency is compliance', desc: 'Under SEBI RA regulations, full disclosure is required. I treat it as a feature, not a burden — it is the foundation of trust.' },
+            ].map((item, i) => (
+              <div key={i} style={{
+                background: 'rgba(255,255,255,0.03)',
+                border: '1px solid rgba(255,255,255,0.07)',
+                borderRadius: 'var(--r-lg)', padding: '28px',
+              }}>
+                <h4 style={{
+                  fontFamily: 'var(--font-heading)', fontStyle: 'italic',
+                  fontSize: '18px', fontWeight: 700, color: 'rgba(255,255,255,0.9)',
+                  marginBottom: '10px',
+                }}>
+                  {item.title}
+                </h4>
+                <p style={{
+                  fontSize: '14px', color: 'rgba(255,255,255,0.5)',
+                  lineHeight: 1.75, fontFamily: 'var(--font-body)',
+                }}>
+                  {item.desc}
+                </p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      <div style={{ padding: '0 40px 40px' }}>
-        <div className="sebi-disclaimer container-narrow" style={{ padding: '16px 20px' }}>
+      {/* ── DISCLAIMER ────────────────────────────────────────────── */}
+      <div style={{ padding: '0 40px 40px', background: 'var(--bg)' }}>
+        <div className="sebi-disclaimer container-narrow" style={{ padding: '16px 20px', marginTop: 40 }}>
           <strong style={{ color: 'var(--gold)' }}>Risk Disclaimer: </strong>
           Investments in securities market are subject to market risks. SEBI registration does not guarantee returns.
           Sahib Singh Hora · SEBI RA · INH000026266 · withSahib.com
         </div>
       </div>
 
+      <BookingBanner />
       <Footer />
     </div>
   )

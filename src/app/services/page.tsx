@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Navbar } from '@/components/layout/Navbar'
+import { BookingBanner } from '@/components/layout/BookingBanner'
 import { Footer } from '@/components/layout/Footer'
 
 export const metadata: Metadata = {
@@ -274,6 +275,7 @@ export default function ServicesPage() {
           Research Analyst: Sahib Singh Hora · SEBI RA Reg. No. INH000026266.
         </div>
       </div>
+      <BookingBanner />
       <Footer />
     </div>
   )

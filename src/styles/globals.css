@@ -254,7 +254,7 @@ h1, h2, h3, h4, h5, h6 {
 .ticker-inner {
   display: flex;
   gap: 48px;
-  animation: ticker 45s linear infinite;
+  animation: ticker 60s linear infinite;
   width: max-content;
   align-items: center;
 }

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Navbar } from '@/components/layout/Navbar'
+import { BookingBanner } from '@/components/layout/BookingBanner'
 import { Footer } from '@/components/layout/Footer'
 import { POSTS, type Post } from '@/lib/data/posts'
 
@@ -148,7 +149,7 @@ export default function BlogPage() {
           Investments in securities market are subject to market risks. Past performance is not indicative of future results. Research Analyst: Sahib Singh Hora · SEBI RA INH000026266 · withSahib.com
         </div>
       </div>
-      <Footer />
+      <BookingBanner />$1
     </div>
   )
 }

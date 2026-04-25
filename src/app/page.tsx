@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Navbar } from '@/components/layout/Navbar'
 import { CredentialBar } from '@/components/layout/CredentialBar'
+import { BookingBanner } from '@/components/layout/BookingBanner'
 import { Footer } from '@/components/layout/Footer'
 import {
   TrendingUp, BarChart2, Target, RefreshCw, BookOpen, Calendar,
@@ -184,10 +185,9 @@ export default function HomePage() {
       <WhoSection />
       <AnalystDarkSection />
       <PricingSection />
-      <TestimonialSection />
-      <TrackRecordSection />
       <ComplianceSection />
       <CTASection />
+      <BookingBanner />
       <Footer />
     </div>
   )
@@ -542,13 +542,12 @@ function ServicesSection() {
             fontSize: 'clamp(28px,4vw,48px)',
             fontWeight: 700,
             color: 'var(--text)',
-            maxWidth: '540px',
             lineHeight: 1.2,
             marginBottom: '12px',
           }}
         >
-          Research coverage across{' '}
-          <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>every time horizon</em>
+          Research across{' '}
+          <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>every time horizon.</em>
         </h2>
         <p style={{ fontSize: '16px', color: 'var(--text2)', maxWidth: '480px', marginBottom: '48px', fontFamily: 'var(--font-body)' }}>
           From intraday to long-term portfolios — every recommendation published under SEBI RA INH000026266 with full written rationale.
@@ -691,7 +690,6 @@ function DepthSection() {
             fontSize: 'clamp(28px,4vw,48px)',
             fontWeight: 700,
             color: 'var(--text)',
-            maxWidth: '560px',
             lineHeight: 1.2,
             marginBottom: '12px',
           }}
@@ -748,7 +746,6 @@ function WhoSection() {
             fontSize: 'clamp(28px,4vw,48px)',
             fontWeight: 700,
             color: 'var(--text)',
-            maxWidth: '500px',
             lineHeight: 1.2,
             marginBottom: '12px',
           }}
@@ -830,18 +827,18 @@ function AnalystDarkSection() {
             <div
               style={{
                 position: 'relative',
-                width: '100px', height: '100px',
-                borderRadius: '50%',
+                width: '100%',
+                aspectRatio: '3/4',
+                borderRadius: '16px',
                 overflow: 'hidden',
-                border: '2px solid rgba(26,122,74,0.3)',
-                flexShrink: 0,
+                border: '2px solid rgba(26,122,74,0.25)',
               }}
             >
               <Image
                 src="/images/sahib-primary.jpg"
                 alt="Sahib Singh Hora — SEBI Registered Research Analyst"
                 fill
-                sizes="100px"
+                sizes="480px"
                 style={{ objectFit: 'cover', objectPosition: 'center top' }}
               />
             </div>

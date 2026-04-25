@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { Navbar } from '@/components/layout/Navbar'
+import { BookingBanner } from '@/components/layout/BookingBanner'
 import { Footer } from '@/components/layout/Footer'
 import { Send, MessageCircle, MapPin, Clock, Shield, Phone, Mail } from 'lucide-react'
 
@@ -389,7 +390,7 @@ export default function ContactClient() {
           </div>
         </section>
       </main>
-      <Footer />
+      <BookingBanner />$1
     </>
   )
 }

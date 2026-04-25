@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Navbar } from '@/components/layout/Navbar'
+import { BookingBanner } from '@/components/layout/BookingBanner'
 import { Footer } from '@/components/layout/Footer'
 import { POSTS } from '@/lib/data/posts'
 
@@ -153,8 +154,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
           </div>
         </section>
       )}
-
-      <Footer />
+      <BookingBanner />$1
     </div>
   )
 }

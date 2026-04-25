@@ -31,7 +31,7 @@ export function CredentialBar() {
       </span>
       <span style={{ color: 'var(--border2)', fontSize: '12px' }}>|</span>
       <Link
-        href="https://www.sebi.gov.in/sebiweb/other/OtherAction.do?doRecognisedFpi=yes&intmId=13"
+        href="https://www.sebi.gov.in/sebiweb/other/OtherAction.do?doRecognisedFpi=yes&intmId=14"
         target="_blank"
         rel="noopener noreferrer"
         style={{ fontSize: '12px', color: 'var(--green)', textDecoration: 'none', fontWeight: 500 }}

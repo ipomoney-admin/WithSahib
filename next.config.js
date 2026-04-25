@@ -32,6 +32,13 @@ const nextConfig = {
       removeConsole: { exclude: ['error', 'warn'] },
     },
   }),
+  async redirects() {
+    return [
+      { source: '/track-record', destination: '/blog', permanent: true },
+      { source: '/learn', destination: '/courses', permanent: true },
+    ]
+  },
+
   async headers() {
     return [
       // SWR cache for HTML pages

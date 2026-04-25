@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Navbar } from '@/components/layout/Navbar'
+import { BookingBanner } from '@/components/layout/BookingBanner'
 import { Footer } from '@/components/layout/Footer'
 
 export const metadata: Metadata = {
@@ -86,8 +87,7 @@ export default function IndexOptionsPage() {
           Index options are leveraged derivatives. They can expire worthless. Investments in securities market are subject to market risks. Research Analyst: Sahib Singh Hora · SEBI RA INH000026266
         </div>
       </section>
-
-      <Footer />
+      <BookingBanner />$1
     </div>
   )
 }

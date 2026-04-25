@@ -20,7 +20,7 @@ const FOOTER_LINKS = {
     { label: 'Privacy Policy', href: '/privacy-policy' },
     { label: 'Terms of Service', href: '/terms-of-service' },
     { label: 'Disclaimer', href: '/disclaimer' },
-    { label: 'SEBI Verification', href: 'https://www.sebi.gov.in/sebiweb/other/OtherAction.do?doRecognisedFpi=yes&intmId=13', target: '_blank' },
+    { label: 'SEBI Verification', href: 'https://www.sebi.gov.in/sebiweb/other/OtherAction.do?doRecognisedFpi=yes&intmId=14', target: '_blank' },
   ],
 }
 
@@ -47,16 +47,18 @@ export function Footer() {
           {/* Brand */}
           <div>
             <div style={{ marginBottom: '16px' }}>
-              <span style={{ fontFamily: 'var(--font-body)', fontSize: '20px', fontWeight: 800, letterSpacing: '-0.3px' }}>
-                <span style={{ color: 'rgba(255,255,255,0.75)', fontWeight: 800 }}>with</span>
-                <span style={{ color: '#1A7A4A' }}>Sahib</span>
-              </span>
+              <Link href="/" style={{ textDecoration: 'none' }} aria-label="withSahib homepage">
+                <span style={{ fontSize: '20px', letterSpacing: '-0.3px' }}>
+                  <span style={{ fontFamily: 'var(--font-body)', color: 'rgba(255,255,255,0.75)', fontWeight: 400 }}>with</span>
+                  <span style={{ fontFamily: 'var(--font-heading)', fontStyle: 'italic', fontWeight: 700, color: '#FF6B00' }}>Sahib</span>
+                </span>
+              </Link>
             </div>
             <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)', lineHeight: '1.7', maxWidth: '240px', marginBottom: '16px', fontFamily: 'var(--font-body)' }}>
               Systematic equity research by SEBI RA Sahib Singh Hora. Accountable by regulation.
             </p>
             <a
-              href="https://www.sebi.gov.in/sebiweb/other/OtherAction.do?doRecognisedFpi=yes&intmId=13"
+              href="https://www.sebi.gov.in/sebiweb/other/OtherAction.do?doRecognisedFpi=yes&intmId=14"
               target="_blank"
               rel="noopener noreferrer"
               style={{
