@@ -84,6 +84,7 @@ const NAV_LINKS = [
   { label: 'The Analyst', href: '/about' },
   { label: "Who It's For", href: '/who-its-for' },
   { label: 'Pricing', href: '/pricing' },
+  { label: 'Blog', href: '/blog' },
   { label: 'Learn', href: '/courses' },
 ]
 
@@ -126,14 +127,34 @@ export function Navbar() {
           background: scrolled ? undefined : 'transparent',
         }}
       >
-        {/* Logo */}
-        <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '10px' }} aria-label="withSahib homepage">
-          <LogoMark size={26} animated={true} />
-          <span style={{ fontSize: '20px', letterSpacing: '-0.3px' }}>
-            <span style={{ fontFamily: 'Inter, system-ui, sans-serif', color: '#0A0A0A', fontWeight: 400 }}>with</span>
-            <span style={{ fontFamily: '"Playfair Display", Georgia, serif', fontStyle: 'italic', fontWeight: 700, color: '#FF6B00' }}>Sahib</span>
+        {/* Logo + SEBI pill */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '10px' }} aria-label="withSahib homepage">
+            <LogoMark size={26} animated={true} />
+            <span style={{ fontSize: '20px', letterSpacing: '-0.3px' }}>
+              <span style={{ fontFamily: 'Inter, system-ui, sans-serif', color: '#0A0A0A', fontWeight: 400 }}>with</span>
+              <span style={{ fontFamily: '"Playfair Display", Georgia, serif', fontStyle: 'italic', fontWeight: 700, color: '#FF6B00' }}>Sahib</span>
+            </span>
+          </Link>
+          <span
+            className="hide-mobile sebi-pill"
+            style={{
+              fontSize: '10px',
+              fontWeight: 600,
+              color: '#6E6E73',
+              background: '#F5F3EE',
+              border: '1px solid #E8E6E0',
+              padding: '3px 10px',
+              borderRadius: '100px',
+              fontFamily: 'Inter, system-ui, sans-serif',
+              letterSpacing: '0.3px',
+              whiteSpace: 'nowrap',
+              flexShrink: 0,
+            }}
+          >
+            SEBI RA · INH000026266
           </span>
-        </Link>
+        </div>
 
         {/* Desktop Links */}
         <div

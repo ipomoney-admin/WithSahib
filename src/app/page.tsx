@@ -4,7 +4,6 @@ import { useEffect, useRef, useState, useCallback } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Navbar } from '@/components/layout/Navbar'
-import { CredentialBar } from '@/components/layout/CredentialBar'
 import { BookingBanner } from '@/components/layout/BookingBanner'
 import { Footer } from '@/components/layout/Footer'
 import {
@@ -175,7 +174,6 @@ export default function HomePage() {
   return (
     <div style={{ background: 'var(--bg)' }}>
       <Navbar />
-      <CredentialBar />
       <LiveTicker />
       <HeroSection />
       <StatsStrip />
@@ -917,6 +915,9 @@ function PricingSection() {
           <p style={{ fontSize: '16px', color: 'var(--text2)', marginBottom: '28px', fontFamily: 'var(--font-body)' }}>
             Start free. Upgrade when ready. Cancel anytime.
           </p>
+          <p style={{ fontSize: '12px', color: 'var(--text4)', fontFamily: 'var(--font-body)', marginBottom: '4px' }}>
+            Free plan always available — no card required
+          </p>
           {/* Billing toggle */}
           <div style={{ display: 'inline-flex', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--r-sm)', padding: '4px', gap: '4px' }}>
             {(['monthly', 'yearly'] as const).map((b) => (
@@ -943,7 +944,7 @@ function PricingSection() {
         </div>
 
         <div className="pricing-grid" style={{ alignItems: 'start' }}>
-          {PLANS.map((plan, i) => {
+          {PLANS.filter(p => p.tier !== 'free').map((plan, i) => {
             const displayPrice = billing === 'yearly' ? plan.yearlyMonthly : plan.monthly
             const isFeatured = !!(plan as any).featured
             const isElite = plan.color === 'gold'

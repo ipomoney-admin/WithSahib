@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { LogoMark } from '@/components/ui/Logo'
 
 const FOOTER_LINKS = {
   Research: [
@@ -46,9 +47,10 @@ export function Footer() {
         >
           {/* Brand */}
           <div>
-            <div style={{ marginBottom: '16px' }}>
-              <Link href="/" style={{ textDecoration: 'none' }} aria-label="withSahib homepage">
-                <span style={{ fontSize: '20px', letterSpacing: '-0.3px' }}>
+            <div style={{ marginBottom: '20px' }}>
+              <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '10px' }} aria-label="withSahib homepage">
+                <LogoMark size={40} animated={false} />
+                <span style={{ fontSize: '26px', letterSpacing: '-0.3px' }}>
                   <span style={{ fontFamily: 'Inter, system-ui, sans-serif', color: 'rgba(255,255,255,0.75)', fontWeight: 400 }}>with</span>
                   <span style={{ fontFamily: '"Playfair Display", Georgia, serif', fontStyle: 'italic', fontWeight: 700, color: '#FF6B00' }}>Sahib</span>
                 </span>

@@ -112,6 +112,13 @@
 .dark-section { background: #0A0A0A; }
 .dark .dark-section { background: #050505; }
 
+/* SEBI pill in dark mode */
+.dark .sebi-pill {
+  background: #1C1C1E !important;
+  color: #6E6E73 !important;
+  border-color: #2C2C2E !important;
+}
+
 /* ─── BASE ───────────────────────────────────────────────────────────── */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -264,6 +271,11 @@ h1, h2, h3, h4, h5, h6 {
   animation: none;
 }
 
+/* ─── GLOBAL HOVER ORANGE ────────────────────────────────────────────── */
+a:hover { color: #FF6B00; transition: color 0.15s; }
+button:hover { color: #FF6B00; transition: all 0.15s; }
+svg:hover path { stroke: #FF6B00; }
+
 /* ─── TICKER ─────────────────────────────────────────────────────────── */
 @keyframes ticker {
   0%   { transform: translateX(0); }
@@ -274,7 +286,7 @@ h1, h2, h3, h4, h5, h6 {
 .ticker-inner {
   display: flex;
   gap: 48px;
-  animation: ticker 60s linear infinite;
+  animation: ticker 120s linear infinite;
   width: max-content;
   align-items: center;
 }

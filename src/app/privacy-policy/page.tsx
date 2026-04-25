@@ -1,4 +1,7 @@
 import { Metadata } from 'next'
+import { Navbar } from '@/components/layout/Navbar'
+import { StatutoryLetterhead } from '@/components/layout/StatutoryLetterhead'
+import { Footer } from '@/components/layout/Footer'
 
 export const metadata: Metadata = {
   title: 'Privacy Policy — Data Protection',
@@ -8,17 +11,10 @@ export const metadata: Metadata = {
 
 export default function PrivacyPolicyPage() {
   return (
-    <div style={{ minHeight: '100vh', background: 'var(--bg)', padding: '80px 20px' }}>
-      <div style={{ maxWidth: '760px', margin: '0 auto' }}>
-        <p style={{ fontSize: '12px', color: 'var(--text3)', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '12px' }}>
-          Legal
-        </p>
-        <h1 style={{ fontFamily: 'DM Serif Display, serif', fontSize: '40px', fontWeight: 400, color: 'var(--text)', marginBottom: '8px' }}>
-          Privacy Policy
-        </h1>
-        <p style={{ fontSize: '14px', color: 'var(--text3)', marginBottom: '48px' }}>
-          Last updated: 23 April 2026
-        </p>
+    <div style={{ minHeight: '100vh', background: 'var(--bg)' }}>
+      <Navbar />
+      <StatutoryLetterhead title="Privacy Policy" lastUpdated="23 April 2026" />
+      <div style={{ maxWidth: '760px', margin: '0 auto', padding: '0 20px 80px' }}>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
 
@@ -161,6 +157,7 @@ export default function PrivacyPolicyPage() {
 
         </div>
       </div>
+      <Footer />
     </div>
   )
 }

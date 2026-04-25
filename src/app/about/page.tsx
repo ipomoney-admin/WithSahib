@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Navbar } from '@/components/layout/Navbar'
-import { CredentialBar } from '@/components/layout/CredentialBar'
 import { BookingBanner } from '@/components/layout/BookingBanner'
 import { Footer } from '@/components/layout/Footer'
 import { Linkedin, Twitter, Instagram, Facebook } from 'lucide-react'
@@ -85,7 +84,6 @@ export default function AboutPage() {
   return (
     <div style={{ background: 'var(--bg)' }}>
       <Navbar />
-      <CredentialBar />
 
       {/* ── HERO (dark) ───────────────────────────────────────────── */}
       <section
