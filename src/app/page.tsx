@@ -549,7 +549,7 @@ function ServicesSection() {
           Research across{' '}
           <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>every time horizon.</em>
         </h2>
-        <p style={{ fontSize: '16px', color: 'var(--text2)', maxWidth: '480px', marginBottom: '48px', fontFamily: 'var(--font-body)' }}>
+        <p style={{ fontSize: '16px', color: 'var(--text2)', marginBottom: '48px', fontFamily: 'var(--font-body)' }}>
           From intraday to long-term portfolios — every recommendation published under SEBI RA INH000026266 with full written rationale.
         </p>
 
@@ -697,7 +697,7 @@ function DepthSection() {
           Six layers of research{' '}
           <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>behind every call</em>
         </h2>
-        <p style={{ fontSize: '16px', color: 'var(--text2)', maxWidth: '480px', marginBottom: '48px', fontFamily: 'var(--font-body)' }}>
+        <p style={{ fontSize: '16px', color: 'var(--text2)', marginBottom: '48px', fontFamily: 'var(--font-body)' }}>
           A research house operates by process, not instinct.
         </p>
         <div className="depth-grid">
@@ -753,7 +753,7 @@ function WhoSection() {
           Built for investors who{' '}
           <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>demand accountability</em>
         </h2>
-        <p style={{ fontSize: '16px', color: 'var(--text2)', maxWidth: '480px', marginBottom: '48px', fontFamily: 'var(--font-body)' }}>
+        <p style={{ fontSize: '16px', color: 'var(--text2)', marginBottom: '48px', fontFamily: 'var(--font-body)' }}>
           withSahib is not for everyone. It is for people who want regulated, documented research — not tips.
         </p>
         <div className="who-grid">
@@ -1041,105 +1041,6 @@ function PricingSection() {
             <Link href="/contact" className="btn btn-primary btn-lg" style={{ textDecoration: 'none', background: 'var(--orange)', boxShadow: 'var(--orange-glow)' }}>
               Contact for Custom Research
             </Link>
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-// ─── TESTIMONIALS ─────────────────────────────────────────────────────────────
-function TestimonialSection() {
-  const { ref, inView } = useInView()
-  const testimonials = [
-    {
-      text: 'The written rationale on every call is what sets this apart. I understand the setup, not just the entry price.',
-      name: 'Subscriber since 2026',
-      sub: 'Pro Plan · Active Trader',
-    },
-    {
-      text: 'Finally a SEBI-registered analyst who actually explains the reasoning. The stop-loss logic alone has saved me multiple times.',
-      name: 'Subscriber since 2026',
-      sub: 'Elite Plan · Swing Trader',
-    },
-    {
-      text: 'The 1-on-1 session gave me a completely different perspective on my portfolio. Worth every rupee.',
-      name: 'Subscriber since 2026',
-      sub: 'Elite Plan · Long-term Investor',
-    },
-  ]
-  return (
-    <section ref={ref} style={{ padding: '80px 40px', background: 'var(--bg2)', borderTop: '1px solid var(--border)' }}>
-      <div className="container-wide" style={{ padding: 0 }}>
-        <div className="section-tag">From Subscribers</div>
-        <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: 'var(--text)', marginBottom: '48px', maxWidth: '480px' }}>
-          What investors say about{' '}
-          <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>the research</em>
-        </h2>
-        <div className="testimonial-grid">
-          {testimonials.map((t, i) => (
-            <div
-              key={i}
-              style={{
-                background: 'var(--surface)',
-                border: '1px solid var(--border)',
-                borderRadius: 'var(--r-lg)',
-                padding: '28px',
-                opacity: inView ? 1 : 0,
-                transform: inView ? 'translateY(0)' : 'translateY(20px)',
-                transition: `all 0.5s ease ${i * 0.1}s`,
-              }}
-            >
-              <p style={{ fontSize: '15px', color: 'var(--text2)', lineHeight: 1.7, marginBottom: '20px', fontFamily: 'var(--font-body)', fontStyle: 'italic' }}>
-                &ldquo;{t.text}&rdquo;
-              </p>
-              <div style={{ borderTop: '1px solid var(--border)', paddingTop: '16px' }}>
-                <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text)', fontFamily: 'var(--font-body)' }}>{t.name}</div>
-                <div style={{ fontSize: '11px', color: 'var(--text4)', marginTop: '2px', fontFamily: 'var(--font-body)' }}>{t.sub}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-// ─── TRACK RECORD ─────────────────────────────────────────────────────────────
-function TrackRecordSection() {
-  const { ref, inView } = useInView()
-  return (
-    <section ref={ref} style={{ padding: '80px 40px', background: 'var(--bg)' }}>
-      <div className="container-wide" style={{ padding: 0 }}>
-        <div className="resp-2col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '60px', alignItems: 'center', opacity: inView ? 1 : 0, transform: inView ? 'translateY(0)' : 'translateY(24px)', transition: 'all 0.7s ease' }}>
-          <div>
-            <div className="section-tag">Track Record</div>
-            <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.15, marginBottom: '20px' }}>
-              Every call logged.{' '}
-              <em style={{ color: 'var(--gold)', fontStyle: 'italic', fontWeight: 400 }}>Wins and losses both.</em>
-            </h2>
-            <p style={{ fontSize: '16px', color: 'var(--text2)', lineHeight: 1.8, marginBottom: '16px', fontFamily: 'var(--font-body)' }}>
-              From May 2026, every research recommendation is publicly logged with its outcome — entry, exit, result, and the written rationale behind each. A research house is accountable for its record, not selective about it.
-            </p>
-            <p style={{ fontSize: '14px', color: 'var(--text3)', lineHeight: 1.7, marginBottom: '28px', fontFamily: 'var(--font-body)' }}>
-              Win rate alone is not a useful metric. A 70% win rate with poor risk management produces negative returns. The published record shows risk-to-reward ratios alongside win rates — because that is the complete picture.
-            </p>
-            <Link href="/track-record" className="btn btn-ghost btn-md" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-              View Track Record <ChevronRight size={16} />
-            </Link>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            {[
-              { val: 'May 2026', label: 'Logging Begins', sub: 'Every recommendation tracked from the first published call — no retrospective additions' },
-              { val: 'Wins + Losses', label: 'Full Record', sub: 'Both profitable and unprofitable calls are logged. Cherry-picking defeats the purpose of a public record.' },
-              { val: 'R:R + Win Rate', label: 'Dual Metrics', sub: 'Risk-to-reward ratio is published alongside win rate. The combination tells the true story.' },
-            ].map((m, i) => (
-              <div key={i} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--r-md)', padding: '20px 24px', opacity: inView ? 1 : 0, transform: inView ? 'translateY(0)' : 'translateY(20px)', transition: `all 0.5s ease ${i * 0.12}s` }}>
-                <div style={{ fontSize: '18px', fontWeight: 700, color: 'var(--text)', fontFamily: 'var(--font-heading)', marginBottom: '4px' }}>{m.val}</div>
-                <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text3)', marginBottom: '6px', letterSpacing: '0.5px', fontFamily: 'var(--font-body)' }}>{m.label}</div>
-                <div style={{ fontSize: '12px', color: 'var(--text3)', lineHeight: 1.6, fontFamily: 'var(--font-body)' }}>{m.sub}</div>
-              </div>
-            ))}
           </div>
         </div>
       </div>

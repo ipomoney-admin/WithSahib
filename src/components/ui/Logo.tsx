@@ -1,7 +1,5 @@
 'use client'
 
-import { useRef } from 'react'
-
 interface LogoMarkProps {
   size?: number
   animated?: boolean
@@ -21,27 +19,17 @@ export function LogoMark({ size = 28, animated = true }: LogoMarkProps) {
       <style>{`
         @keyframes wsBarIn {
           0%   { transform: scaleY(0); opacity: 0; }
-          60%  { opacity: 1; }
+          70%  { opacity: 1; }
           100% { transform: scaleY(1); opacity: 1; }
         }
         @keyframes wsDotPop {
           0%   { transform: scale(0); opacity: 0; }
-          60%  { transform: scale(1.2); opacity: 1; }
-          80%  { transform: scale(0.9); }
-          100% { transform: scale(1.0); opacity: 1; }
-        }
-        @keyframes wsDotPulse {
-          0%, 100% { transform: scale(1.0); }
-          50%       { transform: scale(1.2); }
+          65%  { transform: scale(1.3); opacity: 1; }
+          82%  { transform: scale(0.88); }
+          100% { transform: scale(1); opacity: 1; }
         }
         .ws-bar { transform-origin: bottom center; }
         .ws-dot-wrap { transform-origin: center center; }
-        .ws-logo-svg:hover .ws-bar {
-          filter: brightness(1.3);
-        }
-        .ws-logo-svg:hover .ws-dot {
-          animation: wsDotPulse 0.6s ease forwards !important;
-        }
       `}</style>
       <svg
         className="ws-logo-svg"
@@ -50,7 +38,7 @@ export function LogoMark({ size = 28, animated = true }: LogoMarkProps) {
         viewBox={`0 0 ${svgW} ${svgH}`}
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        style={{ overflow: 'visible', flexShrink: 0 }}
+        style={{ overflow: 'visible', flexShrink: 0, display: 'block' }}
       >
         <rect
           className="ws-bar"
@@ -60,7 +48,9 @@ export function LogoMark({ size = 28, animated = true }: LogoMarkProps) {
           height={heights[0] ?? 0}
           rx={barW * 0.35}
           fill="rgba(26,122,74,0.45)"
-          style={animated ? { animation: 'wsBarIn 0.3s ease-out 0s both' } : {}}
+          style={animated ? {
+            animation: 'wsBarIn 0.35s cubic-bezier(0.22,1,0.36,1) 0s both',
+          } : { transform: 'scaleY(1)' }}
         />
         <rect
           className="ws-bar"
@@ -70,7 +60,9 @@ export function LogoMark({ size = 28, animated = true }: LogoMarkProps) {
           height={heights[1] ?? 0}
           rx={barW * 0.35}
           fill="rgba(26,122,74,0.72)"
-          style={animated ? { animation: 'wsBarIn 0.3s ease-out 0.25s both' } : {}}
+          style={animated ? {
+            animation: 'wsBarIn 0.35s cubic-bezier(0.22,1,0.36,1) 0.15s both',
+          } : { transform: 'scaleY(1)' }}
         />
         <rect
           className="ws-bar"
@@ -80,11 +72,15 @@ export function LogoMark({ size = 28, animated = true }: LogoMarkProps) {
           height={heights[2] ?? 0}
           rx={barW * 0.35}
           fill="#1A7A4A"
-          style={animated ? { animation: 'wsBarIn 0.3s ease-out 0.5s both' } : {}}
+          style={animated ? {
+            animation: 'wsBarIn 0.35s cubic-bezier(0.22,1,0.36,1) 0.30s both',
+          } : { transform: 'scaleY(1)' }}
         />
         <g
-          className="ws-dot-wrap ws-dot"
-          style={animated ? { animation: 'wsDotPop 0.4s cubic-bezier(0.34,1.56,0.64,1) 0.75s both' } : {}}
+          className="ws-dot-wrap"
+          style={animated ? {
+            animation: 'wsDotPop 0.45s cubic-bezier(0.34,1.56,0.64,1) 0.6s both',
+          } : {}}
         >
           <circle
             cx={totalBarsW + gap + dotR}
@@ -106,28 +102,13 @@ interface LogoProps {
 }
 
 export function Logo({ size = 28, showWordmark = true, animated = true, dark = false }: LogoProps) {
-  const played = useRef(false)
-  if (!played.current) played.current = true
-
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
       <LogoMark size={size} animated={animated} />
       {showWordmark && (
-        <span
-          style={{
-            fontSize: `${size * 0.65}px`,
-            letterSpacing: '-0.3px',
-            animation: animated ? 'wsWordIn 0.3s ease-out 0.9s both' : undefined,
-          }}
-        >
-          <style>{`
-            @keyframes wsWordIn {
-              0%   { opacity: 0; transform: translateX(-4px); }
-              100% { opacity: 1; transform: translateX(0); }
-            }
-          `}</style>
-          <span style={{ fontFamily: 'var(--font-body)', fontWeight: 400, color: dark ? 'rgba(255,255,255,0.75)' : '#0A0A0A' }}>with</span>
-          <span style={{ fontFamily: 'var(--font-heading)', fontStyle: 'italic', fontWeight: 700, color: '#FF6B00' }}>Sahib</span>
+        <span style={{ fontSize: `${size * 0.65}px`, letterSpacing: '-0.3px' }}>
+          <span style={{ fontFamily: 'Inter, system-ui, sans-serif', fontWeight: 400, color: dark ? 'rgba(255,255,255,0.75)' : '#0A0A0A' }}>with</span>
+          <span style={{ fontFamily: '"Playfair Display", Georgia, serif', fontStyle: 'italic', fontWeight: 700, color: '#FF6B00' }}>Sahib</span>
         </span>
       )}
     </div>

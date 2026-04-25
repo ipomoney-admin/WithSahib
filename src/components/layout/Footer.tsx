@@ -49,8 +49,8 @@ export function Footer() {
             <div style={{ marginBottom: '16px' }}>
               <Link href="/" style={{ textDecoration: 'none' }} aria-label="withSahib homepage">
                 <span style={{ fontSize: '20px', letterSpacing: '-0.3px' }}>
-                  <span style={{ fontFamily: 'var(--font-body)', color: 'rgba(255,255,255,0.75)', fontWeight: 400 }}>with</span>
-                  <span style={{ fontFamily: 'var(--font-heading)', fontStyle: 'italic', fontWeight: 700, color: '#FF6B00' }}>Sahib</span>
+                  <span style={{ fontFamily: 'Inter, system-ui, sans-serif', color: 'rgba(255,255,255,0.75)', fontWeight: 400 }}>with</span>
+                  <span style={{ fontFamily: '"Playfair Display", Georgia, serif', fontStyle: 'italic', fontWeight: 700, color: '#FF6B00' }}>Sahib</span>
                 </span>
               </Link>
             </div>
