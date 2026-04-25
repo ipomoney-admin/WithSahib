@@ -163,18 +163,10 @@ const PLANS = [
 ]
 
 // ─── ANIMATION HOOK ───────────────────────────────────────────────────────────
-function useInView(threshold = 0.15) {
+function useInView(_threshold = 0.15) {
   const ref = useRef<HTMLDivElement>(null)
-  const [inView, setInView] = useState(false)
-  useEffect(() => {
-    const obs = new IntersectionObserver(
-      ([e]) => { if (e?.isIntersecting) { setInView(true); obs.disconnect() } },
-      { threshold }
-    )
-    if (ref.current) obs.observe(ref.current)
-    return () => obs.disconnect()
-  }, [threshold])
-  return { ref, inView }
+  // Always visible — avoids blank sections on first render / SSR hydration
+  return { ref, inView: true }
 }
 
 // ─── MAIN PAGE ────────────────────────────────────────────────────────────────
@@ -367,7 +359,7 @@ function HeroSection() {
               }}
             >
               Real Research.{' '}
-              <em style={{ fontStyle: 'italic', color: 'var(--green)', fontWeight: 400 }}>Documented process.</em>{' '}
+              <em style={{ fontStyle: 'italic', color: 'var(--orange)', fontWeight: 400 }}>Documented process.</em>{' '}
               Your name on every call.
             </h1>
 
@@ -496,7 +488,6 @@ function StatsStrip() {
     { num: 'INH000026266', label: 'SEBI Reg. No.' },
     { num: 'NISM', label: 'Certified Analyst' },
     { num: '14+', label: 'Years Experience' },
-    { num: 'Full Record', label: 'All Calls Logged' },
   ]
   return (
     <div
@@ -512,7 +503,7 @@ function StatsStrip() {
         style={{
           padding: 0,
           display: 'grid',
-          gridTemplateColumns: 'repeat(4, 1fr)',
+          gridTemplateColumns: 'repeat(3, 1fr)',
           gap: '24px',
         }}
       >
@@ -557,7 +548,7 @@ function ServicesSection() {
           }}
         >
           Research coverage across{' '}
-          <em style={{ color: 'var(--green)', fontStyle: 'italic', fontWeight: 400 }}>every time horizon</em>
+          <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>every time horizon</em>
         </h2>
         <p style={{ fontSize: '16px', color: 'var(--text2)', maxWidth: '480px', marginBottom: '48px', fontFamily: 'var(--font-body)' }}>
           From intraday to long-term portfolios — every recommendation published under SEBI RA INH000026266 with full written rationale.
@@ -636,7 +627,7 @@ function HowItWorksSection() {
           }}
         >
           Research you can{' '}
-          <em style={{ color: 'var(--green)', fontStyle: 'italic', fontWeight: 400 }}>follow and understand</em>
+          <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>follow and understand</em>
         </h2>
         <p style={{ fontSize: '16px', color: 'var(--text2)', maxWidth: '480px', marginBottom: '56px', fontFamily: 'var(--font-body)' }}>
           Every call on withSahib has a person behind it — not a black box.
@@ -706,7 +697,7 @@ function DepthSection() {
           }}
         >
           Six layers of research{' '}
-          <em style={{ color: 'var(--green)', fontStyle: 'italic', fontWeight: 400 }}>behind every call</em>
+          <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>behind every call</em>
         </h2>
         <p style={{ fontSize: '16px', color: 'var(--text2)', maxWidth: '480px', marginBottom: '48px', fontFamily: 'var(--font-body)' }}>
           A research house operates by process, not instinct.
@@ -725,7 +716,7 @@ function DepthSection() {
                 transition: `all 0.5s ease ${i * 0.08}s`,
               }}
             >
-              <div style={{ fontFamily: 'var(--font-heading)', fontSize: '13px', fontWeight: 700, color: 'var(--green)', letterSpacing: '3px', marginBottom: '16px', textTransform: 'uppercase' }}>
+              <div style={{ fontFamily: 'var(--font-heading)', fontSize: '13px', fontWeight: 700, color: 'var(--orange)', letterSpacing: '3px', marginBottom: '16px', textTransform: 'uppercase' }}>
                 {c.num}
               </div>
               <h3 style={{ fontSize: '16px', fontWeight: 600, color: 'var(--text)', marginBottom: '10px', fontFamily: 'var(--font-body)' }}>{c.title}</h3>
@@ -763,7 +754,7 @@ function WhoSection() {
           }}
         >
           Built for investors who{' '}
-          <em style={{ color: 'var(--green)', fontStyle: 'italic', fontWeight: 400 }}>demand accountability</em>
+          <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>demand accountability</em>
         </h2>
         <p style={{ fontSize: '16px', color: 'var(--text2)', maxWidth: '480px', marginBottom: '48px', fontFamily: 'var(--font-body)' }}>
           withSahib is not for everyone. It is for people who want regulated, documented research — not tips.
@@ -885,7 +876,7 @@ function AnalystDarkSection() {
 
           {/* Text */}
           <div>
-            <p style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '3px', color: 'var(--green-bright)', textTransform: 'uppercase', marginBottom: '12px', fontFamily: 'var(--font-body)' }}>
+            <p style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '3px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', marginBottom: '12px', fontFamily: 'var(--font-body)' }}>
               The Analyst
             </p>
             <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(28px,3.5vw,40px)', fontWeight: 700, color: 'rgba(255,255,255,0.95)', lineHeight: 1.2, marginBottom: '20px' }}>
@@ -898,7 +889,7 @@ function AnalystDarkSection() {
               That is the structural difference between a registered research house and an unregistered channel: the name on the call has a regulatory consequence.
             </p>
             <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-              <Link href="/about" style={{ textDecoration: 'none', padding: '11px 24px', borderRadius: 'var(--r-sm)', border: '1px solid rgba(26,122,74,0.5)', color: 'var(--green-bright)', fontSize: '14px', fontWeight: 600, transition: 'all 0.2s', fontFamily: 'var(--font-body)' }}>
+              <Link href="/about" style={{ textDecoration: 'none', padding: '11px 24px', borderRadius: 'var(--r-sm)', border: '1px solid rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.7)', fontSize: '14px', fontWeight: 600, transition: 'all 0.2s', fontFamily: 'var(--font-body)' }}>
                 Read my story →
               </Link>
               <Link href="/appointments" style={{ textDecoration: 'none', padding: '11px 24px', borderRadius: 'var(--r-sm)', background: 'var(--orange)', color: '#FFFFFF', fontSize: '14px', fontWeight: 700, transition: 'opacity 0.2s', fontFamily: 'var(--font-body)' }}>
@@ -924,7 +915,7 @@ function PricingSection() {
           <div className="section-tag" style={{ justifyContent: 'center' }}>Research Access</div>
           <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(28px,4vw,48px)', fontWeight: 700, color: 'var(--text)', marginBottom: '12px' }}>
             Transparent pricing,{' '}
-            <em style={{ color: 'var(--green)', fontStyle: 'italic', fontWeight: 400 }}>zero surprises</em>
+            <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>zero surprises</em>
           </h2>
           <p style={{ fontSize: '16px', color: 'var(--text2)', marginBottom: '28px', fontFamily: 'var(--font-body)' }}>
             Start free. Upgrade when ready. Cancel anytime.
@@ -943,7 +934,7 @@ function PricingSection() {
                   fontSize: '13px',
                   fontWeight: 500,
                   cursor: 'pointer',
-                  background: billing === b ? 'var(--green)' : 'transparent',
+                  background: billing === b ? 'var(--orange)' : 'transparent',
                   color: billing === b ? '#FFFFFF' : 'var(--text2)',
                   transition: 'all 0.2s',
                 }}
@@ -957,60 +948,56 @@ function PricingSection() {
         <div className="pricing-grid" style={{ alignItems: 'start' }}>
           {PLANS.map((plan, i) => {
             const displayPrice = billing === 'yearly' ? plan.yearlyMonthly : plan.monthly
-            const borderColor =
-              plan.color === 'emerald' ? 'var(--green)' :
-              plan.color === 'gold' ? 'var(--gold)' :
-              plan.color === 'sapphire' ? 'var(--sapphire)' :
-              'var(--border)'
+            const isFeatured = !!(plan as any).featured
+            const isElite = plan.color === 'gold'
 
             return (
               <div
                 key={i}
                 style={{
-                  background: 'var(--surface)',
-                  border: `1px solid ${borderColor}`,
+                  background: isFeatured ? 'var(--black)' : 'var(--surface)',
+                  border: isElite ? '1px solid var(--gold)' : isFeatured ? '1px solid rgba(255,107,0,0.3)' : '1px solid var(--border2)',
+                  borderTop: isElite ? '2px solid #D4A017' : isFeatured ? '2px solid var(--orange)' : undefined,
                   borderRadius: 'var(--r-xl)',
                   padding: '28px',
                   position: 'relative',
-                  opacity: inView ? 1 : 0,
-                  transform: inView ? `translateY(${(plan as any).featured ? '-8px' : '0'})` : 'translateY(20px)',
-                  transition: `all 0.5s ease ${i * 0.1}s`,
-                  boxShadow: (plan as any).featured ? '0 0 0 1px rgba(26,122,74,0.1), 0 16px 48px rgba(26,122,74,0.08)' : 'none',
+                  transform: isFeatured ? 'translateY(-8px)' : undefined,
+                  boxShadow: isFeatured ? '0 20px 60px rgba(255,107,0,0.12)' : isElite ? '0 0 0 1px rgba(212,160,23,0.08)' : 'none',
                 }}
               >
-                {(plan as any).featured && (
-                  <div style={{ position: 'absolute', top: '-12px', left: '50%', transform: 'translateX(-50%)', background: 'var(--green)', color: '#FFFFFF', fontSize: '10px', fontWeight: 700, letterSpacing: '1px', padding: '4px 14px', borderRadius: '20px', whiteSpace: 'nowrap', fontFamily: 'var(--font-body)' }}>
+                {isFeatured && (
+                  <div style={{ position: 'absolute', top: '-13px', left: '50%', transform: 'translateX(-50%)', background: 'var(--orange)', color: '#FFFFFF', fontSize: '10px', fontWeight: 700, letterSpacing: '1px', padding: '4px 14px', borderRadius: '20px', whiteSpace: 'nowrap', fontFamily: 'var(--font-body)' }}>
                     MOST POPULAR
                   </div>
                 )}
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
-                  <div style={{ fontSize: '11px', fontWeight: 600, letterSpacing: '2px', color: 'var(--text3)', textTransform: 'uppercase', fontFamily: 'var(--font-body)' }}>
+                  <div style={{ fontSize: '11px', fontWeight: 600, letterSpacing: '2px', color: isFeatured ? 'rgba(255,255,255,0.5)' : 'var(--text3)', textTransform: 'uppercase', fontFamily: 'var(--font-body)' }}>
                     {plan.name}
                   </div>
                   {billing === 'yearly' && plan.discount > 0 && (
-                    <span style={{ fontSize: '10px', fontWeight: 700, padding: '2px 7px', borderRadius: '4px', background: 'rgba(26,122,74,0.10)', color: 'var(--green)', border: '1px solid rgba(26,122,74,0.18)', fontFamily: 'var(--font-body)' }}>
+                    <span style={{ fontSize: '10px', fontWeight: 700, padding: '2px 7px', borderRadius: '4px', background: isFeatured ? 'rgba(255,107,0,0.2)' : 'rgba(255,107,0,0.08)', color: 'var(--orange)', border: '1px solid rgba(255,107,0,0.2)', fontFamily: 'var(--font-body)' }}>
                       SAVE {plan.discount}%
                     </span>
                   )}
                 </div>
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px', marginBottom: '4px' }}>
-                  <span style={{ fontSize: '38px', fontWeight: 700, color: 'var(--text)', fontFamily: 'var(--font-heading)' }}>
+                  <span style={{ fontSize: '42px', fontWeight: 800, color: isFeatured ? '#FFFFFF' : 'var(--text)', fontFamily: 'var(--font-body)' }}>
                     {displayPrice === 0 ? '₹0' : `₹${displayPrice.toLocaleString('en-IN')}`}
                   </span>
-                  <span style={{ fontSize: '13px', color: 'var(--text3)', fontFamily: 'var(--font-body)' }}>/mo</span>
+                  <span style={{ fontSize: '13px', color: isFeatured ? 'rgba(255,255,255,0.4)' : 'var(--text3)', fontFamily: 'var(--font-body)' }}>/mo</span>
                 </div>
                 {billing === 'yearly' && plan.yearlyTotal > 0 && (
-                  <p style={{ fontSize: '11px', color: 'var(--green)', marginBottom: '4px', fontFamily: 'var(--font-body)' }}>
+                  <p style={{ fontSize: '11px', color: isFeatured ? 'rgba(255,107,0,0.8)' : 'var(--text3)', marginBottom: '4px', fontFamily: 'var(--font-body)' }}>
                     ₹{plan.yearlyTotal.toLocaleString('en-IN')} billed yearly
                   </p>
                 )}
-                <p style={{ fontSize: '12px', color: 'var(--text3)', marginBottom: '20px', paddingBottom: '20px', borderBottom: '1px solid var(--border)', fontFamily: 'var(--font-body)' }}>
+                <p style={{ fontSize: '12px', color: isFeatured ? 'rgba(255,255,255,0.4)' : 'var(--text3)', marginBottom: '20px', paddingBottom: '20px', borderBottom: `1px solid ${isFeatured ? 'rgba(255,255,255,0.1)' : 'var(--border)'}`, fontFamily: 'var(--font-body)' }}>
                   {plan.sub}
                 </p>
                 <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '24px' }}>
                   {plan.features.map((f, j) => (
-                    <li key={j} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: f.ok ? 'var(--text2)' : 'var(--text4)', fontFamily: 'var(--font-body)' }}>
-                      <span style={{ width: '16px', height: '16px', borderRadius: '50%', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: f.ok ? 'rgba(26,122,74,0.10)' : 'var(--border)', border: `1.5px solid ${f.ok ? 'var(--green)' : 'var(--border2)'}` }}>
+                    <li key={j} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: f.ok ? (isFeatured ? 'rgba(255,255,255,0.85)' : 'var(--text2)') : (isFeatured ? 'rgba(255,255,255,0.25)' : 'var(--text4)'), fontFamily: 'var(--font-body)' }}>
+                      <span style={{ width: '16px', height: '16px', borderRadius: '50%', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: f.ok ? 'rgba(26,122,74,0.12)' : 'transparent', border: `1.5px solid ${f.ok ? 'var(--green)' : (isFeatured ? 'rgba(255,255,255,0.15)' : 'var(--border2)')}` }}>
                         {f.ok && <Check size={9} color="var(--green)" strokeWidth={3} />}
                       </span>
                       {f.text}
@@ -1027,18 +1014,14 @@ function PricingSection() {
                     textAlign: 'center',
                     textDecoration: 'none',
                     fontSize: '14px',
-                    fontWeight: 600,
+                    fontWeight: 700,
                     cursor: 'pointer',
                     transition: 'all 0.2s',
                     fontFamily: 'var(--font-body)',
-                    background: (plan as any).featured ? 'var(--orange)' :
-                      plan.color === 'gold' ? 'rgba(146,104,10,0.1)' : 'transparent',
-                    color: (plan as any).featured ? '#FFFFFF' :
-                      plan.color === 'gold' ? 'var(--gold)' : 'var(--text2)',
-                    border: (plan as any).featured ? 'none' :
-                      plan.color === 'gold' ? '1px solid rgba(146,104,10,0.3)' :
-                      '1px solid var(--border)',
-                    boxShadow: (plan as any).featured ? 'var(--orange-glow)' : 'none',
+                    background: isFeatured ? 'var(--orange)' : isElite ? 'rgba(212,160,23,0.08)' : 'transparent',
+                    color: isFeatured ? '#FFFFFF' : isElite ? '#B8860B' : 'var(--text2)',
+                    border: isFeatured ? 'none' : isElite ? '1px solid rgba(212,160,23,0.3)' : '1px solid var(--border2)',
+                    boxShadow: isFeatured ? '0 8px 25px rgba(255,107,0,0.4)' : 'none',
                   }}
                 >
                   {plan.cta}
@@ -1094,7 +1077,7 @@ function TestimonialSection() {
         <div className="section-tag">From Subscribers</div>
         <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: 'var(--text)', marginBottom: '48px', maxWidth: '480px' }}>
           What investors say about{' '}
-          <em style={{ color: 'var(--green)', fontStyle: 'italic', fontWeight: 400 }}>the research</em>
+          <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>the research</em>
         </h2>
         <div className="testimonial-grid">
           {testimonials.map((t, i) => (
@@ -1133,7 +1116,7 @@ function TrackRecordSection() {
       <div className="container-wide" style={{ padding: 0 }}>
         <div className="resp-2col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '60px', alignItems: 'center', opacity: inView ? 1 : 0, transform: inView ? 'translateY(0)' : 'translateY(24px)', transition: 'all 0.7s ease' }}>
           <div>
-            <div className="section-tag">Performance Disclosure</div>
+            <div className="section-tag">Track Record</div>
             <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.15, marginBottom: '20px' }}>
               Every call logged.{' '}
               <em style={{ color: 'var(--gold)', fontStyle: 'italic', fontWeight: 400 }}>Wins and losses both.</em>
@@ -1156,7 +1139,7 @@ function TrackRecordSection() {
             ].map((m, i) => (
               <div key={i} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--r-md)', padding: '20px 24px', opacity: inView ? 1 : 0, transform: inView ? 'translateY(0)' : 'translateY(20px)', transition: `all 0.5s ease ${i * 0.12}s` }}>
                 <div style={{ fontSize: '18px', fontWeight: 700, color: 'var(--text)', fontFamily: 'var(--font-heading)', marginBottom: '4px' }}>{m.val}</div>
-                <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--green)', marginBottom: '6px', letterSpacing: '0.5px', fontFamily: 'var(--font-body)' }}>{m.label}</div>
+                <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text3)', marginBottom: '6px', letterSpacing: '0.5px', fontFamily: 'var(--font-body)' }}>{m.label}</div>
                 <div style={{ fontSize: '12px', color: 'var(--text3)', lineHeight: 1.6, fontFamily: 'var(--font-body)' }}>{m.sub}</div>
               </div>
             ))}
@@ -1175,7 +1158,7 @@ function ComplianceSection() {
         <div className="section-tag" style={{ justifyContent: 'center' }}>Regulatory</div>
         <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(24px,3.5vw,40px)', fontWeight: 700, color: 'var(--text)', marginBottom: '36px' }}>
           Built on{' '}
-          <em style={{ color: 'var(--green)', fontStyle: 'italic', fontWeight: 400 }}>full compliance</em>
+          <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>full compliance</em>
         </h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px', marginBottom: '32px' }}>
           {[
@@ -1222,7 +1205,7 @@ function CTASection() {
         <div style={{ position: 'relative', zIndex: 1 }}>
           <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: '#FFFFFF', marginBottom: '14px', lineHeight: 1.2 }}>
             Ready to trade with{' '}
-            <em style={{ color: 'var(--green-bright)', fontStyle: 'italic', fontWeight: 400 }}>real research?</em>
+            <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>real research?</em>
           </h2>
           <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '16px', marginBottom: '32px', lineHeight: 1.7, fontFamily: 'var(--font-body)' }}>
             Join investors who trust SEBI-registered analysis over anonymous signals.

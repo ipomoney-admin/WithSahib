@@ -48,8 +48,8 @@ export function Footer() {
           <div>
             <div style={{ marginBottom: '16px' }}>
               <span style={{ fontFamily: 'var(--font-body)', fontSize: '20px', fontWeight: 800, letterSpacing: '-0.3px' }}>
-                <span style={{ color: 'rgba(255,255,255,0.7)', fontWeight: 300 }}>with</span>
-                <span style={{ color: 'var(--green-bright)' }}>Sahib</span>
+                <span style={{ color: 'rgba(255,255,255,0.75)', fontWeight: 800 }}>with</span>
+                <span style={{ color: '#1A7A4A' }}>Sahib</span>
               </span>
             </div>
             <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)', lineHeight: '1.7', maxWidth: '240px', marginBottom: '16px', fontFamily: 'var(--font-body)' }}>
@@ -134,7 +134,7 @@ export function Footer() {
                       fontFamily: 'var(--font-body)',
                     }}
                     onMouseEnter={(e) =>
-                      ((e.target as HTMLElement).style.color = 'var(--green-bright)')
+                      ((e.target as HTMLElement).style.color = '#FFFFFF')
                     }
                     onMouseLeave={(e) =>
                       ((e.target as HTMLElement).style.color = 'rgba(255,255,255,0.45)')
@@ -173,19 +173,6 @@ export function Footer() {
               SEBI RA · INH000026266
             </p>
           </div>
-          <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.2)', textAlign: 'center', paddingTop: '8px', paddingBottom: '4px', fontFamily: 'var(--font-body)' }}>
-            Developed by{' '}
-            <a
-              href="https://www.altitans.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: 'rgba(255,255,255,0.2)', textDecoration: 'none' }}
-              onMouseEnter={(e) => ((e.target as HTMLElement).style.textDecoration = 'underline')}
-              onMouseLeave={(e) => ((e.target as HTMLElement).style.textDecoration = 'none')}
-            >
-              Altitans Intelligence Private Limited
-            </a>
-          </p>
         </div>
       </div>
     </footer>

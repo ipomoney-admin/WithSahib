@@ -157,7 +157,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
   letter-spacing: 2.5px;
   text-transform: uppercase;
-  color: var(--green);
+  color: #64748B;
   margin-bottom: 12px;
   font-family: var(--font-body);
 }

@@ -48,9 +48,9 @@ export function Navbar() {
       >
         {/* Logo */}
         <Link href="/" style={{ textDecoration: 'none' }} aria-label="withSahib homepage">
-          <span style={{ fontFamily: 'var(--font-body)', fontSize: '18px', fontWeight: 800, letterSpacing: '-0.3px' }}>
-            <span style={{ color: 'var(--black)' }}>with</span>
-            <span style={{ color: 'var(--green)' }}>Sahib</span>
+          <span style={{ fontFamily: 'var(--font-body)', fontSize: '20px', fontWeight: 800, letterSpacing: '-0.3px' }}>
+            <span style={{ color: '#0A0A0A', fontWeight: 800 }}>with</span>
+            <span style={{ color: '#1A7A4A' }}>Sahib</span>
           </span>
         </Link>
 
