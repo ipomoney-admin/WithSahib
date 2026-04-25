@@ -1,5 +1,5 @@
 # withSahib — Complete Project Documentation
-*Last updated: 2026-04-23 (Session 5 — Fyers connected, Razorpay live, swing screener strategy defined)*
+*Last updated: 2026-04-25 (Session 7 — Light theme v3, design system v2, repositioning, GitHub Actions fixed)*
 
 ---
 
@@ -11,7 +11,7 @@
 - **SEBI RA:** Sahib Singh Hora — INH000026266
 - **Valid:** Apr 20, 2026 – Apr 19, 2031
 - **Email:** sahib13singh13@gmail.com
-- **Phone:** +91 9198887210
+- **WhatsApp / Phone:** +91 9981248888
 - **Address:** 86/2 Opposite Ice Factory, Prem Nagar, Madan Mahal, Jabalpur, MP 482001
 - **Entity type:** Individual Research Analyst registered with SEBI under SEBI (Research Analysts) Regulations, 2014
 
@@ -101,7 +101,7 @@ Not explicitly pinned in package.json. Vercel defaults to Node.js 24 LTS.
 - **Auth:** Supabase Auth (email/password + magic link)
 - **Realtime:** Used on admin signals page and member dashboard for live prices and signal updates
 
-**Tables (17 total):**
+**Tables (18 total):**
 1. subscriptions
 2. admin_roles
 3. market_holidays
@@ -126,6 +126,9 @@ Not explicitly pinned in package.json. Vercel defaults to Node.js 24 LTS.
 - **Domain registrar:** Spaceship (spaceship.com)
 - **A record:** @ → 76.76.21.21
 - **CNAME:** www → 01a8d991bd3b8c7e.vercel-dns-017.com
+- **SPF:** `v=spf1 include:_spf.google.com ~all` ✅
+- **MX:** SMTP.GOOGLE.COM priority 1 ✅
+- **CNAME Google Workspace:** ywyhg3t7m → gv-b2kgfyfgr3rmjg.dv.googlehosted.com ✅
 
 ### Cron Jobs (external — cron-job.org)
 
@@ -134,7 +137,7 @@ Not explicitly pinned in package.json. Vercel defaults to Node.js 24 LTS.
 - **Schedule:** Daily 10:30 UTC = 4:00 PM IST (weekdays)
 - **URL:** https://www.withsahib.com/api/revalidate-market?secret=withsahib2026market
 
-### Vercel Crons (from vercel.json — 9 jobs)
+### Vercel Crons (from vercel.json)
 
 | Path | Schedule | IST Time | Days | Purpose |
 |---|---|---|---|---|
@@ -150,39 +153,69 @@ Not explicitly pinned in package.json. Vercel defaults to Node.js 24 LTS.
 
 ---
 
-## 4. DESIGN SYSTEM (LOCKED — DO NOT CHANGE)
+## 4. DESIGN SYSTEM (v2 — CSS Variables, Light Default)
 
-### Colors
+### Theme
+
+- **Default theme:** Light — forced on every page load via blocking script in `layout.tsx`
+- **Dark mode:** Available via toggle button in Navbar — applies for session only, resets to light on next page load
+- **ThemeProvider:** `src/components/layout/ThemeProvider.tsx` — initial state always `'light'`, `useEffect` no longer reads localStorage
+- **Blocking script (in `<head>`):**
+  ```js
+  (function(){
+    document.documentElement.classList.add('light');
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.remove('dark');
+  })()
+  ```
+
+### CSS Variables — Light Mode
 
 | Variable | Value | Usage |
 |---|---|---|
-| --bg | #06090F | Page background |
-| --surface | #141F2E | Card / panel background |
-| --border | #1A2333 | Default border color |
-| --border2 | (slightly lighter variant) | Toast border |
-| --emerald | #00C896 | Primary CTA, active states, wins |
-| --gold | #D4A843 | Accents, SEBI reg numbers, warnings |
-| --text | #E8EDF5 | Primary text |
-| --text2 | #8FA8C0 | Secondary text |
-| --text3 | #6B8AAA | Muted text, labels |
-| Ticker bg (dark) | #0C1219 | Ticker background |
-| WhatsApp | #25D366 | WhatsApp button |
+| --bg | #F5F4F0 | Page background (warm off-white) |
+| --surface | #FFFFFF | Card / panel background |
+| --surface2 | #F0EEE8 | Secondary surface |
+| --border | rgba(13,18,36,0.08) | Default border |
+| --border2 | rgba(13,18,36,0.12) | Stronger border / toast |
+| --emerald | #009966 | Primary CTA, active states, wins |
+| --orange | #EA6C00 | Accent, secondary CTA |
+| --navy | #0B1437 | Dark text, headings |
+| --text | #0B1437 | Primary text |
+| --text2 | #4A5568 | Secondary text |
+| --text3 | #718096 | Muted text, labels |
+| --gold | #D4A843 | SEBI reg numbers, warnings |
 | Red / Loss | #EF4444 | SL hit, errors |
 | Blue | #3B82F6 | Index options segment |
 | Purple | #8B5CF6 | Swing segment |
+| WhatsApp | #25D366 | WhatsApp button |
+
+### CSS Variables — Dark Mode
+
+| Variable | Value | Usage |
+|---|---|---|
+| --bg | #060A07 | Page background |
+| --surface | #0D1410 | Card / panel background |
+| --emerald | #00D97E | Primary CTA (brighter for dark contrast) |
+| --orange | #F97316 | Accent |
+| --text | #E8EDF5 | Primary text |
+| --text2 | #8FA8C0 | Secondary text |
+| --text3 | #6B8AAA | Muted text |
 
 ### Typography
 
-| Font | Usage | Weights |
-|---|---|---|
-| DM Serif Display (Google Fonts) | Headings, hero text | 300, 400 |
-| Outfit (Google Fonts, variable --font-outfit) | Body, UI, labels | 200–800 |
-| JetBrains Mono (Google Fonts, variable --font-mono) | SEBI reg numbers, monospace | 400, 500 |
+| Font | Variable | Usage | Weights |
+|---|---|---|---|
+| Sora (Google Fonts) | --font-sora | Primary headings + all UI | 300–800 |
+| Lora (Google Fonts) | --font-lora | Hero italic serif accents | 600, 700 |
+| Outfit (Google Fonts) | --font-outfit | Body, labels, data | 200–800 |
+| JetBrains Mono (Google Fonts) | --font-mono | SEBI reg numbers, monospace | 400, 500 |
+| DM Serif Display (Google Fonts) | --font-dm-serif | Accent display headings | 400 |
 
 ### Logo
 
 - **Shape:** 3 ascending candle bars (fading opacity left to right) + green pulse dot on top-right of tallest bar
-- **Wordmark:** `with` (Outfit 300) + `Sahib` (#00C896, Outfit 500) + `.com` (Outfit 300)
+- **Wordmark:** `with` (Outfit 300) + `Sahib` (#009966 light / #00D97E dark, Outfit 500) + `.com` (Outfit 300)
 - **Animation:** Bars appear 1-by-1 with stagger, then dot pops in and pulses continuously
 - **Files:** `src/components/ui/Logo.tsx` (static), `src/components/ui/AnimatedLogo.tsx` (animated)
 
@@ -190,7 +223,7 @@ Not explicitly pinned in package.json. Vercel defaults to Node.js 24 LTS.
 
 | Segment | Color | Hex |
 |---|---|---|
-| Intraday | Emerald | #00C896 |
+| Intraday | Emerald | #009966 (light) / #00D97E (dark) |
 | Stock Options | Gold | #D4A843 |
 | Index Options | Blue | #3B82F6 |
 | Swing | Purple | #8B5CF6 |
@@ -199,29 +232,31 @@ Not explicitly pinned in package.json. Vercel defaults to Node.js 24 LTS.
 
 ## 5. ENVIRONMENT VARIABLES
 
-All variables must be set in Vercel project settings. Keys only (no values committed):
+All variables set in Vercel project settings. Keys only (no values committed):
 
-| Variable | Value / Notes |
+| Variable | Notes |
 |---|---|
 | NEXT_PUBLIC_SUPABASE_URL | Supabase project URL |
 | NEXT_PUBLIC_SUPABASE_ANON_KEY | Supabase anon key (public) |
-| SUPABASE_SERVICE_ROLE_KEY | Supabase service role key (server-only, never expose) |
-| NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION | Google Search Console verification code |
-| NEXT_PUBLIC_BING_SITE_VERIFICATION | Bing Webmaster Tools verification code |
-| NEXT_PUBLIC_RAZORPAY_KEY_ID | Razorpay publishable key |
-| RAZORPAY_KEY_SECRET | Razorpay secret key (server-only) |
-| RAZORPAY_WEBHOOK_SECRET | Razorpay webhook signature secret |
-| CRON_SECRET | `withsahib2026market` — used in x-cron-secret header |
-| FYERS_APP_ID | Fyers API v3 app ID (from myapi.fyers.in) |
-| FYERS_SECRET_KEY | Fyers API v3 secret key |
-| FYERS_REDIRECT_URI | `https://withsahib.com/api/fyers/callback` |
-| AISENSY_API_KEY | AiSensy WhatsApp API key |
+| SUPABASE_SERVICE_ROLE_KEY | Server-only, never expose |
+| NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION | Google Search Console code |
+| NEXT_PUBLIC_BING_SITE_VERIFICATION | Bing Webmaster Tools code |
+| NEXT_PUBLIC_RAZORPAY_KEY_ID | Razorpay publishable key ✅ live |
+| RAZORPAY_KEY_SECRET | Razorpay secret key ✅ live |
+| RAZORPAY_WEBHOOK_SECRET | Razorpay webhook secret ✅ live |
+| CRON_SECRET | `withsahib2026market` |
+| FYERS_APP_ID | `4CN81VDZUO-100` ✅ connected |
+| FYERS_SECRET_KEY | Fyers API v3 secret ✅ |
+| FYERS_MPIN | Fyers MPIN — needed for token refresh cron ✅ |
+| FYERS_REDIRECT_URI | `https://withsahib.com/api/fyers/callback` ✅ |
+| AISENSY_API_KEY | AiSensy WhatsApp key — ❌ not set up yet |
 | AISENSY_CAMPAIGN_NAME | `withsahib_signal` |
-| TELEGRAM_BOT_TOKEN | Telegram bot token from @BotFather |
-| TELEGRAM_PAID_CHANNEL_ID | ID of paid Telegram channel |
-| TELEGRAM_FREE_CHANNEL_ID | ID of free Telegram channel |
-| SAHIB_TELEGRAM_ID | Sahib's personal Telegram user ID |
-| NEXT_PUBLIC_APP_URL | `https://www.withsahib.com` (used in performance page SSR fetch) |
+| TELEGRAM_BOT_TOKEN | ❌ not set up yet |
+| TELEGRAM_PAID_CHANNEL_ID | ❌ not set up yet |
+| TELEGRAM_FREE_CHANNEL_ID | ❌ not set up yet |
+| SAHIB_TELEGRAM_ID | ❌ not set up yet |
+| RESEND_API_KEY | Domain verified ✅, full setup pending |
+| NEXT_PUBLIC_APP_URL | `https://www.withsahib.com` |
 
 ---
 
@@ -251,10 +286,10 @@ All variables must be set in Vercel project settings. Keys only (no values commi
 
 | Route | Auth | Description |
 |---|---|---|
-| `/` | Public | Homepage — hero, services overview, stats, social proof |
-| `/about` | Public | Analyst profile — Sahib Singh Hora, bio, credentials |
+| `/` | Public | Homepage — hero, services overview, methodology, social proof |
+| `/about` | Public | Analyst profile — Sahib Singh Hora, bio, credentials, photos |
 | `/pricing` | Public | Subscription plans comparison |
-| `/performance` | Public | Public performance track record (aggregated, no entry/SL/target) |
+| `/performance` | Public | Public performance disclosure (aggregated, compliant language) |
 | `/services` | Public | Services overview page |
 | `/services/intraday` | Member | Intraday signals service detail (protected) |
 | `/services/stock-options` | Member | Stock options service detail (protected) |
@@ -266,7 +301,7 @@ All variables must be set in Vercel project settings. Keys only (no values commi
 | `/contact` | Public | Contact form |
 | `/brand` | Public | Brand guidelines page |
 | `/research` | Public | Research page |
-| `/auth/login` | Public (redirect if logged in) | Login page |
+| `/auth/login` | Public (redirect if logged in) | Login — two-column redesign, animated right panel |
 | `/auth/register` | Public (redirect if logged in) | Registration page |
 | `/auth/forgot-password` | Public | Password reset page |
 | `/auth/callback` | Public | Supabase OAuth callback handler |
@@ -371,7 +406,7 @@ modification_type: sl_tightened | target_raised | cancelled | other
 | description | TEXT | |
 | exchange | TEXT | DEFAULT 'NSE' |
 
-**RLS:** None (no RLS enabled on this table — public read).
+**RLS:** None (public read).
 
 ### Table: fyers_tokens
 | Column | Type | Notes |
@@ -415,7 +450,7 @@ modification_type: sl_tightened | target_raised | cancelled | other
 | created_at | TIMESTAMPTZ | |
 | updated_at | TIMESTAMPTZ | |
 
-**RLS:** users_own_contacts — users see only their own row.
+**RLS:** users_own_contacts.
 
 ### Table: admin_alerts
 | Column | Type | Notes |
@@ -544,7 +579,7 @@ modification_type: sl_tightened | target_raised | cancelled | other
 | id | UUID PK | |
 | signal_id | UUID FK → signals ON DELETE CASCADE | |
 | channel | push_channel | NOT NULL |
-| recipient_id | TEXT | NOT NULL (phone/telegram_id/channel_id) |
+| recipient_id | TEXT | NOT NULL |
 | user_id | UUID FK → auth.users | |
 | message_content | TEXT | NOT NULL |
 | status | push_status | DEFAULT 'queued' |
@@ -562,7 +597,7 @@ modification_type: sl_tightened | target_raised | cancelled | other
 | id | UUID PK | |
 | month | INTEGER | NOT NULL |
 | year | INTEGER | NOT NULL |
-| segment | TEXT | NULL = overall across all segments |
+| segment | TEXT | NULL = overall |
 | total_calls | INTEGER | DEFAULT 0 |
 | t1_hit | INTEGER | DEFAULT 0 |
 | t2_hit | INTEGER | DEFAULT 0 |
@@ -578,8 +613,7 @@ modification_type: sl_tightened | target_raised | cancelled | other
 | expectancy | DECIMAL(6,4) | |
 | updated_at | TIMESTAMPTZ | |
 
-**RLS:** public_read_performance — everyone can SELECT (no sensitive data).
-**Unique indexes:** idx_perf_summary_overall (month, year WHERE segment IS NULL), idx_perf_summary_segment (month, year, segment WHERE segment IS NOT NULL).
+**RLS:** public_read_performance — everyone can SELECT.
 
 ### Table: signal_features (ML training data)
 | Column | Type | Notes |
@@ -593,26 +627,24 @@ modification_type: sl_tightened | target_raised | cancelled | other
 | market_breadth | DECIMAL(6,4) | |
 | volume_ratio | DECIMAL(8,4) | Current vol / avg vol |
 | vwap_distance | DECIMAL(8,4) | % distance from VWAP |
-| atr_value | DECIMAL(12,2) | Absolute ATR |
+| atr_value | DECIMAL(12,2) | |
 | atr_pct | DECIMAL(8,4) | ATR as % of price |
 | time_bucket | TEXT | 09:15-10:00 / 10:00-11:30 / 11:30-13:00 / 13:00-15:30 |
 | day_of_week | TEXT | Monday–Friday |
-| days_to_expiry | INTEGER | Days until next Thursday (weekly expiry) |
+| days_to_expiry | INTEGER | Days until next Thursday |
 | iv_percentile | DECIMAL(6,2) | |
 | pcr | DECIMAL(6,4) | Put-Call Ratio |
 | pattern_type | TEXT | |
 | signal_rr_promised | DECIMAL(6,2) | |
 | entry_vs_52wh | DECIMAL(8,4) | % from 52-week high |
 | entry_vs_52wl | DECIMAL(8,4) | % from 52-week low |
-| symbol_historical_winrate | DECIMAL(5,2) | Historical win % for this scrip |
-| similar_setup_count | INTEGER | # of similar setups in history |
+| symbol_historical_winrate | DECIMAL(5,2) | |
+| similar_setup_count | INTEGER | |
 | last_5_signals_result | TEXT | e.g. "WWLWW" |
 | outcome | TEXT | win / loss / neutral |
 | failure_type | failure_type | Populated after loss |
-| is_black_swan | BOOLEAN | DEFAULT false — excluded from training |
+| is_black_swan | BOOLEAN | DEFAULT false |
 | created_at | TIMESTAMPTZ | |
-
-**Index:** idx_signal_features_signal.
 
 ### Table: signal_ml_scores
 | Column | Type | Notes |
@@ -645,7 +677,7 @@ modification_type: sl_tightened | target_raised | cancelled | other
 | precision_score | DECIMAL(5,4) | |
 | recall_score | DECIMAL(5,4) | |
 | f1_score | DECIMAL(5,4) | |
-| feature_importances | JSONB | {feature_name: importance_value} |
+| feature_importances | JSONB | |
 | model_params | JSONB | {forest: serialized_json, medians: {}} |
 | model_file_url | TEXT | |
 | status | model_status | DEFAULT 'active' |
@@ -686,10 +718,10 @@ modification_type: sl_tightened | target_raised | cancelled | other
 
 ### Database Functions
 
-- **calculate_rr(entry_low, entry_high, stop_loss, target_1)** → DECIMAL — Calculates R:R ratio using mid-entry. IMMUTABLE.
-- **recalculate_performance(month, year, segment)** → VOID — Recomputes performance_summary row by counting signal outcomes. Called automatically by trigger.
-- **trigger_performance_recalc()** → TRIGGER — Fires AFTER UPDATE on signals when status changes; calls recalculate_performance for both overall and segment rows.
-- **auto_generate_postmortem()** → TRIGGER — Fires AFTER UPDATE on signals when status becomes 'sl_hit'; inserts admin_alert.
+- **calculate_rr(entry_low, entry_high, stop_loss, target_1)** → DECIMAL — R:R using mid-entry. IMMUTABLE.
+- **recalculate_performance(month, year, segment)** → VOID — Recomputes performance_summary row. Called by trigger.
+- **trigger_performance_recalc()** → TRIGGER — Fires AFTER UPDATE on signals when status changes.
+- **auto_generate_postmortem()** → TRIGGER — Fires AFTER UPDATE on signals when status becomes 'sl_hit'.
 
 ---
 
@@ -713,40 +745,35 @@ open → modified (stays open, is_modified=true)      (SL tightened or target ra
 - **Win Rate** = (T1 + T2 + T3) / (T1 + T2 + T3 + sl_hit) × 100
 - **Black swan signals** = excluded from performance calculations AND ML training
 
-### Segments — Valid Entry Windows, SL Logic, Target Logic
+### Segments
 
 #### Intraday
-- **Valid publish window:** 9:15 AM – 1:00 PM IST (checked by screener)
-- **Auto-expire:** 3:14 PM IST (via Vercel Cron `expire-intraday`)
-- **SL logic:** Hard SL — price touches SL → sl_hit
-- **Target logic:** Minimum R:R 2.0x before publish is allowed
-- **Screener triggers on:** VWAP crossover + volumeRatio > 1.5 + change_pct > 0.3%
+- Valid publish window: 9:15 AM – 1:00 PM IST
+- Auto-expire: 3:14 PM IST (via Vercel Cron)
+- SL logic: Hard SL
+- Minimum R:R: 2.0x
+- Screener triggers on: VWAP crossover + volumeRatio > 1.5 + change_pct > 0.3%
 
 #### Stock Options
-- **Minimum R:R:** 2.5x
-- **SL logic:** Hard or trailing (admin selects)
-- **Validity:** Admin sets validity_date
+- Minimum R:R: 2.5x
+- SL logic: Hard or trailing
+- Validity: Admin sets validity_date
 
 #### Index Options (Nifty / BankNifty)
-- **Minimum R:R:** 1.5x (lower because options decay fast)
-- **SL logic:** Hard or trailing
-- **Strike field:** e.g. "24000CE", "47500PE"
+- Minimum R:R: 1.5x
+- Strike field: e.g. "24000CE", "47500PE"
 
 #### Swing
-- **Minimum R:R:** 3.0x
-- **Validity:** Multi-day (admin sets validity_date)
-- **Available to:** Basic, Pro, Elite plans
+- Minimum R:R: 3.0x
+- Validity: Multi-day, admin sets validity_date
+- Available to: Basic, Pro, Elite plans
 
 ### Modification Rules (ENFORCED in validateModification() — signal-utils.ts)
 
-- **Entry range:** LOCKED after publish — cannot be changed at all
+- **Entry range:** LOCKED after publish — cannot be changed
 - **Stop loss:** Can ONLY be tightened (moved closer to entry)
-  - Long position: newSL > oldSL (higher)
-  - Short position: newSL < oldSL (lower)
 - **Targets:** Can ONLY be raised
-  - Long position: newTarget > oldTarget (higher)
-  - Short position: newTarget < oldTarget (lower)
-- **Any change:** Triggers disclosure notification to subscribers; sets is_modified=true; logs to signal_modifications table
+- **Any change:** Triggers disclosure notification; sets is_modified=true; logs to signal_modifications table
 
 ---
 
@@ -755,91 +782,67 @@ open → modified (stays open, is_modified=true)      (SL tightened or target ra
 ### Architecture
 
 - **Implementation:** Pure TypeScript — no Python, no external ML library
-- **Algorithm:** Random Forest (ensemble of 50 Decision Trees)
+- **Algorithm:** Random Forest (50 Decision Trees)
 - **Tree parameters:** max_depth = 8, min_samples = 5
-- **Forest parameters:** nTrees = 50
 - **Split criterion:** Gini impurity
-- **Bootstrap sampling:** With replacement (standard Random Forest bagging)
+- **Bootstrap sampling:** With replacement
 - **Training split:** 80% train / 20% test
-- **Model storage:** Serialized as JSONB in `ml_models.model_params` column (field: `forest`)
-- **Medians storage:** Stored alongside model in `model_params.medians` for imputation
+- **Model storage:** Serialized as JSONB in `ml_models.model_params`
 - **Training schedule:** Nightly Vercel Cron at 11:00 PM IST (Mon–Fri)
+- **Status:** LEARNING — no live signals yet; model trains when 20+ closed signals exist
 
 ### Model Hierarchy (getModelForSymbol)
 
-1. Try symbol-specific model first (`symbol = 'RELIANCE', segment = 'intraday'`)
+1. Try symbol-specific model (`symbol = 'RELIANCE', segment = 'intraday'`)
 2. Fall back to global model (`symbol = NULL, segment = NULL`)
 3. Return null if no model available
 
-### Features Captured (14 numeric features in ML vector)
+### 14 Numeric Features in ML Vector
 
-Order matters — this is the exact vector passed to the model:
+| # | Feature | Source |
+|---|---|---|
+| 1 | vix | NSE:INDIA VIX-INDEX live_prices |
+| 2 | nifty_trend | Derived from NIFTY50 change_pct |
+| 3 | nifty_vs_20ema | NIFTY50 ltp vs vwap (proxy) |
+| 4 | sector_performance | NIFTY50 change_pct |
+| 5 | volume_ratio | signal stock volume / avg volume |
+| 6 | vwap_distance | (ltp - vwap) / vwap * 100 |
+| 7 | atr_pct | (high - low) / ltp * 100 |
+| 8 | time_bucket | IST time at signal creation (0–3) |
+| 9 | day_of_week | Mon(0) to Fri(4) |
+| 10 | days_to_expiry | Days until next Thursday |
+| 11 | iv_percentile | Implied volatility %ile |
+| 12 | signal_rr_promised | R:R at publish |
+| 13 | symbol_historical_winrate | Historical win % for scrip |
+| 14 | similar_setup_count | # similar prior setups |
 
-| # | Feature | Source | Description |
-|---|---|---|---|
-| 1 | vix | NSE:INDIA VIX-INDEX live_prices | India VIX value |
-| 2 | nifty_trend | Derived from NIFTY50 change_pct | strong_bull(2)/bull(1)/neutral(0)/bear(-1)/strong_bear(-2) |
-| 3 | nifty_vs_20ema | Derived from NIFTY50 ltp vs vwap | above(1) / below(0) |
-| 4 | sector_performance | NIFTY50 change_pct | % change (proxy) |
-| 5 | volume_ratio | signal stock volume / avg volume | > 1.5 = high volume |
-| 6 | vwap_distance | (ltp - vwap) / vwap * 100 | % distance from VWAP |
-| 7 | atr_pct | (high - low) / ltp * 100 | ATR as % of price |
-| 8 | time_bucket | IST time at signal creation | 0/1/2/3 bucket |
-| 9 | day_of_week | Day of week | Mon(0) to Fri(4) |
-| 10 | days_to_expiry | Days until next Thursday | Weekly options expiry |
-| 11 | iv_percentile | From options data | Implied volatility %ile |
-| 12 | signal_rr_promised | R:R ratio at publish | R:R value |
-| 13 | symbol_historical_winrate | Calculated from signals table | % historical wins for this scrip |
-| 14 | similar_setup_count | Count in signal_features | # similar prior setups |
-
-Additional fields stored in signal_features but NOT in ML vector: market_breadth, pcr, entry_vs_52wh, entry_vs_52wl, last_5_signals_result (categorical, not yet encoded)
-
-### Confidence Tiers (getConfidenceTier)
+### Confidence Tiers
 
 | Tier | Condition |
 |---|---|
 | LEARNING | samples < 5 |
-| LOW | samples 5–19 (uses global model) |
+| LOW | samples 5–19 |
 | MEDIUM | samples 20–49 AND accuracy > 55% |
 | HIGH | samples ≥ 50 AND accuracy > 65% |
-
-### Failure Types
-
-| Type | Meaning |
-|---|---|
-| clean_loss | Setup was valid but market moved against |
-| stop_hunt | Unusual wick took out SL before reversal |
-| premature_entry | Entered before setup confirmed |
-| sector_against | Sector or broader market moved against |
-| black_swan | Unforeseeable macro/event-driven move |
-
-### ML Metrics Tracked
-
-- Accuracy, Precision, Recall, F1 score (all stored in ml_models table)
-- Feature importances (normalized, summing to 1.0)
-- training_samples, model_version, trained_at
 
 ---
 
 ## 12. DISTRIBUTION
 
-### WhatsApp (AiSensy)
+### WhatsApp (AiSensy) — ❌ NOT YET SET UP
 
-- **Endpoint:** https://backend.aisensy.com/campaign/t1/api
-- **Campaign name:** `withsahib_signal`
-- **API key env var:** AISENSY_API_KEY
-- **Eligible subscribers:** Elite plan + whatsapp_opted_in = true in subscriber_contacts
-- **Rate limit:** 50 messages/min → 1.2 second delay between sends
-- **Triggers:** New signal publish, outcome update (T1/T2/T3/SL), signal modification
-- **Queue:** All messages go through signal_push_queue first; processed by /api/distribution/process-queue every 2 minutes
+- Endpoint: https://backend.aisensy.com/campaign/t1/api
+- Campaign name: `withsahib_signal`
+- Eligible: Elite plan + whatsapp_opted_in = true
+- Rate limit: 50 messages/min → 1.2s delay between sends
+- Queue: All messages via signal_push_queue; processed every 2 min
 
-### Telegram
+### Telegram — ❌ NOT YET SET UP
 
-- **Free channel:** Receives daily recap at 4:30 PM IST (outcome only — no entry/SL/targets)
-- **Paid channel:** Receives live signals in real-time (Pro + Elite subscribers)
-- **Personal bot:** @withsahibbot (TELEGRAM_BOT_TOKEN)
-- **Free channel ID:** TELEGRAM_FREE_CHANNEL_ID env var
-- **Paid channel ID:** TELEGRAM_PAID_CHANNEL_ID env var
+- Free channel: Daily recap at 4:30 PM IST (outcome only)
+- Paid channel: Live signals in real-time (Pro + Elite)
+- Bot: @withsahibbot
+- t.me/withsahib — CTA added across site; channel not yet created
 
 ### Message Format (WhatsApp — formatSignalMessage)
 
@@ -861,32 +864,6 @@ Rationale: VWAP crossover with 2x volume...
 SEBI RA: INH000026266 | Not investment advice
 ```
 
-**Outcome update:**
-```
-✅ *withSahib Signal Update*
-
-*RELIANCE*
-Status: T2 Hit ✅✅
-Exit Price: ₹3,050
-R:R Achieved: 2.5x
-
-SEBI RA: INH000026266 | Not investment advice
-```
-
-**Modification:**
-```
-⚠️ *withSahib Signal Modified*
-
-*RELIANCE*
-Entry: ₹2,850 – ₹2,880
-SL (updated): ₹2,840
-T1: ₹2,950
-
-*Disclosure:* This signal has been modified since original publication.
-
-SEBI RA: INH000026266 | Not investment advice
-```
-
 **Telegram uses MarkdownV2** — special characters escaped with `\`.
 
 ---
@@ -896,7 +873,7 @@ SEBI RA: INH000026266 | Not investment advice
 | Feature | Public | Free | Basic | Pro | Elite | Viewer Admin | Super Admin |
 |---|---|---|---|---|---|---|---|
 | Homepage / Blog / FAQ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Performance page (public stats) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Performance page | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | Swing signals | ❌ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | Intraday signals | ❌ | ❌ | ❌ | ✅ | ✅ | ✅ | ✅ |
 | Stock Options signals | ❌ | ❌ | ❌ | ✅ | ✅ | ✅ | ✅ |
@@ -915,450 +892,380 @@ SEBI RA: INH000026266 | Not investment advice
 | ML postmortem management | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | ✅ |
 | Black swan marking | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ |
 
-**Middleware enforcement:** `src/middleware.ts` — protects /dashboard, /admin, /api routes.
-**API enforcement:** Each handler calls `isAdmin()` or `isSuperAdmin()` from `src/lib/admin-check.ts`.
-**DB enforcement:** RLS policies in Supabase.
+**Middleware enforcement:** `src/middleware.ts`
+**API enforcement:** `src/lib/admin-check.ts` — isAdmin(), isSuperAdmin()
+**DB enforcement:** Supabase RLS policies
 
 ---
 
-## 14. PENDING MANUAL SETUP
-
-Items that require manual action before the platform is fully operational:
-
-1. ✅ **SQL Migration** — `supabase/migrations/001_signal_system.sql` made fully idempotent (wrapped all CREATE TYPEs, added ALTER TABLE guards, fixed NULL comparison, added DROP TRIGGER/POLICY IF EXISTS). Safe to re-run. Session 2: ran successfully.
-
-2. ❌ **Fyers API setup** — Create app at myapi.fyers.in → get FYERS_APP_ID + FYERS_SECRET_KEY → add to Vercel env vars. Set redirect URI to `https://withsahib.com/api/fyers/callback`. Must complete OAuth handshake to populate fyers_tokens table.
-
-3. ❌ **Telegram Bot** — Create via @BotFather → get TELEGRAM_BOT_TOKEN → add to Vercel env vars.
-
-4. ❌ **Telegram Channels** — Create 2 channels (1 free, 1 paid) → get channel IDs → add TELEGRAM_FREE_CHANNEL_ID + TELEGRAM_PAID_CHANNEL_ID to Vercel env vars. Add bot as admin in both channels.
-
-5. ❌ **AiSensy setup** — Create account at aisensy.com → get AISENSY_API_KEY → create campaign `withsahib_signal` → add keys to Vercel env vars.
-
-6. ✅ **Admin role setup** — Sahib signed up. User ID: `53c2ff99-f6d3-45d4-9fe9-2a4fe3d313cd`. Email confirmed. `super_admin` row inserted into admin_roles.
-
-7. **Supabase Edge Function** — Deploy Fyers price feed function:
-   ```bash
-   supabase functions deploy fyers-price-feed
-   ```
-   (Note: Edge function code not yet written — this feeds live prices into the live_prices table)
-
-8. ✅ **Replace PLACEHOLDER env vars** — 18 Vercel env vars set (Session 2). Remaining PLACEHOLDERs: Fyers, Telegram, AiSensy, Razorpay.
-
-9. ❌ **Razorpay** — Account pending approval. Once approved, replace PLACEHOLDER keys with real RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET in Vercel env vars.
-
-10. ❌ **Professional photo** — Upload real photo to About page at `/about`.
-
-11. ❌ **LinkedIn profile** — Create at linkedin.com/in/sahibsinghhora → update href in footer.
-
-12. ❌ **Twitter/X profile** — Create at x.com/sahibsinghhora → update href in footer.
-
-13. **Market Holidays** — Insert NSE holidays for the year into market_holidays table.
-
-14. **Bing Search Console** — Add NEXT_PUBLIC_BING_SITE_VERIFICATION env var with real code.
-
-15. ✅ **handle_new_user() trigger** — Fixed to insert into `public.subscriptions` instead of non-existent `public.profiles`. Auth signup now works without "Database error saving new user".
-
----
-
-## 15. CURRENT BUGS / KNOWN ISSUES
-
-1. ✅ **SQL migration conflict** — `ERROR 42703: column "plan" does not exist` — FIXED in Session 2. Migration now fully idempotent with ALTER TABLE IF NOT EXISTS guards for all new columns.
-
-2. **DNS propagation** — CNAME updated to `01a8d991bd3b8c7e.vercel-dns-017.com`. May take up to 48 hours to propagate fully. SSL certificate will auto-provision after DNS is confirmed.
-
-3. **Social links placeholder** — LinkedIn (`linkedin.com/in/sahibsinghhora`) and Twitter (`x.com/sahibsinghhora`) links are `href="#"` in footer/about page — placeholder until profiles are created.
-
-4. **Blog post 404s** — Blog posts at `/blog/[slug]` may return 404 if slug is not found in `src/lib/data/posts.ts`. Verify all slugs exist and match.
-
-5. **VIX condition view** — In admin intelligence page, Condition View VIX stats use `Math.random()` as placeholder. Needs real data aggregation from signal_features table.
-
-6. **market_breadth and pcr** — These feature fields in signal_features are populated as NULL (comment: "populated separately if available"). No feed for these yet.
-
-7. **Fyers VWAP proxy** — In capture-features.ts, nifty_vs_20ema uses VWAP as proxy for 20 EMA. This is an approximation — not a true 20-day EMA calculation.
-
-8. **Volume ratio approximation** — In capture-features.ts, average volume is approximated as `volume * 0.8` instead of using a real historical average.
-
-9. ✅ **FIXED Session 3 — `/admin/signals` 404 in production** — Admin folder was missing from git, never committed. Deployed via `npx vercel --prod` with crons stripped temporarily. All three admin pages now live: /admin/signals, /admin/intelligence, /admin/settings.
-
-10. **Dashboard greeting shows "Investor" not user name** — `/dashboard` shows hardcoded "Welcome back, Investor" instead of the user's actual name. Fix: fetch `subscriptions` or `auth.users` metadata and display real name.
-
-11. **Email confirmation required on signup** — New users must confirm email before they can log in. For early testing, disable in Supabase Auth settings: Authentication → Settings → "Enable email confirmations" → toggle OFF.
-
----
-
-## 16. FILE STRUCTURE
+## 14. FILE STRUCTURE
 
 ```
 src/
 ├── app/
-│   ├── layout.tsx                          — Root layout, fonts, metadata, structured data
-│   ├── layout-public.tsx                   — Public layout wrapper
-│   ├── page.tsx                            — Homepage
-│   ├── loading.tsx                         — Global loading UI
-│   ├── error.tsx                           — Global error boundary
-│   ├── global-error.tsx                    — Global error fallback
-│   ├── not-found.tsx                       — 404 page
-│   ├── icon.tsx                            — /icon route (favicon generator)
-│   ├── apple-icon.tsx                      — /apple-icon route
-│   ├── opengraph-image.tsx                 — /opengraph-image route
-│   ├── robots.ts                           — robots.txt generator
-│   ├── sitemap.ts                          — sitemap.xml generator
-│   ├── about/page.tsx                      — About page
+│   ├── layout.tsx                          — Root layout, fonts, metadata, blocking theme script
+│   ├── page.tsx                            — Homepage (hero, methodology, services)
+│   ├── loading.tsx / error.tsx / not-found.tsx
+│   ├── icon.tsx / apple-icon.tsx / opengraph-image.tsx
+│   ├── robots.ts / sitemap.ts
+│   ├── about/page.tsx                      — About page (sahib-primary.jpg, sahib-secondary.jpg)
 │   ├── admin/
-│   │   ├── layout.tsx                      — Admin layout (auth guard + sidebar)
+│   │   ├── layout.tsx                      — Admin sidebar + auth guard
 │   │   ├── signals/page.tsx                — Signal management dashboard
-│   │   └── intelligence/page.tsx           — Performance matrix + ML postmortems + reports
+│   │   └── intelligence/page.tsx           — Performance matrix + ML + reports
 │   ├── api/
-│   │   ├── admin/alerts/route.ts           — GET admin alerts
-│   │   ├── ai/report/route.ts              — POST AI research report generation
-│   │   ├── distribution/
-│   │   │   ├── daily-recap/route.ts        — GET daily recap (CRON)
-│   │   │   └── process-queue/route.ts      — GET process push queue (CRON)
-│   │   ├── fyers/
-│   │   │   ├── refresh-token/route.ts      — GET refresh Fyers token (CRON)
-│   │   │   └── status/route.ts             — GET Fyers connection status
-│   │   ├── intelligence/weekly-report/route.ts  — GET generate weekly report (CRON)
-│   │   ├── market-data/
-│   │   │   ├── route.ts                    — GET all live prices
-│   │   │   └── prices/route.ts             — GET prices for specific symbols
-│   │   ├── ml/
-│   │   │   ├── generate-postmortem/route.ts — POST generate postmortem
-│   │   │   ├── generate-predictions/route.ts — GET generate ML predictions (CRON)
-│   │   │   ├── score/[alertId]/route.ts    — GET ML score for an alert
-│   │   │   └── train/route.ts             — GET train ML model (CRON)
-│   │   ├── performance/route.ts            — GET public performance data
-│   │   ├── revalidate-market/route.ts      — GET ISR revalidation
-│   │   ├── screener/run/route.ts           — GET run intraday screener (CRON)
-│   │   ├── signals/
-│   │   │   ├── route.ts                    — GET list / POST publish signal
-│   │   │   ├── [id]/route.ts               — GET/PATCH/DELETE single signal
-│   │   │   ├── [id]/push/route.ts          — POST push signal to channel
-│   │   │   ├── [id]/cancel/route.ts        — POST cancel signal
-│   │   │   ├── check-status/route.ts       — GET auto-check T1/T2/T3/SL (CRON)
-│   │   │   └── expire-intraday/route.ts    — GET expire intraday (CRON)
-│   │   ├── subscriptions/create/route.ts   — POST create Razorpay subscription
-│   │   └── webhooks/razorpay/route.ts      — POST Razorpay webhook handler
-│   ├── appointments/page.tsx               — Appointments booking (member)
-│   ├── auth/
-│   │   ├── callback/route.ts               — Supabase OAuth callback
-│   │   ├── forgot-password/page.tsx        — Password reset
-│   │   ├── login/page.tsx                  — Login
-│   │   └── register/page.tsx               — Registration
-│   ├── blog/
-│   │   ├── page.tsx                        — Blog index
-│   │   └── [slug]/page.tsx                 — Individual blog post
-│   ├── brand/page.tsx                      — Brand guidelines
-│   ├── contact/
-│   │   ├── ContactClient.tsx               — Contact form client component
-│   │   └── page.tsx                        — Contact page
-│   ├── courses/page.tsx                    — Courses (member)
-│   ├── dashboard/
-│   │   ├── layout.tsx                      — Dashboard layout (sidebar + header)
-│   │   ├── page.tsx                        — Dashboard home
-│   │   └── signals/page.tsx                — Member signal feed
-│   ├── faq/page.tsx                        — FAQ page
-│   ├── performance/page.tsx                — Public performance tracker
-│   ├── pricing/page.tsx                    — Pricing page
-│   ├── reports/page.tsx                    — AI research reports (member)
-│   ├── research/page.tsx                   — Research page
-│   ├── services/
-│   │   ├── page.tsx                        — Services overview
-│   │   ├── index-options/page.tsx          — Index options service
-│   │   ├── intraday/page.tsx               — Intraday service
-│   │   ├── stock-options/page.tsx          — Stock options service
-│   │   └── swing/page.tsx                  — Swing service
-│   └── settings/page.tsx                   — Account settings
+│   │   ├── admin/alerts/route.ts
+│   │   ├── ai/report/route.ts
+│   │   ├── distribution/daily-recap/route.ts
+│   │   ├── distribution/process-queue/route.ts
+│   │   ├── fyers/refresh-token/route.ts
+│   │   ├── fyers/status/route.ts
+│   │   ├── intelligence/weekly-report/route.ts
+│   │   ├── market-data/route.ts
+│   │   ├── market-data/prices/route.ts
+│   │   ├── ml/generate-postmortem/route.ts
+│   │   ├── ml/generate-predictions/route.ts
+│   │   ├── ml/score/[alertId]/route.ts
+│   │   ├── ml/train/route.ts
+│   │   ├── performance/route.ts
+│   │   ├── revalidate-market/route.ts
+│   │   ├── screener/run/route.ts           — force-dynamic, VWAP screener
+│   │   ├── signals/route.ts
+│   │   ├── signals/[id]/route.ts
+│   │   ├── signals/[id]/push/route.ts
+│   │   ├── signals/[id]/cancel/route.ts
+│   │   ├── signals/check-status/route.ts
+│   │   ├── signals/expire-intraday/route.ts
+│   │   ├── subscriptions/create/route.ts
+│   │   └── webhooks/razorpay/route.ts
+│   ├── auth/callback/route.ts
+│   ├── auth/login/page.tsx                 — Two-column redesign, animated right panel
+│   ├── auth/register/page.tsx
+│   ├── auth/forgot-password/page.tsx
+│   ├── blog/page.tsx / blog/[slug]/page.tsx
+│   ├── brand/page.tsx
+│   ├── contact/page.tsx
+│   ├── courses/page.tsx
+│   ├── dashboard/layout.tsx / dashboard/page.tsx
+│   ├── dashboard/signals/page.tsx
+│   ├── faq/page.tsx
+│   ├── performance/page.tsx
+│   ├── pricing/page.tsx
+│   ├── reports/page.tsx
+│   ├── research/page.tsx
+│   ├── services/page.tsx
+│   ├── services/intraday/page.tsx
+│   ├── services/stock-options/page.tsx
+│   ├── services/index-options/page.tsx
+│   ├── services/swing/page.tsx
+│   └── settings/page.tsx
 ├── components/
 │   ├── layout/
-│   │   ├── Footer.tsx                      — Site footer (SEBI reg, links)
-│   │   ├── Navbar.tsx                      — Navigation bar
-│   │   └── ThemeProvider.tsx               — Theme context
+│   │   ├── Footer.tsx                      — SEBI reg, WhatsApp 9981248888, Telegram t.me/withsahib
+│   │   ├── Navbar.tsx                      — Dark toggle, SEBI shield badge
+│   │   └── ThemeProvider.tsx               — Always starts 'light', no localStorage read
 │   └── ui/
-│       ├── AnimatedLogo.tsx                — Animated 3-bar candle logo
-│       ├── Logo.tsx                        — Static logo
-│       ├── SebiDisclaimer.tsx              — SEBI disclosure component (3 variants)
-│       └── WhatsAppButton.tsx              — Fixed WhatsApp CTA button
+│       ├── AnimatedLogo.tsx
+│       ├── Logo.tsx
+│       ├── SebiDisclaimer.tsx              — 3 variants: short, signal, full
+│       └── WhatsAppButton.tsx
 ├── lib/
-│   ├── admin-check.ts                      — isAdmin(), isSuperAdmin(), getAdminRole()
-│   ├── capture-features.ts                 — captureSignalFeatures() — auto ML feature capture
-│   ├── fyers-client.ts                     — Fyers API client + live price fetching
-│   ├── market-hours.ts                     — isMarketOpen(), isPreMarketWindow(), getTimeBucket()
-│   ├── signal-utils.ts                     — calculateRR(), formatSignalMessage(), validateModification()
-│   ├── ai/reports.ts                       — Anthropic Claude AI report generation
-│   ├── data/posts.ts                       — Blog post data store
-│   ├── ml/
-│   │   ├── decision-tree.ts                — Decision tree training + prediction
-│   │   ├── feature-encoder.ts              — Raw features → numeric vector
-│   │   ├── model-store.ts                  — save/load/train models in Supabase
-│   │   └── random-forest.ts                — Random forest ensemble
-│   ├── razorpay/client.ts                  — Razorpay client setup
-│   ├── supabase/
-│   │   ├── client.ts                       — Browser Supabase client
-│   │   └── server.ts                       — Server + service role Supabase clients
-│   └── utils/marketData.ts                 — Market data utility functions
-├── middleware.ts                           — Auth middleware (route protection)
-└── types/index.ts                          — Shared TypeScript types
+│   ├── admin-check.ts
+│   ├── capture-features.ts
+│   ├── fyers-client.ts
+│   ├── market-hours.ts
+│   ├── signal-utils.ts
+│   ├── ai/reports.ts
+│   ├── data/posts.ts
+│   ├── ml/decision-tree.ts
+│   ├── ml/feature-encoder.ts
+│   ├── ml/model-store.ts
+│   ├── ml/random-forest.ts
+│   ├── razorpay/client.ts
+│   ├── supabase/client.ts
+│   ├── supabase/server.ts
+│   └── utils/marketData.ts
+├── middleware.ts                           — Auth guard; /auth/* and /api/performance are public
+└── types/index.ts
+public/
+├── images/
+│   ├── sahib-primary.jpg                  — About page hero photo
+│   └── sahib-secondary.jpg               — About page secondary photo
+└── withsahib2026indexnow.txt              — IndexNow key file
 ```
 
 ---
 
-## 17. SEBI COMPLIANCE CHECKLIST
+## 15. SEBI COMPLIANCE CHECKLIST
 
 | Requirement | Status | Implementation |
 |---|---|---|
-| RA registration number on every page | ✅ | INH000026266 in Footer, SebiDisclaimer component |
-| Risk disclaimer | ✅ | SebiDisclaimer component (3 variants: short, signal, full) |
-| Rationale mandatory for all signals | ✅ | Enforced in POST /api/signals — required field validation |
-| Modification disclosure | ✅ | signal_modifications table + is_modified flag + subscriber notification |
-| Audit log | ✅ | signal_audit_log table — every action logged |
-| Analyst holding disclosure | ✅ | analyst_holding boolean field in signals table |
+| RA registration number on every page | ✅ | INH000026266 in Footer, SebiDisclaimer |
+| Risk disclaimer | ✅ | SebiDisclaimer component (3 variants) |
+| Rationale mandatory for all signals | ✅ | Enforced in POST /api/signals |
+| Modification disclosure | ✅ | signal_modifications table + subscriber notification |
+| Audit log | ✅ | signal_audit_log table |
+| Analyst holding disclosure | ✅ | analyst_holding boolean in signals table |
 | Original values immutable | ✅ | original_* columns never updated after insert |
-| Grievance page | ✅ | /grievance page exists |
-| SEBI disclosure page | ✅ | /sebi-disclosure page exists |
-| SEBI verification link | ✅ | https://www.sebi.gov.in/sebiweb/other/OtherAction.do?doRecognisedFpi=yes&intmId=14 |
-| No guaranteed returns language | ✅ | FAQ and disclaimer text explicitly states no guarantees |
-| Past performance disclaimer | ✅ | Performance page includes standard disclaimer |
-| Black swan exclusion | ✅ | is_black_swan field excludes anomalous events from stats |
+| Grievance page | ✅ | /grievance exists |
+| SEBI disclosure page | ✅ | /sebi-disclosure exists |
+| No guaranteed returns language | ✅ | All copy audited — no "guaranteed", "assured", "best" |
+| Past performance disclaimer | ✅ | Performance page — compliant "Performance Disclosure" framing |
+| Black swan exclusion | ✅ | is_black_swan excludes anomalous events from stats |
 
 ---
 
-## 18. THIRD-PARTY INTEGRATIONS
+## 16. THIRD-PARTY INTEGRATIONS
 
-| Service | Purpose | Status | Account |
+| Service | Purpose | Status | Notes |
 |---|---|---|---|
-| Supabase | DB + Auth + Realtime | Active | sahib13singh13@gmail.com |
-| Vercel | Hosting + Crons + Analytics | Active | sahibs-projects-f0c8b826 |
-| Fyers API v3 | Market data (live prices) | Pending setup | myapi.fyers.in |
-| AiSensy | WhatsApp message delivery | Pending setup | TBD |
-| Telegram | Bot + paid channel + free channel | Pending setup | @withsahibbot |
-| Razorpay | Payment subscriptions | Pending approval | sahib13singh13@gmail.com |
-| cron-job.org | Market data ISR revalidation | Active | sahib13singh13@gmail.com |
-| Google Search Console | SEO + indexing | Active | sitemap submitted |
-| Spaceship | Domain registrar | Active | withsahib.com |
-| Anthropic Claude API | AI research reports | Active (SDK installed) | Via @anthropic-ai/sdk |
-| Vercel Analytics | Page view analytics | Active | Included with Vercel |
-| Vercel Speed Insights | Core Web Vitals tracking | Active | Included with Vercel |
-| Resend | Transactional email | Installed (^3.2.0) | Pending setup |
-| Capacitor | iOS/Android app wrapper | Installed (devDep) | For future mobile app |
+| Supabase | DB + Auth + Realtime | ✅ Active | sahib13singh13@gmail.com |
+| Vercel | Hosting + Crons + Analytics | ✅ Active | sahibs-projects-f0c8b826 |
+| Fyers API v3 | Market data (live prices) | ✅ Connected | Token refreshes at 8 AM IST; live_prices table still empty — Edge Function not deployed |
+| Razorpay | Payment subscriptions | ✅ Connected | Live keys set; webhook handler active |
+| Resend | Transactional email | ⚠️ Partial | Domain verified, DNS propagated; templates not built |
+| Brevo | Email marketing / newsletters | ⚠️ Partial | Account created, domain authenticated; first template not built |
+| AiSensy | WhatsApp delivery | ❌ Not set up | Account needed, API key needed |
+| Telegram | Bot + channels | ❌ Not set up | @BotFather → bot + 2 channels + 4 env vars |
+| cron-job.org | Market data ISR revalidation | ✅ Active | Daily 4 PM IST |
+| Google Search Console | SEO + indexing | ✅ Active | Sitemap submitted |
+| Bing Webmaster Tools | SEO indexing | ✅ Active | 21 URLs crawled, 0 errors |
+| Microsoft Clarity | Analytics heatmaps | ✅ Active | Tag wg1eq65ef5, IP blocked |
+| Spaceship | Domain registrar | ✅ Active | withsahib.com |
+| Anthropic Claude API | AI research reports | ✅ Active | Via @anthropic-ai/sdk |
+| Vercel Analytics | Page views | ✅ Active | |
+| Vercel Speed Insights | Core Web Vitals | ✅ Active | |
+| Google Workspace | Professional email | ⚠️ Activating | MX verified; DKIM not yet set up |
+| Capacitor | iOS/Android app wrapper | Installed | For future mobile app |
 
 ---
 
-## 19. SPOTMYCHART CONTEXT
+## 17. SPOTMYCHART CONTEXT
 
 **SpotMyChart.com** — separate platform, different codebase, same SEBI RA licence.
 
-- **Purpose:** SEBI RA signals for NSE stocks — pattern-based screener and backtest platform
+- **Purpose:** Pattern-based screener and backtest platform for NSE stocks
 - **Entity:** Altitans Intelligence Private Limited (same CIN: U62011MP2026PTC083080)
 - **SEBI RA:** Same — Sahib Singh Hora INH000026266
 - **Tech stack:** Next.js 14, Supabase, TypeScript
 - **Backtest pipeline:** 13,586 clean signals, 474 NSE stocks, 21 patterns analyzed
 - **Pattern database:** 10 patterns live, 20,572 signals
-- **Relationship to withsahib.com:** Completely separate domain and codebase. Same SEBI RA licence covers both platforms. withsahib.com is the advisory/subscription platform; SpotMyChart is the pattern screener/research tool.
+- **Relationship:** Completely separate domain and codebase. withsahib.com = advisory/subscription platform; SpotMyChart = pattern screener/research tool.
 
 ---
 
-## 20. NOTES FOR NEXT AI SESSION
+## 18. CURRENT STATE (as of 25 Apr 2026 — Session 7)
 
-When starting a new session on this project, read this file first. It is the complete project context.
+**Platform is LIVE** at withsahib.com — DNS propagated, SSL active, all pages deployed.
 
-### CURRENT STATE AS OF 23 APR 2026 (Session 5)
+### Admin accounts
 
-**Platform is LIVE** at withsahib.com — DNS propagated, SSL active, Vercel deployed.
+| Email | Role | Password |
+|---|---|---|
+| sahib13singh13@gmail.com | super_admin | Sahib@2026 |
+| akgupta7501@gmail.com | super_admin | Temp@2026 |
 
-**Sahib's account:**
-- Email: sahib13singh13@gmail.com
-- User ID: `53c2ff99-f6d3-45d4-9fe9-2a4fe3d313cd`
-- Role: `super_admin` (in admin_roles table)
-- Email confirmed: YES
+**Sahib's user ID:** `53c2ff99-f6d3-45d4-9fe9-2a4fe3d313cd`
 
-**External dashboards:**
+### External dashboards
+
 - Supabase: https://supabase.com/dashboard/project/trtoxawkeququfurddwr
 - Vercel: https://vercel.com/sahibs-projects (search "withsahib")
 
----
-
-### What's working ✅
-
-- **Fyers API:** CONNECTED ✅ — token valid 23.5 hours, auto-refresh cron at 8 AM IST
-- **Razorpay:** CONNECTED ✅
-- **GitHub Actions Build Check:** PASSING ✅ (Build #23 green)
-- **Admin pages live:** /admin/signals, /admin/intelligence, /admin/settings ✅
-- **Passkey (Touch ID):** Working on Safari ✅ (Chrome shows 'Not Secure' on Sahib's Mac only — use Safari)
-- **Bing Webmaster Tools:** Verified, sitemap submitted, 21 URLs crawled, 0 errors ✅
-- **Microsoft Clarity:** Script added (tag `wg1eq65ef5`), IP blocked (122.181.101.113), Copilot ON, smart event 'Pricing Page Visit' created ✅
-- **SPF record:** Added to Spaceship DNS — `v=spf1 include:_spf.google.com ~all` ✅
-- **MX record:** Added to Spaceship DNS — SMTP.GOOGLE.COM priority 1 ✅ (Google Workspace Gmail activating)
-- **Google Workspace:** 'Getting your domain ready' — MX verification in progress ✅
-- **Admin/user toggle:** 'View as User' button working ✅
-- **Akshay admin access:** akgupta7501@gmail.com — super_admin ✅
-- **Social links:** LinkedIn, X, Instagram, Facebook all updated ✅
-- **Dashboard greeting:** Shows real user name ✅
-- **FYERS_REDIRECT_URI:** `https://withsahib.com/api/fyers/callback` ✅
-
----
-
-### Lighthouse Scores (Apr 23, 2026)
-
-- **Mobile:** Performance 72, Accessibility 93, Best Practices 100, SEO 92
-- **Desktop:** Performance 95–98, Accessibility 93, Best Practices 92, SEO 92
-- **SEO 92→100 fix:** 1 icon-only link missing aria-label (Claude Code command given, pending deploy)
-
----
-
-### Current Architecture — Signal Flow
-
-- `fyers-client.ts` reads from `live_prices` Supabase table (NOT directly from Fyers API)
-- `live_prices` table is **EMPTY** — no Edge Function deployed yet to feed it
-- Screener (`src/app/api/screener/run/route.ts`) scans only 15 stocks (`INTRADAY_SYMBOLS`)
-- Only Intraday + Swing screeners exist — Stock Options and Index Options screeners NOT built yet
-- Swing screener uses basic '52-week high proximity' logic — needs complete rewrite with real patterns
-- Supabase Edge Function `fyers-price-feed`: code written but **NOT deployed**
-
----
-
-### CRITICAL NEXT TASK — Signal Strategy (decided in Session 5)
-
-**Focus ONLY on Swing Trades first.** Other 3 segments after swing is perfected.
-
-**Swing Trade parameters decided:**
-- Universe: All NSE listed stocks EXCEPT SME board (1500+ stocks)
-- Target: 8–10 trades per month, return target 10–15% per trade
-- Minimum R:R: 3x
-- Timeframe: Weekly charts primary
-- Pattern strategy: **TO BE DEFINED in next session** — Sahib will share chart screenshots showing exact patterns he likes to pick
-
----
-
-### Pending — Tumhe manually karna hai
-
-- **DKIM:** Google Workspace Admin → Apps → Gmail → Authenticate email → generate DKIM key → add TXT record to Spaceship (after MX fully verifies)
-- **DMARC:** Spaceship mein add karo — Host: `_dmarc`, Type: TXT, Value: `v=DMARC1; p=none; rua=mailto:sahib13singh13@gmail.com`, TTL: 1 min
-- **Professional photo:** Upload `IMG_1922.PNG` to Supabase Storage → update `/about` page
-- **NSE Market Holidays 2026:** Insert into `market_holidays` table in Supabase
-- **Telegram:** @BotFather → bot + 2 channels (free + paid) + 4 env vars in Vercel (`TELEGRAM_BOT_TOKEN`, `TELEGRAM_FREE_CHANNEL_ID`, `TELEGRAM_PAID_CHANNEL_ID`, `SAHIB_TELEGRAM_ID`)
-- **AiSensy:** aisensy.com account + `AISENSY_API_KEY` + campaign `withsahib_signal` + add to Vercel
-
----
-
-### Pending — Claude Code commits given but NOT yet verified deployed
-
-- Fyers token expiry IST timezone fix (commit given)
-- SEO 92→100: aria-labels on icon-only links (commit given)
-- SWE-III full code audit + DSA fixes (running)
-- AEO: llms.txt, structured data, robots.ts AI crawlers (commit given)
-- IndexNow: `public/withsahib2026indexnow.txt` + `/api/indexnow` route (commit given)
-- Clarity script properly added via `next/script` afterInteractive (commit given)
-- Admin/user toggle + pricing flow fix (commit given)
-
----
-
-### Key Technical Facts
+### Key technical facts
 
 | Key | Value |
 |---|---|
 | FYERS_APP_ID | `4CN81VDZUO-100` |
 | FYERS_REDIRECT_URI | `https://withsahib.com/api/fyers/callback` |
-| Fyers correct endpoint | `api-t1.fyers.in` (NOT api-t2) |
+| Fyers endpoint | `api-t1.fyers.in` (NOT api-t2) |
 | appIdHash formula | `SHA256(appId + ':' + secretKey)` in hex |
-| Supabase Project ID | `trtoxawkeququfurddwr` |
-| Admin users | sahib13singh13@gmail.com (super_admin), akgupta7501@gmail.com (super_admin) |
-| Sahib password | `Sahib@2026` |
-| Akshay password | `Temp@2026` |
 | Microsoft Clarity tag | `wg1eq65ef5` |
 | IndexNow key | `withsahib2026indexnow` |
-| Spaceship DNS — A | @ → 76.76.21.21 |
-| Spaceship DNS — CNAME www | `01a8d991bd3b8c7e.vercel-dns-017.com` |
-| Spaceship DNS — CNAME Google | `ywyhg3t7m... → gv-b2kgfyfgr3rmjg.dv.googlehosted.com` |
+
+### What's working
+
+- Fyers API connected ✅ — auto-refresh cron at 8 AM IST
+- Razorpay live ✅
+- GitHub Actions build passing ✅ (build #23+)
+- All admin pages live ✅ — /admin/signals, /admin/intelligence, /admin/settings
+- Passkey (Touch ID) on Safari ✅
+- Social links live ✅ — LinkedIn, X, Instagram, Facebook
+- Dashboard greeting shows real user name ✅
+- Admin/user toggle working ✅
+- SEBI shield badge in Navbar ✅
+- Photos live ✅ — sahib-primary.jpg, sahib-secondary.jpg
+- Light theme default ✅ — forces light on every page load
+- Sora + Lora fonts ✅
+- Mobile responsive ✅ — hero, grids, pricing, login
+- Methodology section ✅ — 3 pillars on homepage
+- Performance Disclosure section ✅ — replaces "track record" framing
+- Login page redesign ✅ — two-column, animated right panel
+- WhatsApp 9981248888 ✅ — updated everywhere
+- Telegram CTA t.me/withsahib ✅ — added across site
+
+### Current architecture — signal flow
+
+- `fyers-client.ts` reads from `live_prices` Supabase table (NOT directly from Fyers)
+- `live_prices` table is **EMPTY** — Supabase Edge Function to feed it is NOT deployed
+- Screener scans only 15 stocks (`INTRADAY_SYMBOLS`) — only intraday + basic swing logic
+- Stock Options and Index Options screeners NOT built
+- Swing screener needs full rewrite for 1500+ stock universe
+
+### Lighthouse scores (Apr 23, 2026)
+
+- **Mobile:** Performance 72, Accessibility 93, Best Practices 100, SEO 92
+- **Desktop:** Performance 95–98, Accessibility 93, Best Practices 92, SEO 92
 
 ---
 
-### FIRST TASK for next session
+## 19. PENDING WORK
 
-1. Verify all pending Claude Code commits actually deployed (check Vercel deployments)
-2. Sahib will share chart screenshots showing swing trade patterns he likes
-3. Based on those patterns — define exact technical conditions for swing screener:
-   - Which patterns to scan for (breakout, pullback, reversal, etc.)
-   - Entry trigger conditions
-   - SL placement logic
-   - Target calculation logic
-4. Build real swing screener for 1500+ stock universe using Fyers API
+### HIGH PRIORITY
+
+| Task | Status | Notes |
+|---|---|---|
+| Fyers → live_prices feed | Not deployed | Supabase Edge Function code written, not deployed. Blocks screener, signal tracking, ML |
+| Swing screener (1500+ stocks) | Not built | Needs Fyers OHLCV feed first + Sahib's pattern rules |
+| Options strategy design | Not started | Nifty/BankNifty screener architecture not coded |
+| Signal tracking (check-status cron) | Blocked | Reads live_prices which is empty |
+
+### MEDIUM PRIORITY
+
+| Task | Status | Notes |
+|---|---|---|
+| Telegram setup | Not started | @BotFather → bot + 2 channels + 4 Vercel env vars |
+| AiSensy setup | Not started | Account needed; AISENSY_API_KEY to Vercel |
+| WhatsApp Quick Replies | Not started | /plans, /sebi, /track, /start keyword auto-replies |
+| First Brevo newsletter template | Not started | Account live, template not built |
+| DKIM for Google Workspace email | Not started | Google Workspace Admin → Gmail → Authenticate email → TXT record in Spaceship |
+| DMARC record | Not started | Spaceship: Host `_dmarc`, TXT: `v=DMARC1; p=none; rua=mailto:sahib13singh13@gmail.com` |
+| NSE Market Holidays 2026 | Not done | Insert into market_holidays table in Supabase |
+| Product demo / GIF recording | Not started | Dashboard screen recording for landing page |
+
+### LOW PRIORITY
+
+| Task | Status | Notes |
+|---|---|---|
+| Wikipedia/Wikidata entry | Not started | Needs external citations first |
+| ML model training | Blocked | Needs 20+ closed signals; currently zero |
+| VPS vs Vercel Pro decision | Pending | Evaluate when 24/7 live data feed needed |
+| Social posting strategy | Not started | X/Instagram/Facebook accounts exist, no calendar |
+
+### Known bugs / approximations
+
+- **live_prices is empty** — all real-time features (screener, check-status, ML) non-functional until Edge Function deployed
+- **nifty_vs_20ema uses VWAP as proxy** — not a true 20-day EMA
+- **volume ratio approximation** — uses `volume * 0.8` instead of real historical average
+- **Admin intelligence VIX stats** — uses `Math.random()` placeholder instead of real signal_features aggregation
+- **market_breadth and pcr** — always NULL in signal_features; no feed for these
 
 ---
 
-### Permanent Key Facts
+## 20. COMMITTED WORK LOG
 
+### Sessions 1–4 (Foundation — Apr 21–22, 2026)
+- ✅ Complete signal system — 18 Supabase tables, RLS policies, triggers, DB functions
+- ✅ Admin pages — /admin/signals, /admin/intelligence, /admin/settings deployed
+- ✅ SQL migration idempotent — `supabase/migrations/001_signal_system.sql`
+- ✅ Fyers API v3 connected — FYERS_MPIN added, auto-refresh cron working
+- ✅ Razorpay live — keys, webhook handler active
+- ✅ Supabase Auth — handle_new_user() trigger fixed (inserts to subscriptions not profiles)
+- ✅ Admin roles — sahib + akshay both super_admin
+- ✅ DNS propagated — withsahib.com live, SSL active
+- ✅ Google Search Console, Bing Webmaster Tools, Microsoft Clarity all set up
+- ✅ SPF + MX records added — Google Workspace activating
+- ✅ Social links — LinkedIn, X, Instagram, Facebook updated in footer + about
+- ✅ Dashboard greeting shows real user name
+- ✅ Admin/user 'View as User' toggle working
+- ✅ AEO — llms.txt, 7 structured data schemas, robots.ts with AI crawlers
+- ✅ IndexNow — key file + /api/indexnow route
+
+### Sessions 5–6 (Fyers + Screener + GitHub Actions — Apr 23–24, 2026)
+- ✅ FYERS_MPIN env var added to Vercel — cron token refresh fixed
+- ✅ Intraday screener engine built — VWAP crossover + volume ratio, 15 symbols
+- ✅ force-dynamic on all screener API routes — GitHub Actions build no longer fails
+- ✅ RESEND_API_KEY placeholder added to GitHub Actions workflow — build green
+
+### Session 7 (Design System v2 + Repositioning — Apr 25, 2026)
+- ✅ Light theme forced on every page load — blocking script overrides localStorage
+- ✅ ThemeProvider always starts 'light' — no localStorage read on mount
+- ✅ Dark toggle in Navbar — session-only, resets on reload
+- ✅ Sora + Lora fonts added globally
+- ✅ CSS variables v2 — complete light/dark token system
+- ✅ Mobile responsive — hero, pricing, service grids, login
+- ✅ Hero headline: "Where rigour meets the market."
+- ✅ Methodology section — 3 pillars (Pattern Recognition, Risk Framework, Performance Accountability)
+- ✅ Performance Disclosure section — replaces "track record", compliant language
+- ✅ 15 audit fixes — middleware public routes, AI copy, schema author, blog attribution
+- ✅ All hardcoded stock names removed — real DB signals or empty state
+- ✅ Login page redesign — two-column layout, animated right panel
+- ✅ Photos — sahib-primary.jpg, sahib-secondary.jpg added
+- ✅ WhatsApp updated to 9981248888 everywhere
+- ✅ Telegram CTA t.me/withsahib added across site
+- ✅ SEBI shield badge in Navbar
+- ✅ Sample banner on service call cards (non-subscriber view)
+- ✅ Brevo account created, domain authenticated
+- ✅ Resend domain verified, DNS propagated
+
+---
+
+## 21. PERMANENT RULES FOR AI SESSIONS
+
+**Always read this file first.** It is the complete project context.
+
+### Permanent facts
 1. Platform: withsahib.com — SEBI Registered Research Analyst advisory platform
 2. Stack: Next.js 14 (App Router) + Supabase + Vercel + Fyers API v3 + TypeScript ML
-3. Design tokens: DO NOT CHANGE — locked in Section 4 (colors, fonts, logo)
-4. SEBI compliance is non-negotiable — every signal needs rationale + disclaimer
-5. Sahib is non-technical — explain clearly, give complete commands to copy-paste
-6. All monetary values in Indian Rupees (INR). Use en-IN locale formatting.
-7. Market hours: 9:00 AM – 3:30 PM IST, Mon–Fri, excluding NSE holidays
-8. IST = UTC + 5:30 — all UTC times in vercel.json need +5:30 to convert to IST
+3. SEBI compliance is non-negotiable — every signal needs rationale + disclaimer
+4. Sahib is non-technical — explain clearly, give complete commands to copy-paste
+5. All monetary values in INR, en-IN locale formatting
+6. Market hours: 9:00 AM – 3:30 PM IST, Mon–Fri, excluding NSE holidays
+7. IST = UTC + 5:30 — all UTC times in vercel.json need +5:30 conversion to IST
+8. WhatsApp: 9981248888 | Telegram: t.me/withsahib
 
 ### Architecture decisions (permanent)
-
-- ML is 100% TypeScript (no Python) — by design, to run on Vercel serverless without Python runtime
-- Signal screener generates signal_alerts (queue) — admin reviews and approves before publishing to signals table
+- ML is 100% TypeScript (no Python) — runs on Vercel serverless
+- Screener → signal_alerts (queue) → admin approves → published to signals table
 - No direct screener-to-signal pipeline — everything requires human approval
-- Performance metrics exclude black swan signals (is_black_swan = true)
-- Win rate denominator excludes expired signals (only counts actionable outcomes)
+- Performance metrics exclude black_swan signals
+- Win rate denominator excludes expired signals
 
 ### Do NOT
-
-- Change the color palette, fonts, or logo
 - Remove SEBI disclaimer from any signal-related component
 - Allow entry range to be modified after publish
 - Skip rationale field when creating signals
-- Push signals without admin approval (screener → alert_queue → admin approve → publish)
+- Push signals without admin approval
+- Use guaranteed/assured/best language in any copy
 
 ---
 
-## 21. SIGNAL SYSTEM BUILD REFERENCE
+## 22. SIGNAL SYSTEM BUILD REFERENCE
 
-The complete signal management system was built in Session 1 (21 Apr 2026). It includes:
+Built in Session 1 (21 Apr 2026).
 
-**Critical files that MUST exist (all confirmed present):**
-- `src/app/admin/signals/page.tsx` — Alert queue, open signals, history, manual create tabs
+**Critical files:**
+- `src/app/admin/signals/page.tsx` — Alert queue, open signals, history, manual create
 - `src/app/admin/intelligence/page.tsx` — Performance matrix, postmortems, weekly reports
-- `src/app/admin/layout.tsx` — Admin sidebar + auth guard (redirects non-admins)
-- `src/middleware.ts` — Route protection for /admin, /dashboard, /api/admin/, /api/signals, /api/ml/, /api/fyers/
+- `src/app/admin/layout.tsx` — Admin sidebar + auth guard
+- `src/middleware.ts` — Route protection; /auth/*, /api/webhooks/*, /api/performance are public
 - `src/lib/signal-utils.ts` — validateModification() enforces SEBI immutability rules
-- `src/lib/ml/decision-tree.ts` — Full CART decision tree (Gini impurity, trainTree, predictProba)
+- `src/lib/ml/decision-tree.ts` — CART decision tree (Gini impurity)
 - `src/lib/ml/random-forest.ts` — 50-tree ensemble with bootstrap sampling
-- `src/lib/ml/feature-extractor.ts` — 14-feature numeric vector from signal data
-- `src/lib/ml/model-store.ts` — Load/save model from Supabase ml_models table, confidence tiers
-- `supabase/migrations/001_signal_system.sql` — Complete schema (17 tables, RLS, triggers, functions)
+- `src/lib/ml/feature-extractor.ts` — 14-feature numeric vector
+- `src/lib/ml/model-store.ts` — Load/save model from Supabase, confidence tiers
+- `supabase/migrations/001_signal_system.sql` — Complete schema, idempotent
 
-**API routes (all under src/app/api/):**
-- `/api/screener/[segment]/route.ts` — Cron: scans Fyers data, generates signal_alerts
-- `/api/signals/route.ts` — GET list (member), POST create (admin)
-- `/api/signals/[id]/route.ts` — GET detail, PATCH modify (SEBI-compliant), DELETE cancel
-- `/api/signals/check-status/route.ts` — Cron: check open signals against live prices
-- `/api/signals/expire-intraday/route.ts` — Cron: expire stale intraday signals at 3:20 PM IST
-- `/api/admin/alerts/route.ts` — GET alert queue for admin dashboard
-- `/api/admin/alerts/[id]/approve/route.ts` — POST approve alert → publish signal
-- `/api/admin/alerts/[id]/reject/route.ts` — POST reject alert
-- `/api/ml/train/route.ts` — GET train model on historical data (cron weekly)
-- `/api/ml/generate-predictions/route.ts` — GET generate predictions for all open signals (cron)
-- `/api/ml/score/[alertId]/route.ts` — GET ML score for a specific alert
-- `/api/intelligence/weekly-report/route.ts` — GET generate weekly AI report (cron)
-- `/api/distribution/process-queue/route.ts` — GET process signal_push_queue (cron every 2 min)
-- `/api/distribution/daily-recap/route.ts` — GET send daily recap to channels (cron)
-- `/api/fyers/refresh-token/route.ts` — GET refresh Fyers OAuth token (cron 8 AM IST)
-- `/api/fyers/status/route.ts` — GET Fyers connection status for admin
-- `/api/performance/route.ts` — GET public performance data (used by /performance page)
-
-**Vercel cron schedule (vercel.json):**
-- 8:55 AM IST: fyers/refresh-token
+**Vercel cron schedule:**
+- 8:00 AM IST: fyers/refresh-token
 - 9:00 AM IST: screener (intraday)
 - 9:15 AM IST: screener (stock_options, index_options)
 - 10:00 AM IST: screener (swing)
-- Every 2 min (9–4 IST): signals/check-status
-- 3:20 PM IST: signals/expire-intraday
-- Every 2 min: distribution/process-queue
-- 4:00 PM IST: distribution/daily-recap
-- 4:30 PM IST: intelligence/weekly-report
-- Sunday midnight IST: ml/train
-- Monday 7 AM IST: ml/generate-predictions
+- Every 1 min (8:30 AM–4 PM IST): signals/check-status
+- Every 2 min (8:30 AM–4 PM IST): screener/run
+- 3:14 PM IST: signals/expire-intraday
+- Every 2 min 24/7: distribution/process-queue
+- 4:30 PM IST: distribution/daily-recap
+- 8:00 PM IST Sunday: intelligence/weekly-report
+- 11:00 PM IST Mon–Fri: ml/train
+- 11:05 PM IST Mon–Fri: ml/generate-predictions

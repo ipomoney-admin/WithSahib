@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Sora, Outfit, JetBrains_Mono, DM_Serif_Display, Lora } from 'next/font/google'
+import { Inter, Playfair_Display } from 'next/font/google'
 import Script from 'next/script'
 import '@/styles/globals.css'
 import { ThemeProvider } from '@/components/layout/ThemeProvider'
@@ -8,46 +8,21 @@ import { Toaster } from 'sonner'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 
-const sora = Sora({
+const inter = Inter({
   subsets: ['latin'],
   weight: ['300', '400', '500', '600', '700', '800'],
-  variable: '--font-sora',
+  variable: '--font-inter',
   display: 'swap',
   preload: true,
 })
 
-const lora = Lora({
+const playfair = Playfair_Display({
   subsets: ['latin'],
-  weight: ['600', '700'],
+  weight: ['400', '500', '600', '700', '800'],
   style: ['normal', 'italic'],
-  variable: '--font-lora',
+  variable: '--font-playfair',
   display: 'swap',
-  preload: false,
-})
-
-const outfit = Outfit({
-  subsets: ['latin'],
-  weight: ['200', '300', '400', '500', '600', '700', '800'],
-  variable: '--font-outfit',
-  display: 'swap',
-  preload: false,
-})
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  weight: ['400', '500'],
-  variable: '--font-mono',
-  display: 'swap',
-  preload: false,
-})
-
-const dmSerifDisplay = DM_Serif_Display({
-  subsets: ['latin'],
-  weight: ['400'],
-  style: ['normal'],
-  variable: '--font-dm-serif',
-  display: 'swap',
-  preload: false,
+  preload: true,
 })
 
 const BASE_URL = 'https://www.withsahib.com'
@@ -138,10 +113,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#F5F4F0' },
-    { media: '(prefers-color-scheme: dark)', color: '#080D0A' },
-  ],
+  themeColor: '#FAFAF8',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
@@ -433,7 +405,7 @@ export default function RootLayout({
           />
         ))}
       </head>
-      <body className={`${sora.variable} ${lora.variable} ${outfit.variable} ${jetbrainsMono.variable} ${dmSerifDisplay.variable}`}>
+      <body className={`${inter.variable} ${playfair.variable}`}>
         <ThemeProvider>
           {children}
           <WhatsAppButton />
@@ -444,7 +416,7 @@ export default function RootLayout({
                 background: 'var(--surface)',
                 border: '1px solid var(--border2)',
                 color: 'var(--text)',
-                fontFamily: 'Outfit, sans-serif',
+                fontFamily: 'Inter, system-ui, sans-serif',
               },
             }}
           />

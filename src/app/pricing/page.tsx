@@ -346,7 +346,7 @@ export default function PricingPage() {
             { q: 'Can I cancel anytime?', a: 'Yes. Cancel anytime from your dashboard. No questions asked. You keep access until the end of your billing period.' },
             { q: 'Is the free plan really free?', a: 'Yes, forever. No credit card needed. You get signal previews, market news, and sample reports at no cost.' },
             { q: 'How are trade calls delivered?', a: 'Via your dashboard in real time. Pro and Elite subscribers also receive WhatsApp alerts for time-sensitive intraday calls.' },
-            { q: 'Is Sahib SEBI registered?', a: 'Yes. Sahib Singh Hora is a SEBI Registered Research Analyst with registration number INH000026266, valid from April 2026 to April 2031. You can verify this on SEBI\'s official intermediary portal.' },
+            { q: 'Is Sahib SEBI registered?', a: 'Yes. Sahib Singh Hora is a SEBI Registered Research Analyst with registration number INH000026266. You can verify this on SEBI\'s official intermediary portal at sebi.gov.in.' },
             { q: 'Are investments guaranteed?', a: 'No. All investments in the securities market are subject to market risk. Past performance does not guarantee future returns. Please read all risk disclosures before investing.' },
           ].map((faq, i) => (
             <FAQItem key={i} q={faq.q} a={faq.a} />

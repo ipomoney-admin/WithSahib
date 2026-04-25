@@ -108,7 +108,7 @@ export default function ContactClient() {
                   {[
                     { label: 'Analyst', value: 'Sahib Singh Hora' },
                     { label: 'SEBI Reg. No.', value: 'INH000026266' },
-                    { label: 'Valid Until', value: 'April 19, 2031' },
+                    { label: 'NISM', value: 'Certified' },
                   ].map((row) => (
                     <div key={row.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 8, fontSize: 13 }}>
                       <span style={{ color: 'var(--text3)', flexShrink: 0 }}>{row.label}</span>

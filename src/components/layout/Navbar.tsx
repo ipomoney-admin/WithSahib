@@ -3,19 +3,17 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useTheme } from './ThemeProvider'
-import { Menu, X, Sun, Moon, ShieldCheck } from 'lucide-react'
-import { AnimatedLogo } from '@/components/ui/AnimatedLogo'
+import { Menu, X } from 'lucide-react'
 
 const NAV_LINKS = [
-  { label: 'Services', href: '/services' },
-  { label: 'Pricing', href: '/pricing' },
-  { label: 'Blog', href: '/blog' },
-  { label: 'About', href: '/about' },
+  { label: 'Methodology', href: '/about' },
+  { label: 'The Analyst', href: '/about#analyst' },
+  { label: 'Who It\'s For', href: '/about#who' },
+  { label: 'Plans', href: '/pricing' },
+  { label: 'Track Record', href: '/track-record' },
 ]
 
 export function Navbar() {
-  const { theme, toggleTheme } = useTheme()
   const pathname = usePathname()
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
@@ -27,7 +25,7 @@ export function Navbar() {
   }, [])
 
   const isActive = (href: string) =>
-    pathname === href || pathname.startsWith(href + '/')
+    pathname === href || pathname.startsWith(href.split('#')[0] + '/')
 
   return (
     <>
@@ -42,25 +40,24 @@ export function Navbar() {
           justifyContent: 'space-between',
           padding: '0 40px',
           borderBottom: `1px solid ${scrolled ? 'var(--border)' : 'transparent'}`,
-          background: scrolled ? undefined : 'transparent',
           backdropFilter: scrolled ? 'blur(16px)' : 'none',
-          backgroundColor: scrolled
-            ? theme === 'dark'
-              ? 'rgba(8,13,10,0.92)'
-              : 'rgba(245,244,240,0.95)'
-            : 'transparent',
+          backgroundColor: scrolled ? 'rgba(250,250,248,0.95)' : 'transparent',
           transition: 'all 0.3s ease',
+          background: scrolled ? undefined : 'transparent',
         }}
       >
         {/* Logo */}
-        <Link href="/" style={{ textDecoration: 'none' }} aria-label="Go to withSahib homepage">
-          <AnimatedLogo />
+        <Link href="/" style={{ textDecoration: 'none' }} aria-label="withSahib homepage">
+          <span style={{ fontFamily: 'var(--font-body)', fontSize: '18px', fontWeight: 800, letterSpacing: '-0.3px' }}>
+            <span style={{ color: 'var(--black)' }}>with</span>
+            <span style={{ color: 'var(--green)' }}>Sahib</span>
+          </span>
         </Link>
 
         {/* Desktop Links */}
         <div
           className="hide-mobile"
-          style={{ display: 'flex', alignItems: 'center', gap: '4px' }}
+          style={{ display: 'flex', alignItems: 'center', gap: '2px' }}
         >
           {NAV_LINKS.map((link) => (
             <Link
@@ -69,14 +66,13 @@ export function Navbar() {
               style={{
                 textDecoration: 'none',
                 padding: '6px 14px',
-                borderRadius: 'var(--radius-sm)',
+                borderRadius: 'var(--r-sm)',
                 fontSize: '14px',
                 fontWeight: isActive(link.href) ? 500 : 400,
-                color: isActive(link.href) ? 'var(--emerald)' : 'var(--text2)',
-                background: isActive(link.href)
-                  ? 'rgba(0,200,150,0.08)'
-                  : 'transparent',
+                color: isActive(link.href) ? 'var(--green)' : 'var(--text2)',
+                background: isActive(link.href) ? 'rgba(26,122,74,0.06)' : 'transparent',
                 transition: 'all 0.2s',
+                fontFamily: 'var(--font-body)',
               }}
             >
               {link.label}
@@ -86,63 +82,21 @@ export function Navbar() {
 
         {/* Right Actions */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          {/* SEBI badge — desktop only */}
-          <span
-            className="hide-mobile"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '5px',
-              fontSize: '11px',
-              fontWeight: 600,
-              letterSpacing: '0.5px',
-              color: 'var(--emerald)',
-              border: '1px solid rgba(0,200,150,0.25)',
-              borderRadius: '6px',
-              padding: '4px 10px',
-              background: 'rgba(0,200,150,0.06)',
-            }}
-          >
-            <ShieldCheck size={12} strokeWidth={2.5} />
-            SEBI RA · INH000026266
-          </span>
-
-          {/* Theme toggle */}
-          <button
-            onClick={toggleTheme}
-            style={{
-              background: 'none',
-              border: '1px solid var(--border)',
-              borderRadius: 'var(--radius-sm)',
-              padding: '7px 10px',
-              cursor: 'pointer',
-              color: 'var(--text2)',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              fontSize: '13px',
-              transition: 'all 0.2s',
-            }}
-            aria-label="Toggle theme"
-          >
-            {theme === 'dark' ? <Sun size={14} /> : <Moon size={14} />}
-            <span className="hide-mobile">{theme === 'dark' ? 'Light' : 'Dark'}</span>
-          </button>
-
           {/* Login */}
           <Link
             href="/auth/login"
+            className="hide-mobile"
             style={{
               textDecoration: 'none',
               padding: '8px 16px',
-              borderRadius: 'var(--radius-sm)',
+              borderRadius: 'var(--r-sm)',
               fontSize: '14px',
               fontWeight: 400,
               color: 'var(--text2)',
-              border: '1px solid var(--border)',
+              border: '1px solid var(--border2)',
               transition: 'all 0.2s',
+              fontFamily: 'var(--font-body)',
             }}
-            className="hide-mobile"
           >
             Log in
           </Link>
@@ -153,7 +107,7 @@ export function Navbar() {
             className="btn btn-primary btn-sm"
             style={{ textDecoration: 'none' }}
           >
-            Get Started
+            Start Free
           </Link>
 
           {/* Mobile Menu Button */}
@@ -164,8 +118,8 @@ export function Navbar() {
             aria-expanded={menuOpen}
             style={{
               background: 'none',
-              border: '1px solid var(--border)',
-              borderRadius: 'var(--radius-sm)',
+              border: '1px solid var(--border2)',
+              borderRadius: 'var(--r-sm)',
               padding: '7px',
               cursor: 'pointer',
               color: 'var(--text2)',
@@ -194,7 +148,7 @@ export function Navbar() {
             flexDirection: 'column',
             gap: '4px',
             borderTop: '1px solid var(--border)',
-            animation: 'fadeIn 0.2s ease',
+            overflowY: 'auto',
           }}
         >
           {NAV_LINKS.map((link) => (
@@ -205,14 +159,13 @@ export function Navbar() {
               style={{
                 textDecoration: 'none',
                 padding: '14px 16px',
-                borderRadius: 'var(--radius-sm)',
+                borderRadius: 'var(--r-sm)',
                 fontSize: '16px',
-                fontWeight: isActive(link.href) ? 500 : 300,
-                color: isActive(link.href) ? 'var(--emerald)' : 'var(--text)',
-                background: isActive(link.href)
-                  ? 'rgba(0,200,150,0.08)'
-                  : 'transparent',
+                fontWeight: isActive(link.href) ? 500 : 400,
+                color: isActive(link.href) ? 'var(--green)' : 'var(--text)',
+                background: isActive(link.href) ? 'rgba(26,122,74,0.06)' : 'transparent',
                 borderBottom: '1px solid var(--border)',
+                fontFamily: 'var(--font-body)',
               }}
             >
               {link.label}
@@ -225,12 +178,13 @@ export function Navbar() {
               style={{
                 textDecoration: 'none',
                 padding: '14px',
-                borderRadius: 'var(--radius-md)',
+                borderRadius: 'var(--r-md)',
                 fontSize: '15px',
                 fontWeight: 400,
                 color: 'var(--text)',
-                border: '1px solid var(--border)',
+                border: '1px solid var(--border2)',
                 textAlign: 'center',
+                fontFamily: 'var(--font-body)',
               }}
             >
               Log in
@@ -241,7 +195,7 @@ export function Navbar() {
               className="btn btn-primary btn-lg"
               style={{ textDecoration: 'none', justifyContent: 'center' }}
             >
-              Get Started Free
+              Start Free
             </Link>
           </div>
           <div
@@ -249,14 +203,14 @@ export function Navbar() {
               marginTop: 'auto',
               padding: '16px',
               background: 'var(--surface)',
-              borderRadius: 'var(--radius-md)',
+              borderRadius: 'var(--r-md)',
               border: '1px solid var(--border)',
             }}
           >
-            <p style={{ fontSize: '11px', color: 'var(--text3)', letterSpacing: '1px', fontFamily: 'Courier New, monospace' }}>
+            <p style={{ fontSize: '11px', color: 'var(--text3)', letterSpacing: '1px', fontFamily: 'var(--font-mono)' }}>
               SEBI REGISTERED · INH000026266
             </p>
-            <p style={{ fontSize: '11px', color: 'var(--text3)', marginTop: '4px' }}>
+            <p style={{ fontSize: '11px', color: 'var(--text4)', marginTop: '4px', fontFamily: 'var(--font-body)' }}>
               Investments are subject to market risk.
             </p>
           </div>
@@ -265,4 +219,3 @@ export function Navbar() {
     </>
   )
 }
-

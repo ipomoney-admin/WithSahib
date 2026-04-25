@@ -271,7 +271,7 @@ export default function ServicesPage() {
           <strong style={{ color: 'var(--gold)' }}>Risk Disclaimer: </strong>
           Investments in securities market are subject to market risks. Read all related documents carefully before investing.
           SEBI registration does not guarantee performance or assurance of returns.
-          Research Analyst: Sahib Singh Hora · SEBI RA Reg. No. INH000026266 · Valid: Apr 2026 – Apr 2031.
+          Research Analyst: Sahib Singh Hora · SEBI RA Reg. No. INH000026266.
         </div>
       </div>
       <Footer />

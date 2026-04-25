@@ -67,8 +67,8 @@ export default function AboutPage() {
               <p style={{ fontSize: '14px', color: 'var(--text2)' }}>SEBI Registered Research Analyst</p>
               <p style={{ fontSize: '12px', color: 'var(--gold)', fontFamily: 'Courier New, monospace', letterSpacing: '1px', marginTop: '4px' }}>INH000026266</p>
             </div>
-            <div style={{ width: '100%', padding: '12px', background: 'rgba(0,200,150,0.05)', border: '1px solid rgba(0,200,150,0.15)', borderRadius: '10px' }}>
-              <p style={{ fontSize: '11px', color: 'var(--emerald)', fontWeight: 500 }}>Valid: Apr 20, 2026 – Apr 19, 2031</p>
+            <div style={{ width: '100%', padding: '12px', background: 'rgba(26,122,74,0.05)', border: '1px solid rgba(26,122,74,0.15)', borderRadius: '10px' }}>
+              <p style={{ fontSize: '11px', color: 'var(--green)', fontWeight: 500, fontFamily: 'var(--font-mono)', letterSpacing: '0.5px' }}>SEBI RA · INH000026266 · Verify on SEBI.gov.in</p>
             </div>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', justifyContent: 'center' }}>
               {['SEBI RA', 'NISM Certified', 'Technical Analyst', 'Options Strategist'].map(tag => (
@@ -80,7 +80,7 @@ export default function AboutPage() {
           {/* Text */}
           <div>
             <div className="section-tag">About</div>
-            <h1 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 'clamp(32px,4vw,52px)', fontWeight: 400, color: 'var(--text)', lineHeight: 1.15, marginBottom: '24px' }}>
+            <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(32px,4vw,52px)', fontWeight: 400, color: 'var(--text)', lineHeight: 1.15, marginBottom: '24px' }}>
               India&apos;s verified<br />
               <em style={{ color: 'var(--emerald)', fontStyle: 'italic' }}>stock market advisor</em>
             </h1>
@@ -106,7 +106,7 @@ export default function AboutPage() {
       <section style={{ padding: '60px 40px', background: 'var(--bg2)' }}>
         <div style={{ maxWidth: '720px', margin: '0 auto' }}>
           <div className="section-tag">The Story</div>
-          <h2 style={{ fontFamily: 'DM Serif Display, serif', fontSize: '36px', fontWeight: 400, color: 'var(--text)', marginBottom: '28px', lineHeight: 1.2 }}>
+          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '36px', fontWeight: 400, color: 'var(--text)', marginBottom: '28px', lineHeight: 1.2 }}>
             Why I built <em style={{ color: 'var(--emerald)', fontStyle: 'italic' }}>withSahib</em>
           </h2>
           <p style={{ fontSize: '16px', color: 'var(--text)', lineHeight: 1.8, marginBottom: '20px', fontWeight: 400 }}>
@@ -136,7 +136,7 @@ export default function AboutPage() {
       <section style={{ padding: '60px 40px', background: 'var(--bg)' }}>
         <div style={{ maxWidth: '720px', margin: '0 auto' }}>
           <div className="section-tag">Services</div>
-          <h2 style={{ fontFamily: 'DM Serif Display, serif', fontSize: '32px', fontWeight: 400, color: 'var(--text)', marginBottom: '28px' }}>
+          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '32px', fontWeight: 400, color: 'var(--text)', marginBottom: '28px' }}>
             What I offer as a SEBI RA
           </h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -164,7 +164,7 @@ export default function AboutPage() {
       <section style={{ padding: '60px 40px', background: 'var(--bg2)' }}>
         <div style={{ maxWidth: '720px', margin: '0 auto' }}>
           <div className="section-tag">Credentials</div>
-          <h2 style={{ fontFamily: 'DM Serif Display, serif', fontSize: '32px', fontWeight: 400, color: 'var(--text)', marginBottom: '28px' }}>
+          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '32px', fontWeight: 400, color: 'var(--text)', marginBottom: '28px' }}>
             Fully verifiable SEBI registration
           </h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '14px' }}>
@@ -172,13 +172,12 @@ export default function AboutPage() {
               { label: 'SEBI Registration Number', value: 'INH000026266', mono: true },
               { label: 'Registered Name', value: 'Sahib Singh Hora', mono: false },
               { label: 'Category', value: 'Individual RA', mono: false },
-              { label: 'Valid From', value: 'Apr 20, 2026', mono: false },
-              { label: 'Valid Until', value: 'Apr 19, 2031', mono: false },
+              { label: 'Experience', value: '14+ Years', mono: false },
               { label: 'Regulator', value: 'SEBI, Government of India', mono: false },
             ].map(item => (
               <div key={item.label} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '12px', padding: '16px' }}>
                 <p style={{ fontSize: '11px', fontWeight: 600, letterSpacing: '1px', color: 'var(--text3)', textTransform: 'uppercase', marginBottom: '6px' }}>{item.label}</p>
-                <p style={{ fontSize: item.mono ? '13px' : '14px', fontWeight: 600, color: 'var(--text)', fontFamily: item.mono ? 'Courier New, monospace' : 'Outfit, sans-serif' }}>{item.value}</p>
+                <p style={{ fontSize: item.mono ? '13px' : '14px', fontWeight: 600, color: 'var(--text)', fontFamily: item.mono ? 'Courier New, monospace' : 'var(--font-body)' }}>{item.value}</p>
               </div>
             ))}
           </div>

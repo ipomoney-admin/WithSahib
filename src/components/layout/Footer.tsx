@@ -3,14 +3,6 @@
 import Link from 'next/link'
 
 const FOOTER_LINKS = {
-  Services: [
-    { label: 'Intraday Calls', href: '/services/intraday' },
-    { label: 'Stock Options', href: '/services/stock-options' },
-    { label: 'Index Options', href: '/services/index-options' },
-    { label: 'Swing Trades', href: '/services/swing' },
-    { label: 'Model Portfolio', href: '/services/portfolio' },
-    { label: 'Appointments', href: '/appointments' },
-  ],
   Research: [
     { label: 'Research Reports', href: '/reports' },
     { label: 'Track Record', href: '/track-record' },
@@ -22,6 +14,7 @@ const FOOTER_LINKS = {
     { label: 'Courses', href: '/courses' },
     { label: 'Pricing', href: '/pricing' },
     { label: 'Contact', href: '/contact' },
+    { label: 'Appointments', href: '/appointments' },
   ],
   Legal: [
     { label: 'Privacy Policy', href: '/privacy-policy' },
@@ -35,7 +28,7 @@ export function Footer() {
   return (
     <footer
       style={{
-        background: 'var(--navy)',
+        background: 'var(--black)',
         borderTop: '1px solid rgba(255,255,255,0.06)',
         padding: '56px 40px 32px',
       }}
@@ -46,28 +39,21 @@ export function Footer() {
           className="footer-grid"
           style={{
             display: 'grid',
-            gridTemplateColumns: '2fr repeat(4, 1fr)',
+            gridTemplateColumns: '2fr repeat(3, 1fr)',
             gap: '40px',
             marginBottom: '48px',
           }}
         >
           {/* Brand */}
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
-              <div style={{ display: 'flex', alignItems: 'flex-end', gap: '3px', height: '22px' }}>
-                {[{ h: 8, op: .35 }, { h: 13, op: .65 }, { h: 20, op: 1 }].map((c, i) => (
-                  <div key={i} style={{ width: '4px', height: `${c.h}px`, background: `rgba(0,200,150,${c.op})`, borderRadius: '2px' }} />
-                ))}
-                <div style={{ width: '5px', height: '5px', borderRadius: '50%', background: 'var(--emerald)', marginBottom: '1px', marginLeft: '1px' }} />
-              </div>
-              <span style={{ fontSize: '16px' }}>
-                <span style={{ fontWeight: 300, color: 'rgba(255,255,255,0.7)' }}>with</span>
-                <span style={{ fontWeight: 700, color: 'var(--emerald)' }}>Sahib</span>
-                <span style={{ fontWeight: 300, color: 'rgba(255,255,255,0.7)' }}>.com</span>
+            <div style={{ marginBottom: '16px' }}>
+              <span style={{ fontFamily: 'var(--font-body)', fontSize: '20px', fontWeight: 800, letterSpacing: '-0.3px' }}>
+                <span style={{ color: 'rgba(255,255,255,0.7)', fontWeight: 300 }}>with</span>
+                <span style={{ color: 'var(--green-bright)' }}>Sahib</span>
               </span>
             </div>
-            <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)', lineHeight: '1.7', maxWidth: '240px', marginBottom: '16px' }}>
-              Systematic equity research. Published under SEBI RA INH000026266. Accountable by regulation.
+            <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)', lineHeight: '1.7', maxWidth: '240px', marginBottom: '16px', fontFamily: 'var(--font-body)' }}>
+              Systematic equity research by SEBI RA Sahib Singh Hora. Accountable by regulation.
             </p>
             <a
               href="https://www.sebi.gov.in/sebiweb/other/OtherAction.do?doRecognisedFpi=yes&intmId=13"
@@ -76,13 +62,13 @@ export function Footer() {
               style={{
                 display: 'inline-block',
                 fontSize: '10px',
-                fontWeight: 500,
+                fontWeight: 600,
                 letterSpacing: '1px',
                 color: '#D4A843',
                 border: '1px solid rgba(212,168,67,0.25)',
                 borderRadius: '4px',
                 padding: '4px 8px',
-                fontFamily: 'Courier New, monospace',
+                fontFamily: 'var(--font-mono)',
                 background: 'rgba(212,168,67,0.08)',
                 textDecoration: 'none',
               }}
@@ -128,6 +114,7 @@ export function Footer() {
                   color: 'rgba(255,255,255,0.3)',
                   textTransform: 'uppercase',
                   marginBottom: '16px',
+                  fontFamily: 'var(--font-body)',
                 }}
               >
                 {section}
@@ -135,7 +122,7 @@ export function Footer() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 {links.map((link) => (
                   <Link
-                    key={link.href}
+                    key={link.href + link.label}
                     href={link.href}
                     target={(link as any).target}
                     rel={(link as any).target === '_blank' ? 'noopener noreferrer' : undefined}
@@ -144,9 +131,10 @@ export function Footer() {
                       fontSize: '13px',
                       color: 'rgba(255,255,255,0.45)',
                       transition: 'color 0.2s',
+                      fontFamily: 'var(--font-body)',
                     }}
                     onMouseEnter={(e) =>
-                      ((e.target as HTMLElement).style.color = 'var(--emerald)')
+                      ((e.target as HTMLElement).style.color = 'var(--green-bright)')
                     }
                     onMouseLeave={(e) =>
                       ((e.target as HTMLElement).style.color = 'rgba(255,255,255,0.45)')
@@ -161,14 +149,13 @@ export function Footer() {
         </div>
 
         {/* SEBI Disclaimer */}
-        <div style={{ marginBottom: '32px', fontSize: '11px', color: 'rgba(255,255,255,0.28)', lineHeight: '1.7', padding: '16px 20px', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '12px' }}>
+        <div style={{ marginBottom: '32px', fontSize: '11px', color: 'rgba(255,255,255,0.28)', lineHeight: '1.7', padding: '16px 20px', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '12px', fontFamily: 'var(--font-body)' }}>
           <strong style={{ color: '#D4A843', fontWeight: 600 }}>Risk Disclaimer: </strong>
           Investments in securities market are subject to market risks. Read all related documents carefully before investing.
           Registration granted by SEBI and certification from NISM in no way guarantee performance of the intermediary
           or provide any assurance of returns to investors. Past performance is not indicative of future results.
           Research Analyst: <strong style={{ color: 'rgba(255,255,255,0.5)', fontWeight: 500 }}>Sahib Singh Hora</strong> ·
-          SEBI RA Registration No. <strong style={{ fontWeight: 600, fontFamily: 'Courier New, monospace' }}>INH000026266</strong> ·
-          Valid: 20th April 2026 – 19th April 2031
+          SEBI RA Registration No. <strong style={{ fontWeight: 600, fontFamily: 'var(--font-mono)' }}>INH000026266</strong>
         </div>
 
         {/* Bottom bar */}
@@ -179,14 +166,14 @@ export function Footer() {
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px' }}>
-            <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.25)' }}>
+            <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.25)', fontFamily: 'var(--font-body)' }}>
               © 2026 Sahib Singh Hora. All rights reserved. | withSahib.com
             </p>
-            <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.25)' }}>
+            <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.25)', fontFamily: 'var(--font-mono)' }}>
               SEBI RA · INH000026266
             </p>
           </div>
-          <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.2)', textAlign: 'center', paddingTop: '8px', paddingBottom: '4px' }}>
+          <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.2)', textAlign: 'center', paddingTop: '8px', paddingBottom: '4px', fontFamily: 'var(--font-body)' }}>
             Developed by{' '}
             <a
               href="https://www.altitans.com"
