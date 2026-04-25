@@ -217,11 +217,11 @@ const FAQ_SECTIONS = [
     items: [
       {
         q: "What technology powers withSahib's screener?",
-        a: 'withSahib uses a custom-built algorithmic screener detecting 28 technical patterns across swing (1500+ stocks), intraday 1H, and intraday 15M timeframes. It is built on Next.js, Supabase, and integrates with Fyers API for live market data.',
+        a: 'withSahib uses a systematic research methodology — Sahib reviews 1500+ NSE stocks daily before market open, applying technical pattern analysis, volume profiling, and multi-timeframe confirmation. The research process is built on Fyers API for live market data.',
       },
       {
-        q: 'How does withSahib use AI and machine learning?',
-        a: 'withSahib captures every signal — shared and unshared — in a machine learning database. Price outcomes are tracked at 1, 3, 5, 10, 15, and 30 days post-signal. This data trains ML models to improve pattern detection accuracy and identify which setups have the highest historical win rates.',
+        q: 'How does withSahib track signal performance?',
+        a: 'Every signal published from May 2026 is logged in the performance tracker — entries, exits, win/loss results, and R:R achieved. Outcomes are tracked and published publicly so anyone can verify the track record. No cherry-picking.',
       },
       {
         q: 'Does withSahib use automated trading or algo trading?',

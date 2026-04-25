@@ -119,9 +119,9 @@ const SERVICES_DETAIL = [
     keywords: 'stock research report India · market signals today · best research analyst India',
     badge: 'On Filing · Pro Plan',
     badgeColor: '#00C896',
-    desc: 'Automated institutional-grade research reports generated when BSE/NSE-listed companies publish quarterly results or major filings. DCF models, earnings analysis, management commentary breakdown, and buy/hold/sell recommendations.',
+    desc: 'Institutional-grade research reports published when BSE/NSE-listed companies file quarterly results or major announcements. DCF models, earnings analysis, management commentary breakdown, and buy/hold/sell recommendations.',
     features: [
-      'Auto-generated on Q1/Q2/Q3/Q4 results',
+      'Published on Q1/Q2/Q3/Q4 results',
       'DCF valuation model included',
       'Management commentary analysis',
       'Buy / Hold / Sell recommendation',

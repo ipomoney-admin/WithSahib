@@ -17,8 +17,8 @@ import { FALLBACK_DATA, type TickerItem } from '@/lib/utils/marketData'
 const SERVICES = [
   {
     icon: TrendingUp,
-    title: 'Intraday Picks',
-    desc: 'Daily intraday picks for NSE equities — pre-market entry, target & SL published by 9 AM. The best stock to buy today, every trading day, from a verified SEBI RA.',
+    title: 'Intraday Research',
+    desc: 'Pre-market equity research for NSE-listed stocks — setup rationale, entry zone, risk levels, and sector context documented and published before 9 AM every trading session.',
     badge: 'Daily',
     badgeColor: 'green',
     tier: 'pro',
@@ -27,7 +27,7 @@ const SERVICES = [
   {
     icon: BarChart2,
     title: 'Stock Options',
-    desc: 'Options signals with strike selection, premium targets, and risk-defined weekly & monthly setups — SEBI-compliant, fully disclosed.',
+    desc: 'Options research covering strike selection, premium targets, and expiry-week setups across weekly and monthly contracts. Each recommendation includes OI context, IV rank, and defined max-risk parameters.',
     badge: 'Weekly',
     badgeColor: 'gold',
     tier: 'pro',
@@ -36,7 +36,7 @@ const SERVICES = [
   {
     icon: Target,
     title: 'Index Options',
-    desc: 'Nifty options signals today and Bank Nifty signals with OI analysis, PCR-based directional calls, and expiry plays. Institutional methodology for retail traders.',
+    desc: 'Nifty and Bank Nifty derivatives research built on open interest analysis, PCR signals, and multi-timeframe structure. Expiry-day plays with full written rationale.',
     badge: 'Expiry Plays',
     badgeColor: 'gold',
     tier: 'pro',
@@ -45,7 +45,7 @@ const SERVICES = [
   {
     icon: RefreshCw,
     title: 'Swing Trades',
-    desc: 'Swing trading stocks India — 2–10 day positional ideas based on pattern breakouts, volume confirmation & multi-timeframe analysis. Best stocks to buy this week.',
+    desc: 'Positional research for 2–10 day NSE equity setups. Chart structure analysis — flags, triangles, cup-and-handle — with volume confirmation, target levels, and documented invalidation criteria.',
     badge: '3–5/Week',
     badgeColor: 'green',
     tier: 'basic',
@@ -54,7 +54,7 @@ const SERVICES = [
   {
     icon: BookOpen,
     title: 'Model Portfolio',
-    desc: 'SEBI RA model portfolio: curated NSE long-term picks with quarterly rebalancing, sector allocation & live performance tracking. Research-backed, not guesswork.',
+    desc: 'A curated NSE equity portfolio, research-backed and quarterly-rebalanced. Every holding is supported by a documented valuation thesis, sector allocation rationale, and published rebalancing logic.',
     badge: 'Long Term',
     badgeColor: 'blue',
     tier: 'basic',
@@ -63,7 +63,7 @@ const SERVICES = [
   {
     icon: Calendar,
     title: '1-on-1 Sessions',
-    desc: 'Book a personal session with a verified stock market advisor India — portfolio review, stock deep-dives, or strategy discussions. 15 or 30-minute slots.',
+    desc: 'Scheduled one-to-one sessions with a SEBI Registered Analyst. Portfolio review, stock-specific research deep-dives, and options strategy consultation — 15 or 30-minute structured sessions.',
     badge: 'Book a Slot',
     badgeColor: 'blue',
     tier: 'elite',
@@ -72,8 +72,8 @@ const SERVICES = [
   {
     icon: Brain,
     title: 'Research Reports',
-    desc: 'In-depth stock research reports India — automated DCF models, quarterly results analysis, and institutional-grade notes generated the moment companies file on BSE/NSE.',
-    badge: 'Data-Driven',
+    desc: 'Equity research notes published on BSE/NSE results filings. DCF analysis, earnings quality assessment, management commentary breakdown, and a formal Buy/Hold/Sell recommendation with documented reasoning.',
+    badge: 'On Filing',
     badgeColor: 'green',
     tier: 'pro',
     href: '/research',
@@ -81,7 +81,7 @@ const SERVICES = [
   {
     icon: Shield,
     title: 'Courses',
-    desc: 'Structured courses on technical analysis, options theory & systematic trading process — from a SEBI registered analyst. Learn the method behind every call.',
+    desc: 'Structured learning modules on technical analysis methodology, options frameworks, and systematic research process — taught by a SEBI Registered Research Analyst.',
     badge: 'Self-Paced',
     badgeColor: 'gold',
     tier: 'basic',
@@ -157,7 +157,7 @@ const PLANS = [
     yearlyMonthly: 5099,   // ₹5,099/mo
     yearlyTotal: 61190,    // ₹5999 × 12 × 0.85
     discount: 15,          // 15% off
-    sub: 'Full access. Serious capital.',
+    sub: 'Full research access. Direct analyst relationship.',
     features: [
       { text: 'Everything in Pro', ok: true },
       { text: 'Unlimited appointments', ok: true },
@@ -194,13 +194,13 @@ export default function HomePage() {
       <LiveTicker />
       <HeroSection />
       <ServicesSection />
+      <MethodologySection />
       <HowItWorksSection />
-      <AIEngineSection />
+      <ResearchEngineSection />
       <PricingSection />
       <TrackRecordSection />
       <ComplianceSection />
-      <AboutSection />
-      <EarlyAccessSection />
+      <FounderSection />
       <AnalystProfileSection />
       <QuickLinksSection />
       <CTASection />
@@ -372,7 +372,7 @@ function HeroSection() {
           }}
         >
           <ShieldCheck size={14} strokeWidth={2.5} />
-          SEBI Registered Research Analyst · INH000026266
+          Systematic Equity Research · SEBI RA INH000026266
         </div>
 
         {/* H1 */}
@@ -386,11 +386,8 @@ function HeroSection() {
             color: 'var(--text)',
           }}
         >
-          Research with{' '}
-          <em style={{ fontStyle: 'italic', color: 'var(--emerald)' }}>clarity.</em>
-          <br />
-          Trade with{' '}
-          <em style={{ fontStyle: 'italic', color: 'var(--gold)' }}>conviction.</em>
+          Where rigour{' '}
+          <em style={{ fontStyle: 'italic', color: 'var(--emerald)' }}>meets the market.</em>
         </h1>
 
         {/* Sub */}
@@ -405,7 +402,7 @@ function HeroSection() {
             lineHeight: 1.7,
           }}
         >
-          Get SEBI-verified market intelligence, intraday stock calls for NSE, options trading calls, and in-depth research reports — from Sahib Singh Hora, India's trusted SEBI registered research analyst (INH000026266).
+          Equity research with a documented process, written rationale on every recommendation, and a SEBI registration number that puts every call on record. Not tips — research.
         </p>
 
         {/* Actions */}
@@ -448,6 +445,9 @@ function HeroSection() {
             Join Free Telegram
           </a>
         </div>
+        <p style={{ fontSize: '12px', color: 'var(--text3)', marginTop: '16px', letterSpacing: '0.5px' }}>
+          SEBI RA INH000026266 · Written rationale on every call · No unregistered tipsters
+        </p>
 
         {/* Stats */}
         <div
@@ -465,7 +465,7 @@ function HeroSection() {
             { num: 'INH000026266', suf: '', label: 'SEBI Reg. No.' },
             { num: 'Apr 2031', suf: '', label: 'Licence Valid' },
             { num: 'NISM', suf: '', label: 'Certified' },
-            { num: '2026', suf: '', label: 'Est.' },
+            { num: 'Apr 2026', suf: '', label: 'SEBI Licensed' },
           ].map((s, i) => (
             <div key={i} style={{ textAlign: 'center' }}>
               <div style={{
@@ -500,7 +500,7 @@ function HeroSection() {
             fontFamily: 'Courier New, monospace',
           }}
         >
-          SEBI REGISTERED · INH000026266 · VALID APR 2026 – APR 2031 · INVESTMENTS SUBJECT TO MARKET RISK
+          <a href="https://www.sebi.gov.in/sebiweb/other/OtherAction.do?doRecognisedFpi=yes&intmId=13" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>SEBI REGISTERED · INH000026266 · VALID APR 2026 – APR 2031 · Verify on SEBI.gov.in →</a>
         </div>
       </div>
     </section>
@@ -516,7 +516,7 @@ function ServicesSection() {
       style={{ padding: '80px 40px', background: 'var(--bg2)' }}
     >
       <div className="container-wide" style={{ padding: 0 }}>
-        <div className="section-tag">What We Offer</div>
+        <div className="section-tag">Research Coverage</div>
         <h2
           style={{
             fontFamily: 'DM Serif Display, serif',
@@ -528,12 +528,11 @@ function ServicesSection() {
             marginBottom: '12px',
           }}
         >
-          Every service a{' '}
-          <em style={{ color: 'var(--emerald)', fontStyle: 'italic' }}>serious investor</em>{' '}
-          needs
+          Research coverage across{' '}
+          <em style={{ color: 'var(--emerald)', fontStyle: 'italic' }}>every time horizon</em>
         </h2>
         <p style={{ fontSize: '16px', color: 'var(--text2)', maxWidth: '480px', marginBottom: '48px' }}>
-          From intraday scalps to long-term portfolios — all under one SEBI-registered roof.
+          From intraday to long-term portfolios — every recommendation published under SEBI RA INH000026266 with full written rationale.
         </p>
 
         <div
@@ -609,31 +608,134 @@ function ServicesSection() {
   )
 }
 
-// ─── HOW IT WORKS ─────────────────────────────────────────────────────────────
-function HowItWorksSection() {
+// ─── METHODOLOGY ─────────────────────────────────────────────────────────────
+function MethodologySection() {
   const { ref, inView } = useInView()
-  const steps = [
-    { n: '01', title: 'Sign Up Free', desc: 'Create your account in 60 seconds. No credit card needed. Access free previews immediately.' },
-    { n: '02', title: 'Choose Your Plan', desc: 'Pick from 4 tiers based on your trading style — swing, active, or elite advisory.' },
-    { n: '03', title: 'Your Dashboard', desc: 'Personalized dashboard with live picks, research reports, and watchlist tailored to your tier.' },
-    { n: '04', title: 'Trade with Clarity', desc: 'Every call has entry, target & stop-loss. No ambiguity. Full SEBI-compliant research.' },
+  const pillars = [
+    {
+      n: 'I',
+      title: 'Structural Analysis',
+      desc: 'Every setup is evaluated across multiple timeframes — daily, weekly, and intraday — to confirm that price structure, volume, and momentum are aligned before a recommendation is published.',
+    },
+    {
+      n: 'II',
+      title: 'Risk Definition First',
+      desc: 'Stop-loss and invalidation criteria are defined before entry. A recommendation without a clear risk level is not a recommendation — it is speculation. Every call on withSahib defines the downside explicitly.',
+    },
+    {
+      n: 'III',
+      title: 'Written Rationale Always',
+      desc: 'Every recommendation includes a written explanation of the setup — pattern, catalyst, sector context, and timing. Subscribers understand the research, not just the numbers.',
+    },
   ]
   return (
-    <section ref={ref} style={{ padding: '80px 40px', background: 'var(--bg)' }}>
+    <section ref={ref} style={{ padding: '80px 40px', background: 'var(--bg)', borderTop: '1px solid var(--border)' }}>
       <div className="container-wide" style={{ padding: 0 }}>
-        <div className="section-tag">Process</div>
+        <div className="section-tag">Research Methodology</div>
         <h2
           style={{
             fontFamily: 'DM Serif Display, serif',
             fontSize: 'clamp(28px,4vw,48px)',
             fontWeight: 400,
             color: 'var(--text)',
-            marginBottom: '48px',
+            maxWidth: '600px',
+            lineHeight: 1.2,
+            marginBottom: '12px',
           }}
         >
-          How <em style={{ color: 'var(--emerald)', fontStyle: 'italic' }}>withSahib</em> works
+          Three principles that govern{' '}
+          <em style={{ color: 'var(--emerald)', fontStyle: 'italic' }}>every call</em>
         </h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '2px' }}>
+        <p style={{ fontSize: '16px', color: 'var(--text2)', maxWidth: '520px', marginBottom: '56px' }}>
+          A research house operates by process, not instinct. These three pillars define how every recommendation on withSahib is built — before it reaches a subscriber.
+        </p>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '0' }}>
+          {pillars.map((p, i) => (
+            <div
+              key={i}
+              style={{
+                padding: '40px 36px',
+                borderLeft: i > 0 ? '1px solid var(--border)' : 'none',
+                borderTop: '2px solid var(--emerald)',
+                opacity: inView ? 1 : 0,
+                transform: inView ? 'translateY(0)' : 'translateY(20px)',
+                transition: `all 0.5s ease ${i * 0.12}s`,
+              }}
+            >
+              <div
+                style={{
+                  fontFamily: 'DM Serif Display, serif',
+                  fontSize: '13px',
+                  fontWeight: 400,
+                  color: 'var(--emerald)',
+                  letterSpacing: '3px',
+                  textTransform: 'uppercase',
+                  marginBottom: '20px',
+                }}
+              >
+                {p.n}
+              </div>
+              <h3
+                style={{
+                  fontFamily: 'DM Serif Display, serif',
+                  fontSize: '24px',
+                  fontWeight: 400,
+                  color: 'var(--text)',
+                  marginBottom: '16px',
+                  lineHeight: 1.2,
+                }}
+              >
+                {p.title}
+              </h3>
+              <p style={{ fontSize: '14px', color: 'var(--text2)', lineHeight: 1.8 }}>{p.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ─── HOW IT WORKS ─────────────────────────────────────────────────────────────
+function HowItWorksSection() {
+  const { ref, inView } = useInView()
+  const steps = [
+    {
+      n: '01',
+      title: 'I scan the market every morning before 9 AM',
+      desc: 'Sahib reviews overnight global cues, FII/DII data, and technical setups across 1500+ Nifty 500 stocks before the market opens.',
+    },
+    {
+      n: '02',
+      title: 'I pick only the highest-conviction setups',
+      desc: 'Not every setup qualifies. I share 1–3 calls per day maximum — quality over quantity, every single trading day.',
+    },
+    {
+      n: '03',
+      title: 'You get the full reasoning, not just the call',
+      desc: 'Entry range, two targets, stop loss, and written rationale. You understand the trade before you take it.',
+    },
+  ]
+  return (
+    <section ref={ref} style={{ padding: '80px 40px', background: 'var(--bg)' }}>
+      <div className="container-wide" style={{ padding: 0 }}>
+        <div className="section-tag">How It Works</div>
+        <h2
+          style={{
+            fontFamily: 'DM Serif Display, serif',
+            fontSize: 'clamp(28px,4vw,48px)',
+            fontWeight: 400,
+            color: 'var(--text)',
+            marginBottom: '12px',
+          }}
+        >
+          Research you can{' '}
+          <em style={{ color: 'var(--emerald)', fontStyle: 'italic' }}>follow and understand</em>
+        </h2>
+        <p style={{ fontSize: '16px', color: 'var(--text2)', maxWidth: '480px', marginBottom: '48px' }}>
+          Every call on withSahib has a person behind it — not a black box. Here is exactly how Sahib&apos;s research process works.
+        </p>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '2px' }}>
           {steps.map((step, i) => (
             <div
               key={i}
@@ -656,7 +758,7 @@ function HowItWorksSection() {
               >
                 {step.n}
               </div>
-              <h3 style={{ fontSize: '16px', fontWeight: 600, color: 'var(--text)', marginBottom: '10px' }}>
+              <h3 style={{ fontSize: '16px', fontWeight: 600, color: 'var(--text)', marginBottom: '10px', lineHeight: 1.4 }}>
                 {step.title}
               </h3>
               <p style={{ fontSize: '13px', color: 'var(--text2)', lineHeight: 1.6 }}>{step.desc}</p>
@@ -668,39 +770,39 @@ function HowItWorksSection() {
   )
 }
 
-// ─── AI ENGINE ────────────────────────────────────────────────────────────────
-function AIEngineSection() {
+// ─── RESEARCH ENGINE ──────────────────────────────────────────────────────────
+function ResearchEngineSection() {
   const { ref, inView } = useInView()
   const cards = [
     {
-      tag: 'Live Screener Engine',
-      title: 'Pattern Recognition & Trade Picks',
-      desc: 'Algorithmic screener scanning NSE stocks for chart patterns, demand zones, and volume breakouts — rolling picks every trading day.',
-      status: 'Running live',
+      tag: 'Pre-Market Research',
+      title: 'Daily Stock Picks & Setups',
+      desc: 'Every morning before 9 AM, I scan NSE stocks for chart patterns, demand zones, and volume breakouts — and publish only the setups worth trading.',
+      status: 'Published by 9 AM',
     },
     {
-      tag: 'Automated Research Reports',
+      tag: 'Research Reports',
       title: 'Quarterly Results Analysis',
-      desc: 'DCF models, earnings analysis, and management commentary — processed the moment BSE/NSE releases filings.',
-      status: 'Auto-generates on filing',
+      desc: 'DCF models, earnings analysis, and management commentary — published when BSE/NSE releases filings. Institutional depth, retail accessibility.',
+      status: 'Published on filing',
     },
     {
-      tag: 'Company Intelligence',
-      title: 'Live Company Pages',
-      desc: 'Every NSE-listed company has a dedicated page. News, results, filings, and analyst notes — auto-updated and archived.',
-      status: 'Real-time updates',
+      tag: 'Sector & Market Context',
+      title: 'Breadth and Trend Analysis',
+      desc: 'Every call comes with the broader market context — Nifty trend, sector strength, FII/DII activity — so you understand why the setup matters now.',
+      status: 'Included with every call',
     },
     {
-      tag: 'Signal Quality Engine',
-      title: 'Backtested Signal Quality',
-      desc: 'Every signal ranked by tier based on historical win rate, SL hit rate, and hold-period performance across years of data.',
-      status: 'Continuously validated',
+      tag: 'Track Record',
+      title: 'Every Outcome Logged',
+      desc: 'Every signal published from May 2026 is logged with its result — wins and losses both. No cherry-picking. Full SEBI-compliant audit trail.',
+      status: 'Publicly auditable',
     },
   ]
   return (
     <section ref={ref} style={{ padding: '80px 40px', background: 'var(--bg2)' }}>
       <div className="container-wide" style={{ padding: 0 }}>
-        <div className="section-tag">The Intelligence Behind Every Call</div>
+        <div className="section-tag">The Research Behind Every Call</div>
         <h2
           style={{
             fontFamily: 'DM Serif Display, serif',
@@ -712,11 +814,11 @@ function AIEngineSection() {
             marginBottom: '12px',
           }}
         >
-          Systematic research,{' '}
+          Research-driven,{' '}
           <em style={{ color: 'var(--emerald)', fontStyle: 'italic' }}>not guesswork</em>
         </h2>
         <p style={{ fontSize: '16px', color: 'var(--text2)', maxWidth: '480px', marginBottom: '48px' }}>
-          Not guesswork. Not gut feel. Every recommendation is backed by automated analysis running 24/7.
+          Every recommendation is backed by systematic research — technical analysis, price action, volume profile, and market context. My name is on every call.
         </p>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '16px' }}>
           {cards.map((c, i) => (
@@ -747,15 +849,7 @@ function AIEngineSection() {
               </h3>
               <p style={{ fontSize: '13px', color: 'var(--text2)', lineHeight: 1.6, marginBottom: '16px' }}>{c.desc}</p>
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <span
-                  style={{
-                    width: '6px', height: '6px', borderRadius: '50%',
-                    background: 'var(--emerald)',
-                    animation: 'pulseDot 2s ease-in-out infinite',
-                    animationDelay: `${i * 0.4}s`,
-                  }}
-                />
-                <span style={{ fontSize: '11px', color: 'var(--emerald)', fontWeight: 500 }}>{c.status}</span>
+                <span style={{ fontSize: '11px', color: 'var(--emerald)', fontWeight: 500, fontFamily: 'Courier New, monospace', letterSpacing: '0.5px' }}>{c.status}</span>
               </div>
             </div>
           ))}
@@ -774,7 +868,7 @@ function PricingSection() {
     <section ref={ref} id="pricing" style={{ padding: '80px 40px', background: 'var(--bg)' }}>
       <div className="container-wide" style={{ padding: 0 }}>
         <div style={{ textAlign: 'center', marginBottom: '48px' }}>
-          <div className="section-tag" style={{ justifyContent: 'center' }}>Plans</div>
+          <div className="section-tag" style={{ justifyContent: 'center' }}>Research Access</div>
           <h2
             style={{
               fontFamily: 'DM Serif Display, serif',
@@ -943,65 +1037,61 @@ function PricingSection() {
 // ─── TRACK RECORD ─────────────────────────────────────────────────────────────
 function TrackRecordSection() {
   const { ref, inView } = useInView()
-  const metrics = [
-    { icon: Target, val: 'Live from May 2026', label: 'Track Record', sub: 'Auditable — no cherry-picking' },
-    { icon: Zap, val: 'Before 9 AM', label: 'Signal Delivery', sub: 'Every trading day' },
-    { icon: Award, val: '5Y', label: 'Licence Valid', sub: 'Apr 2026 – Apr 2031' },
-    { icon: Users, val: '100%', label: 'SEBI Compliant', sub: 'Full regulatory framework' },
-  ]
   return (
     <section ref={ref} style={{ padding: '80px 40px', background: 'var(--bg2)' }}>
       <div className="container-wide" style={{ padding: 0 }}>
-        <div style={{ textAlign: 'center', marginBottom: '48px' }}>
-          <div className="section-tag" style={{ justifyContent: 'center' }}>Track Record</div>
-          <h2
-            style={{
-              fontFamily: 'DM Serif Display, serif',
-              fontSize: 'clamp(28px,4vw,48px)',
-              fontWeight: 400,
-              color: 'var(--text)',
-            }}
-          >
-            Built on{' '}
-            <em style={{ color: 'var(--gold)', fontStyle: 'italic' }}>accountability</em>
-          </h2>
-        </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
-          {metrics.map((m, i) => {
-            const Icon = m.icon
-            return (
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '60px', alignItems: 'center', opacity: inView ? 1 : 0, transform: inView ? 'translateY(0)' : 'translateY(24px)', transition: 'all 0.7s ease' }}>
+          {/* Left — copy */}
+          <div>
+            <div className="section-tag">Performance Disclosure</div>
+            <h2
+              style={{
+                fontFamily: 'DM Serif Display, serif',
+                fontSize: 'clamp(28px,4vw,44px)',
+                fontWeight: 400,
+                color: 'var(--text)',
+                lineHeight: 1.15,
+                marginBottom: '20px',
+              }}
+            >
+              Every call logged.{' '}
+              <em style={{ color: 'var(--gold)', fontStyle: 'italic' }}>Wins and losses both.</em>
+            </h2>
+            <p style={{ fontSize: '16px', color: 'var(--text2)', lineHeight: 1.8, marginBottom: '16px' }}>
+              From May 2026, every research recommendation is publicly logged with its outcome — entry, exit, result, and the written rationale behind each. A research house is accountable for its record, not selective about it.
+            </p>
+            <p style={{ fontSize: '14px', color: 'var(--text3)', lineHeight: 1.7, marginBottom: '16px' }}>
+              Win rate alone is not a useful metric. A 70% win rate with poor risk management produces negative returns. The published record shows risk-to-reward ratios alongside win rates — because that is the complete picture.
+            </p>
+            <Link href="/performance" className="btn btn-ghost btn-md" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+              View Performance Disclosure →
+            </Link>
+          </div>
+          {/* Right — metrics */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            {[
+              { val: 'May 2026', label: 'Logging Begins', sub: 'Every recommendation tracked from the first published call — no retrospective additions' },
+              { val: 'Wins + Losses', label: 'Full Record', sub: 'Both profitable and unprofitable calls are logged. Cherry-picking defeats the purpose of a public record.' },
+              { val: 'R:R + Win Rate', label: 'Dual Metrics Published', sub: 'Risk-to-reward ratio is published alongside win rate. The combination tells the true story.' },
+            ].map((m, i) => (
               <div
                 key={i}
                 style={{
                   background: 'var(--surface)',
                   border: '1px solid var(--border)',
                   borderRadius: '16px',
-                  padding: '28px',
-                  textAlign: 'center',
+                  padding: '20px 24px',
                   opacity: inView ? 1 : 0,
                   transform: inView ? 'translateY(0)' : 'translateY(20px)',
-                  transition: `all 0.5s ease ${i * 0.1}s`,
+                  transition: `all 0.5s ease ${i * 0.12}s`,
                 }}
               >
-                <div
-                  style={{
-                    width: '48px', height: '48px',
-                    background: 'rgba(0,200,150,0.08)',
-                    borderRadius: '12px',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    margin: '0 auto 16px',
-                  }}
-                >
-                  <Icon size={22} strokeWidth={1.5} color="var(--emerald)" />
-                </div>
-                <div style={{ fontSize: m.val.length > 8 ? '16px' : '32px', fontWeight: 700, color: 'var(--text)', fontFamily: 'DM Serif Display, serif', marginBottom: '4px', lineHeight: 1.2 }}>
-                  {m.val}
-                </div>
-                <div style={{ fontSize: '14px', fontWeight: 500, color: 'var(--text2)', marginBottom: '4px' }}>{m.label}</div>
-                <div style={{ fontSize: '12px', color: 'var(--text3)' }}>{m.sub}</div>
+                <div style={{ fontSize: '18px', fontWeight: 700, color: 'var(--text)', fontFamily: 'DM Serif Display, serif', marginBottom: '4px' }}>{m.val}</div>
+                <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--emerald)', marginBottom: '6px', letterSpacing: '0.5px' }}>{m.label}</div>
+                <div style={{ fontSize: '12px', color: 'var(--text3)', lineHeight: 1.6 }}>{m.sub}</div>
               </div>
-            )
-          })}
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -1061,8 +1151,8 @@ function ComplianceSection() {
   )
 }
 
-// ─── ABOUT ────────────────────────────────────────────────────────────────────
-function AboutSection() {
+// ─── FOUNDER SECTION ──────────────────────────────────────────────────────────
+function FounderSection() {
   const { ref, inView } = useInView()
   return (
     <section ref={ref} style={{ padding: '80px 40px', background: 'var(--bg2)' }}>
@@ -1117,18 +1207,17 @@ function AboutSection() {
               <p style={{ fontSize: '13px', color: 'var(--text2)', marginBottom: '4px' }}>
                 SEBI Registered Research Analyst
               </p>
-              <p
-                style={{
-                  fontSize: '11px', color: 'var(--gold)',
-                  fontFamily: 'Courier New, monospace',
-                  letterSpacing: '1px',
-                }}
+              <a
+                href="https://www.sebi.gov.in/sebiweb/other/OtherAction.do?doRecognisedFpi=yes&intmId=13"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ fontSize: '11px', color: 'var(--gold)', fontFamily: 'Courier New, monospace', letterSpacing: '1px', textDecoration: 'none' }}
               >
-                INH000026266
-              </p>
+                INH000026266 · Verify →
+              </a>
             </div>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', justifyContent: 'center', marginTop: '8px' }}>
-              {['SEBI RA', 'NISM Certified', 'Technical Analyst', 'Options Strategist'].map((tag) => (
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', justifyContent: 'center', marginTop: '4px' }}>
+              {['SEBI RA', 'NISM Certified', 'INH000026266', 'Apr 2026 – Apr 2031'].map((tag) => (
                 <span
                   key={tag}
                   style={{
@@ -1142,22 +1231,11 @@ function AboutSection() {
                 </span>
               ))}
             </div>
-            <div
-              style={{
-                width: '100%', padding: '14px',
-                background: 'rgba(0,200,150,0.05)',
-                border: '1px solid rgba(0,200,150,0.15)',
-                borderRadius: '10px',
-                fontSize: '12px', color: 'var(--emerald)', fontWeight: 500,
-              }}
-            >
-              Valid: Apr 20, 2026 – Apr 19, 2031
-            </div>
           </div>
 
           {/* Text */}
           <div>
-            <div className="section-tag">About the Analyst</div>
+            <div className="section-tag">The Analyst</div>
             <h2
               style={{
                 fontFamily: 'DM Serif Display, serif',
@@ -1168,22 +1246,18 @@ function AboutSection() {
                 marginBottom: '24px',
               }}
             >
-              Research with{' '}
-              <em style={{ color: 'var(--emerald)', fontStyle: 'italic' }}>accountability</em>{' '}
-              at its core
+              Accountability by{' '}
+              <em style={{ color: 'var(--emerald)', fontStyle: 'italic' }}>name and by regulation</em>
             </h2>
             <p style={{ fontSize: '15px', color: 'var(--text2)', lineHeight: 1.8, marginBottom: '16px' }}>
-              I'm Sahib — a SEBI Registered Research Analyst building the kind of research platform
-              I always wished existed as a retail investor. Real data. Real analysis. No noise.
+              Sahib Singh Hora is a SEBI Registered Research Analyst (INH000026266), licensed under SEBI (Research Analysts) Regulations, 2014. Every recommendation published on withSahib is made under that registration — individually named, publicly verifiable, and legally accountable.
             </p>
             <p style={{ fontSize: '15px', color: 'var(--text2)', lineHeight: 1.8, marginBottom: '28px' }}>
-              Every call on withSahib.com is backed by systematic analysis, clearly disclosed under
-              SEBI's regulatory framework. My name and licence number are on every recommendation —
-              because accountability is the foundation of trust.
+              That is the structural difference between a registered research house and an unregistered channel: the name on the call has a regulatory consequence.
             </p>
             <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
               <Link href="/about" className="btn btn-ghost btn-md" style={{ textDecoration: 'none' }}>
-                Read More
+                Read My Story
                 <ChevronRight size={16} />
               </Link>
               <Link href="/appointments" className="btn btn-primary btn-md" style={{ textDecoration: 'none' }}>
@@ -1200,14 +1274,14 @@ function AboutSection() {
 // ─── INTERNAL LINKS / SEO KEYWORD SECTION ─────────────────────────────────────
 function QuickLinksSection() {
   const links = [
-    { href: '/services/intraday', label: 'Intraday Picks NSE', desc: 'Daily market intelligence with entry, target & SL' },
-    { href: '/services', label: 'Market Signals Today', desc: 'All SEBI RA advisory services in one place' },
-    { href: '/reports', label: 'Stock Research Reports', desc: 'NSE equity research, DCF models & results analysis' },
-    { href: '/pricing', label: 'Stock Advisory Subscription India', desc: 'Plans from ₹0 — paid stock advisory with SEBI RA' },
-    { href: '/appointments', label: 'Book a Stock Market Advisor', desc: 'One-on-one session with a verified SEBI RA' },
-    { href: '/faq', label: 'SEBI Research Analyst FAQ', desc: 'Everything about INH000026266 & SEBI RA services' },
-    { href: '/about', label: 'About Sahib Singh Hora', desc: 'Best SEBI RA India 2026 — credentials & background' },
-    { href: '/blog', label: 'Market Intelligence Blog', desc: 'Intraday picks, swing trading & options strategies explained' },
+    { href: '/services/intraday', label: 'Intraday Research', desc: 'Pre-market equity research — entry, target & SL before 9 AM' },
+    { href: '/services', label: 'Research Services', desc: 'All SEBI RA research coverage in one place' },
+    { href: '/reports', label: 'Research Reports', desc: 'NSE equity research, DCF models & results analysis' },
+    { href: '/pricing', label: 'Research Access Plans', desc: 'Plans from ₹0 — SEBI RA research subscription' },
+    { href: '/appointments', label: '1-on-1 Sessions', desc: 'Scheduled session with a SEBI Registered Research Analyst' },
+    { href: '/faq', label: 'SEBI Research Analyst FAQ', desc: 'Questions about INH000026266 & research methodology' },
+    { href: '/about', label: 'About Sahib Singh Hora', desc: 'SEBI RA INH000026266 — credentials & background' },
+    { href: '/blog', label: 'Research Blog', desc: 'Methodology notes, market commentary & analysis explained' },
   ]
   return (
     <section style={{ padding: '56px 40px', background: 'var(--bg2)', borderTop: '1px solid var(--border)' }}>
@@ -1233,44 +1307,6 @@ function QuickLinksSection() {
   )
 }
 
-// ─── PRE-ANALYST CTA ─────────────────────────────────────────────────────────
-function EarlyAccessSection() {
-  return (
-    <section style={{ background: 'var(--surface)', padding: '80px 0', textAlign: 'center' }}>
-      <div style={{ maxWidth: '600px', margin: '0 auto', padding: '0 24px' }}>
-        <h2
-          style={{
-            fontFamily: 'DM Serif Display, serif',
-            fontSize: 'clamp(28px,4vw,40px)',
-            fontWeight: 400,
-            margin: '0 0 16px',
-            color: 'var(--text)',
-            lineHeight: 1.2,
-          }}
-        >
-          Ready to trade with{' '}
-          <em style={{ color: 'var(--emerald)', fontStyle: 'italic' }}>real research?</em>
-        </h2>
-        <p style={{ color: 'var(--text2)', marginBottom: '32px', lineHeight: 1.7, fontSize: '16px' }}>
-          Join investors who trust SEBI-registered analysis over anonymous signals.
-          Start free — upgrade when ready.
-        </p>
-        <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' as const }}>
-          <Link href="/auth/register" className="btn btn-primary btn-lg" style={{ textDecoration: 'none' }}>
-            Start Free Today
-            <ArrowRight size={16} />
-          </Link>
-          <Link href="/pricing" className="btn btn-ghost btn-lg" style={{ textDecoration: 'none' }}>
-            See Pricing
-          </Link>
-        </div>
-        <p style={{ fontSize: '11px', color: 'var(--text3)', marginTop: '20px', fontFamily: 'Courier New, monospace', letterSpacing: '1px' }}>
-          SEBI RA · INH000026266 · No credit card required for free plan
-        </p>
-      </div>
-    </section>
-  )
-}
 
 // ─── ANALYST PROFILE ─────────────────────────────────────────────────────────
 function AnalystProfileSection() {

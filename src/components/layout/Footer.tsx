@@ -67,9 +67,12 @@ export function Footer() {
               </span>
             </div>
             <p style={{ fontSize: '13px', color: 'var(--text3)', lineHeight: '1.7', maxWidth: '240px', marginBottom: '16px' }}>
-              Research with clarity. Trade with confidence. Powered by SEBI-registered expertise and data-driven analysis.
+              Systematic equity research. Published under SEBI RA INH000026266. Accountable by regulation.
             </p>
-            <div
+            <a
+              href="https://www.sebi.gov.in/sebiweb/other/OtherAction.do?doRecognisedFpi=yes&intmId=13"
+              target="_blank"
+              rel="noopener noreferrer"
               style={{
                 display: 'inline-block',
                 fontSize: '10px',
@@ -81,10 +84,11 @@ export function Footer() {
                 padding: '4px 8px',
                 fontFamily: 'Courier New, monospace',
                 background: 'rgba(212,168,67,0.04)',
+                textDecoration: 'none',
               }}
             >
-              INH000026266
-            </div>
+              INH000026266 · Verify on SEBI.gov.in →
+            </a>
 
             {/* Social links */}
             <div style={{ display: 'flex', gap: '10px', marginTop: '16px' }}>

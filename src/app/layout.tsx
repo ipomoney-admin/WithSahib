@@ -38,7 +38,7 @@ const BASE_URL = 'https://www.withsahib.com'
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: 'withSahib — SEBI Registered Research Analyst INH000026266',
+    default: 'withSahib — Systematic Equity Research | SEBI RA INH000026266',
     template: '%s | withSahib',
   },
   description:
@@ -78,9 +78,9 @@ export const metadata: Metadata = {
     locale: 'en_IN',
     url: BASE_URL,
     siteName: 'withSahib',
-    title: 'withSahib — SEBI Registered Research Analyst INH000026266',
+    title: 'withSahib — Systematic Equity Research | SEBI RA INH000026266',
     description:
-      'Institutional-grade intraday calls, NSE swing trades, index options & research reports by Sahib Singh Hora, SEBI RA INH000026266.',
+      'Systematic equity research by Sahib Singh Hora, SEBI RA INH000026266. Intraday calls, swing trades, index options, research reports — documented methodology, full written rationale on every recommendation.',
     images: [
       {
         url: '/og-image.png',
@@ -94,9 +94,9 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     site: '@WithSahib_',
     creator: '@WithSahib_',
-    title: 'withSahib — SEBI Registered Research Analyst INH000026266',
+    title: 'withSahib — Systematic Equity Research | SEBI RA INH000026266',
     description:
-      'SEBI RA INH000026266 · Sahib Singh Hora · Intraday calls, swing trades, options & research reports for Indian markets.',
+      'Systematic equity research by SEBI RA INH000026266 · Sahib Singh Hora · Documented methodology, written rationale, full accountability on every recommendation.',
     images: ['/og-image.png'],
   },
   manifest: '/manifest.json',

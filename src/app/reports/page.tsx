@@ -5,7 +5,7 @@ export const dynamic = 'force-dynamic'
 import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import Link from 'next/link'
-import { FileText, Download, Crown, Brain, TrendingUp, TrendingDown, Minus, Search, ChevronRight } from 'lucide-react'
+import { FileText, Download, Crown, TrendingUp, TrendingDown, Minus, Search, ChevronRight } from 'lucide-react'
 import type { User, ResearchReport } from '@/types'
 
 const REPORT_TYPES = [
@@ -37,8 +37,8 @@ function ReportCard({ report }: { report: Partial<ResearchReport> }) {
               {REPORT_TYPES.find(t => t.value === report.report_type)?.label ?? report.report_type}
             </span>
             {report.ai_generated && (
-              <span style={{ fontSize: '10px', padding: '2px 7px', borderRadius: '4px', background: 'rgba(100,160,255,0.08)', color: 'var(--sapphire)', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '3px' }}>
-                <Brain size={10} /> AI
+              <span style={{ fontSize: '10px', padding: '2px 7px', borderRadius: '4px', background: 'rgba(100,160,255,0.08)', color: 'var(--sapphire)', fontWeight: 600 }}>
+                Research
               </span>
             )}
           </div>
@@ -156,7 +156,7 @@ export default function ReportsPage() {
       ) : (
         <div style={{ background: 'var(--surface)', border: '1px solid rgba(0,200,150,0.2)', borderRadius: '16px', padding: '24px', marginBottom: '28px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
-            <Brain size={18} color="var(--emerald)" />
+            <FileText size={18} color="var(--emerald)" />
             <h2 style={{ fontSize: '15px', fontWeight: 600, color: 'var(--text)' }}>Generate a new report</h2>
           </div>
           <form onSubmit={handleGenerate} style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
@@ -169,7 +169,7 @@ export default function ReportsPage() {
             </button>
           </form>
           <p style={{ fontSize: '11px', color: 'var(--text3)', marginTop: '10px' }}>
-            Uses AI (Claude) to analyse available public data. Generation takes 15–30 seconds.
+            Generates research using publicly available data. Takes 15–30 seconds.
           </p>
         </div>
       )}
@@ -206,8 +206,8 @@ export default function ReportsPage() {
       <div className="sebi-disclaimer" style={{ marginTop: '32px' }}>
         <strong style={{ color: 'var(--gold)' }}>Disclaimer: </strong>
         All research reports are prepared by Sahib Singh Hora, SEBI Registered Research Analyst (INH000026266).
-        AI-assisted reports are reviewed for accuracy but may not reflect the most recent data. These reports are for
-        informational purposes only and do not constitute investment advice. Investments are subject to market risk.
+        Reports are for informational purposes only and do not constitute investment advice.
+        All research is reviewed by Sahib Singh Hora, SEBI RA INH000026266. Investments are subject to market risk.
       </div>
     </div>
   )

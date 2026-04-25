@@ -92,6 +92,46 @@ export default function SwingTradePage() {
         </div>
       </section>
 
+      {/* Sample Research Call */}
+      <section style={{ padding: '0 40px 40px' }}>
+        <div style={{ maxWidth: 860, margin: '0 auto' }}>
+          <h2 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 32, fontWeight: 400, color: 'var(--text)', marginBottom: 20 }}>What a swing call looks like</h2>
+          <div style={{ position: 'relative', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '16px', overflow: 'hidden' }}>
+            <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%) rotate(-15deg)', fontSize: '64px', fontWeight: 900, color: 'rgba(139,92,246,0.05)', letterSpacing: '4px', pointerEvents: 'none', zIndex: 0, whiteSpace: 'nowrap' }}>
+              SAMPLE
+            </div>
+            <div style={{ height: '3px', background: '#8B5CF6' }} />
+            <div style={{ padding: '24px 28px', position: 'relative', zIndex: 1 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
+                <span style={{ fontSize: '16px', fontWeight: 700, fontFamily: 'Courier New, monospace', color: 'var(--text)' }}>[SAMPLE CALL]</span>
+                <span style={{ fontSize: '10px', fontWeight: 700, padding: '2px 7px', borderRadius: '4px', background: 'rgba(0,200,150,0.1)', color: 'var(--emerald)' }}>BUY</span>
+                <span style={{ fontSize: '10px', color: 'var(--text3)', fontFamily: 'Courier New, monospace' }}>NSE · SWING · 2–7 DAYS</span>
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px', marginBottom: '16px' }}>
+                {[
+                  { label: 'ENTRY RANGE', value: '₹XXX – ₹XXX', color: 'var(--text)' },
+                  { label: 'TARGET 1', value: '₹XXX (+X%)', color: 'var(--emerald)' },
+                  { label: 'TARGET 2', value: '₹XXX (+X%)', color: 'var(--emerald)' },
+                  { label: 'STOP LOSS', value: '₹XXX (-X%)', color: '#EF4444' },
+                ].map((p) => (
+                  <div key={p.label} style={{ background: 'var(--bg2)', borderRadius: '10px', padding: '12px', textAlign: 'center' }}>
+                    <p style={{ fontSize: '9px', fontWeight: 600, letterSpacing: '1px', color: 'var(--text3)', marginBottom: '4px' }}>{p.label}</p>
+                    <p style={{ fontSize: '13px', fontWeight: 700, color: p.color, fontFamily: 'Courier New, monospace' }}>{p.value}</p>
+                  </div>
+                ))}
+              </div>
+              <div style={{ padding: '12px', background: 'var(--bg2)', borderRadius: '10px', borderLeft: '2px solid #8B5CF6', fontSize: '13px', color: 'var(--text2)', lineHeight: 1.6, marginBottom: '10px' }}>
+                <strong style={{ color: '#8B5CF6', fontSize: '10px', letterSpacing: '1px', textTransform: 'uppercase' }}>Rationale: </strong>
+                Stock has formed a base above 20 EMA with RSI showing positive divergence. Entry on breakout of resistance zone. Holding period 2–7 trading days. Stop below recent swing low.
+              </div>
+              <p style={{ fontSize: '11px', color: 'var(--text3)', lineHeight: 1.5 }}>
+                Actual calls include the specific stock name, exact entry/target/SL levels, and full written rationale. Subscribe to access live swing picks.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section style={{ padding: '0 40px 40px', textAlign: 'center' }}>
         <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 32 }}>
           <Link href="/services" style={{ fontSize: 14, color: 'var(--text3)', textDecoration: 'none' }}>← All Services</Link>

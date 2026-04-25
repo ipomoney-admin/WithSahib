@@ -115,10 +115,26 @@ export default async function PerformancePage() {
 
       <div style={{ maxWidth: 1100, margin: '0 auto', padding: '48px 24px' }}>
 
-        {/* Coming soon notice */}
+        {/* Accountability statement */}
         <div style={{
-          background: 'rgba(212,168,67,0.06)',
-          border: '1px solid rgba(212,168,67,0.25)',
+          background: 'rgba(0,200,150,0.04)',
+          border: '1px solid rgba(0,200,150,0.2)',
+          borderRadius: 16,
+          padding: '24px 28px',
+          marginBottom: 28,
+        }}>
+          <p style={{ fontSize: 15, fontWeight: 600, color: 'var(--text)', marginBottom: 8 }}>
+            This page shows every research call made through withSahib — including losing trades.
+          </p>
+          <p style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.7, margin: 0 }}>
+            No cherry-picking. No hindsight. Every signal published from May 2026 appears here within 24 hours with its result. This is what real research accountability looks like.
+          </p>
+        </div>
+
+        {/* Why we show losing trades */}
+        <div style={{
+          background: 'rgba(212,168,67,0.04)',
+          border: '1px solid rgba(212,168,67,0.2)',
           borderRadius: 16,
           padding: '20px 24px',
           marginBottom: 36,
@@ -126,14 +142,13 @@ export default async function PerformancePage() {
           alignItems: 'flex-start',
           gap: 14,
         }}>
-          <span style={{ fontSize: 22, flexShrink: 0 }}>📋</span>
+          <span style={{ fontSize: 20, flexShrink: 0 }}>📋</span>
           <div>
-            <p style={{ fontSize: 14, fontWeight: 600, color: 'var(--gold)', marginBottom: 4 }}>
-              Track record publishing begins from May 2026
+            <p style={{ fontSize: 14, fontWeight: 600, color: 'var(--gold)', marginBottom: 6 }}>
+              Why we show losing trades
             </p>
             <p style={{ fontSize: 13, color: 'var(--text3)', lineHeight: 1.7, margin: 0 }}>
-              Every signal will be logged here — entries, exits, win/loss, and full rationale. No cherry-picking.
-              All data is publicly auditable under SEBI RA regulations. SEBI RA INH000026266.
+              A 70% win rate with poor risk management is worse than a 50% win rate with good R:R. We show everything so you can evaluate the methodology, not just the headline number. Track record logging begins May 1, 2026. Every call will appear here within 24 hours of being shared.
             </p>
           </div>
         </div>

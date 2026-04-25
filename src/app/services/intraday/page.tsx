@@ -285,6 +285,47 @@ export default function IntradayPage() {
         </div>
       )}
 
+      {/* Sample Research Call Preview */}
+      <div style={{ marginTop: '32px', marginBottom: '8px' }}>
+        <h2 style={{ fontFamily: 'DM Serif Display, serif', fontSize: '20px', fontWeight: 400, color: 'var(--text)', marginBottom: '12px' }}>
+          What a call looks like
+        </h2>
+        <div style={{ position: 'relative', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '16px', overflow: 'hidden' }}>
+          {/* SAMPLE watermark */}
+          <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%) rotate(-15deg)', fontSize: '64px', fontWeight: 900, color: 'rgba(0,200,150,0.05)', letterSpacing: '4px', pointerEvents: 'none', zIndex: 0, whiteSpace: 'nowrap' }}>
+            SAMPLE
+          </div>
+          <div style={{ height: '3px', background: 'var(--emerald)' }} />
+          <div style={{ padding: '20px 24px', position: 'relative', zIndex: 1 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '14px' }}>
+              <span style={{ fontSize: '16px', fontWeight: 700, fontFamily: 'Courier New, monospace', color: 'var(--text)' }}>[SAMPLE CALL]</span>
+              <span style={{ fontSize: '10px', fontWeight: 700, padding: '2px 7px', borderRadius: '4px', background: 'rgba(0,200,150,0.1)', color: 'var(--emerald)' }}>BUY</span>
+              <span style={{ fontSize: '10px', color: 'var(--text3)', fontFamily: 'Courier New, monospace' }}>NSE · INTRADAY</span>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px', marginBottom: '14px' }}>
+              {[
+                { label: 'ENTRY RANGE', value: '₹XXX – ₹XXX', color: 'var(--text)' },
+                { label: 'TARGET 1', value: '₹XXX (+X%)', color: 'var(--emerald)' },
+                { label: 'TARGET 2', value: '₹XXX (+X%)', color: 'var(--emerald)' },
+                { label: 'STOP LOSS', value: '₹XXX (-X%)', color: '#EF4444' },
+              ].map((p) => (
+                <div key={p.label} style={{ background: 'var(--bg2)', borderRadius: '10px', padding: '10px', textAlign: 'center' }}>
+                  <p style={{ fontSize: '9px', fontWeight: 600, letterSpacing: '1px', color: 'var(--text3)', marginBottom: '4px' }}>{p.label}</p>
+                  <p style={{ fontSize: '13px', fontWeight: 700, color: p.color, fontFamily: 'Courier New, monospace' }}>{p.value}</p>
+                </div>
+              ))}
+            </div>
+            <div style={{ padding: '12px', background: 'var(--bg2)', borderRadius: '10px', borderLeft: '2px solid var(--emerald)', fontSize: '13px', color: 'var(--text2)', lineHeight: 1.6, marginBottom: '10px' }}>
+              <strong style={{ color: 'var(--emerald)', fontSize: '10px', letterSpacing: '1px', textTransform: 'uppercase' }}>Rationale: </strong>
+              Stock has formed a base above 20 EMA with RSI showing positive divergence. Entry on breakout of resistance zone with volume confirmation.
+            </div>
+            <p style={{ fontSize: '11px', color: 'var(--text3)', lineHeight: 1.5 }}>
+              Actual calls include the specific stock name, exact levels, and full written rationale. Subscribe to access live calls.
+            </p>
+          </div>
+        </div>
+      </div>
+
       {/* SEBI Disclaimer */}
       <div className="sebi-disclaimer" style={{ marginTop: '32px' }}>
         <strong style={{ color: 'var(--gold)' }}>Disclaimer: </strong>

@@ -9,31 +9,25 @@ import { Check, X, HelpCircle, Crown, Zap, Shield, Star } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 
 const FEATURES = [
-  { category: 'Advisory Services', items: [
-    { label: 'Signal previews', free: true, basic: true, pro: true, elite: true },
-    { label: 'Weekly market outlook', free: false, basic: true, pro: true, elite: true },
-    { label: 'Swing picks (5/week)', free: false, basic: true, pro: true, elite: true },
-    { label: 'Model portfolio', free: false, basic: true, pro: true, elite: true },
-    { label: 'Daily intraday calls', free: false, basic: false, pro: true, elite: true },
-    { label: 'Stock options picks', free: false, basic: false, pro: true, elite: true },
-    { label: 'Index options picks', free: false, basic: false, pro: true, elite: true },
+  { category: 'Signals & Calls', items: [
+    { label: 'Daily swing trade picks', free: false, basic: true, pro: true, elite: true },
+    { label: 'Intraday stock calls (NSE)', free: false, basic: false, pro: true, elite: true },
+    { label: 'Index options signals (Nifty/BankNifty)', free: false, basic: false, pro: true, elite: true },
+    { label: 'Stock options signals', free: false, basic: false, pro: true, elite: true },
+    { label: 'Research rationale with every call', free: false, basic: true, pro: true, elite: true },
+    { label: 'Entry, Target 1, Target 2, Stop Loss levels', free: false, basic: true, pro: true, elite: true },
   ]},
-  { category: 'Research', items: [
-    { label: 'Sample research reports', free: true, basic: false, pro: false, elite: false },
-    { label: 'Company news feed', free: false, basic: true, pro: true, elite: true },
+  { category: 'Delivery & Alerts', items: [
+    { label: 'WhatsApp signal alerts', free: false, basic: false, pro: false, elite: true },
+    { label: 'Telegram paid channel access', free: false, basic: false, pro: true, elite: true },
+    { label: 'Weekly track record report', free: false, basic: true, pro: true, elite: true },
+    { label: 'Signal previews (public)', free: true, basic: true, pro: true, elite: true },
+  ]},
+  { category: 'Advisory & Access', items: [
+    { label: '1-on-1 session with Sahib (monthly)', free: false, basic: false, pro: '1/month', elite: 'Unlimited' },
+    { label: 'Priority WhatsApp access', free: false, basic: false, pro: false, elite: true },
     { label: 'In-depth research reports', free: false, basic: false, pro: true, elite: true },
-    { label: 'DCF model reports', free: false, basic: false, pro: true, elite: true },
-    { label: 'HNI deep-dive reports', free: false, basic: false, pro: false, elite: true },
-  ]},
-  { category: 'Appointments & Courses', items: [
-    { label: '1-on-1 appointment', free: false, basic: false, pro: '1/month', elite: 'Unlimited' },
     { label: 'All courses included', free: false, basic: false, pro: false, elite: true },
-    { label: 'Courses at discount', free: false, basic: '20%', pro: '30%', elite: 'Free' },
-  ]},
-  { category: 'Support & Access', items: [
-    { label: 'Standard support', free: true, basic: true, pro: true, elite: true },
-    { label: 'Priority WhatsApp alerts', free: false, basic: false, pro: false, elite: true },
-    { label: 'Direct analyst access', free: false, basic: false, pro: false, elite: true },
     { label: 'Dashboard & reports portal', free: true, basic: true, pro: true, elite: true },
   ]},
 ]
@@ -94,12 +88,12 @@ export default function PricingPage() {
     }
   }
 
-  // Basic: 8% off, Pro: 12% off, Elite: 15% off
+  // Yearly = monthly × 10 (2 months free ≈ 20% off)
   const plans = [
     { tier: 'free',  name: 'Free',  monthly: 0,    yearlyMonthly: 0,    yearlyTotal: 0,     discount: 0,  color: 'var(--text3)',    cta: 'Start Free',  ctaStyle: 'ghost',   badgeColor: 'grey'    },
-    { tier: 'basic', name: 'Basic', monthly: 999,  yearlyMonthly: 919,  yearlyTotal: 11029, discount: 8,  color: 'var(--sapphire)', cta: 'Start Basic', ctaStyle: 'ghost',   badgeColor: 'grey'    },
-    { tier: 'pro',   name: 'Pro',   monthly: 2499, yearlyMonthly: 2199, yearlyTotal: 26390, discount: 12, color: 'var(--emerald)',  cta: 'Start Pro',   ctaStyle: 'primary', featured: true, badgeColor: 'emerald' },
-    { tier: 'elite', name: 'Elite', monthly: 5999, yearlyMonthly: 5099, yearlyTotal: 61190, discount: 15, color: 'var(--gold)',     cta: 'Go Elite',    ctaStyle: 'gold',    badgeColor: 'gold'    },
+    { tier: 'basic', name: 'Basic', monthly: 999,  yearlyMonthly: 832,  yearlyTotal: 9990,  discount: 20, color: 'var(--sapphire)', cta: 'Start Basic', ctaStyle: 'ghost',   badgeColor: 'grey'    },
+    { tier: 'pro',   name: 'Pro',   monthly: 2499, yearlyMonthly: 2082, yearlyTotal: 24990, discount: 20, color: 'var(--emerald)',  cta: 'Start Pro',   ctaStyle: 'primary', featured: true, badgeColor: 'emerald' },
+    { tier: 'elite', name: 'Elite', monthly: 5999, yearlyMonthly: 4999, yearlyTotal: 59990, discount: 20, color: 'var(--gold)',     cta: 'Go Elite',    ctaStyle: 'gold',    badgeColor: 'gold'    },
   ]
 
   return (
@@ -139,6 +133,25 @@ export default function PricingPage() {
               </button>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* SEBI Risk Disclaimer — above pricing */}
+      <section style={{ padding: '0 40px 16px' }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto', background: 'rgba(212,168,67,0.06)', border: '1px solid rgba(212,168,67,0.3)', borderRadius: '12px', padding: '16px 20px', display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
+          <span style={{ fontSize: '18px', flexShrink: 0 }}>⚠️</span>
+          <p style={{ fontSize: '13px', color: 'var(--gold)', lineHeight: 1.6, margin: 0 }}>
+            <strong>Risk Disclaimer:</strong> Investments in securities are subject to market risk. Research provided by Sahib Singh Hora, SEBI RA INH000026266. Past performance does not guarantee future returns. Please read all risk disclosures before investing.
+          </p>
+        </div>
+      </section>
+
+      {/* Social proof */}
+      <section style={{ padding: '0 40px 8px' }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto', textAlign: 'center' }}>
+          <p style={{ fontSize: '12px', color: 'var(--text3)', letterSpacing: '0.5px' }}>
+            Join traders already on the platform · SEBI RA INH000026266 · Cancel anytime
+          </p>
         </div>
       </section>
 
