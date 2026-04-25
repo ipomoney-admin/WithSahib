@@ -389,7 +389,8 @@ export default function PricingPage() {
           SEBI RA Registration: Sahib Singh Hora · INH000026266 · withSahib.com
         </div>
       </div>
-      <BookingBanner />$1
+      <BookingBanner />
+      <Footer />
     </div>
   )
 }

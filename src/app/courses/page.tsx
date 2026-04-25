@@ -157,7 +157,8 @@ export default function CoursesPage() {
           Investments in securities market are subject to market risks. Research Analyst: Sahib Singh Hora · SEBI RA INH000026266 · withSahib.com
         </div>
       </div>
-      <BookingBanner />$1
+      <BookingBanner />
+      <Footer />
     </div>
   )
 }

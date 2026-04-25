@@ -376,11 +376,18 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* Blocking theme script — always forces light on page load */}
+        {/* Blocking theme script — reads localStorage before first paint */}
         <script dangerouslySetInnerHTML={{__html: `(function(){
-  document.documentElement.classList.add('light');
-  document.documentElement.setAttribute('data-theme', 'light');
-  document.documentElement.classList.remove('dark');
+  try {
+    var t = localStorage.getItem('theme');
+    if (t === 'dark') {
+      document.documentElement.classList.add('dark');
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+  } catch(e) {}
 })()`}} />
         {/* Resource hints for performance */}
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
