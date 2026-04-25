@@ -325,6 +325,7 @@ function LiveTicker() {
 function HeroSection() {
   return (
     <section
+      className="hero-section"
       style={{
         minHeight: '92vh',
         display: 'flex',
@@ -407,7 +408,7 @@ function HeroSection() {
 
         {/* Actions */}
         <div
-          className="animate-fade-up-3"
+          className="animate-fade-up-3 hero-ctas"
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -451,7 +452,7 @@ function HeroSection() {
 
         {/* Stats */}
         <div
-          className="animate-fade-up-4"
+          className="animate-fade-up-4 hero-stats"
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -1040,7 +1041,7 @@ function TrackRecordSection() {
   return (
     <section ref={ref} style={{ padding: '80px 40px', background: 'var(--bg2)' }}>
       <div className="container-wide" style={{ padding: 0 }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '60px', alignItems: 'center', opacity: inView ? 1 : 0, transform: inView ? 'translateY(0)' : 'translateY(24px)', transition: 'all 0.7s ease' }}>
+        <div className="resp-2col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '60px', alignItems: 'center', opacity: inView ? 1 : 0, transform: inView ? 'translateY(0)' : 'translateY(24px)', transition: 'all 0.7s ease' }}>
           {/* Left — copy */}
           <div>
             <div className="section-tag">Performance Disclosure</div>
@@ -1158,6 +1159,7 @@ function FounderSection() {
     <section ref={ref} style={{ padding: '80px 40px', background: 'var(--bg2)' }}>
       <div className="container-wide" style={{ padding: 0 }}>
         <div
+          className="resp-2col"
           style={{
             display: 'grid',
             gridTemplateColumns: '1fr 1.4fr',
@@ -1319,6 +1321,7 @@ function AnalystProfileSection() {
     >
       <div className="container-wide" style={{ padding: 0 }}>
         <div
+          className="resp-2col"
           style={{
             display: 'grid',
             gridTemplateColumns: '2fr 3fr',

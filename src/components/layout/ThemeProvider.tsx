@@ -20,10 +20,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<Theme>('light')
 
   useEffect(() => {
-    const stored = localStorage.getItem('withsahib-theme') as Theme | null
-    const resolved = stored ?? 'light'
-    setThemeState(resolved)
-    applyTheme(resolved)
+    const saved = localStorage.getItem('withsahib-theme')
+    setTheme((saved as Theme) || 'light')
   }, [])
 
   function applyTheme(t: Theme) {

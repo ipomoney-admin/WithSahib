@@ -405,7 +405,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         {/* Blocking theme script — runs before paint to avoid flash of wrong theme */}
-        <script dangerouslySetInnerHTML={{ __html: `try{var t=localStorage.getItem('withsahib-theme')||'light';document.documentElement.classList.add(t);document.documentElement.setAttribute('data-theme',t);}catch(e){}` }} />
+        <script dangerouslySetInnerHTML={{ __html: `(function(){try{var t=localStorage.getItem('withsahib-theme');if(!t)t='light';document.documentElement.classList.add(t);document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.classList.add('light');document.documentElement.setAttribute('data-theme','light');}})()` }} />
         {/* Resource hints for performance */}
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="format-detection" content="telephone=no" />

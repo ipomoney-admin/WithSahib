@@ -16,8 +16,8 @@
 
   --text: #0D1224;
   --text2: #3D4560;
-  --text3: #7A82A0;
-  --text4: #A8ADBE;
+  --text3: #6B7280;
+  --text4: #9CA3AF;
 
   --muted: #7A82A0;
   --muted2: #A8ADBE;
@@ -28,11 +28,13 @@
 
   --emerald: #009966;
   --emerald-light: #00C47A;
+  --emerald-mid: #6EE7B7;
   --emerald-deep: #007A50;
   --emerald2: #00C47A;
 
   --orange: #EA6C00;
   --orange2: #F97316;
+  --orange-light: #FFF7ED;
 
   --gold: #92680A;
   --gold-light: #B8860B;
@@ -58,6 +60,15 @@
   --radius-xl: 20px;
   --radius-2xl: 28px;
   --nav-h: 64px;
+
+  /* Alias variables */
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-text: var(--text);
+  --color-text2: var(--text2);
+  --color-border: var(--border);
+  --color-emerald: var(--emerald);
+  --color-gold: var(--gold);
 }
 
 /* ─── CSS VARIABLES — DARK ───────────────────────────────────────────── */
@@ -491,9 +502,18 @@ body {
 }
 
 /* Primary CTAs get the glow pulse — only in light mode */
-.btn-primary { animation: glow-pulse 3s ease-in-out infinite; }
-.btn-primary:hover { animation: none; }
-[data-theme='dark'] .btn-primary, .dark .btn-primary { animation: none; }
+.btn-primary,
+.cta-primary,
+[data-cta='primary'] { animation: glow-pulse 3s ease-in-out infinite; }
+.btn-primary:hover,
+.cta-primary:hover,
+[data-cta='primary']:hover { animation: none; }
+[data-theme='dark'] .btn-primary,
+[data-theme='dark'] .cta-primary,
+[data-theme='dark'] [data-cta='primary'],
+.dark .btn-primary,
+.dark .cta-primary,
+.dark [data-cta='primary'] { animation: none; }
 
 @keyframes live-pulse {
   0%,100% { opacity: 1; transform: scale(1); }
@@ -503,6 +523,16 @@ body {
 @keyframes fadeSlideIn {
   from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+.section-animate { animation: fadeSlideIn 0.5s ease forwards; }
+
+/* Live dot */
+.live-dot,
+[data-live='true'] { animation: live-pulse 2s ease-in-out infinite; }
+
+@keyframes ticker-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 /* ─── CANDLE ANIMATION ───────────────────────────────────────────────── */
@@ -569,6 +599,20 @@ body {
   body { font-size: 15px; }
   .footer-grid { grid-template-columns: 1fr 1fr !important; }
   nav[style] { padding: 0 16px !important; }
+
+  /* Collapse two-column grids to single column */
+  .resp-2col { grid-template-columns: 1fr !important; gap: 32px !important; }
+
+  /* Hero section */
+  .hero-section { padding: 60px 20px 40px !important; min-height: auto !important; }
+  .hero-ctas { flex-direction: column !important; align-items: stretch !important; }
+  .hero-ctas a, .hero-ctas button { width: 100% !important; justify-content: center !important; text-align: center !important; }
+
+  /* Stats row */
+  .hero-stats { gap: 24px !important; }
+
+  /* Section horizontal padding collapse */
+  section { padding-left: 20px !important; padding-right: 20px !important; }
 }
 @media (min-width: 769px) {
   .show-mobile { display: none !important; }
