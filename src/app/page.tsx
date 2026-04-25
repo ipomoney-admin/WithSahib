@@ -358,9 +358,9 @@ function HeroSection() {
                 marginBottom: '20px',
               }}
             >
-              Real Research.{' '}
-              <em style={{ fontStyle: 'italic', color: 'var(--orange)', fontWeight: 400 }}>Documented process.</em>{' '}
-              Your name on every call.
+              Where conviction{' '}
+              <br />
+              meets <em style={{ fontStyle: 'italic', color: '#FF6B00', fontWeight: 400 }}>clarity.</em>
             </h1>
 
             {/* Sub */}
@@ -376,7 +376,7 @@ function HeroSection() {
                 marginBottom: '36px',
               }}
             >
-              Equity research with a documented process, written rationale on every recommendation, and a SEBI registration number that puts every call on record.
+              Daily equity research from a SEBI Registered Analyst — with entry, targets, stop-loss, and written reasoning on every call. No black boxes. No anonymous tips.
             </p>
 
             {/* CTAs */}
