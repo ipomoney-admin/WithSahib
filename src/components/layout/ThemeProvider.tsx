@@ -11,20 +11,17 @@ interface ThemeContextType {
 }
 
 const ThemeContext = createContext<ThemeContextType>({
-  theme: 'dark',
+  theme: 'light',
   toggleTheme: () => {},
   setTheme: () => {},
 })
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>('dark')
+  const [theme, setThemeState] = useState<Theme>('light')
 
   useEffect(() => {
     const stored = localStorage.getItem('withsahib-theme') as Theme | null
-    const preferred = window.matchMedia('(prefers-color-scheme: dark)').matches
-      ? 'dark'
-      : 'light'
-    const resolved = stored ?? preferred
+    const resolved = stored ?? 'light'
     setThemeState(resolved)
     applyTheme(resolved)
   }, [])
@@ -38,7 +35,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     // Update mobile status bar
     const meta = document.querySelector('meta[name="theme-color"]')
     if (meta) {
-      meta.setAttribute('content', t === 'dark' ? '#06090F' : '#F0F4FA')
+      meta.setAttribute('content', t === 'dark' ? '#080D0A' : '#F5F4F0')
     }
   }
 

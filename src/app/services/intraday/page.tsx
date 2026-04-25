@@ -291,8 +291,10 @@ export default function IntradayPage() {
           What a call looks like
         </h2>
         <div style={{ position: 'relative', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '16px', overflow: 'hidden' }}>
+          {/* Banner */}
+          <div className="sample-banner">SAMPLE RESEARCH CALL — Illustrative Only</div>
           {/* SAMPLE watermark */}
-          <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%) rotate(-15deg)', fontSize: '64px', fontWeight: 900, color: 'rgba(0,200,150,0.05)', letterSpacing: '4px', pointerEvents: 'none', zIndex: 0, whiteSpace: 'nowrap' }}>
+          <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%) rotate(-15deg)', fontSize: '64px', fontWeight: 900, color: 'rgba(0,153,102,0.04)', letterSpacing: '4px', pointerEvents: 'none', zIndex: 0, whiteSpace: 'nowrap' }}>
             SAMPLE
           </div>
           <div style={{ height: '3px', background: 'var(--emerald)' }} />

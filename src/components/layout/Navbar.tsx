@@ -46,8 +46,8 @@ export function Navbar() {
           backdropFilter: scrolled ? 'blur(16px)' : 'none',
           backgroundColor: scrolled
             ? theme === 'dark'
-              ? 'rgba(6,9,15,0.92)'
-              : 'rgba(240,244,250,0.92)'
+              ? 'rgba(8,13,10,0.92)'
+              : 'rgba(245,244,240,0.95)'
             : 'transparent',
           transition: 'all 0.3s ease',
         }}

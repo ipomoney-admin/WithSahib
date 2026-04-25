@@ -35,8 +35,8 @@ export function Footer() {
   return (
     <footer
       style={{
-        background: 'var(--bg2)',
-        borderTop: '1px solid var(--border)',
+        background: 'var(--navy)',
+        borderTop: '1px solid rgba(255,255,255,0.06)',
         padding: '56px 40px 32px',
       }}
     >
@@ -61,12 +61,12 @@ export function Footer() {
                 <div style={{ width: '5px', height: '5px', borderRadius: '50%', background: 'var(--emerald)', marginBottom: '1px', marginLeft: '1px' }} />
               </div>
               <span style={{ fontSize: '16px' }}>
-                <span style={{ fontWeight: 300, color: 'var(--text)' }}>with</span>
+                <span style={{ fontWeight: 300, color: 'rgba(255,255,255,0.7)' }}>with</span>
                 <span style={{ fontWeight: 700, color: 'var(--emerald)' }}>Sahib</span>
-                <span style={{ fontWeight: 300, color: 'var(--text)' }}>.com</span>
+                <span style={{ fontWeight: 300, color: 'rgba(255,255,255,0.7)' }}>.com</span>
               </span>
             </div>
-            <p style={{ fontSize: '13px', color: 'var(--text3)', lineHeight: '1.7', maxWidth: '240px', marginBottom: '16px' }}>
+            <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)', lineHeight: '1.7', maxWidth: '240px', marginBottom: '16px' }}>
               Systematic equity research. Published under SEBI RA INH000026266. Accountable by regulation.
             </p>
             <a
@@ -78,12 +78,12 @@ export function Footer() {
                 fontSize: '10px',
                 fontWeight: 500,
                 letterSpacing: '1px',
-                color: 'var(--gold)',
-                border: '1px solid rgba(212,168,67,0.2)',
+                color: '#D4A843',
+                border: '1px solid rgba(212,168,67,0.25)',
                 borderRadius: '4px',
                 padding: '4px 8px',
                 fontFamily: 'Courier New, monospace',
-                background: 'rgba(212,168,67,0.04)',
+                background: 'rgba(212,168,67,0.08)',
                 textDecoration: 'none',
               }}
             >
@@ -125,7 +125,7 @@ export function Footer() {
                   fontSize: '11px',
                   fontWeight: 600,
                   letterSpacing: '2px',
-                  color: 'var(--text3)',
+                  color: 'rgba(255,255,255,0.3)',
                   textTransform: 'uppercase',
                   marginBottom: '16px',
                 }}
@@ -142,14 +142,14 @@ export function Footer() {
                     style={{
                       textDecoration: 'none',
                       fontSize: '13px',
-                      color: 'var(--text3)',
+                      color: 'rgba(255,255,255,0.45)',
                       transition: 'color 0.2s',
                     }}
                     onMouseEnter={(e) =>
                       ((e.target as HTMLElement).style.color = 'var(--emerald)')
                     }
                     onMouseLeave={(e) =>
-                      ((e.target as HTMLElement).style.color = 'var(--text3)')
+                      ((e.target as HTMLElement).style.color = 'rgba(255,255,255,0.45)')
                     }
                   >
                     {link.label}
@@ -161,12 +161,12 @@ export function Footer() {
         </div>
 
         {/* SEBI Disclaimer */}
-        <div className="sebi-disclaimer" style={{ marginBottom: '32px' }}>
-          <strong style={{ color: 'var(--gold)', fontWeight: 600 }}>Risk Disclaimer: </strong>
+        <div style={{ marginBottom: '32px', fontSize: '11px', color: 'rgba(255,255,255,0.28)', lineHeight: '1.7', padding: '16px 20px', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '12px' }}>
+          <strong style={{ color: '#D4A843', fontWeight: 600 }}>Risk Disclaimer: </strong>
           Investments in securities market are subject to market risks. Read all related documents carefully before investing.
           Registration granted by SEBI and certification from NISM in no way guarantee performance of the intermediary
           or provide any assurance of returns to investors. Past performance is not indicative of future results.
-          Research Analyst: <strong style={{ color: 'var(--text2)', fontWeight: 500 }}>Sahib Singh Hora</strong> ·
+          Research Analyst: <strong style={{ color: 'rgba(255,255,255,0.5)', fontWeight: 500 }}>Sahib Singh Hora</strong> ·
           SEBI RA Registration No. <strong style={{ fontWeight: 600, fontFamily: 'Courier New, monospace' }}>INH000026266</strong> ·
           Valid: 20th April 2026 – 19th April 2031
         </div>
@@ -174,25 +174,25 @@ export function Footer() {
         {/* Bottom bar */}
         <div
           style={{
-            borderTop: '1px solid var(--border)',
+            borderTop: '1px solid rgba(255,255,255,0.06)',
             paddingTop: '20px',
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px' }}>
-            <p style={{ fontSize: '12px', color: 'var(--text3)' }}>
+            <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.25)' }}>
               © 2026 Sahib Singh Hora. All rights reserved. | withSahib.com
             </p>
-            <p style={{ fontSize: '12px', color: 'var(--text3)' }}>
+            <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.25)' }}>
               SEBI RA · INH000026266
             </p>
           </div>
-          <p style={{ fontSize: '11px', color: 'var(--text3)', textAlign: 'center', paddingTop: '8px', paddingBottom: '4px' }}>
+          <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.2)', textAlign: 'center', paddingTop: '8px', paddingBottom: '4px' }}>
             Developed by{' '}
             <a
               href="https://www.altitans.com"
               target="_blank"
               rel="noopener noreferrer"
-              style={{ color: 'var(--text3)', textDecoration: 'none' }}
+              style={{ color: 'rgba(255,255,255,0.2)', textDecoration: 'none' }}
               onMouseEnter={(e) => ((e.target as HTMLElement).style.textDecoration = 'underline')}
               onMouseLeave={(e) => ((e.target as HTMLElement).style.textDecoration = 'none')}
             >

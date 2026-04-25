@@ -432,7 +432,7 @@ function HeroSection() {
             style={{
               textDecoration: 'none',
               background: '#4ADE80',
-              color: '#052E16',
+              color: '#FFFFFF',
               fontWeight: 700,
               display: 'inline-flex',
               alignItems: 'center',
@@ -908,7 +908,7 @@ function PricingSection() {
                   fontWeight: 500,
                   cursor: 'pointer',
                   background: billing === b ? 'var(--emerald)' : 'transparent',
-                  color: billing === b ? '#031A13' : 'var(--text2)',
+                  color: billing === b ? '#FFFFFF' : 'var(--text2)',
                   transition: 'all 0.2s',
                 }}
               >
@@ -1016,7 +1016,7 @@ function PricingSection() {
                     transition: 'all 0.2s',
                     background: plan.featured ? 'var(--emerald)' :
                       plan.color === 'gold' ? 'rgba(212,168,67,0.1)' : 'transparent',
-                    color: plan.featured ? '#031A13' :
+                    color: plan.featured ? '#FFFFFF' :
                       plan.color === 'gold' ? 'var(--gold)' : 'var(--text2)',
                     border: plan.featured ? 'none' :
                       plan.color === 'gold' ? '1px solid rgba(212,168,67,0.3)' :
@@ -1315,7 +1315,7 @@ function AnalystProfileSection() {
     <section
       id="analyst-profile"
       ref={ref}
-      style={{ padding: '80px 40px', background: '#0C1219', borderTop: '1px solid var(--border)' }}
+      style={{ padding: '80px 40px', background: 'var(--navy)', borderTop: '1px solid var(--border)' }}
     >
       <div className="container-wide" style={{ padding: 0 }}>
         <div
@@ -1363,27 +1363,27 @@ function AnalystProfileSection() {
             </div>
 
             {/* Name */}
-            <h3 style={{ fontFamily: 'DM Serif Display, serif', fontSize: '24px', fontWeight: 400, color: '#fff', marginTop: '16px', marginBottom: 0 }}>
+            <h3 style={{ fontFamily: 'DM Serif Display, serif', fontSize: '24px', fontWeight: 400, color: 'rgba(255,255,255,0.95)', marginTop: '16px', marginBottom: 0 }}>
               Sahib Singh Hora
             </h3>
             {/* Title */}
-            <p style={{ fontSize: '13px', color: 'var(--text3)', marginTop: '4px', marginBottom: 0 }}>
+            <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.5)', marginTop: '4px', marginBottom: 0 }}>
               SEBI Registered Research Analyst
             </p>
             {/* Registration chip */}
             <span
               style={{
                 display: 'inline-block', marginTop: '12px',
-                background: 'rgba(212,168,67,0.1)', color: '#D4A843',
+                background: 'rgba(212,168,67,0.15)', color: '#D4A843',
                 fontFamily: 'Courier New, monospace', fontSize: '12px',
                 borderRadius: '4px', padding: '3px 8px',
-                border: '1px solid rgba(212,168,67,0.2)',
+                border: '1px solid rgba(212,168,67,0.25)',
               }}
             >
               INH000026266
             </span>
             {/* Valid */}
-            <p style={{ fontSize: '11px', color: 'var(--text4)', marginTop: '6px', marginBottom: 0 }}>
+            <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.35)', marginTop: '6px', marginBottom: 0 }}>
               Valid: Apr 2026 – Apr 2031
             </p>
             {/* Tags */}
@@ -1392,8 +1392,9 @@ function AnalystProfileSection() {
                 <span
                   key={tag}
                   style={{
-                    background: '#1A2535', color: '#94A3B8',
+                    background: 'rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.5)',
                     fontSize: '11px', borderRadius: '4px', padding: '3px 8px',
+                    border: '1px solid rgba(255,255,255,0.1)',
                   }}
                 >
                   {tag}
@@ -1409,9 +1410,9 @@ function AnalystProfileSection() {
                 aria-label="Sahib Singh Hora on LinkedIn"
                 style={{
                   width: 36, height: 36, borderRadius: '50%',
-                  background: '#1A2535', border: '1px solid rgba(255,255,255,0.1)',
+                  background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  color: '#94A3B8', textDecoration: 'none', fontSize: 14, fontWeight: 600,
+                  color: 'rgba(255,255,255,0.55)', textDecoration: 'none', fontSize: 14, fontWeight: 600,
                   transition: 'border-color 0.2s, color 0.2s',
                 }}
               >
@@ -1424,9 +1425,9 @@ function AnalystProfileSection() {
                 aria-label="Sahib Singh Hora on X / Twitter"
                 style={{
                   width: 36, height: 36, borderRadius: '50%',
-                  background: '#1A2535', border: '1px solid rgba(255,255,255,0.1)',
+                  background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  color: '#94A3B8', textDecoration: 'none', fontSize: 13, fontWeight: 700,
+                  color: 'rgba(255,255,255,0.55)', textDecoration: 'none', fontSize: 13, fontWeight: 700,
                   transition: 'border-color 0.2s, color 0.2s',
                 }}
               >
@@ -1439,9 +1440,9 @@ function AnalystProfileSection() {
                 aria-label="Sahib Singh Hora on Instagram"
                 style={{
                   width: 36, height: 36, borderRadius: '50%',
-                  background: '#1A2535', border: '1px solid rgba(255,255,255,0.1)',
+                  background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  color: '#94A3B8', textDecoration: 'none', fontSize: 14, fontWeight: 600,
+                  color: 'rgba(255,255,255,0.55)', textDecoration: 'none', fontSize: 14, fontWeight: 600,
                   transition: 'border-color 0.2s, color 0.2s',
                 }}
               >
@@ -1454,9 +1455,9 @@ function AnalystProfileSection() {
                 aria-label="Sahib Singh Hora on Facebook"
                 style={{
                   width: 36, height: 36, borderRadius: '50%',
-                  background: '#1A2535', border: '1px solid rgba(255,255,255,0.1)',
+                  background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  color: '#94A3B8', textDecoration: 'none', fontSize: 14, fontWeight: 600,
+                  color: 'rgba(255,255,255,0.55)', textDecoration: 'none', fontSize: 14, fontWeight: 600,
                   transition: 'border-color 0.2s, color 0.2s',
                 }}
               >
@@ -1468,7 +1469,7 @@ function AnalystProfileSection() {
           {/* RIGHT — Editorial copy */}
           <div>
             {/* Section label */}
-            <p style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '3px', color: '#00C896', textTransform: 'uppercase', marginBottom: '8px' }}>
+            <p style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '3px', color: 'var(--emerald)', textTransform: 'uppercase', marginBottom: '8px' }}>
               THE ANALYST
             </p>
             {/* Heading */}
@@ -1477,7 +1478,7 @@ function AnalystProfileSection() {
                 fontFamily: 'DM Serif Display, serif',
                 fontSize: '32px',
                 fontWeight: 400,
-                color: '#fff',
+                color: 'rgba(255,255,255,0.95)',
                 lineHeight: 1.2,
                 marginBottom: '20px',
               }}
@@ -1485,13 +1486,13 @@ function AnalystProfileSection() {
               Research-first. Compliance-first. You-first.
             </h2>
             {/* Body */}
-            <p style={{ fontSize: '15px', color: 'var(--text2)', lineHeight: 1.7, marginBottom: '16px' }}>
+            <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.6)', lineHeight: 1.7, marginBottom: '16px' }}>
               I&apos;m Sahib Singh Hora — a SEBI Registered Research Analyst who believes every retail investor deserves institutional-grade research. Every pick I publish carries a clear entry, target, and stop-loss. No ambiguity. No excuses.
             </p>
-            <p style={{ fontSize: '15px', color: 'var(--text2)', lineHeight: 1.7, marginBottom: '16px' }}>
+            <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.6)', lineHeight: 1.7, marginBottom: '16px' }}>
               With SEBI registration INH000026266, every recommendation on withSahib.com is compliant, documented, and fully accountable — something no unregistered WhatsApp group can offer.
             </p>
-            <p style={{ fontSize: '15px', color: 'var(--text2)', lineHeight: 1.7, marginBottom: '28px' }}>
+            <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.6)', lineHeight: 1.7, marginBottom: '28px' }}>
               Whether you trade intraday, prefer swing picks, or want to build a long-term model portfolio — I&apos;m here to research, so you can trade with conviction.
             </p>
             {/* CTAs */}
@@ -1502,8 +1503,8 @@ function AnalystProfileSection() {
                   textDecoration: 'none',
                   padding: '11px 24px',
                   borderRadius: '10px',
-                  border: '1px solid #00C896',
-                  color: '#00C896',
+                  border: '1px solid var(--emerald)',
+                  color: 'var(--emerald)',
                   fontSize: '14px',
                   fontWeight: 600,
                   transition: 'background 0.2s, color 0.2s',
@@ -1517,8 +1518,8 @@ function AnalystProfileSection() {
                   textDecoration: 'none',
                   padding: '11px 24px',
                   borderRadius: '10px',
-                  background: '#00C896',
-                  color: '#031A13',
+                  background: 'var(--emerald)',
+                  color: '#FFFFFF',
                   fontSize: '14px',
                   fontWeight: 700,
                   transition: 'opacity 0.2s',

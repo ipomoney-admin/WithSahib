@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Outfit, JetBrains_Mono, DM_Serif_Display } from 'next/font/google'
+import { Sora, Outfit, JetBrains_Mono, DM_Serif_Display, Lora } from 'next/font/google'
 import Script from 'next/script'
 import '@/styles/globals.css'
 import { ThemeProvider } from '@/components/layout/ThemeProvider'
@@ -8,12 +8,29 @@ import { Toaster } from 'sonner'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 
+const sora = Sora({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700', '800'],
+  variable: '--font-sora',
+  display: 'swap',
+  preload: true,
+})
+
+const lora = Lora({
+  subsets: ['latin'],
+  weight: ['600', '700'],
+  style: ['normal', 'italic'],
+  variable: '--font-lora',
+  display: 'swap',
+  preload: false,
+})
+
 const outfit = Outfit({
   subsets: ['latin'],
   weight: ['200', '300', '400', '500', '600', '700', '800'],
   variable: '--font-outfit',
   display: 'swap',
-  preload: true,
+  preload: false,
 })
 
 const jetbrainsMono = JetBrains_Mono({
@@ -122,8 +139,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: '(prefers-color-scheme: dark)', color: '#06090F' },
-    { media: '(prefers-color-scheme: light)', color: '#F0F4FA' },
+    { media: '(prefers-color-scheme: light)', color: '#F5F4F0' },
+    { media: '(prefers-color-scheme: dark)', color: '#080D0A' },
   ],
   width: 'device-width',
   initialScale: 1,
@@ -388,7 +405,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         {/* Blocking theme script — runs before paint to avoid flash of wrong theme */}
-        <script dangerouslySetInnerHTML={{ __html: `try{var t=localStorage.getItem('withsahib-theme')||(window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.classList.add(t);document.documentElement.setAttribute('data-theme',t);}catch(e){}` }} />
+        <script dangerouslySetInnerHTML={{ __html: `try{var t=localStorage.getItem('withsahib-theme')||'light';document.documentElement.classList.add(t);document.documentElement.setAttribute('data-theme',t);}catch(e){}` }} />
         {/* Resource hints for performance */}
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="format-detection" content="telephone=no" />
@@ -412,7 +429,7 @@ export default function RootLayout({
           />
         ))}
       </head>
-      <body className={`${outfit.variable} ${jetbrainsMono.variable} ${dmSerifDisplay.variable}`}>
+      <body className={`${sora.variable} ${lora.variable} ${outfit.variable} ${jetbrainsMono.variable} ${dmSerifDisplay.variable}`}>
         <ThemeProvider>
           {children}
           <WhatsAppButton />
