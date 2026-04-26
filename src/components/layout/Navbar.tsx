@@ -141,9 +141,9 @@ export function Navbar() {
             style={{
               fontSize: '10px',
               fontWeight: 600,
-              color: '#6E6E73',
+              color: '#3D3D3D',
               background: '#F5F3EE',
-              border: '1px solid #E8E6E0',
+              border: '1px solid #D0CEC8',
               padding: '3px 10px',
               borderRadius: '100px',
               fontFamily: 'Inter, system-ui, sans-serif',
@@ -152,7 +152,7 @@ export function Navbar() {
               flexShrink: 0,
             }}
           >
-            SEBI RA · INH000026266
+            Sahib Singh Hora · SEBI RA INH000026266
           </span>
         </div>
 

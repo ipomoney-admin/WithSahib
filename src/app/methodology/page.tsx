@@ -91,7 +91,7 @@ const FILTERS = [
 const FRAMEWORKS = [
   { name: 'Wyckoff Method', origin: 'Richard Wyckoff · 1930s', desc: 'Accumulation and distribution phase identification using price-volume relationships. Applied in Filter 02 for structure validation.', filter: 'Filter 02' },
   { name: 'Dow Theory', origin: 'Charles Dow · 1900s', desc: 'Trend confirmation across multiple indices and timeframes. A setup must align with the prevailing Dow Theory trend to pass Filter 02.', filter: 'Filter 02' },
-  { name: 'Inversion Method', origin: 'Charlie Munger', desc: '"Invert, always invert." Instead of asking what makes a trade good, ask what makes it wrong. The foundation of Filter 05 red team review.', filter: 'Filter 05' },
+  { name: 'Inversion Method', origin: 'Charlie Munger', desc: '"Invert, always invert." Instead of asking what makes a recommendation strong, ask what makes it wrong. The foundation of Filter 05 red team review.', filter: 'Filter 05' },
   { name: 'Checklist Method', origin: 'Mohnish Pabrai', desc: 'Every filter in the methodology is a checklist item. No discretion, no exception. A single failure = discard. Applied across all 5 filters.', filter: 'All Filters' },
   { name: 'Darvas Box', origin: 'Nicolas Darvas · 1950s', desc: 'Breakout identification using consolidation boxes. Stocks forming Darvas Box structures with volume confirmation score higher in Filter 02.', filter: 'Filter 02' },
   { name: 'Bamboo Method', origin: 'Japanese philosophy', desc: 'Long base, explosive growth. Setups showing extended base formation before breakout are prioritised — a setup in a hurry is usually wrong.', filter: 'Filter 02' },
@@ -176,17 +176,18 @@ export default function MethodologyPage() {
             border: '1px solid #1C1C1E', borderRadius: '16px', overflow: 'hidden',
           }}>
             {[
-              { to: 1500, suffix: '+', label: 'Instruments Screened Daily' },
-              { to: 0, suffix: '.3%', prefix: '', label: 'Of Setups Published', special: '0.3%' },
-              { to: 4, suffix: '.2h', label: 'Avg Analysis Per Report', special: '4.2h' },
+              { display: null, to: 1500, suffix: '+', label: 'Instruments Screened Daily' },
+              { display: '0.3%', label: 'Of Setups Published' },
+              { display: 'Every setup', label: 'Must pass 6 filters', small: true },
+              { display: 'Before open', label: 'Reports published before market', small: true },
             ].map((s, i) => (
               <div key={i} style={{ padding: '32px 28px', background: '#0D0D0D' }}>
                 <div style={{
                   fontFamily: '"Playfair Display", Georgia, serif',
-                  fontStyle: 'italic', fontSize: '44px', fontWeight: 700,
+                  fontStyle: 'italic', fontSize: s.small ? '28px' : '44px', fontWeight: 700,
                   color: '#FF6B00', lineHeight: 1, marginBottom: '10px',
                 }}>
-                  {s.special ?? <CountUp to={s.to} suffix={s.suffix} />}
+                  {s.display ?? <CountUp to={s.to!} suffix={s.suffix!} />}
                 </div>
                 <div style={{ fontSize: '12px', color: '#6E6E73', letterSpacing: '0.5px', fontFamily: 'Inter, system-ui, sans-serif' }}>
                   {s.label}
@@ -429,7 +430,7 @@ export default function MethodologyPage() {
               fontStyle: 'italic', fontSize: 'clamp(18px,2.5vw,26px)',
               color: '#D4A843', lineHeight: 1.7, marginBottom: '20px',
             }}>
-              &ldquo;Most analysts ask: why should I take this trade? I ask: is there any reason not to. If one filter fails — it&apos;s out. Not reconsidered. Not adjusted. Out.&rdquo;
+              &ldquo;Most analysts ask: why should I publish this recommendation? I ask: is there any reason not to. If one filter fails — it&apos;s out. Not reconsidered. Not adjusted. Out.&rdquo;
             </p>
             <p style={{ fontSize: '13px', color: '#6E6E73', fontFamily: 'Inter, system-ui, sans-serif', letterSpacing: '0.3px' }}>
               — Sahib Singh Hora, SEBI RA INH000026266

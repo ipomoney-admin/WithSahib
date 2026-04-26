@@ -285,10 +285,10 @@ function LiveTicker() {
       <div className="ticker-inner">
         {doubled.map((item, i) => (
           <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '10px', whiteSpace: 'nowrap' }}>
-            <span style={{ fontSize: '11px', fontWeight: 700, color: 'rgba(255,255,255,0.45)', fontFamily: 'var(--font-mono)', letterSpacing: '0.5px' }}>
+            <span style={{ fontSize: '11px', fontWeight: 700, color: '#D1D1D6', fontFamily: 'var(--font-mono)', letterSpacing: '0.5px' }}>
               {item.sym}
             </span>
-            <span style={{ fontSize: '12px', fontWeight: 500, color: 'rgba(255,255,255,0.85)', fontFamily: 'var(--font-body)' }}>
+            <span style={{ fontSize: '12px', fontWeight: 500, color: '#F1F5F9', fontFamily: 'var(--font-body)' }}>
               ₹{item.val}
             </span>
             <span style={{ fontSize: '11px', fontWeight: 600, color: item.up ? 'var(--green-bright)' : '#FF5B5B', display: 'flex', alignItems: 'center', gap: 2, fontFamily: 'var(--font-body)' }}>
@@ -399,6 +399,22 @@ function HeroSection() {
             <p style={{ fontSize: '12px', color: 'var(--text4)', fontFamily: 'var(--font-body)', letterSpacing: '0.3px' }}>
               No credit card required · Cancel anytime · SEBI regulated
             </p>
+            <a
+              href="https://t.me/withsahib"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: '6px',
+                fontSize: '14px', color: '#0088cc', textDecoration: 'none',
+                marginTop: '14px', fontFamily: 'var(--font-body)',
+                transition: 'opacity 0.2s',
+              }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.opacity = '0.75' }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.opacity = '1' }}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+              Join free Telegram channel →
+            </a>
           </div>
 
           {/* Right — Sample Research Card */}

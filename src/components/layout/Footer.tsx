@@ -6,21 +6,28 @@ import { LogoMark } from '@/components/ui/Logo'
 const FOOTER_LINKS = {
   Research: [
     { label: 'Research Reports', href: '/reports' },
-    { label: 'Track Record', href: '/track-record' },
-    { label: 'Trade History', href: '/track-record' },
     { label: 'Blog', href: '/blog' },
+    { label: 'Methodology', href: '/methodology' },
   ],
   Company: [
     { label: 'About Sahib', href: '/about' },
     { label: 'Courses', href: '/courses' },
     { label: 'Pricing', href: '/pricing' },
     { label: 'Contact', href: '/contact' },
-    { label: 'Appointments', href: '/appointments' },
+    { label: 'Work With Us', href: '/work-with-us' },
   ],
   Legal: [
     { label: 'Privacy Policy', href: '/privacy-policy' },
     { label: 'Terms of Service', href: '/terms-of-service' },
     { label: 'Disclaimer', href: '/disclaimer' },
+    { label: 'Refund Policy', href: '/refund-policy' },
+    { label: 'MITC', href: '/mitc' },
+    { label: 'Disclosure', href: '/disclosure' },
+    { label: 'Investor Charter', href: '/investor-charter' },
+    { label: 'File a Complaint', href: '/complaints' },
+    { label: 'Grievance Redressal', href: '/grievance-redressal' },
+    { label: 'SMART ODR', href: '/smart-odr' },
+    { label: 'Terminology', href: '/terminology' },
     { label: 'SEBI Verification', href: 'https://www.sebi.gov.in/sebiweb/other/OtherAction.do?doRecognisedFpi=yes&intmId=14', target: '_blank' },
   ],
 }
@@ -177,6 +184,9 @@ export function Footer() {
               SEBI RA · INH000026266
             </p>
           </div>
+          <p style={{ fontSize: '11px', color: '#48484A', marginTop: '8px', fontFamily: 'var(--font-body)' }}>
+            Compliance Officer: Sahib Singh Hora · sahib13singh13@gmail.com
+          </p>
         </div>
       </div>
     </footer>

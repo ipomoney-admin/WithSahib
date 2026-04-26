@@ -5,13 +5,13 @@ import { BookingBanner } from '@/components/layout/BookingBanner'
 import { Footer } from '@/components/layout/Footer'
 
 export const metadata: Metadata = {
-  title: 'Trading Courses — Technical Analysis, Options & Systems',
+  title: 'Courses — Live 1-on-1 Trading Education | withSahib SEBI RA',
   description:
-    'Self-paced courses by Sahib Singh Hora, SEBI RA INH000026266. Learn technical analysis, options trading, and how to build a systematic trading process. Join the waitlist.',
+    'Live, personalised 1-on-1 sessions with SEBI RA Sahib Singh Hora (INH000026266). Foundation, Options & Derivatives, and Complete Research Methodology courses. 3-month handholding included.',
   alternates: { canonical: 'https://www.withsahib.com/courses' },
   openGraph: {
-    title: 'Trading Courses — withSahib SEBI RA',
-    description: 'Self-paced trading courses by SEBI Registered Research Analyst Sahib Singh Hora. Technical Analysis, Options Theory, Trading Systems.',
+    title: 'Courses — Live 1-on-1 Sessions | withSahib SEBI RA',
+    description: 'Not pre-recorded. Not YouTube. Live 1-on-1 sessions built around your portfolio — by SEBI RA Sahib Singh Hora.',
     url: 'https://www.withsahib.com/courses',
   },
 }
@@ -19,31 +19,50 @@ export const metadata: Metadata = {
 const COURSES = [
   {
     label: 'Course 01',
-    title: 'Technical Analysis Masterclass',
-    desc: 'From candlestick patterns and support/resistance to multi-timeframe analysis and volume interpretation. The complete toolkit for reading NSE charts.',
-    modules: ['Candlestick patterns & psychology', 'Support, resistance & trendlines', 'Moving averages & momentum indicators', 'Volume analysis & institutional footprint', 'Multi-timeframe confluence', 'Building a watchlist system'],
-    level: 'Beginner → Intermediate',
-    duration: '8 hours across 24 modules',
-    color: 'var(--emerald)',
+    title: 'Foundation: Reading Markets',
+    price: '₹7,999',
+    desc: 'Chart structure, price action, volume analysis, and how to identify high-probability setups. Built from scratch — no prior knowledge needed.',
+    includes: [
+      '3-month handholding',
+      'Live 1-on-1 sessions',
+      'Personalised feedback on your charts',
+    ],
+    color: 'var(--green)',
+    borderColor: 'rgba(26,122,74,0.25)',
   },
   {
     label: 'Course 02',
-    title: 'Options Trading for Beginners',
-    desc: 'Options are not lottery tickets. This course covers the real mechanics — Greeks, pricing, OI analysis, and defined-risk strategies for Nifty and Bank Nifty.',
-    modules: ['Options basics: calls, puts, strikes, expiry', 'Understanding option pricing & time decay', 'The Greeks: delta, theta, vega, gamma', 'OI analysis & PCR interpretation', 'Nifty & Bank Nifty options strategies', 'Risk management for options traders'],
-    level: 'Beginner → Intermediate',
-    duration: '6 hours across 18 modules',
-    color: 'var(--sapphire)',
+    title: 'Advanced: Options & Derivatives',
+    price: '₹9,999',
+    desc: 'Open interest, PCR, IV rank, options strategies. Learn to trade expiry week setups, build structured positions, and manage risk in F&O.',
+    includes: [
+      '3-month handholding',
+      'Live 1-on-1 sessions',
+      'Trade review sessions',
+    ],
+    color: '#2563EB',
+    borderColor: 'rgba(37,99,235,0.25)',
   },
   {
     label: 'Course 03',
-    title: 'Building a Systematic Trading Process',
-    desc: 'Most traders fail not because they lack knowledge but because they have no system. This course covers pre-market process, journaling, review, and consistency.',
-    modules: ['Pre-market routine & global cues analysis', 'Building a personal trade setup checklist', 'Position sizing & capital allocation rules', 'Trade journaling & performance tracking', 'Weekly review & strategy refinement', 'Psychology of consistent execution'],
-    level: 'Intermediate → Advanced',
-    duration: '5 hours across 15 modules',
+    title: 'Pro: Complete Research Methodology',
+    price: '₹12,999',
+    desc: 'The full withSahib research framework — from pre-market scan to published report. Learn exactly how every call is built, filtered, and risk-calibrated.',
+    includes: [
+      '3-month handholding',
+      'Live 1-on-1 sessions',
+      'Access to all research during course',
+    ],
     color: 'var(--gold)',
+    borderColor: 'rgba(146,104,10,0.25)',
   },
+]
+
+const TIMELINE = [
+  { week: 'Week 1–2', label: 'Foundation concepts', desc: 'Core theory, frameworks, and vocabulary. Establishing the mental model before applying it.' },
+  { week: 'Week 3–6', label: 'Applied practice', desc: 'Real charts, real setups. Working through live and historical examples with Sahib.' },
+  { week: 'Week 7–10', label: 'Live market sessions', desc: 'Trading alongside the research process in real-time. Your decisions, your reasoning.' },
+  { week: 'Week 11–12', label: 'Independent review + handholding', desc: 'You run the process. Sahib reviews and refines. Building confidence through repetition.' },
 ]
 
 export default function CoursesPage() {
@@ -52,111 +71,162 @@ export default function CoursesPage() {
       <Navbar />
 
       {/* Hero */}
-      <section style={{ padding: '80px 40px 60px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
-        <div className="glow-orb glow-emerald" style={{ width: '600px', height: '400px', top: 0, left: '50%', transform: 'translateX(-50%)' }} />
-        <div style={{ position: 'relative', zIndex: 1, maxWidth: 700, margin: '0 auto' }}>
+      <section style={{ padding: '64px 40px 56px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ maxWidth: 680, margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <div className="section-tag" style={{ justifyContent: 'center', marginBottom: 20 }}>Courses</div>
-          <h1 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 'clamp(36px,5vw,60px)', fontWeight: 400, color: 'var(--text)', lineHeight: 1.1, marginBottom: 20 }}>
-            Learn to trade with{' '}
-            <em style={{ color: 'var(--emerald)', fontStyle: 'italic' }}>institutional discipline.</em>
-          </h1>
-          <p style={{ fontSize: 18, color: 'var(--text2)', lineHeight: 1.7, marginBottom: 36 }}>
-            Self-paced courses by Sahib Singh Hora, SEBI Registered Research Analyst (INH000026266).
-            Built for Indian retail traders — not recycled YouTube content.
-          </p>
-          <div style={{
-            display: 'inline-flex', alignItems: 'center', gap: 10, padding: '10px 20px',
-            background: 'rgba(212,168,67,0.08)', border: '1px solid rgba(212,168,67,0.25)',
-            borderRadius: 10, fontSize: 13, color: 'var(--gold)', fontWeight: 500,
+          <h1 style={{
+            fontFamily: 'var(--font-heading)',
+            fontSize: 'clamp(32px,5vw,56px)',
+            fontWeight: 700,
+            color: 'var(--text)',
+            lineHeight: 1.15,
+            marginBottom: 20,
           }}>
-            <span style={{ width: 7, height: 7, borderRadius: '50%', background: 'var(--gold)', animation: 'pulseDot 2s ease-in-out infinite' }} />
-            Launching soon — join the waitlist below
-          </div>
+            Learn to read{' '}
+            <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>the market.</em>
+          </h1>
+          <p style={{ fontSize: 18, color: 'var(--text2)', lineHeight: 1.7, marginBottom: 36, fontFamily: 'var(--font-body)' }}>
+            Live, personalised, one-on-one sessions with a SEBI Registered Analyst. Not pre-recorded. Not YouTube. Built around your portfolio.
+          </p>
+          <Link href="/appointments" className="btn btn-primary btn-lg" style={{ textDecoration: 'none' }}>
+            Book a Session →
+          </Link>
         </div>
       </section>
 
-      {/* Course cards */}
-      <section style={{ padding: '0 40px 80px' }}>
-        <div style={{ maxWidth: 1060, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 24 }}>
+      {/* Course Cards */}
+      <section style={{ padding: '0 40px 64px' }}>
+        <div style={{ maxWidth: 1060, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 24 }}>
           {COURSES.map((course) => (
-            <div key={course.label} style={{ background: 'var(--surface)', border: `1px solid var(--border)`, borderRadius: 20, padding: '40px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 40 }}>
-              <div>
-                <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: 2, color: course.color, textTransform: 'uppercase', marginBottom: 10 }}>{course.label}</p>
-                <h2 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 28, fontWeight: 400, color: 'var(--text)', lineHeight: 1.2, marginBottom: 16 }}>{course.title}</h2>
-                <p style={{ fontSize: 15, color: 'var(--text2)', lineHeight: 1.7, marginBottom: 24 }}>{course.desc}</p>
-                <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
-                  <span style={{ fontSize: 12, color: 'var(--text3)', padding: '4px 10px', background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 6 }}>{course.level}</span>
-                  <span style={{ fontSize: 12, color: 'var(--text3)', padding: '4px 10px', background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 6 }}>{course.duration}</span>
-                </div>
+            <div
+              key={course.label}
+              style={{
+                background: 'var(--surface)',
+                border: `1px solid ${course.borderColor}`,
+                borderRadius: 20,
+                padding: '32px 28px',
+                display: 'flex',
+                flexDirection: 'column',
+              }}
+            >
+              <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '2px', color: course.color, textTransform: 'uppercase', marginBottom: 10, fontFamily: 'var(--font-body)' }}>
+                {course.label}
               </div>
-              <div>
-                <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: 2, color: 'var(--text3)', textTransform: 'uppercase', marginBottom: 14 }}>What you&apos;ll learn</p>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                  {course.modules.map((mod) => (
-                    <div key={mod} style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
-                      <span style={{ width: 6, height: 6, borderRadius: '50%', background: course.color, marginTop: 6, flexShrink: 0 }} />
-                      <span style={{ fontSize: 14, color: 'var(--text2)', lineHeight: 1.5 }}>{mod}</span>
-                    </div>
-                  ))}
-                </div>
+              <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: 22, fontWeight: 700, color: 'var(--text)', marginBottom: 8, lineHeight: 1.2 }}>
+                {course.title}
+              </h3>
+              <div style={{ fontFamily: 'var(--font-heading)', fontSize: 36, fontWeight: 700, color: 'var(--text)', marginBottom: 4 }}>
+                {course.price}
               </div>
+              <p style={{ fontSize: 13, color: 'var(--text3)', marginBottom: 20, paddingBottom: 20, borderBottom: '1px solid var(--border)', fontFamily: 'var(--font-body)', lineHeight: 1.5 }}>
+                One-time · 3-month handholding
+              </p>
+              <p style={{ fontSize: 14, color: 'var(--text2)', lineHeight: 1.7, marginBottom: 20, fontFamily: 'var(--font-body)', flex: 1 }}>
+                {course.desc}
+              </p>
+              <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 24 }}>
+                {course.includes.map((item, i) => (
+                  <li key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'var(--text2)', fontFamily: 'var(--font-body)' }}>
+                    <span style={{ width: 6, height: 6, borderRadius: '50%', background: course.color, flexShrink: 0 }} />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href="/appointments"
+                style={{
+                  display: 'block', textAlign: 'center', padding: '12px',
+                  borderRadius: 12, fontSize: 14, fontWeight: 700,
+                  textDecoration: 'none', fontFamily: 'var(--font-body)',
+                  background: 'transparent', color: 'var(--text2)',
+                  border: '1px solid var(--border2)', transition: 'all 0.2s',
+                }}
+              >
+                Book a Session →
+              </Link>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Waitlist */}
-      <section style={{ padding: '80px 40px', background: 'var(--bg2)', borderTop: '1px solid var(--border)' }}>
-        <div style={{ maxWidth: 540, margin: '0 auto', textAlign: 'center' }}>
-          <div className="section-tag" style={{ justifyContent: 'center', marginBottom: 20 }}>Early Access</div>
-          <h2 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 36, fontWeight: 400, color: 'var(--text)', marginBottom: 16, lineHeight: 1.2 }}>
-            Get notified when courses launch
+      {/* Why 1-on-1 */}
+      <section style={{ padding: '64px 40px', background: 'var(--bg2)', borderTop: '1px solid var(--border)' }}>
+        <div style={{ maxWidth: 860, margin: '0 auto' }}>
+          <div className="section-tag" style={{ marginBottom: 16 }}>Why 1-on-1?</div>
+          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(26px,4vw,40px)', fontWeight: 700, color: 'var(--text)', marginBottom: 16, lineHeight: 1.2 }}>
+            Teaching is most effective when it&apos;s personal.
           </h2>
-          <p style={{ fontSize: 16, color: 'var(--text2)', lineHeight: 1.7, marginBottom: 32 }}>
-            Join the waitlist. Elite and Pro subscribers get early access and a 30% launch discount.
+          <p style={{ fontSize: 16, color: 'var(--text2)', lineHeight: 1.8, marginBottom: 40, maxWidth: 640, fontFamily: 'var(--font-body)' }}>
+            Most courses teach theory. These sessions are built around your actual trades, your actual questions, your actual portfolio. Every session is different because every trader is different.
           </p>
-          <div style={{ display: 'flex', gap: 10, maxWidth: 440, margin: '0 auto' }}>
-            <input
-              type="email"
-              placeholder="your@email.com"
-              className="input"
-              style={{ flex: 1 }}
-            />
-            <button
-              style={{
-                padding: '12px 24px', background: 'var(--emerald)', color: '#031A13',
-                border: 'none', borderRadius: 10, fontWeight: 700, fontSize: 14,
-                cursor: 'pointer', fontFamily: 'Outfit, sans-serif', whiteSpace: 'nowrap',
-              }}
-            >
-              Notify Me
-            </button>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 16 }}>
+            {[
+              { title: 'Personalised to your level', desc: 'Whether you\'re a beginner or an experienced trader, the curriculum adapts to where you actually are.' },
+              { title: 'Focused on your active trades', desc: 'Bring your live watchlist, your recent trades, your confusions. We work with real examples, not textbook setups.' },
+              { title: 'Direct access to a SEBI RA', desc: 'Every session is with Sahib Singh Hora — a SEBI Registered Research Analyst, not an assistant or junior trainer.' },
+            ].map((item, i) => (
+              <div key={i} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 16, padding: '24px' }}>
+                <div style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--orange)', marginBottom: 14 }} />
+                <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: 16, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>
+                  {item.title}
+                </h4>
+                <p style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.6, fontFamily: 'var(--font-body)' }}>
+                  {item.desc}
+                </p>
+              </div>
+            ))}
           </div>
-          <p style={{ fontSize: 12, color: 'var(--text4)', marginTop: 16 }}>
-            No spam. Unsubscribe anytime.
+        </div>
+      </section>
+
+      {/* Learning timeline */}
+      <section style={{ padding: '64px 40px' }}>
+        <div style={{ maxWidth: 860, margin: '0 auto' }}>
+          <div className="section-tag" style={{ marginBottom: 16 }}>Learning Timeline</div>
+          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(26px,4vw,40px)', fontWeight: 700, color: 'var(--text)', marginBottom: 40, lineHeight: 1.2 }}>
+            Twelve weeks. Structured progress.
+          </h2>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+            {TIMELINE.map((step, i) => (
+              <div key={i} style={{ display: 'flex', gap: 24, paddingBottom: 32 }}>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexShrink: 0 }}>
+                  <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'var(--orange)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: 13, fontWeight: 700, flexShrink: 0, fontFamily: 'var(--font-body)' }}>
+                    {i + 1}
+                  </div>
+                  {i < TIMELINE.length - 1 && (
+                    <div style={{ width: 2, flex: 1, background: 'var(--border)', marginTop: 8 }} />
+                  )}
+                </div>
+                <div style={{ paddingTop: 6 }}>
+                  <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '1.5px', color: 'var(--orange)', textTransform: 'uppercase', marginBottom: 4, fontFamily: 'var(--font-body)' }}>
+                    {step.week}
+                  </div>
+                  <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: 17, fontWeight: 700, color: 'var(--text)', marginBottom: 6 }}>
+                    {step.label}
+                  </h4>
+                  <p style={{ fontSize: 14, color: 'var(--text2)', lineHeight: 1.6, fontFamily: 'var(--font-body)' }}>
+                    {step.desc}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Bottom note */}
+      <section style={{ padding: '0 40px 48px' }}>
+        <div style={{ maxWidth: 860, margin: '0 auto', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 16, padding: '24px 28px' }}>
+          <p style={{ fontSize: 14, color: 'var(--text2)', lineHeight: 1.7, marginBottom: 8, fontFamily: 'var(--font-body)' }}>
+            <strong style={{ color: 'var(--text)' }}>Already on the Elite plan?</strong> Courses are included.
+          </p>
+          <p style={{ fontSize: 14, color: 'var(--text3)', lineHeight: 1.7, fontFamily: 'var(--font-body)' }}>
+            On an annual plan? Ask about course discounts —{' '}
+            <a href="mailto:connect@withsahib.com" style={{ color: 'var(--orange)', textDecoration: 'none' }}>connect@withsahib.com</a>
           </p>
         </div>
       </section>
 
-      {/* CTA */}
-      <section style={{ padding: '60px 40px', textAlign: 'center' }}>
-        <p style={{ fontSize: 15, color: 'var(--text3)', marginBottom: 20 }}>Already a subscriber? Courses are included in Elite plan.</p>
-        <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-          <Link href="/pricing" style={{ padding: '12px 28px', background: 'var(--emerald)', color: '#031A13', borderRadius: 10, fontWeight: 700, fontSize: 14, textDecoration: 'none' }}>
-            View Plans
-          </Link>
-          <Link href="/about" style={{ padding: '12px 28px', border: '1px solid var(--border)', color: 'var(--text2)', borderRadius: 10, fontSize: 14, textDecoration: 'none' }}>
-            About the Analyst
-          </Link>
-        </div>
-      </section>
-
-      <div style={{ padding: '0 40px 40px' }}>
-        <div className="sebi-disclaimer container-tight" style={{ padding: '16px 20px' }}>
-          <strong style={{ color: 'var(--gold)' }}>Risk Disclaimer: </strong>
-          Investments in securities market are subject to market risks. Research Analyst: Sahib Singh Hora · SEBI RA INH000026266 · withSahib.com
-        </div>
-      </div>
       <BookingBanner />
       <Footer />
     </div>

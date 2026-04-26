@@ -389,6 +389,7 @@ export default function RootLayout({
     }
   } catch(e) {}
 })()`}} />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         {/* Resource hints for performance */}
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="format-detection" content="telephone=no" />

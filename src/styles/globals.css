@@ -273,8 +273,13 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ─── GLOBAL HOVER ORANGE ────────────────────────────────────────────── */
 a:hover { color: #FF6B00; transition: color 0.15s; }
+nav a:hover { color: #FF6B00 !important; }
 button:hover { color: #FF6B00; transition: all 0.15s; }
 svg:hover path { stroke: #FF6B00; }
+
+/* ─── DARK SECTIONS (stay dark regardless of theme) ─────────────────── */
+html.light .dark-section { background: #0A0A0A; color: #FAFAF7; }
+html.dark  .dark-section { background: #050505; }
 
 /* ─── TICKER ─────────────────────────────────────────────────────────── */
 @keyframes ticker {
@@ -286,7 +291,7 @@ svg:hover path { stroke: #FF6B00; }
 .ticker-inner {
   display: flex;
   gap: 48px;
-  animation: ticker 120s linear infinite;
+  animation: ticker 150s linear infinite;
   width: max-content;
   align-items: center;
 }

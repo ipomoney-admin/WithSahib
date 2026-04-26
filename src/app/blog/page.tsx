@@ -1,4 +1,6 @@
-import type { Metadata } from 'next'
+'use client'
+
+import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Navbar } from '@/components/layout/Navbar'
@@ -6,99 +8,81 @@ import { BookingBanner } from '@/components/layout/BookingBanner'
 import { Footer } from '@/components/layout/Footer'
 import { POSTS, type Post } from '@/lib/data/posts'
 
-export const metadata: Metadata = {
-  title: 'Blog — SEBI RA Research, Intraday Picks & Trading Insights',
-  description:
-    'In-depth articles on SEBI registered analyst services, intraday picks NSE, Nifty options signals, Bank Nifty calls, swing trading stocks India — by Sahib Singh Hora, SEBI RA INH000026266.',
-  keywords: [
-    'market intelligence', 'intraday picks', 'NSE picks', 'SEBI registered analyst',
-    'research analyst India', 'options trading signals', 'Nifty options signals today',
-    'Bank Nifty signals', 'swing trading stocks', 'SEBI RA', 'INH000026266',
-  ],
-  alternates: { canonical: 'https://www.withsahib.com/blog' },
-  openGraph: {
-    title: 'Blog — SEBI RA Stock Market Research',
-    description: 'Intraday picks, options strategies, swing trading and SEBI compliance articles by Sahib Singh Hora (INH000026266).',
-    url: 'https://www.withsahib.com/blog',
-  },
-}
-
-const blogListSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'Blog',
-  name: 'withSahib Blog',
-  description: 'Stock market research, intraday picks, and trading insights by SEBI RA Sahib Singh Hora',
-  url: 'https://www.withsahib.com/blog',
-  author: {
-    '@type': 'Person',
-    name: 'Sahib Singh Hora',
-    url: 'https://www.withsahib.com/about',
-  },
-  blogPost: POSTS.map((p) => ({
-    '@type': 'BlogPosting',
-    headline: p.title,
-    description: p.excerpt,
-    url: `https://www.withsahib.com/blog/${p.slug}`,
-    datePublished: p.date,
-    author: { '@type': 'Person', name: 'Sahib Singh Hora' },
-  })),
-}
-
 const CATEGORY_COLORS: Record<string, string> = {
-  Regulation: 'var(--sapphire)',
-  Intraday: 'var(--emerald)',
+  Regulation: '#2563EB',
+  Intraday: 'var(--green)',
   Options: 'var(--gold)',
-  'Swing Trading': 'var(--emerald)',
-  Education: 'var(--sapphire)',
+  'Swing Trading': 'var(--green)',
+  Education: '#2563EB',
   Compliance: 'var(--gold)',
+  'Market Analysis': 'var(--orange)',
+  Research: 'var(--green)',
 }
+
+const ALL_CATEGORIES = ['All', 'Research', 'Options', 'Swing Trades', 'Market Analysis', 'Education']
 
 export default function BlogPage() {
-  const categories = Array.from(new Set(POSTS.map((p) => p.category)))
+  const [activeCategory, setActiveCategory] = useState('All')
+
+  const filtered = activeCategory === 'All'
+    ? POSTS
+    : POSTS.filter((p) => p.category === activeCategory || p.category.includes(activeCategory.replace('Swing Trades', 'Swing Trading')))
 
   return (
     <div style={{ background: 'var(--bg)', minHeight: '100vh' }}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogListSchema) }}
-      />
       <Navbar />
 
       {/* Hero */}
-      <section style={{ padding: '80px 40px 56px', background: 'var(--bg2)', borderBottom: '1px solid var(--border)', position: 'relative', overflow: 'hidden' }}>
-        <div className="glow-orb glow-emerald" style={{ width: '600px', height: '400px', top: 0, left: '50%', transform: 'translateX(-50%)' }} />
-        <div style={{ maxWidth: 860, margin: '0 auto', position: 'relative', zIndex: 1, textAlign: 'center' }}>
-          <div className="section-tag" style={{ justifyContent: 'center', marginBottom: 20 }}>Blog</div>
-          <h1 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 'clamp(36px,5vw,56px)', fontWeight: 400, color: 'var(--text)', lineHeight: 1.1, marginBottom: 20 }}>
+      <section style={{ padding: '64px 40px 48px', background: 'var(--bg2)', borderBottom: '1px solid var(--border)', textAlign: 'center' }}>
+        <div style={{ maxWidth: 720, margin: '0 auto' }}>
+          <div className="section-tag" style={{ justifyContent: 'center', marginBottom: 16 }}>Blog</div>
+          <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(32px,5vw,52px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.15, marginBottom: 16 }}>
             Research. Insights.{' '}
-            <em style={{ color: 'var(--emerald)', fontStyle: 'italic' }}>Practical edge.</em>
+            <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>Practical edge.</em>
           </h1>
-          <p style={{ fontSize: 17, color: 'var(--text2)', lineHeight: 1.7, maxWidth: 560, margin: '0 auto' }}>
-            In-depth articles on Indian stock markets — intraday trading, options strategies, swing picks, and SEBI compliance — by Sahib Singh Hora (INH000026266).
+          <p style={{ fontSize: 17, color: 'var(--text2)', lineHeight: 1.7, maxWidth: 540, margin: '0 auto', fontFamily: 'var(--font-body)' }}>
+            In-depth articles on Indian equity markets — intraday trading, options strategies, swing picks, and SEBI compliance — by Sahib Singh Hora (INH000026266).
           </p>
         </div>
       </section>
 
-      {/* Category pills */}
-      <section style={{ padding: '32px 40px 0' }}>
-        <div style={{ maxWidth: 980, margin: '0 auto', display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-          {categories.map((cat) => (
-            <span key={cat} style={{
-              fontSize: 12, fontWeight: 600, padding: '5px 14px',
-              borderRadius: 20, border: '1px solid var(--border)',
-              color: CATEGORY_COLORS[cat] ?? 'var(--text3)',
-              background: 'var(--surface)',
-            }}>
+      {/* Category filter tabs */}
+      <section style={{ padding: '24px 40px 0', borderBottom: '1px solid var(--border)', background: 'var(--surface)' }}>
+        <div style={{ maxWidth: 980, margin: '0 auto', display: 'flex', gap: 4, flexWrap: 'wrap' }}>
+          {ALL_CATEGORIES.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
+              style={{
+                padding: '8px 18px',
+                borderRadius: '8px 8px 0 0',
+                border: 'none',
+                fontSize: 13,
+                fontWeight: activeCategory === cat ? 600 : 400,
+                cursor: 'pointer',
+                background: activeCategory === cat ? 'var(--orange)' : 'transparent',
+                color: activeCategory === cat ? '#fff' : 'var(--text3)',
+                transition: 'all 0.15s',
+                fontFamily: 'var(--font-body)',
+                marginBottom: -1,
+                borderBottom: activeCategory === cat ? 'none' : '2px solid transparent',
+              }}
+            >
               {cat}
-            </span>
+            </button>
           ))}
         </div>
       </section>
 
       {/* Post grid */}
       <section style={{ padding: '40px 40px 80px' }}>
-        <div style={{ maxWidth: 980, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 24 }}>
-          {POSTS.map((post: Post) => {
+        <div style={{ maxWidth: 980, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(420px, 1fr))', gap: 24 }}>
+          {filtered.length === 0 && (
+            <p style={{ color: 'var(--text3)', fontFamily: 'var(--font-body)', gridColumn: '1 / -1', textAlign: 'center', padding: '48px 0' }}>
+              No posts in this category yet.
+            </p>
+          )}
+          {filtered.map((post: Post) => {
             const catColor = CATEGORY_COLORS[post.category] ?? 'var(--text3)'
             return (
               <Link
@@ -108,33 +92,45 @@ export default function BlogPage() {
               >
                 <article style={{
                   background: 'var(--surface)', border: '1px solid var(--border)',
-                  borderRadius: 16, padding: 28, height: '100%',
-                  transition: 'border-color 0.2s',
+                  borderRadius: 16, overflow: 'hidden', height: '100%',
+                  transition: 'border-color 0.2s, box-shadow 0.2s',
                 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
-                    <span style={{
-                      fontSize: 10, fontWeight: 700, letterSpacing: 1.5,
-                      color: catColor, textTransform: 'uppercase',
-                    }}>
+                  {/* Featured image placeholder */}
+                  <div style={{ height: 160, background: 'var(--bg2)', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <div style={{ fontFamily: 'var(--font-heading)', fontSize: 13, color: 'var(--text3)', letterSpacing: '1px', textTransform: 'uppercase' }}>
                       {post.category}
-                    </span>
-                    <span style={{ fontSize: 11, color: 'var(--text4)' }}>·</span>
-                    <span style={{ fontSize: 11, color: 'var(--text4)' }}>{post.readTime}</span>
-                  </div>
-                  <h2 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 20, fontWeight: 400, color: 'var(--text)', lineHeight: 1.3, marginBottom: 12 }}>
-                    {post.title}
-                  </h2>
-                  <p style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.7, marginBottom: 20 }}>
-                    {post.excerpt}
-                  </p>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                      <div style={{ position: 'relative', width: 24, height: 24, borderRadius: '50%', overflow: 'hidden', border: '1px solid rgba(0,200,150,0.2)', flexShrink: 0 }}>
-                        <Image src="/images/sahib-primary.jpg" alt="Sahib Singh Hora" fill sizes="24px" style={{ objectFit: 'cover', objectPosition: 'center top' }} />
-                      </div>
-                      <span style={{ fontSize: 11, color: 'var(--text4)' }}>{post.dateDisplay}</span>
                     </div>
-                    <span style={{ fontSize: 12, color: catColor, fontWeight: 600 }}>Read →</span>
+                    <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 40, background: 'linear-gradient(to top, var(--surface), transparent)' }} />
+                  </div>
+
+                  <div style={{ padding: '20px 24px 24px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
+                      <span style={{
+                        fontSize: 10, fontWeight: 700, letterSpacing: 1.5,
+                        color: catColor, textTransform: 'uppercase',
+                        fontFamily: 'var(--font-body)',
+                        background: catColor === 'var(--orange)' ? 'rgba(255,107,0,0.08)' : 'rgba(26,122,74,0.08)',
+                        padding: '2px 8px', borderRadius: 4,
+                      }}>
+                        {post.category}
+                      </span>
+                      <span style={{ fontSize: 11, color: 'var(--text4)', fontFamily: 'var(--font-body)' }}>{post.readTime}</span>
+                    </div>
+                    <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 19, fontWeight: 700, color: 'var(--text)', lineHeight: 1.3, marginBottom: 10 }}>
+                      {post.title}
+                    </h2>
+                    <p style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.7, marginBottom: 16, fontFamily: 'var(--font-body)' }}>
+                      {post.excerpt}
+                    </p>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                        <div style={{ position: 'relative', width: 24, height: 24, borderRadius: '50%', overflow: 'hidden', border: '1px solid var(--border2)', flexShrink: 0 }}>
+                          <Image src="/images/sahib-primary.jpg" alt="Sahib Singh Hora" fill sizes="24px" style={{ objectFit: 'cover', objectPosition: 'center top' }} />
+                        </div>
+                        <span style={{ fontSize: 11, color: 'var(--text4)', fontFamily: 'var(--font-body)' }}>{post.dateDisplay}</span>
+                      </div>
+                      <span style={{ fontSize: 12, color: 'var(--orange)', fontWeight: 600, fontFamily: 'var(--font-body)' }}>Read →</span>
+                    </div>
                   </div>
                 </article>
               </Link>
@@ -144,12 +140,13 @@ export default function BlogPage() {
       </section>
 
       <div style={{ padding: '0 40px 40px' }}>
-        <div className="sebi-disclaimer container-tight" style={{ padding: '16px 20px' }}>
-          <strong style={{ color: 'var(--gold)' }}>Risk Disclaimer: </strong>
+        <div style={{ maxWidth: 640, margin: '0 auto', background: 'rgba(146,104,10,0.05)', border: '1px solid rgba(146,104,10,0.18)', borderRadius: 12, padding: '14px 20px', fontSize: 12, color: 'var(--text3)', lineHeight: 1.6, fontFamily: 'var(--font-body)' }}>
+          <strong style={{ color: '#92680A' }}>Risk Disclaimer: </strong>
           Investments in securities market are subject to market risks. Past performance is not indicative of future results. Research Analyst: Sahib Singh Hora · SEBI RA INH000026266 · withSahib.com
         </div>
       </div>
-      <BookingBanner />$1
+      <BookingBanner />
+      <Footer />
     </div>
   )
 }
