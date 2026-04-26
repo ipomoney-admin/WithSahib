@@ -245,15 +245,18 @@ function LearningPopup() {
         </h2>
 
         <p style={{ fontSize: '14px', color: 'var(--text2)', lineHeight: 1.75, marginBottom: '8px', fontFamily: 'var(--font-body)' }}>
-          1-on-1 sessions with Sahib Singh Hora — SEBI RA INH000026266. Systematic analysis, not tips.
+          Live, 1-on-1 sessions with Sahib Singh Hora — SEBI RA INH000026266. Systematic analysis, not tips.
         </p>
-        <p style={{ fontSize: '13px', color: 'var(--text3)', marginBottom: '28px', fontFamily: 'var(--font-body)' }}>
-          From ₹1,999 / session · Book any time
+        <p style={{ fontSize: '13px', color: 'var(--text3)', marginBottom: '4px', fontFamily: 'var(--font-body)' }}>
+          Starting ₹24,999 · or ₹74,999 for complete 1:1 mentorship
+        </p>
+        <p style={{ fontSize: '12px', color: 'var(--text4)', marginBottom: '28px', fontFamily: 'var(--font-body)' }}>
+          3-month live handholding · 3 course levels available
         </p>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           <Link
-            href="/appointments"
+            href="/courses"
             onClick={close}
             style={{
               display: 'block', textAlign: 'center',
@@ -263,7 +266,7 @@ function LearningPopup() {
               textShadow: '0 1px 2px rgba(0,0,0,0.12)', letterSpacing: '0.02em',
             }}
           >
-            Book a 1-on-1 Session →
+            See All Programs →
           </Link>
           <button
             onClick={close}

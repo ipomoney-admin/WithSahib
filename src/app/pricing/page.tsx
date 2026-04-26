@@ -6,64 +6,76 @@ import { useRouter } from 'next/navigation'
 import { Navbar } from '@/components/layout/Navbar'
 import { BookingBanner } from '@/components/layout/BookingBanner'
 import { Footer } from '@/components/layout/Footer'
-import { Check, X } from 'lucide-react'
+import { Check } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
+
+const FOOTER_LINE = 'Research by Sahib Singh Hora · 14+ Years Experience · SEBI RA'
 
 const PLANS = [
   {
     tier: 'basic',
     name: 'Basic',
-    price: 999,
-    sub: 'For swing traders & beginners.',
-    color: 'var(--sapphire)',
-    borderColor: 'rgba(37,99,235,0.3)',
+    price: 3999,
+    sub: 'For swing traders & beginners',
+    badge: null,
+    featured: false,
+    cardBorder: 'var(--border2)',
+    cardBg: 'var(--surface)',
+    ctaLabel: 'Start with Basic',
     ctaStyle: 'ghost' as const,
     features: [
-      { text: 'Daily swing trade research picks', ok: true },
-      { text: 'Entry zone · 2 targets · Stop-loss defined', ok: true },
-      { text: 'Written rationale on every pick', ok: true },
-      { text: 'Sector & market context included', ok: true },
-      { text: 'Weekly research digest', ok: true },
-      { text: 'Access to research archive', ok: true },
+      'Daily Swing Trade Research Picks',
+      'Clear Entry Zone · 2 Targets · Stop-Loss',
+      'Written Rationale on every pick',
+      'Sector & Market Context included',
+      'Weekly Research Digest + Performance Report',
+      'Full Access to Research Archive',
     ],
-    cta: 'Start Basic',
+    highlightBox: null,
   },
   {
     tier: 'pro',
     name: 'Pro',
-    price: 2499,
-    sub: 'Per service — Intraday / Stock Options / Index Options.',
-    color: 'var(--green)',
-    borderColor: 'rgba(26,122,74,0.35)',
-    ctaStyle: 'primary' as const,
+    price: 6999,
+    sub: 'For active intraday & options traders',
+    badge: { label: 'MOST POPULAR', bg: '#1A7A4A', color: '#FFFFFF' },
     featured: true,
+    cardBorder: '#1A7A4A',
+    cardBorderWidth: 2,
+    cardBg: 'var(--surface)',
+    ctaLabel: 'Go Pro',
+    ctaStyle: 'primary' as const,
     features: [
-      { text: 'Everything in Basic', ok: true },
-      { text: 'Daily intraday research picks', ok: true },
-      { text: 'Options strategy research (Nifty, BankNifty, Sensex)', ok: true },
-      { text: 'Pre-market delivery before 9 AM via WhatsApp', ok: true },
-      { text: '1 × 15-min strategy call/month with Sahib', ok: true },
-      { text: 'Priority research alerts', ok: true },
+      'Everything in Basic',
+      'Daily Intraday Research Picks',
+      'Options Strategy Research (Nifty, BankNifty, Sensex)',
+      'Pre-market WhatsApp Delivery before 9 AM',
+      '1 × 15-min Strategy Call with Sahib every month',
+      'Priority Research Alerts',
     ],
-    cta: 'Start Pro',
+    highlightBox: null,
   },
   {
     tier: 'elite',
     name: 'Elite',
-    price: 6999,
-    sub: 'All services. Maximum access.',
-    color: 'var(--gold)',
-    borderColor: 'rgba(146,104,10,0.35)',
+    price: 12499,
+    sub: 'Maximum access + personal mentorship',
+    badge: { label: 'FLAGSHIP TIER', bg: '#B8975A', color: '#FFFFFF' },
+    featured: false,
+    cardBorder: '#B8975A',
+    cardBorderWidth: 2,
+    cardBg: 'var(--bg2)',
+    ctaLabel: 'Go Elite',
     ctaStyle: 'gold' as const,
     features: [
-      { text: 'Everything in Pro (all services)', ok: true },
-      { text: '1 × 15-min strategy call every week with Sahib', ok: true },
-      { text: 'Bespoke HNI research coverage', ok: true },
-      { text: 'FinNifty & MidcapNifty research', ok: true },
-      { text: 'Direct WhatsApp access to analyst', ok: true },
-      { text: 'All courses included', ok: true },
+      'Everything in Pro',
+      'Weekly 15-min Strategy Call with Sahib (4 calls/month)',
+      'Personalised Trade Feedback & Review (monthly)',
+      'Bespoke / HNI-level Custom Research',
+      'Direct WhatsApp Access to Sahib',
+      'All Courses Included (Foundation + Options + Research Framework)',
     ],
-    cta: 'Go Elite',
+    highlightBox: '🎁 Yearly Elite members get Foundation Course FREE (worth ₹24,999) — within first 2 months',
   },
 ]
 
@@ -131,89 +143,143 @@ export default function PricingPage() {
         </div>
       </section>
 
-      {/* Plan cards — immediately below hero */}
-      <section style={{ padding: '24px 40px 48px' }}>
-        <div style={{ maxWidth: 1060, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px', alignItems: 'start' }}>
-          {PLANS.map((plan) => (
-            <div
-              key={plan.tier}
-              style={{
-                background: 'var(--surface)',
-                border: `1px solid ${plan.borderColor}`,
-                borderRadius: '20px',
-                padding: '32px 28px',
-                position: 'relative',
-                transform: plan.featured ? 'translateY(-6px)' : 'none',
-                boxShadow: plan.featured ? '0 12px 48px rgba(26,122,74,0.08)' : 'none',
-              }}
-            >
-              {plan.featured && (
-                <div style={{
-                  position: 'absolute', top: '-13px', left: '50%', transform: 'translateX(-50%)',
-                  background: 'var(--green)', color: '#fff',
-                  fontSize: '10px', fontWeight: 700, letterSpacing: '1.5px',
-                  padding: '4px 16px', borderRadius: '20px', whiteSpace: 'nowrap',
-                  fontFamily: 'var(--font-body)',
-                }}>
-                  MOST POPULAR
-                </div>
-              )}
-
-              <div style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '2px', color: plan.color, textTransform: 'uppercase', marginBottom: '10px', fontFamily: 'var(--font-body)' }}>
-                {plan.name}
-              </div>
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px', marginBottom: '4px' }}>
-                <span style={{ fontFamily: 'var(--font-heading)', fontSize: '48px', fontWeight: 700, color: 'var(--text)', lineHeight: 1 }}>
-                  ₹{plan.price.toLocaleString('en-IN')}
-                </span>
-                <span style={{ fontSize: '14px', color: 'var(--text3)', fontFamily: 'var(--font-body)' }}>/mo</span>
-              </div>
-              <p style={{ fontSize: '13px', color: 'var(--text3)', marginBottom: '24px', paddingBottom: '20px', borderBottom: '1px solid var(--border)', fontFamily: 'var(--font-body)', lineHeight: 1.5 }}>
-                {plan.sub}
-              </p>
-
-              <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '24px' }}>
-                {plan.features.map((f, j) => (
-                  <li key={j} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', fontSize: '13px', color: f.ok ? 'var(--text2)' : 'var(--text4)', fontFamily: 'var(--font-body)', lineHeight: 1.5 }}>
-                    <span style={{ flexShrink: 0, marginTop: '2px' }}>
-                      {f.ok
-                        ? <Check size={14} color="var(--green)" strokeWidth={2.5} />
-                        : <X size={13} color="var(--text4)" strokeWidth={2} />
-                      }
-                    </span>
-                    {f.text}
-                  </li>
-                ))}
-              </ul>
-
-              <button
-                onClick={() => handlePlanClick(plan.tier)}
-                disabled={ctaLoading === plan.tier}
+      {/* Plan cards */}
+      <section style={{ padding: '24px 40px 16px' }}>
+        <div style={{
+          maxWidth: 1060, margin: '0 auto',
+          display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+          gap: '20px', alignItems: 'start',
+        }}>
+          {PLANS.map((plan) => {
+            const borderWidth = (plan as any).cardBorderWidth ?? 1
+            return (
+              <div
+                key={plan.tier}
                 style={{
-                  display: 'block', width: '100%', padding: '13px',
-                  borderRadius: '12px', textAlign: 'center',
-                  fontSize: '14px', fontWeight: 700,
-                  cursor: ctaLoading === plan.tier ? 'not-allowed' : 'pointer',
-                  opacity: ctaLoading === plan.tier ? 0.7 : 1,
-                  transition: 'all 0.2s', outline: 'none',
-                  fontFamily: 'var(--font-body)',
-                  background: plan.ctaStyle === 'primary' ? 'var(--green)'
-                    : plan.ctaStyle === 'gold' ? 'rgba(146,104,10,0.1)' : 'transparent',
-                  color: plan.ctaStyle === 'primary' ? '#fff'
-                    : plan.ctaStyle === 'gold' ? 'var(--gold)' : 'var(--text2)',
-                  border: plan.ctaStyle === 'primary' ? 'none'
-                    : plan.ctaStyle === 'gold' ? '1px solid rgba(146,104,10,0.3)' : '1px solid var(--border2)',
+                  background: plan.cardBg,
+                  border: `${borderWidth}px solid ${plan.cardBorder}`,
+                  borderRadius: '20px',
+                  padding: '32px 28px',
+                  position: 'relative',
+                  transform: plan.featured ? 'translateY(-8px)' : 'none',
+                  boxShadow: plan.featured
+                    ? '0 16px 56px rgba(26,122,74,0.12)'
+                    : plan.tier === 'elite'
+                      ? '0 8px 32px rgba(184,151,90,0.08)'
+                      : 'none',
+                  display: 'flex',
+                  flexDirection: 'column',
                 }}
               >
-                {ctaLoading === plan.tier ? 'Starting…' : plan.cta}
-              </button>
-              {plan.tier !== 'free' && (
-                <p style={{ fontSize: '10px', color: 'var(--text4)', textAlign: 'center', marginTop: '8px', fontFamily: 'var(--font-body)' }}>
-                  {hasSession ? 'Click to subscribe' : 'Register or sign in to subscribe'}
+                {/* Badge */}
+                {plan.badge && (
+                  <div style={{
+                    position: 'absolute', top: '-13px', left: '50%', transform: 'translateX(-50%)',
+                    background: plan.badge.bg, color: plan.badge.color,
+                    fontSize: '10px', fontWeight: 700, letterSpacing: '1.5px',
+                    padding: '4px 16px', borderRadius: '20px', whiteSpace: 'nowrap',
+                    fontFamily: 'var(--font-body)',
+                  }}>
+                    {plan.badge.label}
+                  </div>
+                )}
+
+                {/* Plan name */}
+                <div style={{
+                  fontSize: '11px', fontWeight: 700, letterSpacing: '2px',
+                  color: plan.tier === 'elite' ? '#B8975A' : plan.tier === 'pro' ? '#1A7A4A' : 'var(--text3)',
+                  textTransform: 'uppercase', marginBottom: '10px', fontFamily: 'var(--font-body)',
+                }}>
+                  {plan.name}
+                </div>
+
+                {/* Price */}
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px', marginBottom: '4px' }}>
+                  <span style={{ fontFamily: 'var(--font-heading)', fontSize: '48px', fontWeight: 700, color: 'var(--text)', lineHeight: 1 }}>
+                    ₹{plan.price.toLocaleString('en-IN')}
+                  </span>
+                  <span style={{ fontSize: '14px', color: 'var(--text3)', fontFamily: 'var(--font-body)' }}>/mo</span>
+                </div>
+
+                {/* Sub */}
+                <p style={{
+                  fontSize: '13px', color: 'var(--text3)', marginBottom: '24px',
+                  paddingBottom: '20px', borderBottom: '1px solid var(--border)',
+                  fontFamily: 'var(--font-body)', lineHeight: 1.5,
+                }}>
+                  {plan.sub}
                 </p>
-              )}
-            </div>
-          ))}
+
+                {/* Features */}
+                <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '20px', flex: 1 }}>
+                  {plan.features.map((f, j) => (
+                    <li key={j} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', fontSize: '13px', color: 'var(--text2)', fontFamily: 'var(--font-body)', lineHeight: 1.5 }}>
+                      <span style={{ flexShrink: 0, marginTop: '2px' }}>
+                        <Check size={14} color={plan.tier === 'elite' ? '#B8975A' : '#1A7A4A'} strokeWidth={2.5} />
+                      </span>
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+
+                {/* Highlight box for Elite */}
+                {plan.highlightBox && (
+                  <div style={{
+                    background: 'rgba(255,107,0,0.06)',
+                    border: '1px solid rgba(255,107,0,0.2)',
+                    borderRadius: '10px',
+                    padding: '14px 16px',
+                    marginBottom: '20px',
+                    fontSize: '12px', color: 'var(--text2)', lineHeight: 1.6,
+                    fontFamily: 'var(--font-body)',
+                  }}>
+                    {plan.highlightBox}
+                  </div>
+                )}
+
+                {/* CTA button */}
+                <button
+                  onClick={() => handlePlanClick(plan.tier)}
+                  disabled={ctaLoading === plan.tier}
+                  style={{
+                    display: 'block', width: '100%', padding: '13px',
+                    borderRadius: '12px', textAlign: 'center',
+                    fontSize: '14px', fontWeight: 700,
+                    cursor: ctaLoading === plan.tier ? 'not-allowed' : 'pointer',
+                    opacity: ctaLoading === plan.tier ? 0.7 : 1,
+                    transition: 'all 0.2s', outline: 'none',
+                    fontFamily: 'var(--font-body)',
+                    letterSpacing: '0.02em',
+                    ...(plan.ctaStyle === 'primary' ? {
+                      background: 'var(--orange)',
+                      color: '#FFFFFF',
+                      border: 'none',
+                      boxShadow: '0 8px 24px rgba(255,107,0,0.35)',
+                      textShadow: '0 1px 2px rgba(0,0,0,0.12)',
+                    } : plan.ctaStyle === 'gold' ? {
+                      background: 'rgba(184,151,90,0.08)',
+                      color: '#B8975A',
+                      border: '1.5px solid #B8975A',
+                    } : {
+                      background: 'transparent',
+                      color: 'var(--text2)',
+                      border: '1px solid var(--border2)',
+                    }),
+                  }}
+                >
+                  {ctaLoading === plan.tier ? 'Starting…' : plan.ctaLabel}
+                </button>
+
+                {/* Footer line */}
+                <p style={{
+                  fontSize: '10px', color: 'var(--text4)', textAlign: 'center',
+                  marginTop: '12px', fontFamily: 'var(--font-body)', lineHeight: 1.5,
+                }}>
+                  {FOOTER_LINE}
+                </p>
+              </div>
+            )
+          })}
         </div>
 
         {ctaError && (
@@ -221,25 +287,53 @@ export default function PricingPage() {
             {ctaError}
           </div>
         )}
+
+        {/* Free line */}
+        <p style={{ textAlign: 'center', fontSize: '12px', color: 'var(--text4)', marginTop: '20px', fontFamily: 'var(--font-body)' }}>
+          Free plan always available — no card required · cancel anytime
+        </p>
       </section>
 
-      {/* Free tier notice */}
-      <section style={{ padding: '0 40px 48px' }}>
+      {/* HNI Band */}
+      <section style={{ padding: '32px 40px' }}>
         <div style={{ maxWidth: 1060, margin: '0 auto' }}>
-          <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 16, padding: '20px 28px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
+          <div style={{
+            background: 'var(--black)',
+            borderRadius: 16,
+            padding: '28px 36px',
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+            flexWrap: 'wrap', gap: 20,
+          }}>
             <div>
-              <p style={{ fontSize: 15, fontWeight: 600, color: 'var(--text)', marginBottom: 4, fontFamily: 'var(--font-body)' }}>Start free — no card needed</p>
-              <p style={{ fontSize: 13, color: 'var(--text3)', fontFamily: 'var(--font-body)' }}>Get signal previews, market ticker, and sample reports at no cost.</p>
+              <p style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '2px', color: '#B8975A', textTransform: 'uppercase', marginBottom: '8px', fontFamily: 'var(--font-body)' }}>
+                Specialised Research
+              </p>
+              <p style={{ fontSize: '18px', fontWeight: 600, color: '#FFFFFF', fontFamily: 'var(--font-heading)', fontStyle: 'italic', lineHeight: 1.3 }}>
+                Starting ₹9,999/mo — For family offices, listed companies & serious capital.
+              </p>
             </div>
-            <Link href="/auth/register" className="btn btn-ghost btn-md" style={{ textDecoration: 'none', whiteSpace: 'nowrap' }}>
-              Create Free Account →
+            <Link href="/contact" style={{
+              display: 'inline-block',
+              padding: '12px 28px',
+              background: 'transparent',
+              border: '1.5px solid #B8975A',
+              borderRadius: '10px',
+              color: '#B8975A',
+              fontSize: '14px',
+              fontWeight: 700,
+              textDecoration: 'none',
+              fontFamily: 'var(--font-body)',
+              whiteSpace: 'nowrap',
+              flexShrink: 0,
+            }}>
+              Let&apos;s Discuss →
             </Link>
           </div>
         </div>
       </section>
 
       {/* Risk disclaimer */}
-      <section style={{ padding: '0 40px 48px' }}>
+      <section style={{ padding: '0 40px 32px' }}>
         <div style={{ maxWidth: 1060, margin: '0 auto', background: 'rgba(146,104,10,0.05)', border: '1px solid rgba(146,104,10,0.2)', borderRadius: 12, padding: '14px 20px' }}>
           <p style={{ fontSize: 12, color: 'var(--text3)', lineHeight: 1.6, fontFamily: 'var(--font-body)' }}>
             <strong style={{ color: '#92680A' }}>Risk Disclaimer: </strong>
@@ -257,9 +351,9 @@ export default function PricingPage() {
           </h2>
           {[
             { q: 'Can I cancel anytime?', a: 'Yes. Cancel anytime from your dashboard. No questions asked. Access continues until the end of your billing period.' },
-            { q: 'Is Pro per service or all services?', a: 'Pro is priced per service — ₹2,499/month for Intraday, or ₹2,499/month for Options. Elite at ₹6,999/month gives you access to all services.' },
+            { q: 'What is the difference between Basic and Pro?', a: 'Basic covers swing trade research — multi-day setups with written rationale. Pro adds daily intraday picks, options research, pre-market WhatsApp delivery, and a monthly strategy call with Sahib.' },
             { q: 'How are research picks delivered?', a: 'Via your dashboard in real time. Pro and Elite subscribers also get WhatsApp delivery before 9 AM for intraday calls.' },
-            { q: 'Is Sahib SEBI registered?', a: 'Yes. Sahib Singh Hora is a SEBI Registered Research Analyst (INH000026266). Verify on SEBI\'s official portal at sebi.gov.in.' },
+            { q: 'Is Sahib SEBI registered?', a: "Yes. Sahib Singh Hora is a SEBI Registered Research Analyst (INH000026266). Verify on SEBI's official portal at sebi.gov.in." },
             { q: 'Are returns guaranteed?', a: 'No. All investments in securities are subject to market risk. Past performance does not guarantee future returns.' },
           ].map((faq, i) => (
             <FAQItem key={i} q={faq.q} a={faq.a} />
