@@ -112,8 +112,8 @@ export default function AboutPage() {
             {/* Photo */}
             <div>
               <div style={{
-                position: 'relative', width: '100%', aspectRatio: '3/4',
-                borderRadius: '20px', overflow: 'hidden',
+                position: 'relative', width: '100%', minHeight: '600px',
+                borderRadius: '12px', overflow: 'hidden',
                 border: '2px solid rgba(255,255,255,0.08)',
                 boxShadow: '0 32px 80px rgba(0,0,0,0.4)',
               }}>
@@ -205,7 +205,7 @@ export default function AboutPage() {
               </div>
 
               <p style={{ fontSize: '16px', color: 'rgba(255,255,255,0.8)', lineHeight: 1.85, marginBottom: '18px', fontFamily: 'var(--font-body)' }}>
-                I built withSahib because the Indian stock market is drowning in unaccountable noise — Telegram tipsters with no regulatory registration, YouTube &quot;analysts&quot; calling themselves research analysts without SEBI authorisation, and paid advisory services operating without oversight.
+                I built withSahib to bring institutional-grade equity research to every serious market participant in India. Every recommendation I publish carries my SEBI registration number, my name, and my reasoning. That accountability is the foundation of everything here.
               </p>
               <p style={{ fontSize: '16px', color: 'rgba(255,255,255,0.6)', lineHeight: 1.85, marginBottom: '18px', fontFamily: 'var(--font-body)' }}>
                 I became a SEBI Registered Research Analyst under INH000026266 to build something structurally different: a research house where every recommendation carries a name, a registration number, and a regulatory consequence. Not a channel. A firm.

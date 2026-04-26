@@ -124,6 +124,8 @@ export default function MethodologyPage() {
         }
         .dark-section { background: #0A0A0A; }
         .dark .dark-section { background: #050505; }
+        html:not(.dark) .methodology-dark { background: #0A0A0A !important; color: #FAFAF7; }
+        html.dark .methodology-dark { background: #050505 !important; color: #FAFAF7; }
       `}</style>
 
       <Navbar />
@@ -411,7 +413,7 @@ export default function MethodologyPage() {
       </section>
 
       {/* ── PHILOSOPHY ────────────────────────────────────────────────── */}
-      <section className="dark-section" style={{ padding: '96px 40px', borderTop: '1px solid #1C1C1E' }}>
+      <section className="dark-section methodology-dark" style={{ padding: '96px 40px', borderTop: '1px solid #1C1C1E' }}>
         <div style={{ maxWidth: '860px', margin: '0 auto' }}>
           <div style={{ marginBottom: '56px', textAlign: 'center' }}>
             <h2 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: '#FAFAF7', lineHeight: 1.2 }}>

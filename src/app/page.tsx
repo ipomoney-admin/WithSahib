@@ -9,7 +9,7 @@ import { Footer } from '@/components/layout/Footer'
 import {
   TrendingUp, BarChart2, Target, RefreshCw, BookOpen, Calendar,
   Brain, Shield, ArrowRight, ChevronRight, Check,
-  Linkedin, Twitter, Instagram, Facebook, ShieldCheck
+  Linkedin, Twitter, Instagram, Facebook
 } from 'lucide-react'
 import { FALLBACK_DATA, type TickerItem } from '@/lib/utils/marketData'
 
@@ -320,30 +320,6 @@ function HeroSection() {
         <div className="hero-grid">
           {/* Left — copy */}
           <div>
-            {/* Tag */}
-            <div
-              className="animate-fade-up"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                background: 'rgba(26,122,74,0.07)',
-                border: '1px solid rgba(26,122,74,0.18)',
-                borderRadius: '20px',
-                padding: '6px 16px',
-                fontSize: '11px',
-                fontWeight: 600,
-                color: 'var(--green)',
-                letterSpacing: '1.5px',
-                marginBottom: '24px',
-                fontFamily: 'var(--font-body)',
-                textTransform: 'uppercase',
-              }}
-            >
-              <ShieldCheck size={13} strokeWidth={2.5} />
-              SEBI RA INH000026266
-            </div>
-
             {/* H1 */}
             <h1
               className="animate-fade-up-1"
