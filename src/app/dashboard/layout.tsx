@@ -12,6 +12,7 @@ import {
   LogOut, Menu, X, Sun, Moon, ChevronRight, User as UserIcon,
   Zap, Crown,
 } from 'lucide-react'
+import { LogoMark } from '@/components/ui/Logo'
 
 const NAV_ITEMS = [
   { label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard, tier: 'free' },
@@ -117,16 +118,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           flexShrink: 0,
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'flex-end', gap: '2px', height: '22px', flexShrink: 0 }}>
-          {[{ h: 8, op: .4 }, { h: 14, op: .7 }, { h: 20, op: 1 }].map((c, i) => (
-            <div key={i} style={{ width: '4px', height: `${c.h}px`, background: `rgba(0,200,150,${c.op})`, borderRadius: '2px' }} />
-          ))}
-          <div style={{ width: '5px', height: '5px', borderRadius: '50%', background: 'var(--emerald)', marginBottom: '1px', marginLeft: '1px', animation: 'pulseDot 2s ease-in-out infinite' }} />
-        </div>
+        <LogoMark size={24} animated={false} />
         {(sidebarOpen || mobile) && (
           <span style={{ fontSize: '16px', whiteSpace: 'nowrap' }}>
-            <span style={{ fontWeight: 300, color: 'var(--text)' }}>with</span>
-            <span style={{ fontWeight: 700, color: 'var(--emerald)' }}>Sahib</span>
+            <span style={{ fontFamily: 'Inter, system-ui, sans-serif', fontWeight: 400, color: 'var(--text)' }}>with</span>
+            <span style={{ fontFamily: '"Playfair Display", Georgia, serif', fontStyle: 'italic', fontWeight: 700, color: '#FF6B00' }}>Sahib</span>
           </span>
         )}
       </div>

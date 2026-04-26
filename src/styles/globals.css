@@ -112,6 +112,10 @@
 .dark-section { background: #0A0A0A; }
 .dark .dark-section { background: #050505; }
 
+/* Navbar "with" logo text — dark mode visibility */
+.navbar-logo-with { color: #0A0A0A; transition: color 0.3s ease; }
+.dark .navbar-logo-with { color: rgba(255, 255, 255, 0.85); }
+
 /* SEBI pill in dark mode */
 .dark .sebi-pill {
   background: #1C1C1E !important;
@@ -221,6 +225,9 @@ h1, h2, h3, h4, h5, h6 {
 .btn-primary {
   background: var(--orange);
   color: #FFFFFF;
+  font-weight: 700;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+  letter-spacing: 0.02em;
   box-shadow: var(--orange-glow);
   animation: pulse-btn 3s ease-in-out infinite;
 }

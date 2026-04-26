@@ -6,6 +6,55 @@ import { usePathname } from 'next/navigation'
 import { Menu, X } from 'lucide-react'
 import { LogoMark } from '@/components/ui/Logo'
 
+// ─── HIRING BAR ───────────────────────────────────────────────────────────────
+function HiringBar() {
+  const [dismissed, setDismissed] = useState<boolean | null>(null)
+
+  useEffect(() => {
+    setDismissed(localStorage.getItem('hiring_bar_dismissed') === '1')
+  }, [])
+
+  if (dismissed !== false) return null
+
+  return (
+    <div style={{
+      height: '36px', background: '#FF6B00',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      padding: '0 48px', position: 'relative', zIndex: 101, flexShrink: 0,
+    }}>
+      <p style={{
+        fontSize: '13px', fontWeight: 500, color: '#FFFFFF',
+        fontFamily: 'Inter, system-ui, sans-serif', textAlign: 'center',
+        whiteSpace: 'nowrap',
+      }}>
+        We&apos;re hiring —{' '}
+        <Link href="/work-with-us" style={{
+          color: '#FFFFFF', fontWeight: 700,
+          textDecoration: 'underline', textUnderlineOffset: '3px',
+        }}>
+          Join the team
+        </Link>
+      </p>
+      <button
+        onClick={() => {
+          localStorage.setItem('hiring_bar_dismissed', '1')
+          setDismissed(true)
+        }}
+        aria-label="Dismiss hiring bar"
+        style={{
+          position: 'absolute', right: '16px', top: '50%', transform: 'translateY(-50%)',
+          background: 'none', border: 'none', cursor: 'pointer',
+          color: 'rgba(255,255,255,0.8)', padding: '4px',
+          display: 'flex', alignItems: 'center',
+        }}
+      >
+        <X size={15} />
+      </button>
+    </div>
+  )
+}
+
+// ─── THEME TOGGLE ─────────────────────────────────────────────────────────────
 function ThemeToggle() {
   const [dark, setDark] = useState(false)
 
@@ -98,6 +147,7 @@ export function Navbar() {
   const pathname = usePathname()
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [dark, setDark] = useState(false)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
@@ -105,11 +155,24 @@ export function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  useEffect(() => {
+    const check = () => setDark(document.documentElement.classList.contains('dark'))
+    check()
+    const obs = new MutationObserver(check)
+    obs.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
+    return () => obs.disconnect()
+  }, [])
+
   const isActive = (href: string) =>
     pathname === href || pathname.startsWith(href.split('#')[0] + '/')
 
+  const navBg = scrolled
+    ? (dark ? 'rgba(10,10,10,0.97)' : 'rgba(250,250,248,0.95)')
+    : 'transparent'
+
   return (
     <>
+      <HiringBar />
       <nav
         style={{
           position: 'sticky',
@@ -122,9 +185,8 @@ export function Navbar() {
           padding: '0 40px',
           borderBottom: `1px solid ${scrolled ? 'var(--border)' : 'transparent'}`,
           backdropFilter: scrolled ? 'blur(16px)' : 'none',
-          backgroundColor: scrolled ? 'rgba(250,250,248,0.95)' : 'transparent',
+          backgroundColor: navBg,
           transition: 'all 0.3s ease',
-          background: scrolled ? undefined : 'transparent',
         }}
       >
         {/* Logo + SEBI pill */}
@@ -132,7 +194,7 @@ export function Navbar() {
           <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '10px' }} aria-label="withSahib homepage">
             <LogoMark size={26} animated={true} />
             <span style={{ fontSize: '20px', letterSpacing: '-0.3px' }}>
-              <span style={{ fontFamily: 'Inter, system-ui, sans-serif', color: '#0A0A0A', fontWeight: 400 }}>with</span>
+              <span className="navbar-logo-with" style={{ fontFamily: 'Inter, system-ui, sans-serif', fontWeight: 400 }}>with</span>
               <span style={{ fontFamily: '"Playfair Display", Georgia, serif', fontStyle: 'italic', fontWeight: 700, color: '#FF6B00' }}>Sahib</span>
             </span>
           </Link>

@@ -100,7 +100,7 @@ const FRAMEWORKS = [
 // ─── PAGE ─────────────────────────────────────────────────────────────────────
 export default function MethodologyPage() {
   return (
-    <div style={{ background: '#0A0A0A' }}>
+    <div style={{ background: 'var(--bg)' }}>
       <style>{`
         @keyframes dotScale {
           0%, 100% { transform: scale(1); }
@@ -112,14 +112,14 @@ export default function MethodologyPage() {
           100% { box-shadow: 0 0 0 0 rgba(255,107,0,0); }
         }
         .method-card {
-          background: #0D0D0D;
-          border: 1px solid #1C1C1E;
+          background: var(--surface);
+          border: 1px solid var(--border);
           border-radius: 16px;
           padding: 28px;
           transition: border-color 0.2s, background 0.2s;
         }
         .method-card:hover {
-          background: #111;
+          background: var(--bg2);
           border-color: rgba(255,107,0,0.45);
         }
         .dark-section { background: #0A0A0A; }
@@ -131,7 +131,7 @@ export default function MethodologyPage() {
       <Navbar />
 
       {/* ── HERO ──────────────────────────────────────────────────────── */}
-      <section style={{ padding: '96px 40px 80px', background: '#0A0A0A', position: 'relative', overflow: 'hidden' }}>
+      <section style={{ padding: '96px 40px 80px', background: 'var(--black)', position: 'relative', overflow: 'hidden' }}>
         <div style={{
           position: 'absolute', inset: 0,
           background: 'radial-gradient(ellipse 900px 500px at 60% 30%, rgba(255,107,0,0.05) 0%, transparent 65%)',
@@ -202,9 +202,9 @@ export default function MethodologyPage() {
 
       {/* ── PRINCIPLE BAR ─────────────────────────────────────────────── */}
       <div style={{
-        background: '#111111',
-        borderTop: '1px solid #1C1C1E',
-        borderBottom: '1px solid #1C1C1E',
+        background: 'var(--surface)',
+        borderTop: '1px solid var(--border)',
+        borderBottom: '1px solid var(--border)',
         padding: '0 40px',
         overflowX: 'auto',
       }}>
@@ -221,12 +221,12 @@ export default function MethodologyPage() {
             { n: '05', text: 'Written rationale, always' },
           ].map((p, i) => (
             <div key={i} style={{ display: 'flex', alignItems: 'center' }}>
-              {i > 0 && <span style={{ width: '1px', height: '40px', background: '#1C1C1E', margin: '0 24px', flexShrink: 0 }} />}
+              {i > 0 && <span style={{ width: '1px', height: '40px', background: 'var(--border2)', margin: '0 24px', flexShrink: 0 }} />}
               <div style={{ padding: '20px 0', display: 'flex', alignItems: 'center', gap: '10px', whiteSpace: 'nowrap' }}>
                 <span style={{ fontSize: '10px', fontWeight: 700, color: '#FF6B00', fontFamily: '"Courier New", monospace', letterSpacing: '0.5px' }}>
                   {p.n}
                 </span>
-                <span style={{ fontSize: '13px', color: '#8A8A8E', fontFamily: 'Inter, system-ui, sans-serif', fontWeight: 400 }}>
+                <span style={{ fontSize: '13px', color: 'var(--text3)', fontFamily: 'Inter, system-ui, sans-serif', fontWeight: 400 }}>
                   {p.text}
                 </span>
               </div>
@@ -236,7 +236,7 @@ export default function MethodologyPage() {
       </div>
 
       {/* ── PROCESS / TIMELINE ────────────────────────────────────────── */}
-      <section style={{ padding: '96px 40px', background: '#0A0A0A' }}>
+      <section style={{ padding: '96px 40px', background: 'var(--bg)' }}>
         <div style={{ maxWidth: '860px', margin: '0 auto' }}>
 
           {/* Section header */}
@@ -247,11 +247,11 @@ export default function MethodologyPage() {
                 The Process
               </span>
             </div>
-            <h2 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: 'clamp(32px,4.5vw,56px)', fontWeight: 700, color: '#FAFAF7', lineHeight: 1.1, marginBottom: '16px' }}>
+            <h2 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: 'clamp(32px,4.5vw,56px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.1, marginBottom: '16px' }}>
               Six filters.{' '}
               <em style={{ color: '#FF6B00', fontStyle: 'italic', fontWeight: 400 }}>Zero shortcuts.</em>
             </h2>
-            <p style={{ fontSize: '16px', color: '#6E6E73', lineHeight: 1.75, fontFamily: 'Inter, system-ui, sans-serif', maxWidth: '520px' }}>
+            <p style={{ fontSize: '16px', color: 'var(--text3)', lineHeight: 1.75, fontFamily: 'Inter, system-ui, sans-serif', maxWidth: '520px' }}>
               Each filter runs sequentially. A setup that fails Filter 2 never reaches Filter 3.
             </p>
           </div>
@@ -261,7 +261,7 @@ export default function MethodologyPage() {
             {/* Vertical line */}
             <div style={{
               position: 'absolute', left: '19px', top: '20px', bottom: '20px',
-              width: '2px', background: '#1C1C1E',
+              width: '2px', background: 'var(--border2)',
             }} />
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
@@ -271,8 +271,8 @@ export default function MethodologyPage() {
                   <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '20px' }}>
                     <div style={{
                       width: '14px', height: '14px', borderRadius: '50%',
-                      background: '#1C1C1E',
-                      border: '2px solid #3A3A3C',
+                      background: 'var(--surface2)',
+                      border: '2px solid var(--border2)',
                       flexShrink: 0, zIndex: 1, position: 'relative',
                       animation: `dotScale 2.5s ease-in-out ${i * 0.4}s infinite`,
                     }} />
@@ -280,7 +280,7 @@ export default function MethodologyPage() {
 
                   {/* Card */}
                   <div style={{
-                    background: '#0D0D0D', border: '1px solid #1C1C1E',
+                    background: 'var(--surface)', border: '1px solid var(--border)',
                     borderRadius: '16px', padding: '28px 32px',
                   }}>
                     {/* Header row */}
@@ -288,16 +288,16 @@ export default function MethodologyPage() {
                       <span style={{ fontSize: '10px', fontWeight: 700, color: '#FF6B00', letterSpacing: '2px', fontFamily: '"Courier New", monospace' }}>
                         {f.label}
                       </span>
-                      <span style={{ width: '1px', height: '12px', background: '#3A3A3C' }} />
-                      <span style={{ fontSize: '12px', color: '#6E6E73', fontFamily: 'Inter, system-ui, sans-serif', fontWeight: 500, letterSpacing: '0.5px' }}>
+                      <span style={{ width: '1px', height: '12px', background: 'var(--border2)' }} />
+                      <span style={{ fontSize: '12px', color: 'var(--text3)', fontFamily: 'Inter, system-ui, sans-serif', fontWeight: 500, letterSpacing: '0.5px' }}>
                         {f.context}
                       </span>
                     </div>
 
-                    <h3 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: '22px', fontWeight: 700, color: '#FAFAF7', marginBottom: '12px', lineHeight: 1.3 }}>
+                    <h3 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: '22px', fontWeight: 700, color: 'var(--text)', marginBottom: '12px', lineHeight: 1.3 }}>
                       {f.title}
                     </h3>
-                    <p style={{ fontSize: '14px', color: '#8A8A8E', lineHeight: 1.8, marginBottom: '20px', fontFamily: 'Inter, system-ui, sans-serif' }}>
+                    <p style={{ fontSize: '14px', color: 'var(--text2)', lineHeight: 1.8, marginBottom: '20px', fontFamily: 'Inter, system-ui, sans-serif' }}>
                       {f.body}
                     </p>
 
@@ -305,9 +305,9 @@ export default function MethodologyPage() {
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '16px' }}>
                       {f.tags.map(t => (
                         <span key={t} style={{
-                          padding: '3px 10px', background: 'rgba(255,255,255,0.04)',
-                          border: '1px solid #2C2C2E', borderRadius: '20px',
-                          fontSize: '11px', color: '#6E6E73', fontFamily: 'Inter, system-ui, sans-serif',
+                          padding: '3px 10px', background: 'var(--bg2)',
+                          border: '1px solid var(--border2)', borderRadius: '20px',
+                          fontSize: '11px', color: 'var(--text3)', fontFamily: 'Inter, system-ui, sans-serif',
                           fontWeight: 500,
                         }}>{t}</span>
                       ))}
@@ -315,8 +315,8 @@ export default function MethodologyPage() {
 
                     {/* Outcome */}
                     <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                      <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: f.outcomeOrange ? '#FF6B00' : '#3A3A3C', flexShrink: 0 }} />
-                      <span style={{ fontSize: '11px', fontWeight: 600, color: f.outcomeOrange ? '#FF6B00' : '#6E6E73', fontFamily: 'Inter, system-ui, sans-serif', letterSpacing: '0.3px' }}>
+                      <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: f.outcomeOrange ? '#FF6B00' : 'var(--border2)', flexShrink: 0 }} />
+                      <span style={{ fontSize: '11px', fontWeight: 600, color: f.outcomeOrange ? '#FF6B00' : 'var(--text3)', fontFamily: 'Inter, system-ui, sans-serif', letterSpacing: '0.3px' }}>
                         {f.outcome}
                       </span>
                     </div>
@@ -338,7 +338,7 @@ export default function MethodologyPage() {
 
                 {/* Published card — orange accent */}
                 <div style={{
-                  background: '#0D0D0D',
+                  background: 'var(--surface)',
                   border: '1px solid rgba(255,107,0,0.35)',
                   borderTop: '2px solid #FF6B00',
                   borderRadius: '16px', padding: '28px 32px',
@@ -347,23 +347,23 @@ export default function MethodologyPage() {
                     <span style={{ fontSize: '10px', fontWeight: 700, color: '#FF6B00', letterSpacing: '2px', fontFamily: '"Courier New", monospace' }}>
                       PUBLISHED
                     </span>
-                    <span style={{ width: '1px', height: '12px', background: '#3A3A3C' }} />
-                    <span style={{ fontSize: '12px', color: '#6E6E73', fontFamily: 'Inter, system-ui, sans-serif', fontWeight: 500 }}>
+                    <span style={{ width: '1px', height: '12px', background: 'var(--border2)' }} />
+                    <span style={{ fontSize: '12px', color: 'var(--text3)', fontFamily: 'Inter, system-ui, sans-serif', fontWeight: 500 }}>
                       Report Delivered
                     </span>
                   </div>
-                  <h3 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: '22px', fontWeight: 700, color: '#FAFAF7', marginBottom: '12px' }}>
+                  <h3 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: '22px', fontWeight: 700, color: 'var(--text)', marginBottom: '12px' }}>
                     Research Report Delivered
                   </h3>
-                  <p style={{ fontSize: '14px', color: '#8A8A8E', lineHeight: 1.8, marginBottom: '20px', fontFamily: 'Inter, system-ui, sans-serif' }}>
+                  <p style={{ fontSize: '14px', color: 'var(--text2)', lineHeight: 1.8, marginBottom: '20px', fontFamily: 'Inter, system-ui, sans-serif' }}>
                     Every surviving setup becomes a written research report: entry range, targets, stop-loss, risk-to-reward, and full written rationale. Published to the platform before market open. Pro and Elite subscribers receive WhatsApp alerts.
                   </p>
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', alignItems: 'center' }}>
                     <div style={{ padding: '6px 14px', background: 'rgba(255,107,0,0.1)', border: '1px solid rgba(255,107,0,0.25)', borderRadius: '20px' }}>
                       <span style={{ fontSize: '12px', fontWeight: 700, color: '#FF6B00', fontFamily: 'Inter, system-ui, sans-serif' }}>1–3 reports / day</span>
                     </div>
-                    <div style={{ padding: '6px 14px', background: 'rgba(255,255,255,0.04)', border: '1px solid #2C2C2E', borderRadius: '20px' }}>
-                      <span style={{ fontSize: '12px', color: '#8A8A8E', fontFamily: 'Inter, system-ui, sans-serif' }}>Named · Timestamped · Logged</span>
+                    <div style={{ padding: '6px 14px', background: 'var(--bg2)', border: '1px solid var(--border2)', borderRadius: '20px' }}>
+                      <span style={{ fontSize: '12px', color: 'var(--text3)', fontFamily: 'Inter, system-ui, sans-serif' }}>Named · Timestamped · Logged</span>
                     </div>
                   </div>
                 </div>
@@ -374,7 +374,7 @@ export default function MethodologyPage() {
       </section>
 
       {/* ── FRAMEWORKS ────────────────────────────────────────────────── */}
-      <section style={{ padding: '96px 40px', background: '#0D0D0D', borderTop: '1px solid #1C1C1E' }}>
+      <section style={{ padding: '96px 40px', background: 'var(--bg2)', borderTop: '1px solid var(--border)' }}>
         <div style={{ maxWidth: '960px', margin: '0 auto' }}>
           <div style={{ marginBottom: '56px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
@@ -383,7 +383,7 @@ export default function MethodologyPage() {
                 Named Frameworks
               </span>
             </div>
-            <h2 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: 'clamp(28px,4vw,48px)', fontWeight: 700, color: '#FAFAF7', lineHeight: 1.15 }}>
+            <h2 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: 'clamp(28px,4vw,48px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.15 }}>
               Named methods.{' '}
               <em style={{ color: '#FF6B00', fontStyle: 'italic', fontWeight: 400 }}>Proven foundations.</em>
             </h2>
@@ -394,16 +394,16 @@ export default function MethodologyPage() {
               <div key={i} className="method-card">
                 <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '12px', gap: '8px' }}>
                   <div>
-                    <h3 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: '18px', fontWeight: 700, color: '#FAFAF7', marginBottom: '4px' }}>
+                    <h3 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: '18px', fontWeight: 700, color: 'var(--text)', marginBottom: '4px' }}>
                       {fw.name}
                     </h3>
-                    <p style={{ fontSize: '11px', color: '#6E6E73', fontFamily: 'Inter, system-ui, sans-serif' }}>{fw.origin}</p>
+                    <p style={{ fontSize: '11px', color: 'var(--text3)', fontFamily: 'Inter, system-ui, sans-serif' }}>{fw.origin}</p>
                   </div>
                   <span style={{ padding: '3px 10px', background: 'rgba(255,107,0,0.08)', border: '1px solid rgba(255,107,0,0.2)', borderRadius: '20px', fontSize: '10px', fontWeight: 700, color: '#FF6B00', fontFamily: 'Inter, system-ui, sans-serif', whiteSpace: 'nowrap', flexShrink: 0 }}>
                     {fw.filter}
                   </span>
                 </div>
-                <p style={{ fontSize: '13px', color: '#8A8A8E', lineHeight: 1.75, fontFamily: 'Inter, system-ui, sans-serif' }}>
+                <p style={{ fontSize: '13px', color: 'var(--text2)', lineHeight: 1.75, fontFamily: 'Inter, system-ui, sans-serif' }}>
                   {fw.desc}
                 </p>
               </div>

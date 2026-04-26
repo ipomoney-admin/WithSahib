@@ -9,7 +9,7 @@ import { Footer } from '@/components/layout/Footer'
 import {
   TrendingUp, BarChart2, Target, RefreshCw, BookOpen, Calendar,
   Brain, Shield, ArrowRight, ChevronRight, Check,
-  Linkedin, Twitter, Instagram, Facebook
+  Linkedin, Twitter, Instagram, Facebook, X as CloseIcon
 } from 'lucide-react'
 import { FALLBACK_DATA, type TickerItem } from '@/lib/utils/marketData'
 
@@ -170,6 +170,118 @@ function useInView(_threshold = 0.15) {
 }
 
 // ─── MAIN PAGE ────────────────────────────────────────────────────────────────
+// ─── 1-ON-1 LEARNING POPUP ────────────────────────────────────────────────────
+function LearningPopup() {
+  const [show, setShow] = useState(false)
+
+  useEffect(() => {
+    const lastSeen = localStorage.getItem('learning_popup_seen')
+    if (lastSeen && Date.now() - parseInt(lastSeen, 10) < 24 * 60 * 60 * 1000) return
+    const t = setTimeout(() => setShow(true), 4000)
+    return () => clearTimeout(t)
+  }, [])
+
+  function close() {
+    localStorage.setItem('learning_popup_seen', String(Date.now()))
+    setShow(false)
+  }
+
+  if (!show) return null
+
+  return (
+    <div
+      style={{
+        position: 'fixed', inset: 0, zIndex: 500,
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        padding: '20px',
+        background: 'rgba(0,0,0,0.5)',
+        backdropFilter: 'blur(4px)',
+      }}
+      onClick={close}
+    >
+      <div
+        style={{
+          width: '100%', maxWidth: '460px',
+          background: 'var(--bg)',
+          border: '1px solid var(--border2)',
+          borderRadius: '20px',
+          padding: '36px 32px',
+          position: 'relative',
+          boxShadow: '0 24px 60px rgba(0,0,0,0.18)',
+        }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          onClick={close}
+          aria-label="Close"
+          style={{
+            position: 'absolute', top: '16px', right: '16px',
+            background: 'none', border: 'none', cursor: 'pointer',
+            color: 'var(--text3)', padding: '4px',
+            display: 'flex', alignItems: 'center',
+          }}
+        >
+          <CloseIcon size={18} />
+        </button>
+
+        <div style={{
+          display: 'inline-flex', alignItems: 'center', gap: '8px',
+          background: 'rgba(255,107,0,0.08)', border: '1px solid rgba(255,107,0,0.2)',
+          borderRadius: '20px', padding: '5px 14px',
+          fontSize: '10px', fontWeight: 700, letterSpacing: '2px',
+          color: 'var(--orange)', textTransform: 'uppercase',
+          fontFamily: 'var(--font-body)', marginBottom: '20px',
+        }}>
+          PERSONALISED LEARNING
+        </div>
+
+        <h2 style={{
+          fontFamily: 'var(--font-heading)',
+          fontSize: '28px', fontWeight: 700, lineHeight: 1.15,
+          color: 'var(--text)', marginBottom: '12px',
+        }}>
+          Learn how to read<br />
+          <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>markets properly.</em>
+        </h2>
+
+        <p style={{ fontSize: '14px', color: 'var(--text2)', lineHeight: 1.75, marginBottom: '8px', fontFamily: 'var(--font-body)' }}>
+          1-on-1 sessions with Sahib Singh Hora — SEBI RA INH000026266. Systematic analysis, not tips.
+        </p>
+        <p style={{ fontSize: '13px', color: 'var(--text3)', marginBottom: '28px', fontFamily: 'var(--font-body)' }}>
+          From ₹1,999 / session · Book any time
+        </p>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          <Link
+            href="/appointments"
+            onClick={close}
+            style={{
+              display: 'block', textAlign: 'center',
+              padding: '13px 24px', background: 'var(--orange)', color: '#FFFFFF',
+              borderRadius: '10px', fontSize: '14px', fontWeight: 700,
+              textDecoration: 'none', fontFamily: 'var(--font-body)',
+              textShadow: '0 1px 2px rgba(0,0,0,0.12)', letterSpacing: '0.02em',
+            }}
+          >
+            Book a 1-on-1 Session →
+          </Link>
+          <button
+            onClick={close}
+            style={{
+              padding: '12px 24px', background: 'transparent',
+              border: '1px solid var(--border2)', color: 'var(--text3)',
+              borderRadius: '10px', fontSize: '14px', cursor: 'pointer',
+              fontFamily: 'var(--font-body)',
+            }}
+          >
+            Maybe later
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export default function HomePage() {
   return (
     <div style={{ background: 'var(--bg)' }}>
@@ -187,6 +299,7 @@ export default function HomePage() {
       <CTASection />
       <BookingBanner />
       <Footer />
+      <LearningPopup />
     </div>
   )
 }

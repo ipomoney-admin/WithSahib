@@ -77,13 +77,33 @@ function CountUp({ target, suffix = '', duration = 1800 }: { target: number; suf
 export default function AboutPage() {
   return (
     <div style={{ background: 'var(--bg)' }}>
+      <style>{`
+        .about-hero { background: #F5F3EE; }
+        .dark .about-hero { background: #0A0A0A; }
+        .about-hero-name { color: #0A0A0A; }
+        .dark .about-hero-name { color: #FFFFFF; }
+        .about-hero-p1 { color: rgba(0,0,0,0.8); }
+        .dark .about-hero-p1 { color: rgba(255,255,255,0.8); }
+        .about-hero-p2 { color: rgba(0,0,0,0.55); }
+        .dark .about-hero-p2 { color: rgba(255,255,255,0.6); }
+        .about-hero-stat-grid { background: rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.08); }
+        .dark .about-hero-stat-grid { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.07); }
+        .about-hero-stat-cell { background: rgba(0,0,0,0.03); }
+        .dark .about-hero-stat-cell { background: rgba(255,255,255,0.02); }
+        .about-hero-stat-label { color: rgba(0,0,0,0.4); }
+        .dark .about-hero-stat-label { color: rgba(255,255,255,0.35); }
+        .about-hero-social { background: rgba(0,0,0,0.05); border-color: rgba(0,0,0,0.1); color: rgba(0,0,0,0.5); }
+        .dark .about-hero-social { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.5); }
+        .about-sebi-badge { background: rgba(212,168,67,0.12); color: #7A5900; border-color: rgba(212,168,67,0.3); }
+        .dark .about-sebi-badge { background: rgba(212,168,67,0.15); color: #D4A843; border-color: rgba(212,168,67,0.25); }
+      `}</style>
       <Navbar />
 
       {/* ── HERO: PHOTO FIRST ──────────────────────────────────── */}
       <section
+        className="about-hero"
         style={{
           padding: '80px 40px',
-          background: 'var(--black)',
           position: 'relative',
           overflow: 'hidden',
         }}
@@ -139,12 +159,13 @@ export default function AboutPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={label}
+                    className="about-hero-social"
                     style={{
                       display: 'flex', alignItems: 'center', gap: '8px',
                       padding: '8px 14px',
-                      background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)',
+                      border: '1px solid',
                       borderRadius: '8px', textDecoration: 'none',
-                      color: 'rgba(255,255,255,0.5)', fontSize: '12px',
+                      fontSize: '12px',
                       fontFamily: 'var(--font-body)', fontWeight: 500,
                       transition: 'color 0.2s, border-color 0.2s',
                     }}
@@ -154,9 +175,7 @@ export default function AboutPage() {
                       el.style.borderColor = 'rgba(255,107,0,0.3)'
                     }}
                     onMouseLeave={(e) => {
-                      const el = e.currentTarget as HTMLAnchorElement
-                      el.style.color = 'rgba(255,255,255,0.5)'
-                      el.style.borderColor = 'rgba(255,255,255,0.1)'
+                      e.currentTarget.removeAttribute('style')
                     }}
                   >
                     {icon}
@@ -179,11 +198,11 @@ export default function AboutPage() {
               </div>
 
               <h1
+                className="about-hero-name"
                 style={{
                   fontFamily: 'var(--font-heading)',
                   fontSize: 'clamp(36px, 4.5vw, 60px)',
                   fontWeight: 700,
-                  color: '#FFFFFF',
                   lineHeight: 1.05,
                   marginBottom: '12px',
                 }}
@@ -192,32 +211,31 @@ export default function AboutPage() {
               </h1>
 
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '28px' }}>
-                <span style={{
-                  background: 'rgba(212,168,67,0.15)', color: '#D4A843',
+                <span className="about-sebi-badge" style={{
                   fontFamily: 'var(--font-mono)', fontSize: '12px', fontWeight: 600,
-                  padding: '3px 10px', borderRadius: '4px', border: '1px solid rgba(212,168,67,0.25)',
+                  padding: '3px 10px', borderRadius: '4px', border: '1px solid',
                 }}>
                   INH000026266
                 </span>
-                <span style={{ fontSize: '13px', color: 'rgba(255,255,255,0.5)', fontFamily: 'var(--font-body)' }}>
+                <span className="about-hero-p2" style={{ fontSize: '13px', fontFamily: 'var(--font-body)' }}>
                   SEBI Registered Research Analyst
                 </span>
               </div>
 
-              <p style={{ fontSize: '16px', color: 'rgba(255,255,255,0.8)', lineHeight: 1.85, marginBottom: '18px', fontFamily: 'var(--font-body)' }}>
+              <p className="about-hero-p1" style={{ fontSize: '16px', lineHeight: 1.85, marginBottom: '18px', fontFamily: 'var(--font-body)' }}>
                 I built withSahib to bring institutional-grade equity research to every serious market participant in India. Every recommendation I publish carries my SEBI registration number, my name, and my reasoning. That accountability is the foundation of everything here.
               </p>
-              <p style={{ fontSize: '16px', color: 'rgba(255,255,255,0.6)', lineHeight: 1.85, marginBottom: '18px', fontFamily: 'var(--font-body)' }}>
+              <p className="about-hero-p2" style={{ fontSize: '16px', lineHeight: 1.85, marginBottom: '18px', fontFamily: 'var(--font-body)' }}>
                 I became a SEBI Registered Research Analyst under INH000026266 to build something structurally different: a research house where every recommendation carries a name, a registration number, and a regulatory consequence. Not a channel. A firm.
               </p>
-              <p style={{ fontSize: '16px', color: 'rgba(255,255,255,0.6)', lineHeight: 1.85, fontFamily: 'var(--font-body)' }}>
+              <p className="about-hero-p2" style={{ fontSize: '16px', lineHeight: 1.85, fontFamily: 'var(--font-body)' }}>
                 My market philosophy is simple: process over instinct. A systematic, repeatable methodology — multi-timeframe technical analysis, fundamental validation, defined risk-to-reward — applied consistently every single trading day for 14+ years.
               </p>
 
-              <div style={{
+              <div className="about-hero-stat-grid" style={{
                 display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)',
-                gap: '1px', background: 'rgba(255,255,255,0.07)',
-                border: '1px solid rgba(255,255,255,0.07)', borderRadius: '12px',
+                gap: '1px',
+                borderRadius: '12px',
                 overflow: 'hidden', marginTop: '36px',
               }}>
                 {[
@@ -225,7 +243,7 @@ export default function AboutPage() {
                   { num: 6, suffix: ' Layers', label: 'Before Any Recommendation' },
                   { num: 14, suffix: '+ Yrs', label: 'Market Experience' },
                 ].map((s, i) => (
-                  <div key={i} style={{ padding: '20px 18px', background: 'rgba(255,255,255,0.02)' }}>
+                  <div key={i} className="about-hero-stat-cell" style={{ padding: '20px 18px' }}>
                     <div style={{
                       fontFamily: 'var(--font-heading)', fontStyle: 'italic',
                       fontSize: '28px', fontWeight: 700, color: '#FF6B00', lineHeight: 1,
@@ -233,7 +251,7 @@ export default function AboutPage() {
                     }}>
                       <CountUp target={s.num} suffix={s.suffix} />
                     </div>
-                    <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.35)', letterSpacing: '0.5px', fontFamily: 'var(--font-body)' }}>
+                    <div className="about-hero-stat-label" style={{ fontSize: '11px', letterSpacing: '0.5px', fontFamily: 'var(--font-body)' }}>
                       {s.label}
                     </div>
                   </div>

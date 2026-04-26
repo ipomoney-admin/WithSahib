@@ -22,15 +22,18 @@ const FOOTER_LINKS = {
     { label: 'Disclaimer', href: '/disclaimer' },
     { label: 'Refund Policy', href: '/refund-policy' },
     { label: 'MITC', href: '/mitc' },
-    { label: 'Disclosure', href: '/disclosure' },
-    { label: 'Investor Charter', href: '/investor-charter' },
-    { label: 'File a Complaint', href: '/complaints' },
-    { label: 'Grievance Redressal', href: '/grievance-redressal' },
-    { label: 'SMART ODR', href: '/smart-odr' },
-    { label: 'Terminology', href: '/terminology' },
-    { label: 'SEBI Verification', href: 'https://www.sebi.gov.in/sebiweb/other/OtherAction.do?doRecognisedFpi=yes&intmId=14', target: '_blank' },
   ],
 }
+
+const LEGAL_STRIP = [
+  { label: 'Disclosure', href: '/disclosure' },
+  { label: 'Investor Charter', href: '/investor-charter' },
+  { label: 'File a Complaint', href: '/complaints' },
+  { label: 'Grievance Redressal', href: '/grievance-redressal' },
+  { label: 'SMART ODR', href: '/smart-odr' },
+  { label: 'Terminology', href: '/terminology' },
+  { label: 'Verify on SEBI.gov.in →', href: 'https://www.sebi.gov.in/sebiweb/other/OtherAction.do?doRecognisedFpi=yes&intmId=14', target: '_blank' },
+]
 
 export function Footer() {
   return (
@@ -187,6 +190,27 @@ export function Footer() {
           <p style={{ fontSize: '11px', color: '#48484A', marginTop: '8px', fontFamily: 'var(--font-body)' }}>
             Compliance Officer: Sahib Singh Hora · sahib13singh13@gmail.com
           </p>
+          <div style={{ marginTop: '12px', display: 'flex', flexWrap: 'wrap', gap: '4px 0', alignItems: 'center' }}>
+            {LEGAL_STRIP.map((link, i) => (
+              <span key={link.href} style={{ display: 'flex', alignItems: 'center' }}>
+                {i > 0 && <span style={{ color: '#2C2C2E', margin: '0 10px', fontSize: '10px' }}>·</span>}
+                <Link
+                  href={link.href}
+                  target={(link as any).target}
+                  rel={(link as any).target === '_blank' ? 'noopener noreferrer' : undefined}
+                  style={{
+                    fontSize: '11px', color: '#3A3A3C',
+                    textDecoration: 'none', fontFamily: 'var(--font-body)',
+                    transition: 'color 0.2s',
+                  }}
+                  onMouseEnter={(e) => ((e.target as HTMLElement).style.color = 'rgba(255,255,255,0.5)')}
+                  onMouseLeave={(e) => ((e.target as HTMLElement).style.color = '#3A3A3C')}
+                >
+                  {link.label}
+                </Link>
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </footer>
