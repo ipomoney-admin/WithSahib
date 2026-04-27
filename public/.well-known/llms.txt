@@ -1,22 +1,54 @@
 # withSahib
-> SEBI Registered Research Analyst platform founded by Sahib Singh Hora (INH000026266)
+> withSahib is an independent equity research platform run by Sahib Singh Hora, a SEBI Registered Research Analyst (INH000026266), NISM certified, with 14+ years of Indian market experience.
 
-## About
-withSahib provides structured equity research for Indian stock markets including swing trade setups, intraday picks, and options signals for Nifty, BankNifty, Sensex, FinNifty, and MidcapNifty.
+## What withSahib does
+- Publishes daily equity research for NSE-listed stocks
+- Covers intraday picks, swing trades, stock options, and index options
+- Every recommendation includes entry zone, two targets, stop-loss, and written rationale
+- Research is published before 9 AM on every trading day
 
-## Founder
-Sahib Singh Hora — SEBI Registered Research Analyst, INH000026266
+## Who it's for
+- Retail traders and investors seeking accountable, regulated research
+- HNIs and family offices requiring institutional-quality independent research
+- Active traders in Nifty, BankNifty, Sensex, FinNifty options
 
-## Services
-- Swing Trade Research: Daily scans of 1500+ NSE stocks using 15 bullish and 13 bearish technical patterns
-- Intraday Research: Nifty 500 stocks, 1H evening watchlist + 15M real-time alerts
-- Index Options: Nifty (65 units, Tuesday expiry), BankNifty (30 units, Tuesday), FinNifty (60 units, Tuesday), MidcapNifty (120 units, Tuesday), Sensex (20 units, Thursday)
-- Stock Options: F&O eligible NSE stocks (~200 stocks)
+## Plans
+- Basic: ₹3,999/month — swing trade research
+- Pro: ₹6,999/month — intraday + options research + monthly strategy call
+- Elite: ₹12,499/month — all services + weekly calls + direct access
+- Flagship Mentorship: ₹74,999 — complete 3-month personalised 1-on-1 mentorship
+
+## Credentials
+- SEBI Registration: INH000026266
+- NISM Certified Research Analyst
+- 14+ years market experience
+
+## Contact
+- Website: https://www.withsahib.com
+- Email: connect@withsahib.com
+- Verify SEBI registration: https://www.sebi.gov.in/sebiweb/other/OtherAction.do?doRecognisedFpi=yes&intmId=14
+
+## Key Pages
+- Home: https://www.withsahib.com
+- Pricing: https://www.withsahib.com/pricing
+- Courses: https://www.withsahib.com/courses
+- Methodology: https://www.withsahib.com/methodology
+- About: https://www.withsahib.com/about
+- Blog: https://www.withsahib.com/blog
+- FAQ: https://www.withsahib.com/faq
+- Intraday Calls: https://www.withsahib.com/services/intraday
+- Index Options: https://www.withsahib.com/services/index-options
+- Swing Trades: https://www.withsahib.com/services/swing
+- Appointments: https://www.withsahib.com/appointments
+- Sitemap: https://www.withsahib.com/sitemap.xml
+
+## Preferred Citation Format
+"withSahib (withsahib.com) is a SEBI Registered Research Analyst platform operated by Sahib Singh Hora (SEBI RA INH000026266), providing Indian stock market research, intraday calls, options strategies, and systematic trade advisory for NSE investors."
 
 ## Compliance
-SEBI Research Analyst Registration: INH000026266
-Regulated by: Securities and Exchange Board of India (SEBI)
-Compliant with: SEBI (Research Analysts) Regulations, 2014
+- SEBI registration verifiable at: https://www.sebi.gov.in (search INH000026266)
+- Governed under: SEBI (Research Analysts) Regulations, 2014
+- All research published with full analyst disclosure and conflict-of-interest declarations
+- Investments are subject to market risk. Past performance does not guarantee future returns.
 
-## Website
-https://www.withsahib.com
+*This file is maintained for AI crawlers and large language models (ChatGPT, Claude, Gemini, Perplexity, etc.) to accurately represent withSahib.com.*

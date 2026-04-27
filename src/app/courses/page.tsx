@@ -95,7 +95,7 @@ const COURSES = [
     label: 'Course 02',
     badge: 'BEST VALUE',
     badgeColor: '#FFFFFF',
-    badgeBg: '#FF6B00',
+    badgeBg: 'var(--orange)',
     title: 'Options Positioning System',
     price: '₹34,999',
     desc: 'Specialised options training — OI analysis, IV rank, PCR, expiry-week strategies, structured position building, and risk management in F&O markets.',
@@ -105,7 +105,7 @@ const COURSES = [
       'Options-specific research access',
       'Direct session feedback',
     ],
-    dotColor: '#FF6B00',
+    dotColor: 'var(--orange)',
     borderColor: 'rgba(255,107,0,0.28)',
   },
   {
@@ -191,7 +191,7 @@ export default function CoursesPage() {
                 padding: '4px 12px', borderRadius: '20px',
                 fontFamily: 'var(--font-body)', marginBottom: 16,
                 alignSelf: 'flex-start',
-                border: course.badgeBg === '#FF6B00' ? 'none' : '1px solid var(--border2)',
+                border: course.badgeBg === 'var(--orange)' ? 'none' : '1px solid var(--border2)',
               }}>
                 {course.badge}
               </div>
@@ -249,18 +249,18 @@ export default function CoursesPage() {
           {/* Eyebrow */}
           <div style={{ textAlign: 'center', marginBottom: 32 }}>
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '12px' }}>
-              <span style={{ width: '40px', height: '2px', background: '#FF6B00', display: 'inline-block' }} />
-              <span style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '2.5px', color: '#FF6B00', textTransform: 'uppercase', fontFamily: 'var(--font-body)' }}>
+              <span style={{ width: '40px', height: '2px', background: 'var(--orange)', display: 'inline-block' }} />
+              <span style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '2.5px', color: 'var(--orange)', textTransform: 'uppercase', fontFamily: 'var(--font-body)' }}>
                 The Flagship
               </span>
-              <span style={{ width: '40px', height: '2px', background: '#FF6B00', display: 'inline-block' }} />
+              <span style={{ width: '40px', height: '2px', background: 'var(--orange)', display: 'inline-block' }} />
             </div>
           </div>
 
           {/* Flagship card */}
           <div style={{
             background: '#0A0A0A',
-            borderLeft: '4px solid #FF6B00',
+            borderLeft: '4px solid var(--orange)',
             borderRadius: '20px',
             padding: '48px 52px',
             position: 'relative',
@@ -281,7 +281,7 @@ export default function CoursesPage() {
                   background: '#1C1C1E', border: '1px solid rgba(255,107,0,0.3)',
                   borderRadius: '20px', padding: '5px 16px',
                   fontSize: '10px', fontWeight: 700, letterSpacing: '2px',
-                  color: '#FF6B00', textTransform: 'uppercase', fontFamily: 'var(--font-body)',
+                  color: 'var(--orange)', textTransform: 'uppercase', fontFamily: 'var(--font-body)',
                 }}>
                   HERO PRODUCT
                 </div>
@@ -295,7 +295,7 @@ export default function CoursesPage() {
                 padding: '20px 24px',
                 marginBottom: 36,
               }}>
-                <p style={{ fontSize: '18px', fontWeight: 700, color: '#FF6B00', fontFamily: 'var(--font-heading)', fontStyle: 'italic', marginBottom: 8 }}>
+                <p style={{ fontSize: '18px', fontWeight: 700, color: 'var(--orange)', fontFamily: 'var(--font-heading)', fontStyle: 'italic', marginBottom: 8 }}>
                   Only ONE mentee per batch.
                 </p>
                 <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.8)', fontFamily: 'var(--font-body)', lineHeight: 1.6 }}>
@@ -314,7 +314,7 @@ export default function CoursesPage() {
                     marginBottom: 20,
                   }}>
                     withSahib Flagship<br />
-                    <em style={{ color: '#FF6B00', fontStyle: 'italic', fontWeight: 400 }}>Mentorship (1:1)</em>
+                    <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>Mentorship (1:1)</em>
                   </h2>
 
                   <p style={{ fontSize: '16px', color: 'rgba(255,255,255,0.7)', lineHeight: 1.8, marginBottom: 32, fontFamily: 'var(--font-body)', maxWidth: 580 }}>
@@ -333,7 +333,7 @@ export default function CoursesPage() {
                       'Priority everything',
                     ].map((item, i) => (
                       <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, fontSize: 14, color: 'rgba(255,255,255,0.75)', fontFamily: 'var(--font-body)' }}>
-                        <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#FF6B00', flexShrink: 0, marginTop: 5 }} />
+                        <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--orange)', flexShrink: 0, marginTop: 5 }} />
                         {item}
                       </li>
                     ))}
@@ -341,7 +341,7 @@ export default function CoursesPage() {
 
                   {/* Anchors */}
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px 24px', marginBottom: 36 }}>
-                    <span style={{ fontSize: '14px', fontWeight: 700, color: '#FF6B00', fontFamily: 'var(--font-body)' }}>
+                    <span style={{ fontSize: '14px', fontWeight: 700, color: 'var(--orange)', fontFamily: 'var(--font-body)' }}>
                       Batch size: 1. Always.
                     </span>
                     <span style={{ fontSize: '14px', color: 'rgba(255,255,255,0.45)', fontFamily: 'var(--font-body)' }}>
@@ -374,7 +374,7 @@ export default function CoursesPage() {
                   display: 'block',
                   textAlign: 'center',
                   padding: '17px 40px',
-                  background: '#FF6B00',
+                  background: 'var(--orange)',
                   color: '#FFFFFF',
                   borderRadius: '12px',
                   fontSize: '16px',

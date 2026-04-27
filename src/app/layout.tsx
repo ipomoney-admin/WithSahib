@@ -334,6 +334,7 @@ export default function RootLayout({
         <meta name="msvalidate.01" content={process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION ?? 'BING_PLACEHOLDER'} />
         {/* AI crawler reference — https://llmstxt.org */}
         <link rel="alternate" type="text/plain" title="LLM Reference" href="/llms.txt" />
+        <link rel="alternate" type="text/plain" title="LLM Reference" href="/.well-known/llms.txt" />
         {structuredData.map((schema, i) => (
           <script
             key={i}

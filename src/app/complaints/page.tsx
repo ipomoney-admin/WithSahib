@@ -51,9 +51,35 @@ export default function ComplaintsPage() {
   const [form, setForm] = useState({
     name: '', email: '', phone: '', type: '', description: '', date: '',
   })
+  const [loading, setLoading] = useState(false)
+  const [submitted, setSubmitted] = useState<{ referenceId: string } | null>(null)
+  const [submitError, setSubmitError] = useState('')
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+  }
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    setLoading(true)
+    setSubmitError('')
+    try {
+      const res = await fetch('/api/complaints', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        setSubmitError(data.error ?? 'Submission failed. Please email connect@withsahib.com directly.')
+      } else {
+        setSubmitted({ referenceId: data.referenceId })
+      }
+    } catch {
+      setSubmitError('Network error. Please email connect@withsahib.com directly.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -91,7 +117,18 @@ export default function ComplaintsPage() {
             <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 22, fontWeight: 700, color: 'var(--text)', marginBottom: 28 }}>
               Submit a Complaint
             </h2>
-            <form style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+            {submitted ? (
+              <div style={{ padding: '32px', textAlign: 'center', background: 'rgba(0,200,150,0.05)', border: '1px solid rgba(0,200,150,0.2)', borderRadius: 12 }}>
+                <p style={{ fontSize: 20, fontWeight: 600, color: 'var(--emerald)', marginBottom: 8 }}>Complaint Received</p>
+                <p style={{ fontSize: 14, color: 'var(--text2)', lineHeight: 1.7, marginBottom: 16 }}>
+                  Your complaint has been filed. We will respond within 30 days as per SEBI guidelines.
+                </p>
+                <p style={{ fontFamily: 'Courier New, monospace', fontSize: 13, color: 'var(--text3)' }}>
+                  Reference: <strong style={{ color: 'var(--text)' }}>{submitted.referenceId}</strong>
+                </p>
+              </div>
+            ) : (
+            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
                 <div>
                   <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: 'var(--text3)', letterSpacing: 1, textTransform: 'uppercase', marginBottom: 8 }}>Name *</label>
@@ -127,10 +164,16 @@ export default function ComplaintsPage() {
                 <input className="input" type="date" name="date" value={form.date} onChange={handleChange} />
               </div>
 
-              <Button type="submit" variant="primary" style={{ alignSelf: 'flex-start' }}>
-                Submit Complaint
+              {submitError && (
+                <p style={{ fontSize: 13, color: 'var(--coral, #f47b7b)', lineHeight: 1.6 }}>
+                  {submitError}
+                </p>
+              )}
+              <Button type="submit" variant="primary" style={{ alignSelf: 'flex-start', opacity: loading ? 0.7 : 1 }}>
+                {loading ? 'Submitting…' : 'Submit Complaint'}
               </Button>
             </form>
+            )}
           </div>
 
           {/* Escalation Levels */}
