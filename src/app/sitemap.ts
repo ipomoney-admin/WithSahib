@@ -1,66 +1,52 @@
 import { MetadataRoute } from 'next'
 import { POSTS } from '@/lib/data/posts'
 
-const BASE_URL = 'https://www.withsahib.com'
+const base = 'https://www.withsahib.com'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date()
 
   const blogEntries: MetadataRoute.Sitemap = POSTS.map((post) => ({
-    url: `${BASE_URL}/blog/${post.slug}`,
+    url: `${base}/blog/${post.slug}`,
     lastModified: new Date(post.date),
     changeFrequency: 'monthly',
     priority: 0.75,
   }))
 
   return [
-    // Core
-    { url: BASE_URL,                              lastModified: now, changeFrequency: 'daily',   priority: 1.0 },
-    { url: `${BASE_URL}/pricing`,                 lastModified: now, changeFrequency: 'weekly',  priority: 0.95 },
+    // Core pages
+    { url: base,                                  lastModified: now, changeFrequency: 'daily',   priority: 1.00 },
+    { url: `${base}/pricing`,                     lastModified: now, changeFrequency: 'weekly',  priority: 0.95 },
+    { url: `${base}/about`,                       lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
+    { url: `${base}/methodology`,                 lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
+    { url: `${base}/who-its-for`,                 lastModified: now, changeFrequency: 'monthly', priority: 0.80 },
+    { url: `${base}/courses`,                     lastModified: now, changeFrequency: 'weekly',  priority: 0.90 },
+    { url: `${base}/blog`,                        lastModified: now, changeFrequency: 'daily',   priority: 0.85 },
+    { url: `${base}/contact`,                     lastModified: now, changeFrequency: 'monthly', priority: 0.70 },
+    { url: `${base}/work-with-us`,                lastModified: now, changeFrequency: 'monthly', priority: 0.60 },
+    { url: `${base}/appointments`,                lastModified: now, changeFrequency: 'weekly',  priority: 0.80 },
+    { url: `${base}/faq`,                         lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
 
-    // Services — all individually indexed for AEO
-    { url: `${BASE_URL}/services`,                lastModified: now, changeFrequency: 'weekly',  priority: 0.9 },
-    { url: `${BASE_URL}/services/intraday`,       lastModified: now, changeFrequency: 'daily',   priority: 0.95 },
-    { url: `${BASE_URL}/services/stock-options`,  lastModified: now, changeFrequency: 'weekly',  priority: 0.9 },
-    { url: `${BASE_URL}/services/index-options`,  lastModified: now, changeFrequency: 'weekly',  priority: 0.9 },
-    { url: `${BASE_URL}/services/swing`,          lastModified: now, changeFrequency: 'weekly',  priority: 0.88 },
+    // Services
+    { url: `${base}/services`,                    lastModified: now, changeFrequency: 'weekly',  priority: 0.88 },
+    { url: `${base}/services/intraday`,           lastModified: now, changeFrequency: 'weekly',  priority: 0.88 },
+    { url: `${base}/services/stock-options`,      lastModified: now, changeFrequency: 'weekly',  priority: 0.85 },
+    { url: `${base}/services/index-options`,      lastModified: now, changeFrequency: 'weekly',  priority: 0.85 },
+    { url: `${base}/services/swing`,              lastModified: now, changeFrequency: 'weekly',  priority: 0.85 },
 
-    // Research & content
-    { url: `${BASE_URL}/reports`,                 lastModified: now, changeFrequency: 'daily',   priority: 0.85 },
-    { url: `${BASE_URL}/research`,                lastModified: now, changeFrequency: 'weekly',  priority: 0.8 },
-    { url: `${BASE_URL}/performance`,             lastModified: now, changeFrequency: 'weekly',  priority: 0.8 },
-    { url: `${BASE_URL}/blog`,                    lastModified: now, changeFrequency: 'weekly',  priority: 0.8 },
-
-    // Info
-    { url: `${BASE_URL}/faq`,                     lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
-    { url: `${BASE_URL}/about`,                   lastModified: now, changeFrequency: 'monthly', priority: 0.75 },
-    { url: `${BASE_URL}/appointments`,            lastModified: now, changeFrequency: 'weekly',  priority: 0.78 },
-    { url: `${BASE_URL}/courses`,                 lastModified: now, changeFrequency: 'monthly', priority: 0.72 },
-    { url: `${BASE_URL}/contact`,                 lastModified: now, changeFrequency: 'monthly', priority: 0.65 },
-
-    // Auth
-    { url: `${BASE_URL}/auth/register`,           lastModified: now, changeFrequency: 'yearly',  priority: 0.5 },
-    { url: `${BASE_URL}/auth/login`,              lastModified: now, changeFrequency: 'yearly',  priority: 0.4 },
-
-    // Discovery & engagement
-    { url: `${BASE_URL}/methodology`,             lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE_URL}/who-its-for`,             lastModified: now, changeFrequency: 'monthly', priority: 0.75 },
-    { url: `${BASE_URL}/work-with-us`,            lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
-
-    // Legal & compliance
-    { url: `${BASE_URL}/complaints`,              lastModified: now, changeFrequency: 'yearly',  priority: 0.4 },
-    { url: `${BASE_URL}/disclosure`,              lastModified: now, changeFrequency: 'yearly',  priority: 0.4 },
-    { url: `${BASE_URL}/investor-charter`,        lastModified: now, changeFrequency: 'yearly',  priority: 0.4 },
-    { url: `${BASE_URL}/refund-policy`,           lastModified: now, changeFrequency: 'yearly',  priority: 0.4 },
-    { url: `${BASE_URL}/grievance-redressal`,     lastModified: now, changeFrequency: 'yearly',  priority: 0.4 },
-    { url: `${BASE_URL}/smart-odr`,               lastModified: now, changeFrequency: 'yearly',  priority: 0.3 },
-    { url: `${BASE_URL}/mitc`,                    lastModified: now, changeFrequency: 'yearly',  priority: 0.3 },
-    { url: `${BASE_URL}/terminology`,             lastModified: now, changeFrequency: 'yearly',  priority: 0.35 },
-    { url: `${BASE_URL}/privacy-policy`,          lastModified: now, changeFrequency: 'yearly',  priority: 0.4 },
-    { url: `${BASE_URL}/terms-of-service`,        lastModified: now, changeFrequency: 'yearly',  priority: 0.4 },
-    { url: `${BASE_URL}/disclaimer`,              lastModified: now, changeFrequency: 'yearly',  priority: 0.4 },
+    // Statutory
+    { url: `${base}/investor-charter`,            lastModified: now, changeFrequency: 'yearly',  priority: 0.50 },
+    { url: `${base}/complaints`,                  lastModified: now, changeFrequency: 'monthly', priority: 0.55 },
+    { url: `${base}/disclosure`,                  lastModified: now, changeFrequency: 'monthly', priority: 0.55 },
+    { url: `${base}/refund-policy`,               lastModified: now, changeFrequency: 'monthly', priority: 0.50 },
+    { url: `${base}/grievance-redressal`,         lastModified: now, changeFrequency: 'monthly', priority: 0.55 },
+    { url: `${base}/smart-odr`,                   lastModified: now, changeFrequency: 'monthly', priority: 0.50 },
+    { url: `${base}/mitc`,                        lastModified: now, changeFrequency: 'monthly', priority: 0.50 },
+    { url: `${base}/terminology`,                 lastModified: now, changeFrequency: 'monthly', priority: 0.65 },
+    { url: `${base}/privacy-policy`,              lastModified: now, changeFrequency: 'yearly',  priority: 0.40 },
+    { url: `${base}/terms-of-service`,            lastModified: now, changeFrequency: 'yearly',  priority: 0.40 },
+    { url: `${base}/disclaimer`,                  lastModified: now, changeFrequency: 'yearly',  priority: 0.40 },
 
     ...blogEntries,
-    // Brand page intentionally excluded (noindex)
   ]
 }

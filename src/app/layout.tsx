@@ -30,11 +30,11 @@ const BASE_URL = 'https://www.withsahib.com'
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: 'withSahib — Systematic Equity Research | SEBI RA INH000026266',
+    default: 'withSahib — SEBI Registered Research Analyst | Equity Research India',
     template: '%s | withSahib',
   },
   description:
-    'Sahib Singh Hora, SEBI Registered Research Analyst (INH000026266). Institutional-grade intraday calls, NSE swing trades, index options, research reports & 1-on-1 advisory for serious Indian investors.',
+    'Daily equity research from Sahib Singh Hora, SEBI Registered Research Analyst (INH000026266). Intraday picks, swing trades, options research with entry, targets, stop-loss and written rationale.',
   keywords: [
     'SEBI registered research analyst India',
     'SEBI RA INH000026266',
@@ -75,10 +75,10 @@ export const metadata: Metadata = {
       'Systematic equity research by Sahib Singh Hora, SEBI RA INH000026266. Intraday calls, swing trades, index options, research reports — documented methodology, full written rationale on every recommendation.',
     images: [
       {
-        url: '/og-image.png',
+        url: '/og-home.jpg',
         width: 1200,
         height: 630,
-        alt: 'withSahib — SEBI Registered Research Analyst Sahib Singh Hora INH000026266',
+        alt: 'withSahib — SEBI Registered Equity Research | INH000026266',
       },
     ],
   },
@@ -86,10 +86,10 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     site: '@WithSahib_',
     creator: '@WithSahib_',
-    title: 'withSahib — Systematic Equity Research | SEBI RA INH000026266',
+    title: 'withSahib — SEBI Registered Research Analyst | Equity Research India',
     description:
-      'Systematic equity research by SEBI RA INH000026266 · Sahib Singh Hora · Documented methodology, written rationale, full accountability on every recommendation.',
-    images: ['/og-image.png'],
+      'Daily equity research from SEBI RA INH000026266 · Sahib Singh Hora · Intraday picks, swing trades, options research with entry, targets, stop-loss and written rationale.',
+    images: ['/og-home.jpg'],
   },
   manifest: '/manifest.json',
   icons: {

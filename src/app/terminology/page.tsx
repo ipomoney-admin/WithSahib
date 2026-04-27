@@ -4,9 +4,16 @@ import { BookingBanner } from '@/components/layout/BookingBanner'
 import { Footer } from '@/components/layout/Footer'
 
 export const metadata: Metadata = {
-  title: 'Research Terminology — withSahib',
-  description: 'Plain-English definitions of terms used in withSahib research notes. Entry Zone, Stop Loss, R:R, OI, PCR, IV Rank, EMA, Wyckoff Accumulation, and more.',
+  title: 'Stock Market Terminology Explained | withSahib',
+  description:
+    'Plain English definitions of R:R, Stop Loss, PCR, OI, IV Rank, EMA, Wyckoff, and other terms used in withSahib equity research. Learn what every term means before you trade.',
   alternates: { canonical: 'https://www.withsahib.com/terminology' },
+  openGraph: {
+    url: 'https://www.withsahib.com/terminology',
+    title: 'Stock Market Terminology Explained | withSahib',
+    description:
+      'Plain English definitions of trading and research terms — Entry Zone, Stop Loss, PCR, OI, IV Rank, EMA, and more.',
+  },
 }
 
 const TERMS: { term: string; definition: string }[] = [

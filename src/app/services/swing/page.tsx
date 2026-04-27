@@ -5,14 +5,14 @@ import { BookingBanner } from '@/components/layout/BookingBanner'
 import { Footer } from '@/components/layout/Footer'
 
 export const metadata: Metadata = {
-  title: 'Swing Trades — 2–10 Day NSE Stock Picks',
+  title: 'Swing Trade Research — 2-10 Day NSE Setups | withSahib',
   description:
-    'Swing trade picks by SEBI RA Sahib Singh Hora (INH000026266). 3–5 NSE positional trade ideas per week — chart pattern breakouts, volume confirmation, full entry/target/SL. Basic plan.',
+    'Swing trade research by SEBI RA Sahib Singh Hora (INH000026266). 3–5 NSE positional setups per week — bull flags, breakouts, volume confirmation, full entry/target/SL. Available on Basic plan.',
   alternates: { canonical: 'https://www.withsahib.com/services/swing' },
   openGraph: {
-    title: 'Swing Trades — NSE Positional Picks | withSahib SEBI RA',
-    description: '2–10 day swing trade picks by SEBI RA Sahib Singh Hora. Bull flags, breakouts, positional entries for NSE stocks. Available on Basic plan.',
     url: 'https://www.withsahib.com/services/swing',
+    title: 'Swing Trade Research — 2-10 Day NSE Setups | withSahib',
+    description: '2–10 day swing trade picks by SEBI RA Sahib Singh Hora. Bull flags, breakouts, positional entries for NSE stocks. Basic plan and above.',
   },
 }
 

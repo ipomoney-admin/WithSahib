@@ -5,10 +5,16 @@ import { BookingBanner } from '@/components/layout/BookingBanner'
 import { Footer } from '@/components/layout/Footer'
 
 export const metadata: Metadata = {
-  title: "Who It's For — withSahib SEBI RA Research",
+  title: 'Who Is withSahib Research For? | Retail, HNI & Institutional',
   description:
-    'withSahib is built for active traders, swing traders, long-term investors, and HNI family offices who want accountable, SEBI-registered equity research — not anonymous tips.',
+    'withSahib equity research is built for serious retail traders, active investors, HNIs, family offices, and institutional participants who want SEBI-registered, accountable research — not anonymous tips.',
   alternates: { canonical: 'https://www.withsahib.com/who-its-for' },
+  openGraph: {
+    url: 'https://www.withsahib.com/who-its-for',
+    title: 'Who Is withSahib Research For? | Retail, HNI & Institutional',
+    description:
+      'Serious retail traders, HNIs, family offices — SEBI-registered equity research for investors who demand accountability.',
+  },
 }
 
 const SEGMENTS = [

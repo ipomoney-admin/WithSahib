@@ -5,21 +5,15 @@ import { BookingBanner } from '@/components/layout/BookingBanner'
 import { Footer } from '@/components/layout/Footer'
 
 export const metadata: Metadata = {
-  title: 'FAQ — withSahib | SEBI Registered Research Analyst INH000026266',
+  title: 'Frequently Asked Questions | withSahib Research',
   description:
-    'Answers to all questions about withSahib, SEBI registered research analyst Sahib Singh Hora, swing trading, intraday picks, options signals, and Indian stock market research.',
+    'Common questions about withSahib research subscriptions, SEBI registration, methodology, plans, and how calls are published. SEBI RA INH000026266.',
   alternates: { canonical: 'https://www.withsahib.com/faq' },
   openGraph: {
-    title: 'FAQ — withSahib | SEBI Registered Research Analyst INH000026266',
+    title: 'Frequently Asked Questions | withSahib Research',
     description:
-      'Answers to all questions about withSahib, SEBI registered research analyst Sahib Singh Hora, swing trading, intraday picks, options signals, and Indian stock market research.',
+      'Common questions about withSahib research subscriptions, SEBI registration, methodology, plans, and how calls are published.',
     url: 'https://www.withsahib.com/faq',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'FAQ — withSahib | SEBI Registered Research Analyst INH000026266',
-    description:
-      'Answers to all questions about withSahib, SEBI RA Sahib Singh Hora (INH000026266), swing trading, intraday picks, and options signals.',
   },
 }
 
@@ -247,7 +241,7 @@ const FAQ_SECTIONS = [
     items: [
       {
         q: 'How much does withSahib subscription cost?',
-        a: 'There are 4 plans: Free (₹0/month) — signal previews and basic dashboard; Basic (₹999/month) — swing trades, model portfolio, courses; Pro (₹2,499/month) — all signals + research reports + 1 session/month; Elite (₹5,999/month) — everything in Pro plus unlimited sessions, priority WhatsApp alerts, and HNI research. Annual billing saves 8–15%. Visit withsahib.com/pricing for current offers.',
+        a: 'There are 4 plans: Free (₹0/month) — signal previews and basic dashboard; Basic (₹3,999/month) — swing trades, model portfolio, courses; Pro (₹6,999/month) — all signals + research reports + 1 strategy call/month; Elite (₹12,499/month) — everything in Pro plus weekly calls, priority WhatsApp alerts, and direct analyst access. Annual billing saves up to 15%. Visit withsahib.com/pricing for current offers.',
       },
       {
         q: 'Is there a free trial available?',

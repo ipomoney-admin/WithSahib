@@ -133,6 +133,30 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
           <strong style={{ color: 'var(--gold)' }}>Risk Disclaimer: </strong>
           Investments in securities market are subject to market risks. Research Analyst: Sahib Singh Hora · SEBI RA INH000026266 · withSahib.com
         </div>
+
+        {/* CTA */}
+        <div style={{ marginTop: 40, padding: '32px', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '16px', textAlign: 'center' }}>
+          <p style={{ fontSize: '13px', fontWeight: 600, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: '12px' }}>
+            Want research like this, every trading day?
+          </p>
+          <p style={{ fontSize: '16px', color: 'var(--text)', marginBottom: '24px', lineHeight: 1.6 }}>
+            Daily intraday picks, swing trades, and options calls — with entry zone, targets, stop-loss, and written rationale. By SEBI RA INH000026266.
+          </p>
+          <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <Link
+              href="/pricing"
+              style={{ padding: '11px 24px', background: '#FF6B00', color: '#fff', borderRadius: '10px', fontWeight: 600, fontSize: '14px', textDecoration: 'none' }}
+            >
+              See Plans — from ₹3,999/mo
+            </Link>
+            <Link
+              href="/courses"
+              style={{ padding: '11px 24px', border: '1px solid var(--border)', color: 'var(--text2)', borderRadius: '10px', fontWeight: 600, fontSize: '14px', textDecoration: 'none' }}
+            >
+              Explore Courses
+            </Link>
+          </div>
+        </div>
       </section>
 
       {/* Related posts */}

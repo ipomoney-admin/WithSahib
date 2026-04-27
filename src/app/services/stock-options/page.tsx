@@ -5,14 +5,14 @@ import { BookingBanner } from '@/components/layout/BookingBanner'
 import { Footer } from '@/components/layout/Footer'
 
 export const metadata: Metadata = {
-  title: 'Stock Options Advisory — Weekly & Monthly Strategies',
+  title: 'Stock Options Research — F&O Recommendations | withSahib',
   description:
-    'SEBI RA Sahib Singh Hora (INH000026266) publishes weekly and monthly stock options strategies — strike selection, premium targets, and risk-defined setups for NSE-listed equities.',
+    'SEBI RA Sahib Singh Hora (INH000026266) publishes weekly and monthly stock options research — strike selection, premium targets, and risk-defined setups for NSE F&O eligible stocks.',
   alternates: { canonical: 'https://www.withsahib.com/services/stock-options' },
   openGraph: {
-    title: 'Stock Options Advisory — withSahib SEBI RA',
-    description: 'Weekly & monthly stock options strategies by SEBI RA Sahib Singh Hora INH000026266. Strike selection, premium targets, defined-risk setups.',
     url: 'https://www.withsahib.com/services/stock-options',
+    title: 'Stock Options Research — F&O Recommendations | withSahib',
+    description: 'Weekly & monthly stock options strategies by SEBI RA INH000026266. Strike selection, premium targets, defined-risk setups.',
   },
 }
 

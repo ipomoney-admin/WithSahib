@@ -1,5 +1,8 @@
 export const dynamic = 'force-dynamic'
 
+import type { Metadata } from 'next'
+export const metadata: Metadata = { robots: { index: false, follow: false } }
+
 import Link from 'next/link'
 import { cookies } from 'next/headers'
 import { createServerComponentClient, createServiceRoleClient } from '@/lib/supabase/server'

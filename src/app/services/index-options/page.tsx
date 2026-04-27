@@ -5,14 +5,14 @@ import { BookingBanner } from '@/components/layout/BookingBanner'
 import { Footer } from '@/components/layout/Footer'
 
 export const metadata: Metadata = {
-  title: 'Index Options Advisory — Nifty & Bank Nifty Calls',
+  title: 'Index Options Research — Nifty BankNifty Sensex | withSahib',
   description:
-    'Nifty and Bank Nifty options calls by SEBI RA Sahib Singh Hora (INH000026266). OI analysis, PCR-based directional calls, and expiry day strategies for Indian index options traders.',
+    'Nifty, BankNifty, and Sensex options research by SEBI RA Sahib Singh Hora (INH000026266). OI analysis, PCR-based directional calls, and expiry-week strategies for serious Indian options traders.',
   alternates: { canonical: 'https://www.withsahib.com/services/index-options' },
   openGraph: {
-    title: 'Index Options — Nifty & Bank Nifty | withSahib SEBI RA',
-    description: 'Nifty options signals today and Bank Nifty calls by SEBI RA INH000026266. OI analysis, PCR signals, expiry strategies.',
     url: 'https://www.withsahib.com/services/index-options',
+    title: 'Index Options Research — Nifty BankNifty Sensex | withSahib',
+    description: 'Nifty & BankNifty options calls by SEBI RA INH000026266. OI analysis, PCR signals, expiry strategies — every week.',
   },
 }
 
