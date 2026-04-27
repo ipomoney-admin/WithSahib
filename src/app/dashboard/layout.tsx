@@ -10,20 +10,20 @@ import {
   LayoutDashboard, TrendingUp, BarChart2, Target, RefreshCw,
   PieChart, Calendar, BookOpen, FileText, Bell, Settings,
   LogOut, Menu, X, Sun, Moon, ChevronRight, User as UserIcon,
-  Zap, Crown,
+  Zap, Crown, Shield,
 } from 'lucide-react'
 import { LogoMark } from '@/components/ui/Logo'
 
 const NAV_ITEMS = [
   { label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard, tier: 'free' },
-  { label: 'Intraday Calls', href: '/services/intraday', icon: TrendingUp, tier: 'pro', badge: 'Live' },
-  { label: 'Stock Options', href: '/services/stock-options', icon: BarChart2, tier: 'pro' },
-  { label: 'Index Options', href: '/services/index-options', icon: Target, tier: 'pro' },
-  { label: 'Swing Trades', href: '/services/swing', icon: RefreshCw, tier: 'basic', badge: 'New' },
-  { label: 'Model Portfolio', href: '/portfolio', icon: PieChart, tier: 'basic' },
-  { label: 'Research Reports', href: '/reports', icon: FileText, tier: 'pro' },
-  { label: 'Appointments', href: '/appointments', icon: Calendar, tier: 'pro' },
-  { label: 'Courses', href: '/courses', icon: BookOpen, tier: 'basic' },
+  { label: 'Intraday Calls', href: '/dashboard/intraday', icon: TrendingUp, tier: 'pro', badge: 'Live' },
+  { label: 'Stock Options', href: '/dashboard/stock-options', icon: BarChart2, tier: 'pro' },
+  { label: 'Index Options', href: '/dashboard/index-options', icon: Target, tier: 'pro' },
+  { label: 'Swing Trades', href: '/dashboard/swing', icon: RefreshCw, tier: 'basic', badge: 'New' },
+  { label: 'Model Portfolio', href: '/dashboard/model-portfolio', icon: PieChart, tier: 'basic' },
+  { label: 'Research Reports', href: '/dashboard/research-reports', icon: FileText, tier: 'pro' },
+  { label: 'Appointments', href: '/appointments', icon: Calendar, tier: 'free' },
+  { label: 'Courses', href: '/courses', icon: BookOpen, tier: 'free' },
 ]
 
 const TIER_ORDER: Record<string, number> = { free: 0, basic: 1, pro: 2, elite: 3 }
@@ -190,7 +190,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           return (
             <Link
               key={item.href}
-              href={accessible ? item.href : '/pricing'}
+              href={item.href}
               className={`sidebar-link ${active ? 'active' : ''}`}
               style={{
                 opacity: accessible ? 1 : 0.5,
@@ -220,22 +220,25 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
       {/* Bottom actions */}
       <div style={{ padding: '8px 8px 16px', borderTop: '1px solid var(--border)' }}>
-        {[
-          { icon: Settings, label: 'Settings', href: '/settings' },
-        ].map((item) => {
-          const Icon = item.icon
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="sidebar-link"
-              style={{ justifyContent: sidebarOpen || mobile ? 'flex-start' : 'center', marginBottom: '2px' }}
-            >
-              <Icon size={17} strokeWidth={1.5} />
-              {(sidebarOpen || mobile) && <span>{item.label}</span>}
-            </Link>
-          )
-        })}
+        <Link
+          href="/settings"
+          className="sidebar-link"
+          style={{ justifyContent: sidebarOpen || mobile ? 'flex-start' : 'center', marginBottom: '2px' }}
+        >
+          <Settings size={17} strokeWidth={1.5} />
+          {(sidebarOpen || mobile) && <span>Settings</span>}
+        </Link>
+        {isAdminUser && !viewingAsUser && (
+          <Link
+            href="/admin"
+            className="sidebar-link"
+            style={{ justifyContent: sidebarOpen || mobile ? 'flex-start' : 'center', marginBottom: '2px', color: 'var(--gold)' }}
+            title={!sidebarOpen && !mobile ? 'Admin Panel' : undefined}
+          >
+            <Shield size={17} strokeWidth={1.5} />
+            {(sidebarOpen || mobile) && <span>Admin Panel</span>}
+          </Link>
+        )}
         <button
           onClick={handleLogout}
           className="sidebar-link"

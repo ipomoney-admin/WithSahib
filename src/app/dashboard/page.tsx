@@ -128,7 +128,14 @@ export default async function DashboardPage() {
   // Time-based greeting in IST
   const nowIST = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }))
   const h = nowIST.getHours()
-  const greeting = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening'
+  const { text: greetingText, emoji: greetingEmoji } =
+    h >= 5 && h < 12 ? { text: 'Good morning', emoji: '☀️' } :
+    h >= 12 && h < 17 ? { text: 'Good afternoon', emoji: '🌤️' } :
+    h >= 17 && h < 21 ? { text: 'Good evening', emoji: '🌆' } :
+    { text: 'Good night', emoji: '🌙' }
+
+  const initials = displayName.split(' ').filter(Boolean).slice(0, 2).map((n: string) => n[0]).join('').toUpperCase() || 'U'
+  const isFounder = adminUser && !viewingAsUser
 
   const tierLevel = { free: 0, basic: 1, pro: 2, elite: 3 }[userTier]
   const isProPlus = tierLevel >= 2
@@ -162,10 +169,26 @@ export default async function DashboardPage() {
 
       {/* Header */}
       <div style={{ marginBottom: '32px' }}>
-        <p style={{ fontSize: '13px', color: 'var(--text3)', marginBottom: '4px' }}>{greeting},</p>
-        <h1 style={{ fontFamily: 'Playfair Display, serif', fontSize: '32px', fontWeight: 400, color: 'var(--text)', marginBottom: '8px' }}>
-          {displayName} 👋
-        </h1>
+        <p style={{ fontSize: '13px', color: 'var(--text3)', marginBottom: '12px' }}>{greetingEmoji} {greetingText},</p>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '8px' }}>
+          {/* Avatar */}
+          <div style={{ position: 'relative', display: 'inline-block', flexShrink: 0 }}>
+            <div style={{
+              width: 48, height: 48, borderRadius: '50%',
+              background: 'linear-gradient(135deg, #FF6B00, #C45200)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              boxShadow: '0 0 16px rgba(255,107,0,0.35)',
+            }}>
+              <span style={{ color: 'white', fontFamily: 'Inter, system-ui, sans-serif', fontWeight: 700, fontSize: 16 }}>{initials}</span>
+            </div>
+            {isFounder && (
+              <div style={{ position: 'absolute', top: -6, right: -4, fontSize: 14 }}>👑</div>
+            )}
+          </div>
+          <h1 style={{ fontFamily: 'Playfair Display, serif', fontSize: '32px', fontWeight: 400, color: 'var(--text)', margin: 0 }}>
+            {displayName}
+          </h1>
+        </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
           <span style={{
             fontSize: '11px', fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase',
