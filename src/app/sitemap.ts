@@ -42,6 +42,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/auth/register`,           lastModified: now, changeFrequency: 'yearly',  priority: 0.5 },
     { url: `${BASE_URL}/auth/login`,              lastModified: now, changeFrequency: 'yearly',  priority: 0.4 },
 
+    // Discovery & engagement
+    { url: `${BASE_URL}/methodology`,             lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${BASE_URL}/who-its-for`,             lastModified: now, changeFrequency: 'monthly', priority: 0.75 },
+    { url: `${BASE_URL}/work-with-us`,            lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
+
+    // Legal & compliance
+    { url: `${BASE_URL}/complaints`,              lastModified: now, changeFrequency: 'yearly',  priority: 0.4 },
+    { url: `${BASE_URL}/disclosure`,              lastModified: now, changeFrequency: 'yearly',  priority: 0.4 },
+    { url: `${BASE_URL}/investor-charter`,        lastModified: now, changeFrequency: 'yearly',  priority: 0.4 },
+    { url: `${BASE_URL}/refund-policy`,           lastModified: now, changeFrequency: 'yearly',  priority: 0.4 },
+    { url: `${BASE_URL}/grievance-redressal`,     lastModified: now, changeFrequency: 'yearly',  priority: 0.4 },
+    { url: `${BASE_URL}/smart-odr`,               lastModified: now, changeFrequency: 'yearly',  priority: 0.3 },
+    { url: `${BASE_URL}/mitc`,                    lastModified: now, changeFrequency: 'yearly',  priority: 0.3 },
+    { url: `${BASE_URL}/terminology`,             lastModified: now, changeFrequency: 'yearly',  priority: 0.35 },
+    { url: `${BASE_URL}/privacy-policy`,          lastModified: now, changeFrequency: 'yearly',  priority: 0.4 },
+    { url: `${BASE_URL}/terms-of-service`,        lastModified: now, changeFrequency: 'yearly',  priority: 0.4 },
+    { url: `${BASE_URL}/disclaimer`,              lastModified: now, changeFrequency: 'yearly',  priority: 0.4 },
+
     ...blogEntries,
     // Brand page intentionally excluded (noindex)
   ]

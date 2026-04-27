@@ -63,7 +63,7 @@ export const metadata: Metadata = {
   category: 'Finance',
   classification: 'Financial Research & Advisory',
   alternates: {
-    canonical: BASE_URL,
+    canonical: '/',
   },
   openGraph: {
     type: 'website',
@@ -276,9 +276,9 @@ const structuredData = [
       name: 'Advisory Plans',
       itemListElement: [
         { '@type': 'Offer', name: 'Free Plan', price: '0', priceCurrency: 'INR' },
-        { '@type': 'Offer', name: 'Basic Plan', price: '999', priceCurrency: 'INR' },
-        { '@type': 'Offer', name: 'Pro Plan', price: '2499', priceCurrency: 'INR' },
-        { '@type': 'Offer', name: 'Elite Plan', price: '5999', priceCurrency: 'INR' },
+        { '@type': 'Offer', name: 'Basic Plan', price: '3999', priceCurrency: 'INR' },
+        { '@type': 'Offer', name: 'Pro Plan', price: '6999', priceCurrency: 'INR' },
+        { '@type': 'Offer', name: 'Elite Plan', price: '12499', priceCurrency: 'INR' },
       ],
     },
   },
@@ -337,7 +337,7 @@ const structuredData = [
         name: 'How to subscribe to withSahib trading signals?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'To subscribe to withSahib signals: (1) Visit withsahib.com/auth/register and create a free account. (2) Go to withsahib.com/pricing and choose a plan — Free (₹0), Basic (₹999/mo), Pro (₹2,499/mo), or Elite (₹5,999/mo). (3) Pro and Elite plans unlock intraday calls, options strategies, and research reports on your dashboard. All plans include a free tier to start.',
+          text: 'To subscribe to withSahib signals: (1) Visit withsahib.com/auth/register and create a free account. (2) Go to withsahib.com/pricing and choose a plan — Free (₹0), Basic (₹3,999/mo), Pro (₹6,999/mo), or Elite (₹12,499/mo). (3) Pro and Elite plans unlock intraday calls, options strategies, and research reports on your dashboard. All plans include a free tier to start.',
         },
       },
       {

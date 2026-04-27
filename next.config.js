@@ -34,6 +34,12 @@ const nextConfig = {
   }),
   async redirects() {
     return [
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'withsahib.com' }],
+        destination: 'https://www.withsahib.com/:path*',
+        permanent: true,
+      },
       { source: '/track-record', destination: '/blog', permanent: true },
       { source: '/learn', destination: '/courses', permanent: true },
     ]
