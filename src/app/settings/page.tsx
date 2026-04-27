@@ -66,7 +66,7 @@ export default function SettingsPage() {
                   background: tab === t.id ? 'rgba(0,200,150,0.08)' : 'transparent',
                   color: tab === t.id ? 'var(--emerald)' : 'var(--text3)',
                   cursor: 'pointer', fontSize: '14px', fontWeight: tab === t.id ? 500 : 400,
-                  fontFamily: 'Outfit, sans-serif', textAlign: 'left', transition: 'all 0.15s',
+                  fontFamily: 'Inter, system-ui, sans-serif', textAlign: 'left', transition: 'all 0.15s',
                 }}
               >
                 <Icon size={16} strokeWidth={1.5} />
@@ -147,7 +147,7 @@ export default function SettingsPage() {
               {user?.tier !== 'free' && (
                 <div style={{ padding: '14px 16px', background: 'rgba(244,123,123,0.04)', border: '1px solid rgba(244,123,123,0.12)', borderRadius: '10px' }}>
                   <p style={{ fontSize: '13px', color: 'var(--text2)', marginBottom: '8px' }}>Need to cancel your subscription?</p>
-                  <button style={{ fontSize: '13px', color: 'var(--coral)', background: 'none', border: '1px solid rgba(244,123,123,0.2)', borderRadius: '8px', padding: '7px 14px', cursor: 'pointer', fontFamily: 'Outfit, sans-serif' }}>
+                  <button style={{ fontSize: '13px', color: 'var(--coral)', background: 'none', border: '1px solid rgba(244,123,123,0.2)', borderRadius: '8px', padding: '7px 14px', cursor: 'pointer', fontFamily: 'Inter, system-ui, sans-serif' }}>
                     Cancel subscription
                   </button>
                 </div>
@@ -200,7 +200,7 @@ export default function SettingsPage() {
                 <div style={{ padding: '16px 18px', background: 'rgba(244,123,123,0.04)', border: '1px solid rgba(244,123,123,0.12)', borderRadius: '12px' }}>
                   <p style={{ fontSize: '14px', fontWeight: 500, color: 'var(--text)', marginBottom: '6px' }}>Delete Account</p>
                   <p style={{ fontSize: '13px', color: 'var(--text3)', marginBottom: '12px' }}>This will permanently delete your account and all data. This cannot be undone.</p>
-                  <button style={{ fontSize: '13px', color: 'var(--coral)', background: 'none', border: '1px solid rgba(244,123,123,0.2)', borderRadius: '8px', padding: '7px 14px', cursor: 'pointer', fontFamily: 'Outfit, sans-serif' }}>
+                  <button style={{ fontSize: '13px', color: 'var(--coral)', background: 'none', border: '1px solid rgba(244,123,123,0.2)', borderRadius: '8px', padding: '7px 14px', cursor: 'pointer', fontFamily: 'Inter, system-ui, sans-serif' }}>
                     Delete my account
                   </button>
                 </div>

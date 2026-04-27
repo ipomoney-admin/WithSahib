@@ -92,7 +92,7 @@ export default function Error({
             fontWeight: 600,
             fontSize: 14,
             cursor: 'pointer',
-            fontFamily: 'Outfit, sans-serif',
+            fontFamily: 'Inter, system-ui, sans-serif',
           }}
         >
           Try again

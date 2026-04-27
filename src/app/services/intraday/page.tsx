@@ -112,7 +112,7 @@ function CallCard({ signal, blur }: { signal: Signal; blur?: boolean }) {
         {signal.rationale && (
           <button
             onClick={() => setExpanded(!expanded)}
-            style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '12px', color: 'var(--text3)', padding: '0', display: 'flex', alignItems: 'center', gap: '4px', fontFamily: 'Outfit, sans-serif' }}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '12px', color: 'var(--text3)', padding: '0', display: 'flex', alignItems: 'center', gap: '4px', fontFamily: 'Inter, system-ui, sans-serif' }}
           >
             <span style={{ transform: expanded ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s', display: 'inline-block' }}>›</span>
             {expanded ? 'Hide' : 'View'} rationale
@@ -240,7 +240,7 @@ export default function IntradayPage() {
                 background: filter === f ? 'rgba(0,200,150,0.08)' : 'transparent',
                 color: filter === f ? 'var(--emerald)' : 'var(--text3)',
                 fontSize: '13px', fontWeight: filter === f ? 500 : 400, cursor: 'pointer',
-                fontFamily: 'Outfit, sans-serif', transition: 'all 0.15s', textTransform: 'capitalize',
+                fontFamily: 'Inter, system-ui, sans-serif', transition: 'all 0.15s', textTransform: 'capitalize',
               }}
             >
               {f === 'all' ? 'All calls' : f === 'active' ? 'Active' : 'Closed'}

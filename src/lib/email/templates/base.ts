@@ -7,7 +7,7 @@ export function baseTemplate(content: string): string {
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>withSahib</title>
 <style>
-  body { margin:0; padding:0; background:#06090F; font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color:#E8EDF5; }
+  body { margin:0; padding:0; background:#06090F; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color:#E8EDF5; }
   * { box-sizing:border-box; }
   a { color:#00C896; text-decoration:none; }
   a:hover { text-decoration:underline; }

@@ -490,7 +490,7 @@ export default function ScreenerAdminPage() {
   ] as const
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100%', fontFamily: 'var(--font-outfit)' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%', fontFamily: 'var(--font-body)' }}>
       {/* Top Nav */}
       <div style={{
         height: 52, flexShrink: 0, borderBottom: '1px solid var(--border)',

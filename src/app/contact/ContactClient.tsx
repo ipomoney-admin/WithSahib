@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { Navbar } from '@/components/layout/Navbar'
-import { BookingBanner } from '@/components/layout/BookingBanner'
 import { Footer } from '@/components/layout/Footer'
 import { Send, MessageCircle, MapPin, Clock, Shield, Phone, Mail } from 'lucide-react'
 
@@ -368,7 +367,7 @@ export default function ContactClient() {
                         fontWeight: 700,
                         fontSize: 14,
                         cursor: status === 'sending' ? 'not-allowed' : 'pointer',
-                        fontFamily: 'Outfit, sans-serif',
+                        fontFamily: 'Inter, system-ui, sans-serif',
                         transition: 'all 0.2s',
                       }}
                     >
@@ -390,7 +389,6 @@ export default function ContactClient() {
           </div>
         </section>
       </main>
-      <BookingBanner />
     </>
   )
 }

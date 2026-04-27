@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { Button } from '@/components/ui/Button'
 import { Navbar } from '@/components/layout/Navbar'
 import { BookingBanner } from '@/components/layout/BookingBanner'
 import { Footer } from '@/components/layout/Footer'
@@ -160,9 +161,9 @@ export default function CoursesPage() {
           <p style={{ fontSize: 18, color: 'var(--text2)', lineHeight: 1.7, marginBottom: 36, fontFamily: 'var(--font-body)' }}>
             Live, personalised, one-on-one sessions with a SEBI Registered Analyst. Not pre-recorded. Not YouTube. Built around your portfolio.
           </p>
-          <Link href="/appointments" className="btn btn-primary btn-lg" style={{ textDecoration: 'none' }}>
+          <Button href="/appointments" variant="primary" size="lg">
             Book a Session →
-          </Link>
+          </Button>
         </div>
       </section>
 

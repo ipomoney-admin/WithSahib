@@ -74,7 +74,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
         }}>
           <Zap size={18} color="#00C896" />
           <div>
-            <div style={{ fontSize: 14, fontWeight: 600, color: '#00C896', fontFamily: 'var(--font-outfit)' }}>
+            <div style={{ fontSize: 14, fontWeight: 600, color: '#00C896', fontFamily: 'var(--font-body)' }}>
               Admin
             </div>
             <div style={{ fontSize: 10, color: 'var(--text3)', letterSpacing: 1 }}>withSahib</div>

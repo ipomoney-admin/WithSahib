@@ -75,7 +75,7 @@ export const metadata: Metadata = {
       'Systematic equity research by Sahib Singh Hora, SEBI RA INH000026266. Intraday calls, swing trades, index options, research reports — documented methodology, full written rationale on every recommendation.',
     images: [
       {
-        url: '/og-home.jpg',
+        url: '/opengraph-image',
         width: 1200,
         height: 630,
         alt: 'withSahib — SEBI Registered Equity Research | INH000026266',
@@ -89,7 +89,7 @@ export const metadata: Metadata = {
     title: 'withSahib — SEBI Registered Research Analyst | Equity Research India',
     description:
       'Daily equity research from SEBI RA INH000026266 · Sahib Singh Hora · Intraday picks, swing trades, options research with entry, targets, stop-loss and written rationale.',
-    images: ['/og-home.jpg'],
+    images: ['/opengraph-image'],
   },
   manifest: '/manifest.json',
   icons: {

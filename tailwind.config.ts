@@ -54,8 +54,8 @@ const config: Config = {
         pearl: '#F8FBFF',
       },
       fontFamily: {
-        sans: ['Outfit', 'sans-serif'],
-        serif: ['DM Serif Display', 'serif'],
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        serif: ['Playfair Display', 'Georgia', 'serif'],
         mono: ['Courier New', 'monospace'],
       },
       fontSize: {

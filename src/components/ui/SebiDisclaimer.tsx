@@ -8,7 +8,7 @@ export default function SebiDisclaimer({ variant = 'short' }: SebiDisclaimerProp
       <div style={{
         fontSize: '10px',
         color: 'var(--text3)',
-        fontFamily: 'Outfit, sans-serif',
+        fontFamily: 'Inter, system-ui, sans-serif',
         fontWeight: 300,
         lineHeight: '1.5',
         borderTop: '1px solid var(--border)',
@@ -29,7 +29,7 @@ export default function SebiDisclaimer({ variant = 'short' }: SebiDisclaimerProp
       <span style={{
         fontSize: '10px',
         color: 'var(--text3)',
-        fontFamily: 'Outfit, sans-serif',
+        fontFamily: 'Inter, system-ui, sans-serif',
         fontWeight: 300,
       }}>
         SEBI RA: INH000026266 | Not investment advice
@@ -42,7 +42,7 @@ export default function SebiDisclaimer({ variant = 'short' }: SebiDisclaimerProp
     <div style={{
       fontSize: '11px',
       color: 'var(--text3)',
-      fontFamily: 'Outfit, sans-serif',
+      fontFamily: 'Inter, system-ui, sans-serif',
       fontWeight: 300,
       lineHeight: '1.7',
       padding: '20px',

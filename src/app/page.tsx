@@ -12,6 +12,7 @@ import {
   Linkedin, Twitter, Instagram, Facebook, X as CloseIcon
 } from 'lucide-react'
 import { FALLBACK_DATA, type TickerItem } from '@/lib/utils/marketData'
+import { Button } from '@/components/ui/Button'
 
 // ─── SERVICES DATA ────────────────────────────────────────────────────────────
 const SERVICES = [
@@ -501,13 +502,13 @@ function HeroSection() {
                 marginBottom: '24px',
               }}
             >
-              <Link href="/auth/register" className="btn btn-primary btn-lg" style={{ textDecoration: 'none' }}>
+              <Button href="/auth/register" variant="primary" size="lg">
                 Start Free Today
                 <ArrowRight size={16} />
-              </Link>
-              <Link href="/pricing" className="btn btn-ghost btn-lg" style={{ textDecoration: 'none' }}>
+              </Button>
+              <Button href="/pricing" variant="secondary" size="lg">
                 See Plans
-              </Link>
+              </Button>
             </div>
             <p style={{ fontSize: '12px', color: 'var(--text4)', fontFamily: 'var(--font-body)', letterSpacing: '0.3px' }}>
               No credit card required · Cancel anytime · SEBI regulated
@@ -904,12 +905,12 @@ function WhoSection() {
           ))}
         </div>
         <div style={{ marginTop: '48px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-          <Link href="/auth/register" className="btn btn-primary btn-lg" style={{ textDecoration: 'none' }}>
+          <Button href="/auth/register" variant="primary" size="lg">
             Start Free <ArrowRight size={16} />
-          </Link>
-          <Link href="/pricing" className="btn btn-ghost btn-lg" style={{ textDecoration: 'none' }}>
+          </Button>
+          <Button href="/pricing" variant="secondary" size="lg">
             See All Plans
-          </Link>
+          </Button>
         </div>
       </div>
     </section>

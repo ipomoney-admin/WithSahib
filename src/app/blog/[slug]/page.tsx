@@ -179,6 +179,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
         </section>
       )}
       <BookingBanner />
+      <Footer />
     </div>
   )
 }

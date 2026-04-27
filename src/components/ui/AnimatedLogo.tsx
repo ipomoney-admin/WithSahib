@@ -29,9 +29,9 @@ export function AnimatedLogo() {
       <circle className="ws-anim-dot" cx="39" cy="4" r="3.5" fill="#00C896" />
       {/* Wordmark — starts at x=52 giving a clear 13px gap from dot */}
       <g className="ws-anim-word">
-        <text x="52" y="25" fontFamily="Outfit, system-ui, sans-serif" fontWeight="400" fontSize="18" fill="currentColor">with</text>
-        <text x="80" y="25" fontFamily="Outfit, system-ui, sans-serif" fontWeight="700" fontSize="18" fill="#00C896">Sahib</text>
-        <text x="121" y="25" fontFamily="Outfit, system-ui, sans-serif" fontWeight="300" fontSize="18" fill="currentColor" opacity="0.55">.com</text>
+        <text x="52" y="25" fontFamily="Inter, system-ui, sans-serif" fontWeight="400" fontSize="18" fill="currentColor">with</text>
+        <text x="80" y="25" fontFamily="Inter, system-ui, sans-serif" fontWeight="700" fontSize="18" fill="#00C896">Sahib</text>
+        <text x="121" y="25" fontFamily="Inter, system-ui, sans-serif" fontWeight="300" fontSize="18" fill="currentColor" opacity="0.55">.com</text>
       </g>
     </svg>
   )

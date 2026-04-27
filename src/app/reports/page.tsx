@@ -67,7 +67,7 @@ function ReportCard({ report }: { report: Partial<ResearchReport> }) {
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <span style={{ fontSize: '11px', color: 'var(--text3)' }}>{report.published_at ? new Date(report.published_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : ''}</span>
-          <button style={{ display: 'flex', alignItems: 'center', gap: '4px', background: 'none', border: '1px solid var(--border)', borderRadius: '6px', padding: '4px 10px', cursor: 'pointer', fontSize: '11px', color: 'var(--text2)', fontFamily: 'Outfit, sans-serif' }}>
+          <button style={{ display: 'flex', alignItems: 'center', gap: '4px', background: 'none', border: '1px solid var(--border)', borderRadius: '6px', padding: '4px 10px', cursor: 'pointer', fontSize: '11px', color: 'var(--text2)', fontFamily: 'Inter, system-ui, sans-serif' }}>
             <Download size={11} /> PDF
           </button>
         </div>

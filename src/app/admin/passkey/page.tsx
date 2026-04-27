@@ -87,7 +87,7 @@ export default function PasskeySetupPage() {
         {/* Heading */}
         <h1 style={{
           fontSize: 22, fontWeight: 700, color: 'var(--text)',
-          fontFamily: 'var(--font-outfit)', margin: '0 0 10px',
+          fontFamily: 'var(--font-body)', margin: '0 0 10px',
         }}>
           {state === 'success' ? 'All set!' : 'Set up Touch ID / Face ID'}
         </h1>

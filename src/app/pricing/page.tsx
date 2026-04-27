@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { Button } from '@/components/ui/Button'
 import { useRouter } from 'next/navigation'
 import { Navbar } from '@/components/layout/Navbar'
 import { BookingBanner } from '@/components/layout/BookingBanner'
@@ -312,22 +313,9 @@ export default function PricingPage() {
                 Starting ₹9,999/mo — For family offices, listed companies & serious capital.
               </p>
             </div>
-            <Link href="/contact" style={{
-              display: 'inline-block',
-              padding: '12px 28px',
-              background: 'transparent',
-              border: '1.5px solid #B8975A',
-              borderRadius: '10px',
-              color: '#B8975A',
-              fontSize: '14px',
-              fontWeight: 700,
-              textDecoration: 'none',
-              fontFamily: 'var(--font-body)',
-              whiteSpace: 'nowrap',
-              flexShrink: 0,
-            }}>
+            <Button href="/contact" variant="gold" size="md" style={{ whiteSpace: 'nowrap', flexShrink: 0 }}>
               Let&apos;s Discuss →
-            </Link>
+            </Button>
           </div>
         </div>
       </section>

@@ -103,7 +103,7 @@ export default function PasskeyVerifyPage() {
         {/* Heading */}
         <h1 style={{
           fontSize: 24, fontWeight: 700, color: 'var(--text)',
-          fontFamily: 'var(--font-outfit)', margin: '0 0 10px',
+          fontFamily: 'var(--font-body)', margin: '0 0 10px',
         }}>
           {state === 'success' ? 'Verified!' : "Verify it's you"}
         </h1>

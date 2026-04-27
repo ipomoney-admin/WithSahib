@@ -75,7 +75,7 @@ export default function ForgotPasswordPage() {
     fontWeight: active ? 600 : 400,
     cursor: 'pointer',
     transition: 'all 0.15s',
-    fontFamily: 'var(--font-outfit)',
+    fontFamily: 'var(--font-body)',
   })
 
   return (

@@ -11,6 +11,7 @@ export const revalidate = 300
 export const metadata: Metadata = {
   title: 'Performance Track Record | withSahib — SEBI RA INH000026266',
   description: 'Transparent performance record of all research calls by Sahib Singh Hora, SEBI Registered Research Analyst INH000026266.',
+  robots: { index: false, follow: false },
 }
 
 interface PerfRow {

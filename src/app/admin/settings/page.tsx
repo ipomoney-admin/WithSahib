@@ -151,7 +151,7 @@ export default async function AdminSettingsPage({
         <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 2, color: '#00C896', textTransform: 'uppercase', marginBottom: 6 }}>
           Settings
         </div>
-        <h1 style={{ fontSize: 28, fontWeight: 700, color: 'var(--text)', fontFamily: 'var(--font-outfit)', margin: 0 }}>
+        <h1 style={{ fontSize: 28, fontWeight: 700, color: 'var(--text)', fontFamily: 'var(--font-body)', margin: 0 }}>
           Platform Settings
         </h1>
       </div>

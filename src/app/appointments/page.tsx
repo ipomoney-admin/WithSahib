@@ -207,7 +207,7 @@ export default function AppointmentsPage() {
                       flex: 1, padding: '14px 10px', borderRadius: '12px', border: `1.5px solid ${duration === d ? 'var(--emerald)' : 'var(--border)'}`,
                       background: duration === d ? 'rgba(0,200,150,0.06)' : 'var(--bg2)',
                       cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px',
-                      fontFamily: 'Outfit, sans-serif', transition: 'all 0.2s',
+                      fontFamily: 'Inter, system-ui, sans-serif', transition: 'all 0.2s',
                     }}
                   >
                     <Clock size={18} color={duration === d ? 'var(--emerald)' : 'var(--text3)'} />
@@ -227,7 +227,7 @@ export default function AppointmentsPage() {
                 value={topic}
                 onChange={(e) => setTopic(e.target.value)}
                 rows={4}
-                style={{ resize: 'vertical', fontFamily: 'Outfit, sans-serif' }}
+                style={{ resize: 'vertical', fontFamily: 'Inter, system-ui, sans-serif' }}
               />
             </div>
 
@@ -283,7 +283,7 @@ export default function AppointmentsPage() {
                         padding: '8px 4px', borderRadius: '10px', border: `1.5px solid ${sel ? 'var(--emerald)' : 'var(--border)'}`,
                         background: sel ? 'rgba(0,200,150,0.08)' : 'var(--bg2)',
                         cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px',
-                        fontFamily: 'Outfit, sans-serif', transition: 'all 0.15s',
+                        fontFamily: 'Inter, system-ui, sans-serif', transition: 'all 0.15s',
                       }}
                     >
                       <span style={{ fontSize: '10px', color: sel ? 'var(--emerald)' : 'var(--text3)' }}>{d.toLocaleDateString('en-IN', { weekday: 'short' })}</span>
