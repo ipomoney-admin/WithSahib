@@ -4,27 +4,29 @@ import React from 'react'
 import Link from 'next/link'
 
 type Variant = 'primary' | 'secondary' | 'ghost' | 'gold' | 'danger'
-type Size = 'sm' | 'md' | 'lg'
+type Size = 'xs' | 'sm' | 'md' | 'lg'
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: Variant
   size?: Size
   href?: string
   loading?: boolean
+  className?: string
 }
 
-const variantStyles: Record<Variant, React.CSSProperties> = {
-  primary: { background: 'var(--emerald)', color: '#031A13', border: 'none' },
-  secondary: { background: 'transparent', color: 'var(--text2)', border: '1px solid var(--border)' },
-  ghost: { background: 'transparent', color: 'var(--text2)', border: 'none' },
-  gold: { background: 'var(--gold)', color: '#1A0F00', border: 'none' },
-  danger: { background: '#EF4444', color: '#fff', border: 'none' },
+const variantClass: Record<Variant, string> = {
+  primary: 'btn-primary',
+  secondary: 'btn-surface',
+  ghost: 'btn-ghost',
+  gold: 'btn-gold',
+  danger: 'btn-danger',
 }
 
-const sizeStyles: Record<Size, React.CSSProperties> = {
-  sm: { padding: '7px 14px', fontSize: '13px', borderRadius: '8px' },
-  md: { padding: '11px 22px', fontSize: '14px', borderRadius: '10px' },
-  lg: { padding: '14px 28px', fontSize: '15px', borderRadius: '12px' },
+const sizeClass: Record<Size, string> = {
+  xs: 'btn-xs',
+  sm: 'btn-sm',
+  md: 'btn-md',
+  lg: 'btn-lg',
 }
 
 export function Button({
@@ -34,35 +36,32 @@ export function Button({
   loading = false,
   disabled,
   children,
+  className = '',
   style,
   ...props
 }: ButtonProps) {
-  const baseStyle: React.CSSProperties = {
-    display: 'inline-flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: '8px',
-    fontWeight: 600,
-    textDecoration: 'none',
-    cursor: disabled || loading ? 'not-allowed' : 'pointer',
-    opacity: disabled || loading ? 0.6 : 1,
-    transition: 'opacity 0.15s, transform 0.1s',
-    outline: 'none',
-    ...variantStyles[variant],
-    ...sizeStyles[size],
-    ...style,
-  }
+  const cls = `btn ${variantClass[variant]} ${sizeClass[size]} ${className}`.trim()
 
   if (href) {
     return (
-      <Link href={href} style={baseStyle} aria-disabled={disabled}>
+      <Link
+        href={href}
+        className={cls}
+        style={{ textDecoration: 'none', opacity: disabled ? 0.6 : 1, ...style }}
+        aria-disabled={disabled}
+      >
         {loading ? 'Loading…' : children}
       </Link>
     )
   }
 
   return (
-    <button style={baseStyle} disabled={disabled || loading} {...props}>
+    <button
+      className={cls}
+      style={{ opacity: disabled || loading ? 0.6 : 1, ...style }}
+      disabled={disabled || loading}
+      {...props}
+    >
       {loading ? 'Loading…' : children}
     </button>
   )

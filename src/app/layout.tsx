@@ -345,7 +345,9 @@ export default function RootLayout({
       <body className={`${inter.variable} ${playfair.variable}`}>
         <a href="#main-content" className="skip-to-content">Skip to main content</a>
         <ThemeProvider>
-          {children}
+          <main id="main-content" style={{ display: 'contents' }}>
+            {children}
+          </main>
           <WhatsAppButton />
           <Toaster
             position="top-right"

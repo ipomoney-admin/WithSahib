@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
+import { Button } from '@/components/ui/Button'
 import { Navbar } from '@/components/layout/Navbar'
 import { BookingBanner } from '@/components/layout/BookingBanner'
 import { Footer } from '@/components/layout/Footer'
@@ -470,20 +471,12 @@ export default function MethodologyPage() {
               </p>
             </div>
             <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-              <Link href="/auth/register" style={{
-                padding: '12px 28px', background: '#FF6B00', color: '#FFFFFF',
-                borderRadius: '10px', fontSize: '14px', fontWeight: 700,
-                textDecoration: 'none', fontFamily: 'Inter, system-ui, sans-serif',
-              }}>
+              <Button href="/auth/register" variant="primary" size="md">
                 Start Free →
-              </Link>
-              <Link href="/appointments" style={{
-                padding: '12px 22px', border: '1px solid #2C2C2E', color: '#8A8A8E',
-                borderRadius: '10px', fontSize: '14px', fontWeight: 500,
-                textDecoration: 'none', fontFamily: 'Inter, system-ui, sans-serif',
-              }}>
+              </Button>
+              <Button href="/appointments" variant="ghost" size="md">
                 Book a Session
-              </Link>
+              </Button>
             </div>
           </div>
         </div>

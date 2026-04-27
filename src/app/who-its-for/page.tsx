@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { Button } from '@/components/ui/Button'
 import { Navbar } from '@/components/layout/Navbar'
 import { BookingBanner } from '@/components/layout/BookingBanner'
 import { Footer } from '@/components/layout/Footer'
@@ -256,15 +257,15 @@ export default function WhoItsForPage() {
             Sahib Singh Hora · SEBI RA · INH000026266
           </p>
           <div style={{ display: 'flex', justifyContent: 'center', gap: '12px', flexWrap: 'wrap' }}>
-            <Link href="/pricing" style={{ padding: '12px 28px', background: 'var(--orange)', color: '#FFFFFF', borderRadius: '10px', fontWeight: 700, fontSize: '14px', textDecoration: 'none', fontFamily: 'var(--font-body)' }}>
+            <Button href="/pricing" variant="primary" size="md">
               See Plans
-            </Link>
-            <Link href="/about" style={{ padding: '12px 28px', border: '1px solid var(--border2)', color: 'var(--text2)', borderRadius: '10px', fontSize: '14px', textDecoration: 'none', fontFamily: 'var(--font-body)' }}>
+            </Button>
+            <Button href="/about" variant="ghost" size="md">
               About the Analyst
-            </Link>
-            <Link href="/appointments" style={{ padding: '12px 28px', border: '1px solid var(--border2)', color: 'var(--text2)', borderRadius: '10px', fontSize: '14px', textDecoration: 'none', fontFamily: 'var(--font-body)' }}>
+            </Button>
+            <Button href="/appointments" variant="ghost" size="md">
               Book a Session
-            </Link>
+            </Button>
           </div>
         </div>
       </section>

@@ -174,6 +174,7 @@ export function Navbar() {
     <>
       <HiringBar />
       <nav
+        aria-label="Main navigation"
         style={{
           position: 'sticky',
           top: 0,

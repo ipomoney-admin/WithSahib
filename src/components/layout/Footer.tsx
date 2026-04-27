@@ -3,7 +3,9 @@
 import Link from 'next/link'
 import { LogoMark } from '@/components/ui/Logo'
 
-const FOOTER_LINKS = {
+interface FooterLink { label: string; href: string; target?: string }
+
+const FOOTER_LINKS: Record<string, FooterLink[]> = {
   Research: [
     { label: 'Research Reports', href: '/reports' },
     { label: 'Blog', href: '/blog' },
@@ -25,7 +27,7 @@ const FOOTER_LINKS = {
   ],
 }
 
-const LEGAL_STRIP = [
+const LEGAL_STRIP: FooterLink[] = [
   { label: 'Disclosure', href: '/disclosure' },
   { label: 'Investor Charter', href: '/investor-charter' },
   { label: 'File a Complaint', href: '/complaints' },
@@ -38,6 +40,7 @@ const LEGAL_STRIP = [
 export function Footer() {
   return (
     <footer
+      aria-label="Site footer"
       style={{
         background: 'var(--black)',
         borderTop: '1px solid rgba(255,255,255,0.06)',
@@ -138,8 +141,8 @@ export function Footer() {
                   <Link
                     key={link.href + link.label}
                     href={link.href}
-                    target={(link as any).target}
-                    rel={(link as any).target === '_blank' ? 'noopener noreferrer' : undefined}
+                    target={link.target}
+                    rel={link.target === '_blank' ? 'noopener noreferrer' : undefined}
                     style={{
                       textDecoration: 'none',
                       fontSize: '13px',
@@ -196,8 +199,8 @@ export function Footer() {
                 {i > 0 && <span style={{ color: '#2C2C2E', margin: '0 10px', fontSize: '10px' }}>·</span>}
                 <Link
                   href={link.href}
-                  target={(link as any).target}
-                  rel={(link as any).target === '_blank' ? 'noopener noreferrer' : undefined}
+                  target={link.target}
+                  rel={link.target === '_blank' ? 'noopener noreferrer' : undefined}
                   style={{
                     fontSize: '11px', color: '#3A3A3C',
                     textDecoration: 'none', fontFamily: 'var(--font-body)',

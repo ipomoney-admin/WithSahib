@@ -152,7 +152,7 @@ export default function PricingPage() {
           gap: '20px', alignItems: 'start',
         }}>
           {PLANS.map((plan) => {
-            const borderWidth = (plan as any).cardBorderWidth ?? 1
+            const borderWidth = ('cardBorderWidth' in plan ? plan.cardBorderWidth : undefined) ?? 1
             return (
               <div
                 key={plan.tier}

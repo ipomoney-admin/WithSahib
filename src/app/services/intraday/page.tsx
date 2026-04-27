@@ -4,6 +4,7 @@ export const dynamic = 'force-dynamic'
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { Button } from '@/components/ui/Button'
 import { TrendingUp, TrendingDown, Crown, Filter, BarChart2 } from 'lucide-react'
 import { Navbar } from '@/components/layout/Navbar'
 import { BookingBanner } from '@/components/layout/BookingBanner'
@@ -205,9 +206,9 @@ export default function IntradayPage() {
             <p style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text)', marginBottom: '3px' }}>Pro plan required for live intraday picks</p>
             <p style={{ fontSize: '13px', color: 'var(--text3)' }}>Upgrade to Pro (₹2,499/mo) for real-time access to intraday calls.</p>
           </div>
-          <Link href="/pricing?tier=pro" className="btn btn-primary btn-sm" style={{ textDecoration: 'none', flexShrink: 0 }}>
+          <Button href="/pricing?tier=pro" variant="primary" size="sm" style={{ flexShrink: 0 }}>
             Upgrade to Pro
-          </Link>
+          </Button>
         </div>
       )}
 

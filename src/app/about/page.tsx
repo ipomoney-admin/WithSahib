@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { Button } from '@/components/ui/Button'
 import { Navbar } from '@/components/layout/Navbar'
 import { BookingBanner } from '@/components/layout/BookingBanner'
 import { Footer } from '@/components/layout/Footer'
@@ -467,14 +468,9 @@ export default function AboutPage() {
             Book a 1-on-1 session or start a subscription. Every recommendation carries a name, a registration number, and regulatory accountability.
           </p>
           <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', justifyContent: 'center' }}>
-            <Link href="/appointments" style={{
-              display: 'inline-flex', alignItems: 'center', gap: '6px',
-              padding: '14px 32px', background: 'var(--orange)', color: '#FFFFFF',
-              borderRadius: '10px', fontSize: '15px', fontWeight: 700,
-              textDecoration: 'none', fontFamily: 'var(--font-body)',
-            }}>
+            <Button href="/appointments" variant="primary" size="lg">
               Book a Session →
-            </Link>
+            </Button>
             <a
               href="https://www.sebi.gov.in/sebiweb/other/OtherAction.do?doRecognisedFpi=yes&intmId=14"
               target="_blank"

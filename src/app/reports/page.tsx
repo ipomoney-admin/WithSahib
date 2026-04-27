@@ -5,6 +5,7 @@ export const dynamic = 'force-dynamic'
 import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import Link from 'next/link'
+import { Button } from '@/components/ui/Button'
 import { FileText, Download, Crown, TrendingUp, TrendingDown, Minus, Search, ChevronRight } from 'lucide-react'
 import type { User, ResearchReport } from '@/types'
 import { Navbar } from '@/components/layout/Navbar'
@@ -156,7 +157,7 @@ export default function ReportsPage() {
           <Crown size={28} color="var(--gold)" style={{ marginBottom: '12px' }} />
           <p style={{ fontSize: '15px', fontWeight: 600, color: 'var(--text)', marginBottom: '6px' }}>Pro plan required for research reports</p>
           <p style={{ fontSize: '13px', color: 'var(--text3)', marginBottom: '16px' }}>Access DCF models, quarterly results analysis, and technical reports for any NSE stock.</p>
-          <Link href="/pricing?tier=pro" className="btn btn-primary btn-md" style={{ textDecoration: 'none' }}>Upgrade to Pro</Link>
+          <Button href="/pricing?tier=pro" variant="primary" size="md">Upgrade to Pro</Button>
         </div>
       ) : (
         <div style={{ background: 'var(--surface)', border: '1px solid rgba(0,200,150,0.2)', borderRadius: '16px', padding: '24px', marginBottom: '28px' }}>
@@ -169,9 +170,9 @@ export default function ReportsPage() {
             <select className="input" value={genForm.type} onChange={e => setGenForm(f => ({ ...f, type: e.target.value }))} style={{ minWidth: '200px' }}>
               {REPORT_TYPES.map(t => <option key={t.value} value={t.value}>{t.label}</option>)}
             </select>
-            <button type="submit" className="btn btn-primary btn-md" disabled={generating} style={{ flexShrink: 0 }}>
-              {generating ? 'Generating...' : 'Generate Report'}
-            </button>
+            <Button type="submit" variant="primary" size="md" disabled={generating} loading={generating} style={{ flexShrink: 0 }}>
+              Generate Report
+            </Button>
           </form>
           <p style={{ fontSize: '11px', color: 'var(--text3)', marginTop: '10px' }}>
             Generates research using publicly available data. Takes 15–30 seconds.

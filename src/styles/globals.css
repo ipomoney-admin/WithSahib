@@ -82,14 +82,26 @@
   --muted2: var(--text4);
   --ticker-bg: var(--bg2);
 
-  /* Color aliases */
+  /* Color aliases — design-token names */
   --color-bg: var(--bg);
   --color-surface: var(--surface);
+  --color-card: var(--surface);
   --color-text: var(--text);
   --color-text2: var(--text2);
+  --color-text-muted: #6E6E73;
+  --color-text-subtle: #AEAEB2;
   --color-border: var(--border);
+  --color-border-strong: rgba(0, 0, 0, 0.15);
+  --color-cream: var(--bg2);
   --color-emerald: var(--green);
   --color-gold: var(--gold);
+  --color-orange: var(--orange);
+  --color-black: var(--black);
+
+  /* Shadow aliases */
+  --shadow-orange: var(--orange-glow);
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.12);
 }
 
 /* ─── DARK MODE ──────────────────────────────────────────────────────── */
@@ -107,10 +119,27 @@
   --border2: rgba(255, 255, 255, 0.10);
   --border3: rgba(255, 255, 255, 0.05);
   --black: #050505;
+  /* dark-mode aliases */
+  --color-card: #111111;
+  --color-text-subtle: #48484A;
+  --color-border-strong: rgba(255, 255, 255, 0.12);
+  --color-cream: #161616;
 }
 
 .dark-section { background: #0A0A0A; }
 .dark .dark-section { background: #050505; }
+
+/* Sections that must always stay dark regardless of theme toggle */
+.always-dark {
+  background: #0A0A0A !important;
+  color: #FAFAF7 !important;
+}
+.always-dark * {
+  --color-text: #FAFAF7;
+  --color-text-muted: #6E6E73;
+  --color-border: #1C1C1E;
+  --color-card: #111111;
+}
 
 /* Navbar "with" logo text — dark mode visibility */
 .navbar-logo-with { color: #0A0A0A; transition: color 0.3s ease; }
@@ -133,9 +162,12 @@ html {
 }
 
 :focus-visible {
-  outline: 2px solid var(--green);
+  outline: 2px solid var(--orange);
   outline-offset: 2px;
-  border-radius: 2px;
+  border-radius: 4px;
+}
+*:focus:not(:focus-visible) {
+  outline: none;
 }
 
 body {
@@ -256,6 +288,13 @@ h1, h2, h3, h4, h5, h6 {
   color: #1A0F00;
 }
 .btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+.btn-danger {
+  background: #DC2626;
+  color: #FFFFFF;
+  font-weight: 700;
+}
+.btn-danger:hover { background: #B91C1C; transform: translateY(-1px); }
 
 .btn-surface {
   background: var(--surface);
@@ -571,8 +610,8 @@ html.dark  .dark-section { background: #050505; }
   top: -100%;
   left: 16px;
   z-index: 10000;
-  background: var(--emerald);
-  color: #031A13;
+  background: var(--orange);
+  color: #FFFFFF;
   padding: 10px 20px;
   border-radius: 8px;
   font-size: 14px;

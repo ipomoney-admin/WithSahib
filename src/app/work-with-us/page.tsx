@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { Button } from '@/components/ui/Button'
 import { Navbar } from '@/components/layout/Navbar'
 import { BookingBanner } from '@/components/layout/BookingBanner'
 import { Footer } from '@/components/layout/Footer'
@@ -178,19 +179,9 @@ export default function WorkWithUsPage() {
                   </div>
 
                   <div style={{ paddingTop: 4 }}>
-                    <button
-                      type="submit"
-                      className="btn btn-primary"
-                      style={{
-                        padding: '13px 32px',
-                        border: 'none',
-                        borderRadius: 10,
-                        fontSize: 14,
-                        cursor: 'pointer',
-                      }}
-                    >
+                    <Button type="submit" variant="primary" size="md">
                       Submit Application →
-                    </button>
+                    </Button>
                     <p style={{ fontSize: 11, color: 'var(--text3)', marginTop: 12, fontFamily: 'var(--font-body)' }}>
                       Reviewed at <strong style={{ color: 'var(--text2)' }}>connect@withsahib.com</strong>
                     </p>

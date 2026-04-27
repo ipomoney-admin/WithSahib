@@ -214,7 +214,7 @@ function LearningPopup() {
       >
         <button
           onClick={close}
-          aria-label="Close"
+          aria-label="Close learning popup"
           style={{
             position: 'absolute', top: '16px', right: '16px',
             background: 'none', border: 'none', cursor: 'pointer',
@@ -364,6 +364,8 @@ function LiveTicker() {
   return (
     <div
       className="ticker-wrap"
+      aria-hidden="true"
+      role="marquee"
       style={{
         background: 'var(--black)',
         borderBottom: '1px solid rgba(255,255,255,0.08)',
@@ -1076,7 +1078,7 @@ function PricingSection() {
         <div className="pricing-grid" style={{ alignItems: 'start' }}>
           {PLANS.filter(p => p.tier !== 'free').map((plan, i) => {
             const displayPrice = billing === 'yearly' ? plan.yearlyMonthly : plan.monthly
-            const isFeatured = !!(plan as any).featured
+            const isFeatured = !!('featured' in plan && plan.featured)
             const isElite = plan.color === 'gold'
 
             return (
@@ -1169,9 +1171,9 @@ function PricingSection() {
             <div className="hni-sub">For HNI investors, family offices, and corporate treasuries requiring bespoke equity research — get in touch directly.</div>
           </div>
           <div style={{ flexShrink: 0 }}>
-            <Link href="/contact" className="btn btn-primary btn-lg" style={{ textDecoration: 'none', background: 'var(--orange)', boxShadow: 'var(--orange-glow)' }}>
+            <Button href="/contact" variant="primary" size="lg">
               Contact for Custom Research
-            </Link>
+            </Button>
           </div>
         </div>
       </div>
@@ -1241,13 +1243,13 @@ function CTASection() {
             Start free — upgrade when you&apos;re ready.
           </p>
           <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link href="/auth/register" className="btn btn-primary btn-lg" style={{ textDecoration: 'none' }}>
+            <Button href="/auth/register" variant="primary" size="lg">
               Start Free Today
               <ArrowRight size={16} />
-            </Link>
-            <Link href="/pricing" style={{ textDecoration: 'none', padding: '14px 32px', borderRadius: 'var(--r-md)', border: '1px solid rgba(255,255,255,0.15)', color: 'rgba(255,255,255,0.7)', fontSize: '15px', fontWeight: 600, fontFamily: 'var(--font-body)', transition: 'all 0.2s' }}>
+            </Button>
+            <Button href="/pricing" variant="ghost" size="lg">
               See Pricing
-            </Link>
+            </Button>
           </div>
           <p style={{ marginTop: '24px', fontSize: '11px', color: 'rgba(255,255,255,0.3)', fontFamily: 'var(--font-mono)', letterSpacing: '1px' }}>
             SEBI RA · INH000026266 · No credit card required for free plan

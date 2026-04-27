@@ -7,6 +7,7 @@ import { createClient } from '@/lib/supabase/client'
 import { initiateSubscription } from '@/lib/razorpay/client'
 import { Calendar, Clock, CheckCircle, AlertCircle, Video, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
+import { Button } from '@/components/ui/Button'
 import type { User, Appointment } from '@/types'
 import { Navbar } from '@/components/layout/Navbar'
 import { BookingBanner } from '@/components/layout/BookingBanner'
@@ -162,8 +163,8 @@ export default function AppointmentsPage() {
           <p style={{ fontSize: '15px', fontWeight: 600, color: 'var(--text)', marginBottom: '6px' }}>Log in to book a session</p>
           <p style={{ fontSize: '13px', color: 'var(--text3)', marginBottom: '16px' }}>Create a free account or log in — then upgrade to Pro or Elite to book.</p>
           <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link href="/auth/register" className="btn btn-primary btn-md" style={{ textDecoration: 'none' }}>Create Free Account</Link>
-            <Link href="/auth/login" className="btn btn-ghost btn-md" style={{ textDecoration: 'none' }}>Log In</Link>
+            <Button href="/auth/register" variant="primary" size="md">Create Free Account</Button>
+            <Button href="/auth/login" variant="ghost" size="md">Log In</Button>
           </div>
         </div>
       ) : !canBook ? (
@@ -189,7 +190,7 @@ export default function AppointmentsPage() {
             {formatDate(selectedDate!)} at {selectedSlot} ({duration} min)<br />
             You&apos;ll receive a confirmation email with the meeting link within 2 hours.
           </p>
-          <button onClick={() => { setSuccess(false); setSelectedDate(null); setSelectedSlot(null); setTopic('') }} className="btn btn-ghost btn-md">Book another</button>
+          <button aria-label="Book another appointment" onClick={() => { setSuccess(false); setSelectedDate(null); setSelectedSlot(null); setTopic('') }} className="btn btn-ghost btn-md">Book another</button>
         </div>
       ) : (
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
@@ -253,15 +254,17 @@ export default function AppointmentsPage() {
                     <span style={{ color: 'var(--emerald)', fontWeight: 700 }}>₹{APPOINTMENT_PRICES[duration]}</span>
                   </div>
                 </div>
-                <button
+                <Button
                   onClick={handleBook}
                   disabled={!canBook || loading}
-                  className="btn btn-primary btn-md"
-                  style={{ width: '100%', marginTop: '14px', opacity: (!canBook || loading) ? 0.6 : 1 }}
+                  variant="primary"
+                  size="md"
+                  loading={loading}
+                  style={{ width: '100%', marginTop: '14px' }}
                 >
                   {loading ? 'Processing...' : 'Confirm & Pay'}
                   <ArrowRight size={15} />
-                </button>
+                </Button>
                 {error && <p style={{ fontSize: '12px', color: 'var(--coral)', marginTop: '8px' }}>{error}</p>}
               </div>
             )}

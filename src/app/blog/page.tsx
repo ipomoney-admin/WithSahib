@@ -88,6 +88,7 @@ export default function BlogPage() {
               <Link
                 key={post.slug}
                 href={`/blog/${post.slug}`}
+                aria-label={`Read article: ${post.title}`}
                 style={{ textDecoration: 'none', display: 'block' }}
               >
                 <article style={{

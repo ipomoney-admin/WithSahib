@@ -353,6 +353,7 @@ export default function ContactClient() {
 
                     <button
                       type="submit"
+                      aria-label="Send message"
                       disabled={status === 'sending'}
                       style={{
                         display: 'flex',

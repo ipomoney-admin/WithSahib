@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import { Button } from '@/components/ui/Button'
 import Image from 'next/image'
 import { Navbar } from '@/components/layout/Navbar'
 import { BookingBanner } from '@/components/layout/BookingBanner'
@@ -143,18 +144,12 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
             Daily intraday picks, swing trades, and options calls — with entry zone, targets, stop-loss, and written rationale. By SEBI RA INH000026266.
           </p>
           <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link
-              href="/pricing"
-              style={{ padding: '11px 24px', background: '#FF6B00', color: '#fff', borderRadius: '10px', fontWeight: 600, fontSize: '14px', textDecoration: 'none' }}
-            >
+            <Button href="/pricing" variant="primary" size="md">
               See Plans — from ₹3,999/mo
-            </Link>
-            <Link
-              href="/courses"
-              style={{ padding: '11px 24px', border: '1px solid var(--border)', color: 'var(--text2)', borderRadius: '10px', fontWeight: 600, fontSize: '14px', textDecoration: 'none' }}
-            >
+            </Button>
+            <Button href="/courses" variant="ghost" size="md">
               Explore Courses
-            </Link>
+            </Button>
           </div>
         </div>
       </section>

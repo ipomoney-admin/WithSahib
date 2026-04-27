@@ -37,7 +37,7 @@ export default function SettingsPage() {
 
   const tierLevel = { free: 0, basic: 1, pro: 2, elite: 3 }[user?.tier ?? 'free']
 
-  const TABS = [
+  const TABS: Array<{ id: typeof tab; label: string; icon: React.ElementType }> = [
     { id: 'profile', label: 'Profile', icon: UserIcon },
     { id: 'subscription', label: 'Subscription', icon: CreditCard },
     { id: 'notifications', label: 'Notifications', icon: Bell },
@@ -59,7 +59,7 @@ export default function SettingsPage() {
             return (
               <button
                 key={t.id}
-                onClick={() => setTab(t.id as any)}
+                onClick={() => setTab(t.id)}
                 style={{
                   display: 'flex', alignItems: 'center', gap: '10px',
                   padding: '10px 14px', borderRadius: '10px', border: 'none',
@@ -100,7 +100,7 @@ export default function SettingsPage() {
                 ].map(f => (
                   <div key={f.key}>
                     <label style={{ fontSize: '11px', fontWeight: 600, letterSpacing: '1.5px', color: 'var(--text3)', display: 'block', marginBottom: '6px' }}>{f.label}</label>
-                    <input className="input" type={f.type} value={(form as any)[f.key]} onChange={e => setForm(p => ({ ...p, [f.key]: e.target.value }))} />
+                    <input className="input" type={f.type} value={form[f.key as keyof typeof form]} onChange={e => setForm(p => ({ ...p, [f.key]: e.target.value }))} />
                   </div>
                 ))}
                 <div>

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { Button } from '@/components/ui/Button'
 import { Navbar } from '@/components/layout/Navbar'
 import { BookingBanner } from '@/components/layout/BookingBanner'
 import { Footer } from '@/components/layout/Footer'
@@ -565,34 +566,12 @@ export default function FAQPage() {
               Join withSahib free — no credit card required.
             </p>
             <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <Link
-                href="/auth/register"
-                style={{
-                  padding: '12px 28px',
-                  background: 'var(--emerald)',
-                  color: '#031A13',
-                  borderRadius: '10px',
-                  fontWeight: 600,
-                  fontSize: '14px',
-                  textDecoration: 'none',
-                }}
-              >
+              <Button href="/auth/register" variant="primary" size="md">
                 Start Free
-              </Link>
-              <Link
-                href="/pricing"
-                style={{
-                  padding: '12px 28px',
-                  border: '1px solid var(--border)',
-                  color: 'var(--text2)',
-                  borderRadius: '10px',
-                  fontWeight: 600,
-                  fontSize: '14px',
-                  textDecoration: 'none',
-                }}
-              >
+              </Button>
+              <Button href="/pricing" variant="ghost" size="md">
                 See Pricing
-              </Link>
+              </Button>
             </div>
             <p
               style={{
