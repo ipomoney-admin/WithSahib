@@ -142,10 +142,10 @@ export default function MethodologyPage() {
 
           {/* Eyebrow */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '32px' }}>
-            <span style={{ width: '32px', height: '2px', background: '#FF6B00', display: 'inline-block', flexShrink: 0 }} />
+            <span style={{ width: '32px', height: '2px', background: 'var(--orange)', display: 'inline-block', flexShrink: 0 }} />
             <span style={{
               fontSize: '11px', fontWeight: 700, letterSpacing: '2.5px',
-              color: '#FF6B00', textTransform: 'uppercase',
+              color: 'var(--orange)', textTransform: 'uppercase',
               fontFamily: 'Inter, system-ui, sans-serif',
             }}>
               Research Methodology
@@ -160,7 +160,7 @@ export default function MethodologyPage() {
             color: '#FAFAF7', marginBottom: '28px',
           }}>
             Not instinct.<br />
-            <em style={{ color: '#FF6B00', fontStyle: 'italic', fontWeight: 400 }}>Process.</em>
+            <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>Process.</em>
           </h1>
 
           {/* Lead */}
@@ -188,7 +188,7 @@ export default function MethodologyPage() {
                 <div style={{
                   fontFamily: '"Playfair Display", Georgia, serif',
                   fontStyle: 'italic', fontSize: s.small ? '28px' : '44px', fontWeight: 700,
-                  color: '#FF6B00', lineHeight: 1, marginBottom: '10px',
+                  color: 'var(--orange)', lineHeight: 1, marginBottom: '10px',
                 }}>
                   {s.display ?? <CountUp to={s.to!} suffix={s.suffix!} />}
                 </div>
@@ -224,7 +224,7 @@ export default function MethodologyPage() {
             <div key={i} style={{ display: 'flex', alignItems: 'center' }}>
               {i > 0 && <span style={{ width: '1px', height: '40px', background: 'var(--border2)', margin: '0 24px', flexShrink: 0 }} />}
               <div style={{ padding: '20px 0', display: 'flex', alignItems: 'center', gap: '10px', whiteSpace: 'nowrap' }}>
-                <span style={{ fontSize: '10px', fontWeight: 700, color: '#FF6B00', fontFamily: '"Courier New", monospace', letterSpacing: '0.5px' }}>
+                <span style={{ fontSize: '10px', fontWeight: 700, color: 'var(--orange)', fontFamily: '"Courier New", monospace', letterSpacing: '0.5px' }}>
                   {p.n}
                 </span>
                 <span style={{ fontSize: '13px', color: 'var(--text3)', fontFamily: 'Inter, system-ui, sans-serif', fontWeight: 400 }}>
@@ -243,14 +243,14 @@ export default function MethodologyPage() {
           {/* Section header */}
           <div style={{ marginBottom: '64px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
-              <span style={{ width: '32px', height: '2px', background: '#FF6B00', display: 'inline-block' }} />
-              <span style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '2.5px', color: '#FF6B00', textTransform: 'uppercase', fontFamily: 'Inter, system-ui, sans-serif' }}>
+              <span style={{ width: '32px', height: '2px', background: 'var(--orange)', display: 'inline-block' }} />
+              <span style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '2.5px', color: 'var(--orange)', textTransform: 'uppercase', fontFamily: 'Inter, system-ui, sans-serif' }}>
                 The Process
               </span>
             </div>
             <h2 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: 'clamp(32px,4.5vw,56px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.1, marginBottom: '16px' }}>
               Six filters.{' '}
-              <em style={{ color: '#FF6B00', fontStyle: 'italic', fontWeight: 400 }}>Zero shortcuts.</em>
+              <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>Zero shortcuts.</em>
             </h2>
             <p style={{ fontSize: '16px', color: 'var(--text3)', lineHeight: 1.75, fontFamily: 'Inter, system-ui, sans-serif', maxWidth: '520px' }}>
               Each filter runs sequentially. A setup that fails Filter 2 never reaches Filter 3.
@@ -286,7 +286,7 @@ export default function MethodologyPage() {
                   }}>
                     {/* Header row */}
                     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px', flexWrap: 'wrap' }}>
-                      <span style={{ fontSize: '10px', fontWeight: 700, color: '#FF6B00', letterSpacing: '2px', fontFamily: '"Courier New", monospace' }}>
+                      <span style={{ fontSize: '10px', fontWeight: 700, color: 'var(--orange)', letterSpacing: '2px', fontFamily: '"Courier New", monospace' }}>
                         {f.label}
                       </span>
                       <span style={{ width: '1px', height: '12px', background: 'var(--border2)' }} />
@@ -316,8 +316,8 @@ export default function MethodologyPage() {
 
                     {/* Outcome */}
                     <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                      <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: f.outcomeOrange ? '#FF6B00' : 'var(--border2)', flexShrink: 0 }} />
-                      <span style={{ fontSize: '11px', fontWeight: 600, color: f.outcomeOrange ? '#FF6B00' : 'var(--text3)', fontFamily: 'Inter, system-ui, sans-serif', letterSpacing: '0.3px' }}>
+                      <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: f.outcomeOrange ? 'var(--orange)' : 'var(--border2)', flexShrink: 0 }} />
+                      <span style={{ fontSize: '11px', fontWeight: 600, color: f.outcomeOrange ? 'var(--orange)' : 'var(--text3)', fontFamily: 'Inter, system-ui, sans-serif', letterSpacing: '0.3px' }}>
                         {f.outcome}
                       </span>
                     </div>
@@ -331,7 +331,7 @@ export default function MethodologyPage() {
                 <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '20px' }}>
                   <div style={{
                     width: '14px', height: '14px', borderRadius: '50%',
-                    background: '#FF6B00',
+                    background: 'var(--orange)',
                     flexShrink: 0, zIndex: 1, position: 'relative',
                     animation: `dotScale 2.5s ease-in-out 2.0s infinite, dotRing 2.5s ease-out 2.0s infinite`,
                   }} />
@@ -341,11 +341,11 @@ export default function MethodologyPage() {
                 <div style={{
                   background: 'var(--surface)',
                   border: '1px solid rgba(255,107,0,0.35)',
-                  borderTop: '2px solid #FF6B00',
+                  borderTop: '2px solid var(--orange)',
                   borderRadius: '16px', padding: '28px 32px',
                 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px', flexWrap: 'wrap' }}>
-                    <span style={{ fontSize: '10px', fontWeight: 700, color: '#FF6B00', letterSpacing: '2px', fontFamily: '"Courier New", monospace' }}>
+                    <span style={{ fontSize: '10px', fontWeight: 700, color: 'var(--orange)', letterSpacing: '2px', fontFamily: '"Courier New", monospace' }}>
                       PUBLISHED
                     </span>
                     <span style={{ width: '1px', height: '12px', background: 'var(--border2)' }} />
@@ -361,7 +361,7 @@ export default function MethodologyPage() {
                   </p>
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', alignItems: 'center' }}>
                     <div style={{ padding: '6px 14px', background: 'rgba(255,107,0,0.1)', border: '1px solid rgba(255,107,0,0.25)', borderRadius: '20px' }}>
-                      <span style={{ fontSize: '12px', fontWeight: 700, color: '#FF6B00', fontFamily: 'Inter, system-ui, sans-serif' }}>1–3 reports / day</span>
+                      <span style={{ fontSize: '12px', fontWeight: 700, color: 'var(--orange)', fontFamily: 'Inter, system-ui, sans-serif' }}>1–3 reports / day</span>
                     </div>
                     <div style={{ padding: '6px 14px', background: 'var(--bg2)', border: '1px solid var(--border2)', borderRadius: '20px' }}>
                       <span style={{ fontSize: '12px', color: 'var(--text3)', fontFamily: 'Inter, system-ui, sans-serif' }}>Named · Timestamped · Logged</span>
@@ -379,14 +379,14 @@ export default function MethodologyPage() {
         <div style={{ maxWidth: '960px', margin: '0 auto' }}>
           <div style={{ marginBottom: '56px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
-              <span style={{ width: '32px', height: '2px', background: '#FF6B00', display: 'inline-block' }} />
-              <span style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '2.5px', color: '#FF6B00', textTransform: 'uppercase', fontFamily: 'Inter, system-ui, sans-serif' }}>
+              <span style={{ width: '32px', height: '2px', background: 'var(--orange)', display: 'inline-block' }} />
+              <span style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '2.5px', color: 'var(--orange)', textTransform: 'uppercase', fontFamily: 'Inter, system-ui, sans-serif' }}>
                 Named Frameworks
               </span>
             </div>
             <h2 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: 'clamp(28px,4vw,48px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.15 }}>
               Named methods.{' '}
-              <em style={{ color: '#FF6B00', fontStyle: 'italic', fontWeight: 400 }}>Proven foundations.</em>
+              <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>Proven foundations.</em>
             </h2>
           </div>
 
@@ -400,7 +400,7 @@ export default function MethodologyPage() {
                     </h3>
                     <p style={{ fontSize: '11px', color: 'var(--text3)', fontFamily: 'Inter, system-ui, sans-serif' }}>{fw.origin}</p>
                   </div>
-                  <span style={{ padding: '3px 10px', background: 'rgba(255,107,0,0.08)', border: '1px solid rgba(255,107,0,0.2)', borderRadius: '20px', fontSize: '10px', fontWeight: 700, color: '#FF6B00', fontFamily: 'Inter, system-ui, sans-serif', whiteSpace: 'nowrap', flexShrink: 0 }}>
+                  <span style={{ padding: '3px 10px', background: 'rgba(255,107,0,0.08)', border: '1px solid rgba(255,107,0,0.2)', borderRadius: '20px', fontSize: '10px', fontWeight: 700, color: 'var(--orange)', fontFamily: 'Inter, system-ui, sans-serif', whiteSpace: 'nowrap', flexShrink: 0 }}>
                     {fw.filter}
                   </span>
                 </div>
@@ -419,7 +419,7 @@ export default function MethodologyPage() {
           <div style={{ marginBottom: '56px', textAlign: 'center' }}>
             <h2 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: '#FAFAF7', lineHeight: 1.2 }}>
               The one rule that{' '}
-              <em style={{ color: '#FF6B00', fontStyle: 'italic', fontWeight: 400 }}>overrides all others.</em>
+              <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>overrides all others.</em>
             </h2>
           </div>
 

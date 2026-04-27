@@ -2,7 +2,7 @@
 
 export const dynamic = 'force-dynamic'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
@@ -11,7 +11,7 @@ import type { User } from '@/types'
 import { toast } from 'sonner'
 
 export default function SettingsPage() {
-  const supabase = createClient()
+  const supabase = useMemo(() => createClient(), [])
   const router = useRouter()
   const [user, setUser] = useState<User | null>(null)
   const [tab, setTab] = useState<'profile' | 'subscription' | 'notifications' | 'security'>('profile')
@@ -25,7 +25,7 @@ export default function SettingsPage() {
         if (p) { setUser(p); setForm({ name: p.name, phone: p.phone ?? '' }) }
       })
     })
-  }, [])
+  }, [supabase, router])
 
   async function saveProfile(e: React.FormEvent) {
     e.preventDefault(); setSaving(true)

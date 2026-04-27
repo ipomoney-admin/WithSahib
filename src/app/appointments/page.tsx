@@ -2,7 +2,7 @@
 
 export const dynamic = 'force-dynamic'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { initiateSubscription } from '@/lib/razorpay/client'
 import { Calendar, Clock, CheckCircle, AlertCircle, Video, ArrowRight } from 'lucide-react'
@@ -45,7 +45,7 @@ function toISO(d: Date) {
 }
 
 export default function AppointmentsPage() {
-  const supabase = createClient()
+  const supabase = useMemo(() => createClient(), [])
   const [user, setUser] = useState<User | null>(null)
   const [duration, setDuration] = useState<15 | 30>(30)
   const [selectedDate, setSelectedDate] = useState<Date | null>(null)
@@ -67,7 +67,7 @@ export default function AppointmentsPage() {
       supabase.from('appointments').select('*').eq('user_id', data.user.id).order('date', { ascending: true })
         .then(({ data: appts }) => { if (appts) setMyAppointments(appts) })
     })
-  }, [])
+  }, [supabase])
 
   useEffect(() => {
     if (!selectedDate) return
@@ -79,7 +79,7 @@ export default function AppointmentsPage() {
         setBookedSlots(data?.map((a) => a.time_slot) ?? [])
         setSelectedSlot(null)
       })
-  }, [selectedDate])
+  }, [selectedDate, supabase])
 
   const tierLevel = { free: 0, basic: 1, pro: 2, elite: 3 }[user?.tier ?? 'free']
   const canBook = tierLevel >= 2

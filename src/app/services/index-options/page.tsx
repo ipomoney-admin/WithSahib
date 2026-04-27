@@ -16,9 +16,36 @@ export const metadata: Metadata = {
   },
 }
 
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Nifty & Bank Nifty Index Options Research',
+  description: 'Nifty, BankNifty, and Sensex options research by SEBI RA Sahib Singh Hora (INH000026266). OI analysis, PCR-based directional calls, and expiry-week strategies.',
+  provider: {
+    '@type': 'Person',
+    name: 'Sahib Singh Hora',
+    identifier: 'INH000026266',
+    url: 'https://www.withsahib.com/about',
+  },
+  url: 'https://www.withsahib.com/services/index-options',
+  areaServed: { '@type': 'Country', name: 'India' },
+}
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.withsahib.com' },
+    { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://www.withsahib.com/services' },
+    { '@type': 'ListItem', position: 3, name: 'Index Options', item: 'https://www.withsahib.com/services/index-options' },
+  ],
+}
+
 export default function IndexOptionsPage() {
   return (
     <div style={{ background: 'var(--bg)', minHeight: '100vh' }}>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <Navbar />
 
       <section style={{ padding: '80px 40px 56px', background: 'var(--bg2)', borderBottom: '1px solid var(--border)', position: 'relative', overflow: 'hidden' }}>

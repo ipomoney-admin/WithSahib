@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { Button } from '@/components/ui/Button'
 import { Navbar } from '@/components/layout/Navbar'
 import { BookingBanner } from '@/components/layout/BookingBanner'
 import { Footer } from '@/components/layout/Footer'
@@ -126,23 +127,9 @@ export default function ComplaintsPage() {
                 <input className="input" type="date" name="date" value={form.date} onChange={handleChange} />
               </div>
 
-              <button
-                type="submit"
-                style={{
-                  alignSelf: 'flex-start',
-                  padding: '12px 28px',
-                  background: 'var(--orange)',
-                  color: '#FFFFFF',
-                  border: 'none',
-                  borderRadius: 10,
-                  fontWeight: 700,
-                  fontSize: 14,
-                  cursor: 'pointer',
-                  fontFamily: 'var(--font-body)',
-                }}
-              >
+              <Button type="submit" variant="primary" style={{ alignSelf: 'flex-start' }}>
                 Submit Complaint
-              </button>
+              </Button>
             </form>
           </div>
 

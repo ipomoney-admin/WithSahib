@@ -23,6 +23,11 @@ export default function ForgotPasswordPage() {
   const [linkSent, setLinkSent] = useState(false)
   const [otpStage, setOtpStage] = useState<OtpStage>('email')
 
+  const heading =
+    tab === 'link' && linkSent ? 'Check your inbox' :
+    tab === 'otp' && otpStage === 'code' ? 'Enter your code' :
+    tab === 'link' ? 'Reset via link' : 'Reset via OTP'
+
   function switchTab(next: Tab) {
     setTab(next)
     setError('')
@@ -117,9 +122,7 @@ export default function ForgotPasswordPage() {
             <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'rgba(0,200,150,0.1)', border: '1.5px solid rgba(0,200,150,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
               <CheckCircle size={24} color="#00C896" />
             </div>
-            <h1 style={{ fontFamily: 'Playfair Display, serif', fontSize: '24px', fontWeight: 400, color: '#E8EDF5', marginBottom: 10 }}>
-              Check your inbox
-            </h1>
+            <p style={{ fontFamily: 'Playfair Display, serif', fontSize: '24px', fontWeight: 400, color: '#E8EDF5', marginBottom: 10 }}>Check your inbox</p>
             <p style={{ fontSize: 14, color: '#8FA8C0', lineHeight: 1.7, marginBottom: 24 }}>
               A reset link was sent to <strong style={{ color: '#E8EDF5' }}>{email}</strong>. Click it and you&apos;ll be taken straight to the password reset page. Check your spam folder if you don&apos;t see it within a minute.
             </p>
@@ -137,9 +140,9 @@ export default function ForgotPasswordPage() {
             <div style={{ width: 48, height: 48, borderRadius: 12, background: 'rgba(0,200,150,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 20 }}>
               <Hash size={22} color="#00C896" />
             </div>
-            <h1 style={{ fontFamily: 'Playfair Display, serif', fontSize: '26px', fontWeight: 400, color: '#E8EDF5', marginBottom: 8 }}>
+            <p style={{ fontFamily: 'Playfair Display, serif', fontSize: '26px', fontWeight: 400, color: '#E8EDF5', marginBottom: 8 }}>
               Enter your code
-            </h1>
+            </p>
             <p style={{ fontSize: 14, color: '#6B8AAA', marginBottom: 28, lineHeight: 1.6 }}>
               We sent a 6-digit code to <strong style={{ color: '#8FA8C0' }}>{email}</strong>. Enter it below to continue.
             </p>
@@ -205,25 +208,14 @@ export default function ForgotPasswordPage() {
                 {tab === 'link' ? <Mail size={22} color="#00C896" /> : <Hash size={22} color="#00C896" />}
               </div>
 
-              {tab === 'link' ? (
-                <>
-                  <h1 style={{ fontFamily: 'Playfair Display, serif', fontSize: '26px', fontWeight: 400, color: '#E8EDF5', marginBottom: 8 }}>
-                    Reset via link
-                  </h1>
-                  <p style={{ fontSize: 14, color: '#6B8AAA', marginBottom: 28, lineHeight: 1.6 }}>
-                    We&apos;ll email you a secure link. Click it to set a new password.
-                  </p>
-                </>
-              ) : (
-                <>
-                  <h1 style={{ fontFamily: 'Playfair Display, serif', fontSize: '26px', fontWeight: 400, color: '#E8EDF5', marginBottom: 8 }}>
-                    Reset via OTP
-                  </h1>
-                  <p style={{ fontSize: 14, color: '#6B8AAA', marginBottom: 28, lineHeight: 1.6 }}>
-                    We&apos;ll send a 6-digit code to your email. Enter it to verify, then set a new password.
-                  </p>
-                </>
-              )}
+              <h1 style={{ fontFamily: 'Playfair Display, serif', fontSize: '26px', fontWeight: 400, color: '#E8EDF5', marginBottom: 8 }}>
+                {heading}
+              </h1>
+              <p style={{ fontSize: 14, color: '#6B8AAA', marginBottom: 28, lineHeight: 1.6 }}>
+                {tab === 'link'
+                  ? "We'll email you a secure link. Click it to set a new password."
+                  : "We'll send a 6-digit code to your email. Enter it to verify, then set a new password."}
+              </p>
 
               {error && (
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '12px 16px', background: 'rgba(244,123,123,0.08)', border: '1px solid rgba(244,123,123,0.2)', borderRadius: 10, marginBottom: 16, fontSize: 13, color: 'var(--coral)' }}>

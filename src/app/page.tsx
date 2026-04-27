@@ -256,19 +256,9 @@ function LearningPopup() {
         </p>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          <Link
-            href="/courses"
-            onClick={close}
-            style={{
-              display: 'block', textAlign: 'center',
-              padding: '13px 24px', background: 'var(--orange)', color: '#FFFFFF',
-              borderRadius: '10px', fontSize: '14px', fontWeight: 700,
-              textDecoration: 'none', fontFamily: 'var(--font-body)',
-              textShadow: '0 1px 2px rgba(0,0,0,0.12)', letterSpacing: '0.02em',
-            }}
-          >
+          <Button href="/courses" variant="primary" onClick={close}>
             See All Programs →
-          </Link>
+          </Button>
           <button
             onClick={close}
             style={{
@@ -1019,9 +1009,9 @@ function AnalystDarkSection() {
               <Link href="/about" style={{ textDecoration: 'none', padding: '11px 24px', borderRadius: 'var(--r-sm)', border: '1px solid rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.7)', fontSize: '14px', fontWeight: 600, transition: 'all 0.2s', fontFamily: 'var(--font-body)' }}>
                 Read my story →
               </Link>
-              <Link href="/appointments" style={{ textDecoration: 'none', padding: '11px 24px', borderRadius: 'var(--r-sm)', background: 'var(--orange)', color: '#FFFFFF', fontSize: '14px', fontWeight: 700, transition: 'opacity 0.2s', fontFamily: 'var(--font-body)' }}>
+              <Button href="/appointments" variant="primary">
                 Book a session →
-              </Link>
+              </Button>
             </div>
           </div>
         </div>

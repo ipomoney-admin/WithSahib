@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useCallback, useContext, useEffect, useState } from 'react'
 
 type Theme = 'dark' | 'light'
 
@@ -16,30 +16,29 @@ const ThemeContext = createContext<ThemeContextType>({
   setTheme: () => {},
 })
 
+function applyTheme(t: Theme) {
+  const html = document.documentElement
+  html.classList.remove('dark', 'light')
+  html.classList.add(t)
+  html.setAttribute('data-theme', t)
+  localStorage.setItem('withsahib-theme', t)
+  const meta = document.querySelector('meta[name="theme-color"]')
+  if (meta) {
+    meta.setAttribute('content', t === 'dark' ? '#080D0A' : '#F5F4F0')
+  }
+}
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<Theme>('light')
 
-  useEffect(() => {
-    setTheme('light')
-  }, [])
-
-  function applyTheme(t: Theme) {
-    const html = document.documentElement
-    html.classList.remove('dark', 'light')
-    html.classList.add(t)
-    html.setAttribute('data-theme', t)
-    localStorage.setItem('withsahib-theme', t)
-    // Update mobile status bar
-    const meta = document.querySelector('meta[name="theme-color"]')
-    if (meta) {
-      meta.setAttribute('content', t === 'dark' ? '#080D0A' : '#F5F4F0')
-    }
-  }
-
-  function setTheme(t: Theme) {
+  const setTheme = useCallback((t: Theme) => {
     setThemeState(t)
     applyTheme(t)
-  }
+  }, [])
+
+  useEffect(() => {
+    setTheme('light')
+  }, [setTheme])
 
   function toggleTheme() {
     setTheme(theme === 'dark' ? 'light' : 'dark')

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
@@ -38,7 +38,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const router = useRouter()
   const pathname = usePathname()
   const { theme, toggleTheme } = useTheme()
-  const supabase = createClient()
+  const supabase = useMemo(() => createClient(), [])
 
   const [user, setUser] = useState<User | null>(null)
   const [authLoading, setAuthLoading] = useState(true)
@@ -77,7 +77,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           setAuthLoading(false)
         })
     })
-  }, [])
+  }, [supabase, router])
 
   async function handleLogout() {
     await supabase.auth.signOut()

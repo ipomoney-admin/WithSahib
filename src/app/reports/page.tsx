@@ -2,7 +2,7 @@
 
 export const dynamic = 'force-dynamic'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
@@ -78,7 +78,7 @@ function ReportCard({ report }: { report: Partial<ResearchReport> }) {
 }
 
 export default function ReportsPage() {
-  const supabase = createClient()
+  const supabase = useMemo(() => createClient(), [])
   const [user, setUser] = useState<User | null>(null)
   const [reports, setReports] = useState<Partial<ResearchReport>[]>([])
   const [generating, setGenerating] = useState(false)
@@ -111,7 +111,7 @@ export default function ReportsPage() {
           setLoadingReports(false)
         })
     })
-  }, [])
+  }, [supabase])
 
   const tierLevel = { free: 0, basic: 1, pro: 2, elite: 3 }[user?.tier ?? 'free']
   const canAccess = tierLevel >= 2

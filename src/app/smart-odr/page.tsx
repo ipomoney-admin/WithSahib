@@ -100,12 +100,7 @@ export default function SmartOdrPage() {
               href="https://smartodr.in"
               target="_blank"
               rel="noopener noreferrer"
-              style={{
-                display: 'inline-flex', alignItems: 'center', gap: 8,
-                padding: '14px 32px', background: 'var(--orange)', color: '#FFFFFF',
-                borderRadius: 12, fontSize: 15, fontWeight: 700, textDecoration: 'none',
-                fontFamily: 'var(--font-body)',
-              }}
+              className="btn btn-primary btn-lg"
             >
               Go to SMART ODR Platform →
             </a>

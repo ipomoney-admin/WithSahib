@@ -2,7 +2,7 @@
 
 export const dynamic = 'force-dynamic'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { getEntryStatus } from '@/lib/signal-utils'
 import SebiDisclaimer from '@/components/ui/SebiDisclaimer'
@@ -261,7 +261,7 @@ export default function DashboardSignalsPage() {
   const [activeTab, setActiveTab] = useState<string>('all')
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
-  const supabase = createClient()
+  const supabase = useMemo(() => createClient(), [])
 
   useEffect(() => {
     async function load() {
@@ -304,7 +304,7 @@ export default function DashboardSignalsPage() {
       .subscribe()
 
     return () => { supabase.removeChannel(channel) }
-  }, [])
+  }, [supabase])
 
   const plan = subscription?.plan ?? 'free'
   const isActive = subscription && ['active', 'grace_period'].includes(subscription.status) && new Date(subscription.current_period_end) > new Date()
