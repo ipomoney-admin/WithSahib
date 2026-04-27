@@ -1,180 +1,177 @@
-# withSahib.com — Complete Setup Guide
+# withSahib — Developer Documentation
 
-## Stack
-- **Frontend**: Next.js 14 (App Router) + TypeScript
-- **Styling**: Tailwind CSS + Custom CSS Variables
-- **Database**: Supabase (PostgreSQL + Auth + RLS)
-- **Payments**: Razorpay Subscriptions
-- **AI Engine**: Claude API (Haiku for bulk, Sonnet for reports)
-- **Email**: Resend
-- **Hosting**: Vercel (free tier)
-- **Mobile**: Capacitor (Android + iOS — one command)
+## What is withSahib?
+
+withSahib is a SEBI Registered Research Analyst platform (INH000026266) that publishes daily equity research for Indian stock markets. It has three distinct areas:
+
+| Area | URL | Access |
+|------|-----|--------|
+| Public marketing site | withsahib.com | Anyone |
+| Subscriber dashboard | withsahib.com/dashboard | Logged-in users |
+| Admin panel | withsahib.com/admin | Sahib only (passkey-protected) |
 
 ---
 
-## Step 1 — Install dependencies
+## Quick Start (get running in 5 minutes)
 
 ```bash
-cd withsahib
+git clone https://github.com/ipomoney-admin/WithSahib.git
+cd WithSahib
 npm install
+cp .env.example .env.local   # fill in values — ask Sahib for dev credentials
+npm run dev                   # http://localhost:3000
 ```
 
 ---
 
-## Step 2 — Supabase setup
+## Tech Stack
 
-1. Go to [supabase.com](https://supabase.com) → New project
-   - **Name**: withsahib
-   - **Password**: save it
-   - **Region**: Mumbai (ap-south-1)
-   - ⚠️ This is a **completely separate** project from SpotMyChart
-
-2. In SQL Editor, run the entire contents of:
-   `src/lib/supabase/schema.sql`
-
-3. Copy your project URL and keys into `.env.local`
-
----
-
-## Step 3 — Razorpay setup
-
-1. Go to [razorpay.com](https://razorpay.com) → Dashboard
-2. Create 6 subscription plans:
-
-| Plan | Amount (INR) | Interval |
-|------|-------------|----------|
-| Basic Monthly | 999 | monthly |
-| Basic Yearly | 799 | monthly (12 months) |
-| Pro Monthly | 2499 | monthly |
-| Pro Yearly | 1999 | monthly (12 months) |
-| Elite Monthly | 5999 | monthly |
-| Elite Yearly | 4799 | monthly (12 months) |
-
-3. Copy all plan IDs into `.env.local`
-4. Set webhook URL: `https://withsahib.com/api/webhooks/razorpay`
-   - Events: `subscription.activated`, `subscription.charged`, `subscription.cancelled`, `payment.failed`
+| Layer | Technology | Why |
+|-------|-----------|-----|
+| Framework | Next.js 14 (App Router) | SSR + SSG + API routes in one repo |
+| Language | TypeScript (strict) | Type safety across the whole codebase |
+| Styling | CSS Variables + Tailwind | Token-based theming + utility classes |
+| Database | Supabase (PostgreSQL) | Auth + DB + Row Level Security |
+| Payments | Razorpay Subscriptions | INR billing, UPI support |
+| Email | Resend | Transactional emails (confirmation, alerts) |
+| WhatsApp | AiSensy | Subscriber research delivery |
+| AI | Anthropic Claude API | Weekly intelligence reports |
+| Market Data | Fyers API | Live price feeds for screener + signals |
+| Deployment | Vercel | Auto-deploy on push to main |
 
 ---
 
-## Step 4 — Configure environment
+## Fonts
+
+- **Headings:** Playfair Display (Google Fonts, loaded in `src/app/layout.tsx`)
+- **Body/UI:** Inter (Google Fonts, loaded in `src/app/layout.tsx`)
+- **Monospace:** Courier New (system font, for SEBI reg numbers + prices)
+- **NO other fonts** are used or should be added
+
+---
+
+## Color System
+
+All colors are CSS variables in `src/app/globals.css`. **Never hardcode a hex value in a component.**
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| `--orange` | `#FF6B00` | Primary CTAs, accents |
+| `--black` | `#0A0A0A` | Dark backgrounds, primary text |
+| `--bg` | `#FAFAF8` | Page backgrounds (light mode) |
+| `--bg2` | `#F5F3EE` | Section backgrounds, hero areas |
+| `--surface` | `#FFFFFF` | Cards, modals |
+| `--green` | `#1A7A4A` | Logo "Sahib", success, emerald accents |
+| `--gold` | `#D4A843` | Elite plan, premium accents, SEBI badge |
+| `--text` | `#0A0A0A` | Primary body text |
+| `--text2` | `#374151` | Secondary text |
+| `--text3` | `#64748B` | Muted/label text |
+| `--border` | `rgba(0,0,0,0.08)` | Default borders |
+
+---
+
+## Environment Variables
+
+See `.env.example` for all required variables. Critical ones:
 
 ```bash
-cp .env.example .env.local
-# Fill in all values
+# Supabase — always needed
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=      # safe to expose (read-only, browser)
+SUPABASE_SERVICE_ROLE_KEY=           # NEVER expose to browser — server only
+
+# App URL
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+
+# Razorpay — needed for payment flows
+RAZORPAY_KEY_ID=
+RAZORPAY_KEY_SECRET=
+RAZORPAY_WEBHOOK_SECRET=
+NEXT_PUBLIC_RAZORPAY_KEY_ID=        # safe to expose (public key)
+# Plus 12 plan IDs (basic/pro/elite × monthly/yearly × public/private)
+
+# Resend — needed for emails
+RESEND_API_KEY=
+
+# Anthropic — needed for AI intelligence reports
+ANTHROPIC_API_KEY=
+
+# Fyers — needed for market data + screener
+FYERS_APP_ID=
+FYERS_SECRET_KEY=
+FYERS_REDIRECT_URI=
+FYERS_MPIN=
+
+# AiSensy — needed for WhatsApp delivery
+AISENSY_API_KEY=
+AISENSY_CAMPAIGN_NAME=
+
+# Telegram — for admin alerts
+TELEGRAM_BOT_TOKEN=
+SAHIB_TELEGRAM_ID=
+TELEGRAM_PAID_CHANNEL_ID=
+TELEGRAM_FREE_CHANNEL_ID=
+
+# Cron protection
+CRON_SECRET=
 ```
 
 ---
 
-## Step 5 — Run locally
+## First-Time Supabase Setup
 
-```bash
-npm run dev
-# Open http://localhost:3000
-```
-
----
-
-## Step 6 — Deploy to Vercel
-
-```bash
-# Install Vercel CLI
-npm i -g vercel
-
-# Deploy
-vercel
-
-# Add environment variables in Vercel dashboard
-# Settings → Environment Variables → paste all from .env.local
-```
-
-Or connect GitHub repo → auto-deploy on every push.
+1. Create a new Supabase project (Mumbai region — `ap-south-1`)
+2. In the SQL Editor, run the full contents of `src/lib/supabase/schema.sql`
+3. Copy project URL + keys to `.env.local`
 
 ---
 
-## Step 7 — One-click mobile app
+## Deployment
 
-### Android
-```bash
-npm run cap:android
-# This will:
-# 1. Build Next.js (next build)
-# 2. Sync to Capacitor (cap sync android)
-# 3. Open Android Studio
-# In Android Studio: click ▶ Run
-```
-
-### iOS (Mac only)
-```bash
-npm run cap:ios
-# Opens Xcode → click ▶ Run
-```
-
-### Publish to stores
-- **Android**: Build → Generate Signed Bundle → upload to Play Console
-- **iOS**: Product → Archive → upload to App Store Connect
+- **Production:** Push to `main` → Vercel auto-deploys to withsahib.com
+- **Preview:** Every PR gets a preview URL automatically from Vercel
+- **Never** push directly to `main` without testing locally first
+- **Build check:** `npx next build` must pass with zero errors before merging
 
 ---
 
-## Folder Structure
+## Razorpay Plan Setup
 
-```
-withsahib/
-├── src/
-│   ├── app/
-│   │   ├── page.tsx              ← Landing page
-│   │   ├── layout.tsx            ← Root layout
-│   │   ├── auth/                 ← Login, Register, Forgot
-│   │   ├── dashboard/            ← Protected dashboard
-│   │   ├── appointments/         ← Booking system
-│   │   ├── services/             ← Intraday, Options, Swing
-│   │   ├── reports/              ← AI research reports
-│   │   ├── portfolio/            ← Model portfolio
-│   │   ├── courses/              ← Education
-│   │   ├── pricing/              ← Pricing page
-│   │   └── api/                  ← All API routes
-│   ├── components/
-│   │   ├── layout/               ← Navbar, Footer, ThemeProvider
-│   │   └── sections/             ← Landing page sections
-│   ├── lib/
-│   │   ├── supabase/             ← DB client + schema
-│   │   ├── razorpay/             ← Payment integration
-│   │   └── ai/                   ← Report generation
-│   ├── types/                    ← TypeScript types
-│   └── styles/                   ← Global CSS + tokens
-├── public/
-│   ├── manifest.json             ← PWA manifest
-│   └── icons/                    ← App icons (generate at realfavicongenerator.net)
-├── capacitor.config.ts           ← Mobile app config
-└── .env.example                  ← Environment template
-```
+Create 6 subscription plans in Razorpay dashboard → Subscriptions → Plans:
+
+| Plan | Amount (INR/month) | Billing |
+|------|--------------------|---------|
+| Basic Monthly | ₹999 | monthly |
+| Basic Yearly | ₹799 | monthly (12 months) |
+| Pro Monthly | ₹2,499 | monthly |
+| Pro Yearly | ₹1,999 | monthly (12 months) |
+| Elite Monthly | ₹5,999 | monthly |
+| Elite Yearly | ₹4,799 | monthly (12 months) |
+
+Set webhook URL: `https://www.withsahib.com/api/webhooks/razorpay`
+Events to enable: `subscription.activated`, `subscription.charged`, `subscription.cancelled`, `payment.failed`
 
 ---
 
-## Generate app icons
+## Where to go for more
 
-Go to [realfavicongenerator.net](https://realfavicongenerator.net) → upload your logo → download → place in `public/icons/`
-
-Required sizes: 72, 96, 128, 144, 152, 192, 384, 512 (PNG) + apple-touch-icon (180x180)
-
----
-
-## SEBI Compliance checklist
-
-- [x] Registration number on every page (INH000026266)
-- [x] Risk disclaimer in footer
-- [x] Disclaimer on all trade call pages
-- [x] "Not investment advice" on AI reports
-- [x] Validity dates displayed
-- [x] Analyst name on all recommendations
-- [ ] Add your SEBI disclosure document PDF at `/public/sebi-disclosure.pdf`
-- [ ] Update `withsahib.com` in footer once live
-- [ ] Verify on SEBI portal before going live
+| Topic | Document |
+|-------|----------|
+| Folder structure, data flows | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) |
+| Colors, fonts, Button component | [docs/DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md) |
+| How users move through the app | [docs/USER_FLOWS.md](docs/USER_FLOWS.md) |
+| Database schema, all tables | [docs/DATABASE.md](docs/DATABASE.md) |
+| API routes reference | [docs/API.md](docs/API.md) |
+| SEO/metadata/JSON-LD requirements | [docs/SEO.md](docs/SEO.md) |
+| SEBI compliance rules | [docs/COMPLIANCE.md](docs/COMPLIANCE.md) |
+| Day 1 & 2 onboarding plan | [docs/ONBOARDING.md](docs/ONBOARDING.md) |
 
 ---
 
-## Key notes
+## Key Notes
 
-- **SpotMyChart is completely separate** — different Supabase project, different Vercel project, different everything
-- All AI reports use `claude-haiku-4-5-20251001` for cost efficiency (~₹0.04/report)
-- Razorpay webhook is the source of truth for subscription status — never trust client-side
-- RLS policies ensure users can only see their own data
+- Razorpay webhook is the **source of truth** for subscription status — never trust client-side plan state
+- RLS policies in Supabase ensure users can only access their own data
+- Fyers API token must be renewed daily — this is automated via `/api/fyers/refresh-token` cron
+- Claude AI models: `claude-haiku-4-5-20251001` for bulk operations, `claude-sonnet-4-6` for reports
+- **SEBI registration number** `INH000026266` must appear on all public-facing pages
