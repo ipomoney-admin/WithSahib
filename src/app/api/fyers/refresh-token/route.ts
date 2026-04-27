@@ -131,6 +131,5 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ success: false, error: 'DB update failed' }, { status: 500 })
   }
 
-  console.log('[fyers/refresh-token] token renewed, expires at', expiresAt)
   return NextResponse.json({ success: true, data: { expires_at: expiresAt } })
 }

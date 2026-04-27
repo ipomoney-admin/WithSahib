@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { Navbar } from '@/components/layout/Navbar'
 import { BookingBanner } from '@/components/layout/BookingBanner'
 import { Footer } from '@/components/layout/Footer'
+import { Button } from '@/components/ui/Button'
 
 export const metadata: Metadata = {
   title: 'Investor Charter — withSahib SEBI RA INH000026266',
@@ -133,28 +134,12 @@ export default function InvestorCharterPage() {
               internal complaint mechanism and escalate to SEBI SCORES if unresolved within 30 days.
             </p>
             <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
-              <Link
-                href="/complaints"
-                style={{
-                  padding: '10px 22px', background: 'var(--orange)', color: '#FFFFFF',
-                  borderRadius: 10, fontSize: 14, fontWeight: 700, textDecoration: 'none',
-                  fontFamily: 'var(--font-body)',
-                }}
-              >
+              <Button href="/complaints" variant="primary">
                 File a Complaint
-              </Link>
-              <a
-                href="https://scores.sebi.gov.in"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  padding: '10px 22px', border: '1px solid var(--border)',
-                  color: 'var(--text2)', borderRadius: 10, fontSize: 14,
-                  fontWeight: 500, textDecoration: 'none', fontFamily: 'var(--font-body)',
-                }}
-              >
+              </Button>
+              <Button href="https://scores.sebi.gov.in" variant="secondary">
                 SEBI SCORES Portal
-              </a>
+              </Button>
             </div>
           </div>
 

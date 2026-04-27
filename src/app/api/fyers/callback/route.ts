@@ -11,14 +11,6 @@ export async function GET(req: NextRequest) {
 
   const settingsUrl = new URL('/admin/settings', req.url)
 
-  console.log('[fyers-callback] env check:', {
-    hasAppId: !!process.env.FYERS_APP_ID,
-    hasSecret: !!process.env.FYERS_SECRET_KEY,
-    hasRedirect: !!process.env.FYERS_REDIRECT_URI,
-    hasSupabaseUrl: !!process.env.NEXT_PUBLIC_SUPABASE_URL,
-    hasServiceRole: !!process.env.SUPABASE_SERVICE_ROLE_KEY,
-  })
-
   if (state !== 'withsahib_admin' || !code) {
     console.error('[fyers-callback] invalid state or missing code', { state, hasCode: !!code })
     settingsUrl.searchParams.set('fyers', 'error')
@@ -41,8 +33,6 @@ export async function GET(req: NextRequest) {
   try {
     const hashInput = `${appId}:${secretKey}`
     appIdHash = crypto.createHash('sha256').update(hashInput).digest('hex')
-    console.log('[fyers-callback] appId:', appId)
-    console.log('[fyers-callback] appIdHash:', appIdHash)
   } catch (err) {
     console.error('[fyers-callback] hash computation failed:', err)
     settingsUrl.searchParams.set('fyers', 'error')
@@ -59,9 +49,6 @@ export async function GET(req: NextRequest) {
       body: JSON.stringify({ grant_type: 'authorization_code', appIdHash, code }),
     })
     const rawText = await res.text()
-    console.log('[fyers-callback] fyers response status:', res.status)
-    console.log('[fyers-callback] fyers raw response:', rawText.substring(0, 500))
-
     try {
       json = JSON.parse(rawText)
     } catch {
@@ -70,8 +57,6 @@ export async function GET(req: NextRequest) {
       settingsUrl.searchParams.set('reason', 'fyers_returned_html')
       return NextResponse.redirect(settingsUrl)
     }
-
-    console.log('[fyers-callback] fyers parsed response:', JSON.stringify(json))
 
     if (!res.ok || json.code !== 200 || !json.access_token) {
       settingsUrl.searchParams.set('fyers', 'error')
@@ -114,7 +99,6 @@ export async function GET(req: NextRequest) {
     return NextResponse.redirect(settingsUrl)
   }
 
-  console.log('[fyers-callback] success — token stored')
   settingsUrl.searchParams.set('fyers', 'connected')
   return NextResponse.redirect(settingsUrl)
 }

@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { cookies, headers } from 'next/headers'
 import Link from 'next/link'
@@ -7,6 +8,10 @@ import { isAdmin, isSuperAdmin } from '@/lib/admin-check'
 import { isPasskeySessionValid } from '@/lib/webauthn'
 
 export const dynamic = 'force-dynamic'
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+}
 
 const NAV = [
   { label: 'Signals', href: '/admin/signals', icon: Zap },

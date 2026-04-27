@@ -122,6 +122,5 @@ export async function runScreener(
   }
 
   results.sort((a, b) => b.patternStrength - a.patternStrength)
-  console.log(`Screener complete: ${results.length} signals from ${candles.size} symbols`)
   return results
 }

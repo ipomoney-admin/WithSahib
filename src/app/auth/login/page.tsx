@@ -127,7 +127,7 @@ export default function LoginPage() {
           className="login-right-col"
           style={{
             flex: '0 0 50%',
-            background: '#FAFAF7',
+            background: 'var(--bg)',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -142,13 +142,13 @@ export default function LoginPage() {
               <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <LogoMark size={24} animated={false} />
                 <span style={{ fontSize: '20px' }}>
-                  <span style={{ fontFamily: 'Inter, system-ui, sans-serif', color: '#0A0A0A', fontWeight: 400 }}>with</span>
+                  <span style={{ fontFamily: 'Inter, system-ui, sans-serif', color: 'var(--text)', fontWeight: 400 }}>with</span>
                   <span style={{ fontFamily: '"Playfair Display", Georgia, serif', fontStyle: 'italic', fontWeight: 700, color: '#FF6B00' }}>Sahib</span>
                 </span>
               </Link>
             </div>
 
-            <h1 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: '30px', fontWeight: 700, color: '#0A0A0A', marginBottom: '6px' }}>
+            <h1 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: '30px', fontWeight: 700, color: 'var(--text)', marginBottom: '6px' }}>
               Sign in
             </h1>
             <p style={{ fontSize: '14px', color: '#6B7280', marginBottom: '32px', fontFamily: 'Inter, system-ui, sans-serif' }}>
@@ -238,9 +238,9 @@ export default function LoginPage() {
             </form>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', margin: '24px 0' }}>
-              <div style={{ flex: 1, height: '1px', background: '#E8E6E0' }} />
+              <div style={{ flex: 1, height: '1px', background: 'var(--border2)' }} />
               <span style={{ fontSize: '12px', color: '#9CA3AF', fontFamily: 'Inter, system-ui, sans-serif' }}>or</span>
-              <div style={{ flex: 1, height: '1px', background: '#E8E6E0' }} />
+              <div style={{ flex: 1, height: '1px', background: 'var(--border2)' }} />
             </div>
 
             <p style={{ textAlign: 'center', fontSize: '14px', color: '#6B7280', fontFamily: 'Inter, system-ui, sans-serif' }}>

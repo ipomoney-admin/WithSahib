@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { Navbar } from '@/components/layout/Navbar'
 import { BookingBanner } from '@/components/layout/BookingBanner'
 import { Footer } from '@/components/layout/Footer'
+import { Button } from '@/components/ui/Button'
 
 export const metadata: Metadata = {
   title: 'Grievance Redressal Process — withSahib',
@@ -121,17 +122,9 @@ export default function GrievanceRedressalPage() {
             <p style={{ fontSize: 15, color: 'var(--text2)', marginBottom: 16 }}>
               Ready to file a complaint? Start with Level 1 — our internal process.
             </p>
-            <Link
-              href="/complaints"
-              style={{
-                display: 'inline-flex', alignItems: 'center',
-                padding: '12px 28px', background: 'var(--orange)', color: '#FFFFFF',
-                borderRadius: 10, fontSize: 14, fontWeight: 700, textDecoration: 'none',
-                fontFamily: 'var(--font-body)',
-              }}
-            >
+            <Button href="/complaints" variant="primary">
               File a Complaint →
-            </Link>
+            </Button>
           </div>
 
         </div>

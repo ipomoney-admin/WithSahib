@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Navbar } from '@/components/layout/Navbar'
 import { BookingBanner } from '@/components/layout/BookingBanner'
 import { Footer } from '@/components/layout/Footer'
+import { Button } from '@/components/ui/Button'
 
 export const metadata: Metadata = {
   title: 'Disclosure with Advice — withSahib SEBI RA INH000026266',
@@ -104,19 +105,12 @@ export default function DisclosurePage() {
             <p style={{ fontSize: 15, color: 'var(--text2)', lineHeight: 1.8, marginBottom: 16 }}>
               You can verify the SEBI registration of Sahib Singh Hora (INH000026266) on the official SEBI portal.
             </p>
-            <a
+            <Button
               href="https://www.sebi.gov.in/sebiweb/other/OtherAction.do?doRecognisedFpi=yes&intmId=14"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: 'inline-flex', alignItems: 'center', gap: 6,
-                padding: '10px 22px', background: 'var(--orange)', color: '#FFFFFF',
-                borderRadius: 10, fontSize: 14, fontWeight: 700, textDecoration: 'none',
-                fontFamily: 'var(--font-body)',
-              }}
+              variant="primary"
             >
               Verify on SEBI.gov.in →
-            </a>
+            </Button>
           </div>
 
         </div>
