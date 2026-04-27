@@ -1,0 +1,37 @@
+export const tokens = {
+  color: {
+    bg: 'var(--bg)',
+    bg2: 'var(--bg2)',
+    surface: 'var(--surface)',
+    border: 'var(--border)',
+    border2: 'var(--border2)',
+    text: 'var(--text)',
+    text2: 'var(--text2)',
+    text3: 'var(--text3)',
+    emerald: 'var(--emerald)',
+    gold: 'var(--gold)',
+    orange: 'var(--orange)',
+    sapphire: 'var(--sapphire)',
+    red: '#EF4444',
+  },
+  font: {
+    sans: 'Inter, system-ui, sans-serif',
+    serif: "'Playfair Display', Georgia, serif",
+    mono: "'Courier New', Courier, monospace",
+  },
+  radius: {
+    sm: '6px',
+    md: '10px',
+    lg: '14px',
+    xl: '20px',
+    full: '9999px',
+  },
+  space: {
+    xs: '4px',
+    sm: '8px',
+    md: '16px',
+    lg: '24px',
+    xl: '40px',
+    '2xl': '64px',
+  },
+} as const

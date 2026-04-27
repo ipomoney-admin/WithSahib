@@ -2,6 +2,9 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import SebiDisclaimer from '@/components/ui/SebiDisclaimer'
 import { Lock } from 'lucide-react'
+import { Navbar } from '@/components/layout/Navbar'
+import { BookingBanner } from '@/components/layout/BookingBanner'
+import { Footer } from '@/components/layout/Footer'
 
 export const revalidate = 300
 
@@ -94,6 +97,7 @@ export default async function PerformancePage() {
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg)', color: 'var(--text)' }}>
+      <Navbar />
       {/* Hero */}
       <div style={{
         padding: '80px 24px 48px',
@@ -104,7 +108,7 @@ export default async function PerformancePage() {
         <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 2, color: 'var(--emerald)', marginBottom: 12, textTransform: 'uppercase' }}>
           Performance Track Record
         </div>
-        <h1 style={{ fontSize: 40, fontWeight: 700, fontFamily: 'DM Serif Display, serif', color: 'var(--text)', marginBottom: 12, lineHeight: 1.2 }}>
+        <h1 style={{ fontSize: 40, fontWeight: 700, fontFamily: 'Playfair Display, serif', color: 'var(--text)', marginBottom: 12, lineHeight: 1.2 }}>
           Transparent. Auditable. SEBI Compliant.
         </h1>
         <p style={{ fontSize: 15, color: 'var(--text2)', maxWidth: 480, margin: '0 auto 8px' }}>
@@ -335,6 +339,8 @@ export default async function PerformancePage() {
 
         <SebiDisclaimer variant="full" />
       </div>
+      <BookingBanner />
+      <Footer />
     </div>
   )
 }

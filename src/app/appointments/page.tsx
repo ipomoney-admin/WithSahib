@@ -8,6 +8,9 @@ import { initiateSubscription } from '@/lib/razorpay/client'
 import { Calendar, Clock, CheckCircle, AlertCircle, Video, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import type { User, Appointment } from '@/types'
+import { Navbar } from '@/components/layout/Navbar'
+import { BookingBanner } from '@/components/layout/BookingBanner'
+import { Footer } from '@/components/layout/Footer'
 
 const TIME_SLOTS = [
   '09:00', '09:30', '10:00', '10:30', '11:00', '11:30',
@@ -125,11 +128,13 @@ export default function AppointmentsPage() {
   const isLoading = user === null && typeof window !== 'undefined'
 
   return (
-    <div style={{ maxWidth: '800px' }}>
+    <div style={{ background: 'var(--bg)', minHeight: '100vh' }}>
+      <Navbar />
+      <div style={{ maxWidth: '800px', margin: '0 auto', padding: '40px 24px' }}>
       {/* Header */}
       <div style={{ marginBottom: '32px' }}>
         <div className="section-tag">1-on-1 Sessions</div>
-        <h1 style={{ fontFamily: 'DM Serif Display, serif', fontSize: '36px', fontWeight: 400, color: 'var(--text)', marginBottom: '10px' }}>
+        <h1 style={{ fontFamily: 'Playfair Display, serif', fontSize: '36px', fontWeight: 400, color: 'var(--text)', marginBottom: '10px' }}>
           Book a session with Sahib
         </h1>
         <p style={{ fontSize: '15px', color: 'var(--text2)', lineHeight: 1.7 }}>
@@ -142,7 +147,7 @@ export default function AppointmentsPage() {
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '28px' }}>
         {([15, 30] as const).map((d) => (
           <div key={d} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '16px', padding: '20px' }}>
-            <p style={{ fontSize: '22px', fontWeight: 700, color: 'var(--emerald)', fontFamily: 'DM Serif Display, serif', marginBottom: '4px' }}>{d} min</p>
+            <p style={{ fontSize: '22px', fontWeight: 700, color: 'var(--emerald)', fontFamily: 'Playfair Display, serif', marginBottom: '4px' }}>{d} min</p>
             <p style={{ fontSize: '18px', fontWeight: 600, color: 'var(--text)', marginBottom: '6px' }}>₹{APPOINTMENT_PRICES[d]}</p>
             <p style={{ fontSize: '13px', color: 'var(--text3)', lineHeight: 1.5 }}>
               {d === 15 ? 'Quick review: chart analysis, one stock, or a strategy question.' : 'Deep dive: portfolio review, multiple stocks, or strategy session.'}
@@ -179,10 +184,10 @@ export default function AppointmentsPage() {
           <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: 'rgba(0,200,150,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
             <CheckCircle size={32} color="var(--emerald)" />
           </div>
-          <h2 style={{ fontFamily: 'DM Serif Display, serif', fontSize: '24px', color: 'var(--text)', marginBottom: '10px' }}>Appointment requested!</h2>
+          <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: '24px', color: 'var(--text)', marginBottom: '10px' }}>Appointment requested!</h2>
           <p style={{ fontSize: '14px', color: 'var(--text2)', marginBottom: '20px', lineHeight: 1.7 }}>
             {formatDate(selectedDate!)} at {selectedSlot} ({duration} min)<br />
-            You'll receive a confirmation email with the meeting link within 2 hours.
+            You&apos;ll receive a confirmation email with the meeting link within 2 hours.
           </p>
           <button onClick={() => { setSuccess(false); setSelectedDate(null); setSelectedSlot(null); setTopic('') }} className="btn btn-ghost btn-md">Book another</button>
         </div>
@@ -331,7 +336,7 @@ export default function AppointmentsPage() {
       {/* My appointments */}
       {myAppointments.length > 0 && (
         <div style={{ marginTop: '40px' }}>
-          <h2 style={{ fontFamily: 'DM Serif Display, serif', fontSize: '22px', fontWeight: 400, color: 'var(--text)', marginBottom: '16px' }}>Your appointments</h2>
+          <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: '22px', fontWeight: 400, color: 'var(--text)', marginBottom: '16px' }}>Your appointments</h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
             {myAppointments.map((appt) => (
               <div key={appt.id} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '12px', padding: '16px 20px', display: 'flex', alignItems: 'center', gap: '14px', flexWrap: 'wrap' }}>
@@ -350,6 +355,9 @@ export default function AppointmentsPage() {
           </div>
         </div>
       )}
+      </div>
+      <BookingBanner />
+      <Footer />
     </div>
   )
 }

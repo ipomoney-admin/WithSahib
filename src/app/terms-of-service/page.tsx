@@ -76,7 +76,7 @@ export default function TermsOfServicePage() {
             <h3 style={h3}>5.1 Plans</h3>
             <p style={p}>
               We offer Basic, Pro, and Elite subscription plans billed monthly or annually. Pricing is as displayed
-              on our Pricing page and may change with 30 days' notice to existing subscribers.
+              on our Pricing page and may change with 30 days&apos; notice to existing subscribers.
             </p>
             <h3 style={h3}>5.2 Payment</h3>
             <p style={p}>

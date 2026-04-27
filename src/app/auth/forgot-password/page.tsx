@@ -117,11 +117,11 @@ export default function ForgotPasswordPage() {
             <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'rgba(0,200,150,0.1)', border: '1.5px solid rgba(0,200,150,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
               <CheckCircle size={24} color="#00C896" />
             </div>
-            <h1 style={{ fontFamily: 'DM Serif Display, serif', fontSize: '24px', fontWeight: 400, color: '#E8EDF5', marginBottom: 10 }}>
+            <h1 style={{ fontFamily: 'Playfair Display, serif', fontSize: '24px', fontWeight: 400, color: '#E8EDF5', marginBottom: 10 }}>
               Check your inbox
             </h1>
             <p style={{ fontSize: 14, color: '#8FA8C0', lineHeight: 1.7, marginBottom: 24 }}>
-              A reset link was sent to <strong style={{ color: '#E8EDF5' }}>{email}</strong>. Click it and you'll be taken straight to the password reset page. Check your spam folder if you don't see it within a minute.
+              A reset link was sent to <strong style={{ color: '#E8EDF5' }}>{email}</strong>. Click it and you&apos;ll be taken straight to the password reset page. Check your spam folder if you don&apos;t see it within a minute.
             </p>
             <Link href="/auth/login" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 14, color: '#00C896', textDecoration: 'none', fontWeight: 500 }}>
               <ArrowLeft size={14} /> Back to login
@@ -137,7 +137,7 @@ export default function ForgotPasswordPage() {
             <div style={{ width: 48, height: 48, borderRadius: 12, background: 'rgba(0,200,150,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 20 }}>
               <Hash size={22} color="#00C896" />
             </div>
-            <h1 style={{ fontFamily: 'DM Serif Display, serif', fontSize: '26px', fontWeight: 400, color: '#E8EDF5', marginBottom: 8 }}>
+            <h1 style={{ fontFamily: 'Playfair Display, serif', fontSize: '26px', fontWeight: 400, color: '#E8EDF5', marginBottom: 8 }}>
               Enter your code
             </h1>
             <p style={{ fontSize: 14, color: '#6B8AAA', marginBottom: 28, lineHeight: 1.6 }}>
@@ -207,20 +207,20 @@ export default function ForgotPasswordPage() {
 
               {tab === 'link' ? (
                 <>
-                  <h1 style={{ fontFamily: 'DM Serif Display, serif', fontSize: '26px', fontWeight: 400, color: '#E8EDF5', marginBottom: 8 }}>
+                  <h1 style={{ fontFamily: 'Playfair Display, serif', fontSize: '26px', fontWeight: 400, color: '#E8EDF5', marginBottom: 8 }}>
                     Reset via link
                   </h1>
                   <p style={{ fontSize: 14, color: '#6B8AAA', marginBottom: 28, lineHeight: 1.6 }}>
-                    We'll email you a secure link. Click it to set a new password.
+                    We&apos;ll email you a secure link. Click it to set a new password.
                   </p>
                 </>
               ) : (
                 <>
-                  <h1 style={{ fontFamily: 'DM Serif Display, serif', fontSize: '26px', fontWeight: 400, color: '#E8EDF5', marginBottom: 8 }}>
+                  <h1 style={{ fontFamily: 'Playfair Display, serif', fontSize: '26px', fontWeight: 400, color: '#E8EDF5', marginBottom: 8 }}>
                     Reset via OTP
                   </h1>
                   <p style={{ fontSize: 14, color: '#6B8AAA', marginBottom: 28, lineHeight: 1.6 }}>
-                    We'll send a 6-digit code to your email. Enter it to verify, then set a new password.
+                    We&apos;ll send a 6-digit code to your email. Enter it to verify, then set a new password.
                   </p>
                 </>
               )}

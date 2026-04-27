@@ -27,29 +27,28 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
   const superAdmin = await isSuperAdmin(user.id)
 
-  // TODO: re-enable passkey check once WebAuthn is debugged on production
-  // const headersList = headers()
-  // const pathname = headersList.get('x-pathname') ?? ''
-  // const isPasskeyRoute = PASSKEY_ROUTES.some((p) => pathname.startsWith(p))
-  //
-  // if (!isPasskeyRoute) {
-  //   const supabase = createServiceRoleClient()
-  //
-  //   const { data: passkeys } = await supabase
-  //     .from('admin_passkeys')
-  //     .select('id')
-  //     .eq('user_id', user.id)
-  //     .limit(1)
-  //
-  //   const hasPasskeys = (passkeys?.length ?? 0) > 0
-  //   if (!hasPasskeys) redirect('/admin/passkey')
-  //
-  //   const cookieStore = cookies()
-  //   if (!isPasskeySessionValid(cookieStore)) {
-  //     const encodedRedirect = encodeURIComponent(pathname || '/admin/signals')
-  //     redirect(`/admin/passkey/verify?redirect=${encodedRedirect}`)
-  //   }
-  // }
+  const headersList = headers()
+  const pathname = headersList.get('x-pathname') ?? ''
+  const isPasskeyRoute = PASSKEY_ROUTES.some((p) => pathname.startsWith(p))
+
+  if (!isPasskeyRoute) {
+    const supabase = createServiceRoleClient()
+
+    const { data: passkeys } = await supabase
+      .from('admin_passkeys')
+      .select('id')
+      .eq('user_id', user.id)
+      .limit(1)
+
+    const hasPasskeys = (passkeys?.length ?? 0) > 0
+    if (!hasPasskeys) redirect('/admin/passkey')
+
+    const cookieStore = cookies()
+    if (!isPasskeySessionValid(cookieStore)) {
+      const encodedRedirect = encodeURIComponent(pathname || '/admin/signals')
+      redirect(`/admin/passkey/verify?redirect=${encodedRedirect}`)
+    }
+  }
 
   return (
     <div style={{ display: 'flex', height: '100vh', overflow: 'hidden', background: 'var(--bg)' }}>

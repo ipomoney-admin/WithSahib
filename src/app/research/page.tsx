@@ -50,7 +50,7 @@ export default function ResearchPage() {
         <div className="glow-orb glow-emerald" style={{ width: '600px', height: '400px', top: 0, left: '50%', transform: 'translateX(-50%)' }} />
         <div style={{ maxWidth: 860, margin: '0 auto', position: 'relative', zIndex: 1, textAlign: 'center' }}>
           <div className="section-tag" style={{ justifyContent: 'center', marginBottom: 20 }}>Research</div>
-          <h1 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 'clamp(36px,5vw,60px)', fontWeight: 400, color: 'var(--text)', lineHeight: 1.1, marginBottom: 20 }}>
+          <h1 style={{ fontFamily: 'Playfair Display, serif', fontSize: 'clamp(36px,5vw,60px)', fontWeight: 400, color: 'var(--text)', lineHeight: 1.1, marginBottom: 20 }}>
             Institutional-grade research.<br />
             <em style={{ color: 'var(--emerald)', fontStyle: 'italic' }}>SEBI-compliant. Data-driven.</em>
           </h1>
@@ -73,7 +73,7 @@ export default function ResearchPage() {
         <div style={{ maxWidth: 1000, margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 40 }}>
             <div className="section-tag" style={{ justifyContent: 'center', marginBottom: 12 }}>Reports</div>
-            <h2 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 36, fontWeight: 400, color: 'var(--text)' }}>
+            <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: 36, fontWeight: 400, color: 'var(--text)' }}>
               Research reports
             </h2>
             <p style={{ fontSize: 15, color: 'var(--text3)', marginTop: 10 }}>Generated automatically when NSE/BSE filings are published. Accessible to Pro and Elite subscribers.</p>
@@ -101,14 +101,14 @@ export default function ResearchPage() {
         <div style={{ maxWidth: 900, margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 48 }}>
             <div className="section-tag" style={{ justifyContent: 'center', marginBottom: 12 }}>Methodology</div>
-            <h2 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 36, fontWeight: 400, color: 'var(--text)' }}>
+            <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: 36, fontWeight: 400, color: 'var(--text)' }}>
               How the research engine works
             </h2>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 24 }}>
             {METHODOLOGY.map((m) => (
               <div key={m.step} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 16, padding: 24 }}>
-                <p style={{ fontFamily: 'DM Serif Display, serif', fontSize: 40, color: 'rgba(0,200,150,0.2)', lineHeight: 1, marginBottom: 12 }}>{m.step}</p>
+                <p style={{ fontFamily: 'Playfair Display, serif', fontSize: 40, color: 'rgba(0,200,150,0.2)', lineHeight: 1, marginBottom: 12 }}>{m.step}</p>
                 <h3 style={{ fontSize: 15, fontWeight: 600, color: 'var(--text)', marginBottom: 10 }}>{m.title}</h3>
                 <p style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.7 }}>{m.desc}</p>
               </div>
@@ -119,7 +119,7 @@ export default function ResearchPage() {
 
       {/* CTA */}
       <section style={{ padding: '60px 40px', textAlign: 'center' }}>
-        <h2 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 36, fontWeight: 400, color: 'var(--text)', marginBottom: 16 }}>
+        <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: 36, fontWeight: 400, color: 'var(--text)', marginBottom: 16 }}>
           Start reading full reports
         </h2>
         <p style={{ fontSize: 16, color: 'var(--text2)', marginBottom: 32 }}>Pro plan — ₹2,499/month. Includes all research reports, intraday picks, and options picks.</p>
@@ -134,7 +134,8 @@ export default function ResearchPage() {
           Investments in securities market are subject to market risks. Research Analyst: Sahib Singh Hora · SEBI RA INH000026266 · withSahib.com
         </div>
       </div>
-      <BookingBanner />$1
+      <BookingBanner />
+      <Footer />
     </div>
   )
 }

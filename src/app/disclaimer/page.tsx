@@ -78,7 +78,7 @@ export default function DisclaimerPage() {
             <p style={p}>
               The research, analysis, trade ideas, and market commentary published on withSahib.com are provided
               under SEBI (Research Analyst) Regulations 2014. These are general research publications and not
-              personalised investment advice tailored to any individual's financial situation.
+              personalised investment advice tailored to any individual&apos;s financial situation.
             </p>
             <p style={p}>
               Research reports may contain information, data, analysis, and opinions. They are prepared based on
@@ -165,7 +165,7 @@ export default function DisclaimerPage() {
                 <strong style={{ color: 'var(--text)' }}>Grievance Officer: Sahib Singh Hora</strong><br />
                 Email: <a href="mailto:connect@withsahib.com" style={{ color: 'var(--emerald)', textDecoration: 'none' }}>connect@withsahib.com</a><br />
                 Response time: Within 7 business days<br /><br />
-                If your grievance is not resolved, you may approach SEBI's SCORES portal at{' '}
+                If your grievance is not resolved, you may approach SEBI&apos;s SCORES portal at{' '}
                 <a href="https://scores.sebi.gov.in" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--emerald)', textDecoration: 'none' }}>scores.sebi.gov.in</a>
               </p>
             </div>

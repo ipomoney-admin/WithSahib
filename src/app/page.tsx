@@ -285,9 +285,30 @@ function LearningPopup() {
   )
 }
 
+const speakableSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  '@id': 'https://www.withsahib.com/#webpage',
+  url: 'https://www.withsahib.com/',
+  name: 'withSahib — SEBI Registered Research Analyst | Equity Research India',
+  speakable: {
+    '@type': 'SpeakableSpecification',
+    cssSelector: ['#entity-definition', 'h1', 'h2'],
+  },
+}
+
 export default function HomePage() {
   return (
     <div style={{ background: 'var(--bg)' }}>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(speakableSchema) }} />
+      {/* Entity definition for GEO/AEO — indexed by AI crawlers */}
+      <div id="entity-definition" style={{ position: 'absolute', width: '1px', height: '1px', overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap' }}>
+        withSahib is a SEBI Registered Research Analyst platform operated by Sahib Singh Hora (SEBI RA INH000026266).
+        It provides daily intraday NSE equity picks, Nifty and Bank Nifty options calls, swing trade research, deep-dive research reports,
+        and 1-on-1 advisory sessions. All research is published by Sahib Singh Hora, a NISM-certified analyst with SEBI registration
+        number INH000026266 valid from April 2026 to April 2031. The platform operates at withsahib.com and is compliant with
+        SEBI Research Analysts Regulations 2014.
+      </div>
       <Navbar />
       <LiveTicker />
       <HeroSection />
@@ -845,7 +866,7 @@ function WhoSection() {
   return (
     <section ref={ref} style={{ padding: '80px 40px', background: 'var(--bg2)', borderTop: '1px solid var(--border)' }}>
       <div className="container-wide" style={{ padding: 0 }}>
-        <div className="section-tag">Who It's For</div>
+        <div className="section-tag">Who It&apos;s For</div>
         <h2
           style={{
             fontFamily: 'var(--font-heading)',

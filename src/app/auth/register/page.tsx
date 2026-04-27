@@ -81,7 +81,7 @@ export default function RegisterPage() {
           animation: 'fadeUp 0.5s ease',
         }}
       >
-        <h1 style={{ fontFamily: 'DM Serif Display, serif', fontSize: '28px', fontWeight: 400, color: 'var(--text)', marginBottom: '6px' }}>
+        <h1 style={{ fontFamily: 'Playfair Display, serif', fontSize: '28px', fontWeight: 400, color: 'var(--text)', marginBottom: '6px' }}>
           Create your account
         </h1>
         <p style={{ fontSize: '14px', color: 'var(--text3)', marginBottom: '32px' }}>

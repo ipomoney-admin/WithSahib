@@ -67,7 +67,7 @@ export default function ContactClient() {
             <div className="section-tag">Get in Touch</div>
             <h1
               style={{
-                fontFamily: 'DM Serif Display, serif',
+                fontFamily: 'Playfair Display, serif',
                 fontSize: 'clamp(32px, 5vw, 56px)',
                 fontWeight: 400,
                 color: 'var(--text)',
@@ -256,7 +256,7 @@ export default function ContactClient() {
                   </div>
                   <h3
                     style={{
-                      fontFamily: 'DM Serif Display, serif',
+                      fontFamily: 'Playfair Display, serif',
                       fontSize: 26,
                       fontWeight: 400,
                       color: 'var(--text)',
@@ -273,7 +273,7 @@ export default function ContactClient() {
                 <form onSubmit={handleSubmit}>
                   <h2
                     style={{
-                      fontFamily: 'DM Serif Display, serif',
+                      fontFamily: 'Playfair Display, serif',
                       fontSize: 26,
                       fontWeight: 400,
                       color: 'var(--text)',
@@ -390,7 +390,7 @@ export default function ContactClient() {
           </div>
         </section>
       </main>
-      <BookingBanner />$1
+      <BookingBanner />
     </>
   )
 }

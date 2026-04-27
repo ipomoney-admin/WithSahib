@@ -176,7 +176,7 @@ export default function ServicesPage() {
         <div className="glow-orb glow-emerald" style={{ width: '600px', height: '400px', top: '-20%', left: '40%' }} />
         <div style={{ maxWidth: 860, margin: '0 auto', position: 'relative' }}>
           <div className="section-tag">SEBI Registered · INH000026266</div>
-          <h1 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 'clamp(36px,5vw,64px)', fontWeight: 400, color: 'var(--text)', lineHeight: 1.1, marginBottom: 20 }}>
+          <h1 style={{ fontFamily: 'Playfair Display, serif', fontSize: 'clamp(36px,5vw,64px)', fontWeight: 400, color: 'var(--text)', lineHeight: 1.1, marginBottom: 20 }}>
             Market intelligence &amp;{' '}
             <em style={{ color: 'var(--emerald)', fontStyle: 'italic' }}>research services</em>
           </h1>
@@ -212,7 +212,7 @@ export default function ServicesPage() {
               <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16, marginBottom: 20 }}>
                 <div>
                   <p style={{ fontSize: 11, color: 'var(--text4)', letterSpacing: 1, marginBottom: 8, fontFamily: 'Courier New, monospace' }}>{svc.keywords}</p>
-                  <h2 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 'clamp(22px,3vw,32px)', fontWeight: 400, color: 'var(--text)', lineHeight: 1.2 }}>{svc.title}</h2>
+                  <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: 'clamp(22px,3vw,32px)', fontWeight: 400, color: 'var(--text)', lineHeight: 1.2 }}>{svc.title}</h2>
                 </div>
                 <span style={{ padding: '6px 14px', background: `${svc.badgeColor}18`, border: `1px solid ${svc.badgeColor}30`, borderRadius: 20, fontSize: 11, fontWeight: 700, color: svc.badgeColor, letterSpacing: 1, whiteSpace: 'nowrap' }}>
                   {svc.badge}

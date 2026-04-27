@@ -33,7 +33,7 @@ export default function SwingTradePage() {
         <div className="glow-orb glow-emerald" style={{ width: '500px', height: '400px', top: 0, right: '10%' }} />
         <div style={{ maxWidth: 800, margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <div className="section-tag">Swing Trades</div>
-          <h1 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 'clamp(32px,5vw,56px)', fontWeight: 400, color: 'var(--text)', lineHeight: 1.1, marginBottom: 20 }}>
+          <h1 style={{ fontFamily: 'Playfair Display, serif', fontSize: 'clamp(32px,5vw,56px)', fontWeight: 400, color: 'var(--text)', lineHeight: 1.1, marginBottom: 20 }}>
             2–10 day NSE swing picks —{' '}
             <em style={{ color: 'var(--emerald)', fontStyle: 'italic' }}>pattern-based, systematic</em>
           </h1>
@@ -58,7 +58,7 @@ export default function SwingTradePage() {
         <div style={{ maxWidth: 860, margin: '0 auto' }}>
           {/* What's included */}
           <div style={{ marginBottom: 56 }}>
-            <h2 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 32, fontWeight: 400, color: 'var(--text)', marginBottom: 24 }}>What each swing pick includes</h2>
+            <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: 32, fontWeight: 400, color: 'var(--text)', marginBottom: 24 }}>What each swing pick includes</h2>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 16 }}>
               {[
                 { label: 'Stock & exchange', val: 'NSE-listed equities, large & mid cap' },
@@ -80,7 +80,7 @@ export default function SwingTradePage() {
 
           {/* Patterns used */}
           <div>
-            <h2 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 32, fontWeight: 400, color: 'var(--text)', marginBottom: 24 }}>Chart patterns used</h2>
+            <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: 32, fontWeight: 400, color: 'var(--text)', marginBottom: 24 }}>Chart patterns used</h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               {PATTERNS.map((p) => (
                 <div key={p.name} style={{ display: 'flex', gap: 20, padding: 20, background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, alignItems: 'flex-start' }}>
@@ -96,7 +96,7 @@ export default function SwingTradePage() {
       {/* Sample Research Call */}
       <section style={{ padding: '0 40px 40px' }}>
         <div style={{ maxWidth: 860, margin: '0 auto' }}>
-          <h2 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 32, fontWeight: 400, color: 'var(--text)', marginBottom: 20 }}>What a swing call looks like</h2>
+          <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: 32, fontWeight: 400, color: 'var(--text)', marginBottom: 20 }}>What a swing call looks like</h2>
           <div style={{ position: 'relative', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '16px', overflow: 'hidden' }}>
             <div className="sample-banner">SAMPLE RESEARCH CALL — Illustrative Only</div>
             <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%) rotate(-15deg)', fontSize: '64px', fontWeight: 900, color: 'rgba(139,92,246,0.04)', letterSpacing: '4px', pointerEvents: 'none', zIndex: 0, whiteSpace: 'nowrap' }}>
@@ -145,7 +145,7 @@ export default function SwingTradePage() {
           Investments in securities market are subject to market risks. Past performance is not indicative of future results. Research Analyst: Sahib Singh Hora · SEBI RA INH000026266
         </div>
       </section>
-      <BookingBanner />$1
+      <BookingBanner />
     </div>
   )
 }

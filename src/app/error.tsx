@@ -45,7 +45,7 @@ export default function Error({
 
       <h2
         style={{
-          fontFamily: 'DM Serif Display, serif',
+          fontFamily: 'Playfair Display, serif',
           fontSize: 'clamp(24px, 4vw, 36px)',
           fontWeight: 400,
           color: 'var(--text)',

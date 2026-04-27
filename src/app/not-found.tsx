@@ -63,7 +63,7 @@ export default function NotFound() {
         {/* 404 number */}
         <div
           style={{
-            fontFamily: 'DM Serif Display, serif',
+            fontFamily: 'Playfair Display, serif',
             fontSize: 'clamp(96px, 18vw, 180px)',
             fontWeight: 400,
             lineHeight: 1,
@@ -96,7 +96,7 @@ export default function NotFound() {
 
         <h1
           style={{
-            fontFamily: 'DM Serif Display, serif',
+            fontFamily: 'Playfair Display, serif',
             fontSize: 'clamp(28px, 5vw, 44px)',
             fontWeight: 400,
             color: 'var(--text)',

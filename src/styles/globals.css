@@ -555,10 +555,33 @@ html.dark  .dark-section { background: #050505; }
   0%   { background-position: 200% 0; }
   100% { background-position: -200% 0; }
 }
+@keyframes skeleton-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
 .shimmer {
   background: linear-gradient(90deg, var(--surface) 25%, var(--surface2) 50%, var(--surface) 75%);
   background-size: 200% 100%;
   animation: shimmer 2s linear infinite;
+}
+
+/* ─── SKIP TO CONTENT ────────────────────────────────────────────────── */
+.skip-to-content {
+  position: absolute;
+  top: -100%;
+  left: 16px;
+  z-index: 10000;
+  background: var(--emerald);
+  color: #031A13;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: top 0.1s;
+}
+.skip-to-content:focus {
+  top: 16px;
 }
 
 /* ─── GRADIENT TEXT ──────────────────────────────────────────────────── */

@@ -124,7 +124,7 @@ export default function PrivacyPolicyPage() {
           </section>
 
           <section>
-            <h2 style={h2}>9. Children's Privacy</h2>
+            <h2 style={h2}>9. Children&apos;s Privacy</h2>
             <p style={p}>
               Our services are intended for individuals who are 18 years of age or older. We do not knowingly collect
               information from minors. If you believe a minor has provided us with personal information, contact us

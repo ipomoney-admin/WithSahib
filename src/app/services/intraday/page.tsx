@@ -5,6 +5,9 @@ export const dynamic = 'force-dynamic'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { TrendingUp, TrendingDown, Crown, Filter, BarChart2 } from 'lucide-react'
+import { Navbar } from '@/components/layout/Navbar'
+import { BookingBanner } from '@/components/layout/BookingBanner'
+import { Footer } from '@/components/layout/Footer'
 
 interface Signal {
   id: string
@@ -176,13 +179,15 @@ export default function IntradayPage() {
   )
 
   return (
-    <div style={{ maxWidth: '820px' }}>
+    <div style={{ background: 'var(--bg)', minHeight: '100vh' }}>
+      <Navbar />
+      <div style={{ maxWidth: '820px', margin: '0 auto', padding: '40px 24px' }}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
 
       {/* Header */}
       <div style={{ marginBottom: '28px' }}>
         <div className="section-tag">Intraday</div>
-        <h1 style={{ fontFamily: 'DM Serif Display, serif', fontSize: '32px', fontWeight: 400, color: 'var(--text)', marginBottom: '8px' }}>
+        <h1 style={{ fontFamily: 'Playfair Display, serif', fontSize: '32px', fontWeight: 400, color: 'var(--text)', marginBottom: '8px' }}>
           Intraday Picks
         </h1>
         <p style={{ fontSize: '14px', color: 'var(--text2)', lineHeight: 1.6 }}>
@@ -216,7 +221,7 @@ export default function IntradayPage() {
             { label: "Avg R:R", value: avgRR ? `${avgRR}x` : '--', color: 'var(--gold)' },
           ].map((s) => (
             <div key={s.label} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '12px', padding: '14px', textAlign: 'center' }}>
-              <p style={{ fontSize: '22px', fontWeight: 700, color: s.color, fontFamily: 'DM Serif Display, serif', marginBottom: '2px' }}>{s.value}</p>
+              <p style={{ fontSize: '22px', fontWeight: 700, color: s.color, fontFamily: 'Playfair Display, serif', marginBottom: '2px' }}>{s.value}</p>
               <p style={{ fontSize: '11px', color: 'var(--text3)', letterSpacing: '0.5px' }}>{s.label}</p>
             </div>
           ))}
@@ -287,7 +292,7 @@ export default function IntradayPage() {
 
       {/* Sample Research Call Preview */}
       <div style={{ marginTop: '32px', marginBottom: '8px' }}>
-        <h2 style={{ fontFamily: 'DM Serif Display, serif', fontSize: '20px', fontWeight: 400, color: 'var(--text)', marginBottom: '12px' }}>
+        <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: '20px', fontWeight: 400, color: 'var(--text)', marginBottom: '12px' }}>
           What a call looks like
         </h2>
         <div style={{ position: 'relative', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '16px', overflow: 'hidden' }}>
@@ -335,6 +340,9 @@ export default function IntradayPage() {
         These are for informational purposes only and not investment advice. Intraday trading involves significant risk.
         Please read all risk disclosures. Investments are subject to market risk.
       </div>
+      </div>
+      <BookingBanner />
+      <Footer />
     </div>
   )
 }

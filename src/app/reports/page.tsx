@@ -7,6 +7,9 @@ import { createClient } from '@/lib/supabase/client'
 import Link from 'next/link'
 import { FileText, Download, Crown, TrendingUp, TrendingDown, Minus, Search, ChevronRight } from 'lucide-react'
 import type { User, ResearchReport } from '@/types'
+import { Navbar } from '@/components/layout/Navbar'
+import { BookingBanner } from '@/components/layout/BookingBanner'
+import { Footer } from '@/components/layout/Footer'
 
 const REPORT_TYPES = [
   { value: 'quarterly_results', label: 'Quarterly Results', desc: 'Q1/Q2/Q3/Q4 earnings analysis with YoY/QoQ comparison' },
@@ -136,10 +139,12 @@ export default function ReportsPage() {
   )
 
   return (
-    <div style={{ maxWidth: '860px' }}>
+    <div style={{ background: 'var(--bg)', minHeight: '100vh' }}>
+      <Navbar />
+      <div style={{ maxWidth: '860px', margin: '0 auto', padding: '40px 24px' }}>
       <div style={{ marginBottom: '28px' }}>
         <div className="section-tag">Research</div>
-        <h1 style={{ fontFamily: 'DM Serif Display, serif', fontSize: '32px', fontWeight: 400, color: 'var(--text)', marginBottom: '8px' }}>Research Reports</h1>
+        <h1 style={{ fontFamily: 'Playfair Display, serif', fontSize: '32px', fontWeight: 400, color: 'var(--text)', marginBottom: '8px' }}>Research Reports</h1>
         <p style={{ fontSize: '14px', color: 'var(--text2)', lineHeight: 1.6 }}>
           Institutional-grade research reports — DCF models, quarterly results analysis, and technical notes.
           <br /><span style={{ fontSize: '12px', color: 'var(--text3)' }}>Published by Sahib Singh Hora, SEBI RA INH000026266</span>
@@ -209,6 +214,9 @@ export default function ReportsPage() {
         Reports are for informational purposes only and do not constitute investment advice.
         All research is reviewed by Sahib Singh Hora, SEBI RA INH000026266. Investments are subject to market risk.
       </div>
+      </div>
+      <BookingBanner />
+      <Footer />
     </div>
   )
 }

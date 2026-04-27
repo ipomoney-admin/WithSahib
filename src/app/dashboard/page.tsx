@@ -21,7 +21,7 @@ function StatCard({ label, value, sub, color = 'var(--emerald)' }: {
       <p style={{ fontSize: '11px', fontWeight: 600, letterSpacing: '1.5px', color: 'var(--text3)', textTransform: 'uppercase', marginBottom: '8px' }}>
         {label}
       </p>
-      <p style={{ fontSize: '28px', fontWeight: 700, color, fontFamily: 'DM Serif Display, serif', marginBottom: '4px' }}>
+      <p style={{ fontSize: '28px', fontWeight: 700, color, fontFamily: 'Playfair Display, serif', marginBottom: '4px' }}>
         {value}
       </p>
       {sub && <p style={{ fontSize: '12px', color: 'var(--text3)' }}>{sub}</p>}
@@ -163,7 +163,7 @@ export default async function DashboardPage() {
       {/* Header */}
       <div style={{ marginBottom: '32px' }}>
         <p style={{ fontSize: '13px', color: 'var(--text3)', marginBottom: '4px' }}>{greeting},</p>
-        <h1 style={{ fontFamily: 'DM Serif Display, serif', fontSize: '32px', fontWeight: 400, color: 'var(--text)', marginBottom: '8px' }}>
+        <h1 style={{ fontFamily: 'Playfair Display, serif', fontSize: '32px', fontWeight: 400, color: 'var(--text)', marginBottom: '8px' }}>
           {displayName} 👋
         </h1>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>

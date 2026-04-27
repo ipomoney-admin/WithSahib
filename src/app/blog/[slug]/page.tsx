@@ -73,7 +73,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
             <span style={{ color: 'var(--border2)' }}>·</span>
             <span style={{ fontSize: 11, fontWeight: 600, letterSpacing: 2, color: 'var(--emerald)', textTransform: 'uppercase' }}>{post.category}</span>
           </div>
-          <h1 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 'clamp(28px,4vw,48px)', fontWeight: 400, color: 'var(--text)', lineHeight: 1.2, marginBottom: 20 }}>
+          <h1 style={{ fontFamily: 'Playfair Display, serif', fontSize: 'clamp(28px,4vw,48px)', fontWeight: 400, color: 'var(--text)', lineHeight: 1.2, marginBottom: 20 }}>
             {post.title}
           </h1>
           <p style={{ fontSize: 17, color: 'var(--text2)', lineHeight: 1.7, marginBottom: 28 }}>{post.excerpt}</p>
@@ -163,7 +163,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
       {related.length > 0 && (
         <section style={{ padding: '0 40px 80px' }}>
           <div style={{ maxWidth: 760, margin: '0 auto' }}>
-            <h2 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 28, fontWeight: 400, color: 'var(--text)', marginBottom: 24 }}>
+            <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: 28, fontWeight: 400, color: 'var(--text)', marginBottom: 24 }}>
               More from the blog
             </h2>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 16 }}>
@@ -178,7 +178,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
           </div>
         </section>
       )}
-      <BookingBanner />$1
+      <BookingBanner />
     </div>
   )
 }

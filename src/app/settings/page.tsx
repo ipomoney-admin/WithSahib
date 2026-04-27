@@ -47,7 +47,7 @@ export default function SettingsPage() {
   return (
     <div style={{ maxWidth: '720px' }}>
       <div style={{ marginBottom: '28px' }}>
-        <h1 style={{ fontFamily: 'DM Serif Display, serif', fontSize: '32px', fontWeight: 400, color: 'var(--text)', marginBottom: '6px' }}>Settings</h1>
+        <h1 style={{ fontFamily: 'Playfair Display, serif', fontSize: '32px', fontWeight: 400, color: 'var(--text)', marginBottom: '6px' }}>Settings</h1>
         <p style={{ fontSize: '14px', color: 'var(--text3)' }}>Manage your account, subscription, and preferences.</p>
       </div>
 
@@ -85,7 +85,7 @@ export default function SettingsPage() {
               <h2 style={{ fontSize: '17px', fontWeight: 600, color: 'var(--text)', marginBottom: '20px' }}>Profile</h2>
               {/* Avatar */}
               <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '28px', paddingBottom: '24px', borderBottom: '1px solid var(--border)' }}>
-                <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: 'rgba(0,200,150,0.1)', border: '2px solid rgba(0,200,150,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', fontWeight: 600, color: 'var(--emerald)', fontFamily: 'DM Serif Display, serif' }}>
+                <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: 'rgba(0,200,150,0.1)', border: '2px solid rgba(0,200,150,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', fontWeight: 600, color: 'var(--emerald)', fontFamily: 'Playfair Display, serif' }}>
                   {user?.name?.[0]?.toUpperCase() ?? 'U'}
                 </div>
                 <div>
@@ -123,7 +123,7 @@ export default function SettingsPage() {
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
                   <div>
                     <p style={{ fontSize: '12px', letterSpacing: '1.5px', fontWeight: 600, color: 'var(--text3)', textTransform: 'uppercase', marginBottom: '4px' }}>Current Plan</p>
-                    <p style={{ fontSize: '22px', fontWeight: 700, fontFamily: 'DM Serif Display, serif', color: user?.tier === 'elite' ? 'var(--gold)' : user?.tier === 'pro' ? 'var(--emerald)' : 'var(--text)' }}>
+                    <p style={{ fontSize: '22px', fontWeight: 700, fontFamily: 'Playfair Display, serif', color: user?.tier === 'elite' ? 'var(--gold)' : user?.tier === 'pro' ? 'var(--emerald)' : 'var(--text)' }}>
                       {(user?.tier ?? 'free').charAt(0).toUpperCase() + (user?.tier ?? 'free').slice(1)}
                     </p>
                   </div>

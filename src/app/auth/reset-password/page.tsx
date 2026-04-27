@@ -103,7 +103,7 @@ export default function ResetPasswordPage() {
             <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'rgba(0,200,150,0.1)', border: '1.5px solid rgba(0,200,150,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
               <CheckCircle size={28} color="#00C896" />
             </div>
-            <h1 style={{ fontFamily: 'DM Serif Display, serif', fontSize: '24px', fontWeight: 400, color: '#E8EDF5', marginBottom: 8 }}>
+            <h1 style={{ fontFamily: 'Playfair Display, serif', fontSize: '24px', fontWeight: 400, color: '#E8EDF5', marginBottom: 8 }}>
               Password updated successfully
             </h1>
             <p style={{ fontSize: 14, color: '#8FA8C0', lineHeight: 1.6 }}>
@@ -113,7 +113,7 @@ export default function ResetPasswordPage() {
         ) : (
           <>
             <h1 style={{
-              fontFamily: 'DM Serif Display, serif',
+              fontFamily: 'Playfair Display, serif',
               fontSize: '28px',
               fontWeight: 400,
               color: '#E8EDF5',

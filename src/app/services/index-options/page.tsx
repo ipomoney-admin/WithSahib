@@ -25,7 +25,7 @@ export default function IndexOptionsPage() {
         <div className="glow-orb glow-emerald" style={{ width: '500px', height: '400px', top: 0, left: '40%' }} />
         <div style={{ maxWidth: 800, margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <div className="section-tag">Index Options</div>
-          <h1 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 'clamp(32px,5vw,56px)', fontWeight: 400, color: 'var(--text)', lineHeight: 1.1, marginBottom: 20 }}>
+          <h1 style={{ fontFamily: 'Playfair Display, serif', fontSize: 'clamp(32px,5vw,56px)', fontWeight: 400, color: 'var(--text)', lineHeight: 1.1, marginBottom: 20 }}>
             Nifty & Bank Nifty options —{' '}
             <em style={{ color: 'var(--emerald)', fontStyle: 'italic' }}>OI-driven calls</em>
           </h1>
@@ -63,7 +63,7 @@ export default function IndexOptionsPage() {
           </div>
 
           <div style={{ background: 'rgba(0,200,150,0.04)', border: '1px solid rgba(0,200,150,0.15)', borderRadius: 16, padding: 28 }}>
-            <h2 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 24, fontWeight: 400, color: 'var(--text)', marginBottom: 16 }}>What each index options call includes</h2>
+            <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: 24, fontWeight: 400, color: 'var(--text)', marginBottom: 16 }}>What each index options call includes</h2>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 16 }}>
               {['Index & direction', 'Strike price (CE/PE)', 'Entry premium range', 'Target premium', 'Stop-loss level', 'Holding period', 'OI/PCR rationale', 'Risk disclaimer'].map((item) => (
                 <div key={item} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -87,7 +87,7 @@ export default function IndexOptionsPage() {
           Index options are leveraged derivatives. They can expire worthless. Investments in securities market are subject to market risks. Research Analyst: Sahib Singh Hora · SEBI RA INH000026266
         </div>
       </section>
-      <BookingBanner />$1
+      <BookingBanner />
     </div>
   )
 }

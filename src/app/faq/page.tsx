@@ -401,7 +401,7 @@ export default function FAQPage() {
             </div>
             <h1
               style={{
-                fontFamily: 'DM Serif Display, serif',
+                fontFamily: 'Playfair Display, serif',
                 fontSize: 'clamp(32px, 5vw, 56px)',
                 fontWeight: 400,
                 color: 'var(--text)',
@@ -461,7 +461,7 @@ export default function FAQPage() {
             <section key={si} id={`section-${si}`} style={{ marginBottom: '56px' }}>
               <h2
                 style={{
-                  fontFamily: 'DM Serif Display, serif',
+                  fontFamily: 'Playfair Display, serif',
                   fontSize: '24px',
                   fontWeight: 400,
                   color: 'var(--text)',
@@ -552,7 +552,7 @@ export default function FAQPage() {
           >
             <h3
               style={{
-                fontFamily: 'DM Serif Display, serif',
+                fontFamily: 'Playfair Display, serif',
                 fontSize: '28px',
                 fontWeight: 400,
                 color: 'var(--text)',
@@ -608,7 +608,7 @@ export default function FAQPage() {
           </div>
         </div>
       </main>
-      <BookingBanner />$1
+      <BookingBanner />
     </>
   )
 }
