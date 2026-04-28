@@ -7,12 +7,12 @@ import { Footer } from '@/components/layout/Footer'
 export const metadata: Metadata = {
   title: 'Swing Trade Research — 2-10 Day NSE Setups | withSahib',
   description:
-    'Swing trade research by SEBI RA Sahib Singh Hora (INH000026266). 3–5 NSE positional setups per week — bull flags, breakouts, volume confirmation, full entry/target/SL. Available on Basic plan.',
+    'Positional research by SEBI RA Sahib Singh Hora (INH000026266). 8–12 high-conviction NSE setups per month — low risk, asymmetric reward, full written rationale. Available on Positional plan.',
   alternates: { canonical: 'https://www.withsahib.com/services/swing' },
   openGraph: {
     url: 'https://www.withsahib.com/services/swing',
     title: 'Swing Trade Research — 2-10 Day NSE Setups | withSahib',
-    description: '2–10 day swing trade picks by SEBI RA Sahib Singh Hora. Bull flags, breakouts, positional entries for NSE stocks. Basic plan and above.',
+    description: '8–12 high-conviction positional setups per month by SEBI RA Sahib Singh Hora. Low risk, asymmetric reward. Available on Positional plan and above.',
   },
 }
 
@@ -68,15 +68,15 @@ export default function SwingTradePage() {
             3–5 NSE positional trade ideas per week. Each pick includes the chart pattern, sector context, entry range, two targets, and a stop-loss — from SEBI RA Sahib Singh Hora (INH000026266).
           </p>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginBottom: 28 }}>
-            <Link href="/pricing?plan=basic" style={{ padding: '13px 28px', background: 'var(--emerald)', color: '#031A13', borderRadius: 10, fontWeight: 700, fontSize: 14, textDecoration: 'none' }}>
-              Access Swing Picks — Basic (₹999/mo)
+            <Link href="/pricing?plan=positional" style={{ padding: '13px 28px', background: 'var(--emerald)', color: '#031A13', borderRadius: 10, fontWeight: 700, fontSize: 14, textDecoration: 'none' }}>
+              Access Positional Research — ₹3,999/mo
             </Link>
             <Link href="/blog/swing-trading-stocks-india-2-10-day-holding-strategy" style={{ padding: '13px 28px', border: '1px solid var(--border)', color: 'var(--text2)', borderRadius: 10, fontSize: 14, textDecoration: 'none' }}>
               Read: Swing Trading Guide
             </Link>
           </div>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: 12, color: 'var(--sapphire)', background: 'rgba(100,160,255,0.06)', border: '1px solid rgba(100,160,255,0.2)', padding: '5px 12px', borderRadius: 6 }}>
-            Available on Basic plan and above
+            Available on Positional plan and above
           </div>
         </div>
       </section>

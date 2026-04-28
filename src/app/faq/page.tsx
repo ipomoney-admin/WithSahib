@@ -242,7 +242,7 @@ const FAQ_SECTIONS = [
     items: [
       {
         q: 'How much does withSahib subscription cost?',
-        a: 'There are 4 plans: Free (₹0/month) — signal previews and basic dashboard; Basic (₹3,999/month) — swing trades, model portfolio, courses; Pro (₹6,999/month) — all signals + research reports + 1 strategy call/month; Elite (₹12,499/month) — everything in Pro plus weekly calls, priority WhatsApp alerts, and direct analyst access. Annual billing saves up to 15%. Visit withsahib.com/pricing for current offers.',
+        a: 'There are 4 plans: Free (₹0/month) — research previews; Positional (₹3,999/month) — 8–12 high-conviction positional setups/month with full written rationale; Pro (₹6,999/month) — everything in Positional plus your choice of one service (Intraday, Stock Options or Index Options), WhatsApp delivery, and a monthly strategy call; Elite (₹12,499/month) — all three services, weekly calls, bespoke research, and direct access to Sahib. Annual billing saves up to 15%. Visit withsahib.com/pricing for current offers.',
       },
       {
         q: 'Is there a free trial available?',

@@ -7,6 +7,10 @@ interface FooterLink { label: string; href: string; target?: string }
 
 const FOOTER_LINKS: Record<string, FooterLink[]> = {
   Research: [
+    { label: 'Services', href: '/services' },
+    { label: 'Intraday Research', href: '/services/intraday' },
+    { label: 'Options Research', href: '/services/stock-options' },
+    { label: 'Positional Research', href: '/services/swing' },
     { label: 'Research Reports', href: '/reports' },
     { label: 'Blog', href: '/blog' },
     { label: 'Methodology', href: '/methodology' },

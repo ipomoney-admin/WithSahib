@@ -64,7 +64,7 @@ export const POSTS: Post[] = [
       'A SEBI RA model portfolio is different. Every stock in the withSahib model portfolio has: (1) a defined allocation percentage based on conviction and risk, (2) a documented investment thesis — valuation, growth drivers, and risks, (3) a target return horizon, and (4) clear rebalancing rules.',
       'Sector diversification is critical. A good model portfolio spreads capital across IT, banking, pharma, FMCG, auto, and infrastructure — reducing correlation. If IT stocks fall due to US tech weakness, banking or FMCG may hold. This is how institutional investors manage risk.',
       'Quarterly rebalancing means reviewing every position — trimming winners that have become overweight, adding to positions that remain compelling, and exiting those where the thesis has changed. The withSahib model portfolio publishes full rebalancing notes with reasoning.',
-      'The withSahib model portfolio is published under SEBI RA regulations and available to Basic plan subscribers and above. It tracks 10–15 NSE-listed stocks with live performance monitoring — not just best stocks to buy recommendations with no accountability.',
+      'The withSahib model portfolio is published under SEBI RA regulations and available to Positional plan subscribers and above. It tracks 10–15 NSE-listed stocks with live performance monitoring — not just best stocks to buy recommendations with no accountability.',
     ],
   },
   {
@@ -157,13 +157,13 @@ export const POSTS: Post[] = [
     tags: ['swing trading stocks', 'best stocks to buy', 'NSE picks', 'positional trading India'],
     body: [
       'Swing trading occupies the most practical space in active trading — longer than intraday (so you don\'t need to watch screens all day), shorter than investing (so you can adapt quickly to market changes). The holding period is 2–10 trading days on NSE-listed stocks.',
-      'Who is swing trading for? Working professionals who cannot monitor intraday positions, part-time traders who track markets after hours, and investors who want better returns than buy-and-hold but without the stress of intraday trading. The withSahib Basic plan is designed specifically for this profile.',
+      'Who is swing trading for? Working professionals who cannot monitor intraday positions, part-time traders who track markets after hours, and investors who want better returns than buy-and-hold but without the stress of intraday trading. The withSahib Positional plan is designed specifically for this profile.',
       'Phase 1 — Market structure: Before picking stocks, identify the trend of Nifty 50 on the weekly chart. In an uptrend, focus on long setups. In a downtrend, focus on shorts or avoid swing trades entirely.',
       'Phase 2 — Sector strength: Use sector index performance (Nifty IT, Nifty Bank, Nifty Pharma, etc.) to identify the strongest sectors. Swing trade stocks from the strongest sectors — they have institutional tailwind behind them.',
       'Phase 3 — Pattern selection: The most reliable swing trading patterns in NSE stocks: (1) Bull flag after a strong momentum move — pullback to 20-day EMA, then continuation. (2) Symmetrical triangle breakout with volume surge. (3) Cup and handle on the daily chart. (4) Pullback to key support in an uptrend.',
       'Phase 4 — Volume confirmation: Pattern breakouts without volume are false. A genuine breakout on NSE stocks should show 1.5x to 3x average volume on the breakout day. Volume is the footprint of institutional participation.',
       'Phase 5 — Entry, target, SL: Entry on the breakout candle or pullback to the breakout level. Target: measured move from the pattern. SL: below the pattern\'s low for longs, above for shorts. Never move SL against the trade.',
-      'withSahib publishes 3–5 swing trading stock picks per week on the Basic plan. Each pick includes the chart pattern identified, entry range, T1, T2, SL, and the holding timeframe.',
+      'withSahib publishes 8–12 high-conviction positional research picks per month on the Positional plan. Each pick includes the chart pattern identified, entry zone, T1, T2, SL, and the holding timeframe.',
     ],
   },
   {

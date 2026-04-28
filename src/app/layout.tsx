@@ -276,7 +276,7 @@ const structuredData = [
       name: 'Advisory Plans',
       itemListElement: [
         { '@type': 'Offer', name: 'Free Plan', price: '0', priceCurrency: 'INR' },
-        { '@type': 'Offer', name: 'Basic Plan', price: '3999', priceCurrency: 'INR' },
+        { '@type': 'Offer', name: 'Positional Plan', price: '3999', priceCurrency: 'INR' },
         { '@type': 'Offer', name: 'Pro Plan', price: '6999', priceCurrency: 'INR' },
         { '@type': 'Offer', name: 'Elite Plan', price: '12499', priceCurrency: 'INR' },
       ],

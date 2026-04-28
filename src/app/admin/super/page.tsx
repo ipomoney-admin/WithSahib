@@ -75,7 +75,7 @@ export default async function SuperAdminPage() {
         {[
           { icon: Users, label: 'Total Users', value: userCount ?? 0, color: '#8FA8C0' },
           { icon: CreditCard, label: 'Active Subscribers', value: subCount ?? 0, color: '#00C896' },
-          { icon: TrendingUp, label: 'Basic', value: tierCounts['basic'] ?? 0, color: TIER_COLOR['basic'] },
+          { icon: TrendingUp, label: 'Positional', value: tierCounts['basic'] ?? 0, color: TIER_COLOR['basic'] },
           { icon: TrendingUp, label: 'Pro', value: tierCounts['pro'] ?? 0, color: TIER_COLOR['pro'] },
           { icon: TrendingUp, label: 'Elite', value: tierCounts['elite'] ?? 0, color: TIER_COLOR['elite'] },
         ].map(({ icon: Icon, label, value, color }) => (

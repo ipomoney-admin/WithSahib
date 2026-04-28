@@ -45,8 +45,8 @@ const SEGMENTS = [
       'Multi-timeframe: daily + weekly alignment required',
       'Sector rotation context included on each pick',
     ],
-    plan: 'Basic Plan',
-    planHref: '/pricing?tier=basic',
+    plan: 'Positional Plan',
+    planHref: '/pricing?tier=positional',
     accent: '#1A7A4A',
   },
   {
@@ -60,8 +60,8 @@ const SEGMENTS = [
       'DCF-backed research reports on each holding',
       'Dividend and corporate action updates',
     ],
-    plan: 'Basic Plan',
-    planHref: '/pricing?tier=basic',
+    plan: 'Positional Plan',
+    planHref: '/pricing?tier=positional',
     accent: '#1A7A4A',
   },
   {

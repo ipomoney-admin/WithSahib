@@ -131,6 +131,7 @@ function ThemeToggle() {
 
 const NAV_LINKS = [
   { label: 'Methodology', href: '/methodology' },
+  { label: 'Services', href: '/services' },
   { label: 'The Analyst', href: '/about' },
   { label: "Who It's For", href: '/who-its-for' },
   { label: 'Pricing', href: '/pricing' },

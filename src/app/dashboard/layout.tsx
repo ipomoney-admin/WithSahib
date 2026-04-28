@@ -57,59 +57,31 @@ function CheckRow({ text }: { text: string }) {
 
 function PricingPopupContent({ serviceKey }: { serviceKey: string }) {
   const configs: Record<string, {
-    header: string; sub: string; price: string; features: string[]; cta: string
+    header: string; sub: string; availableIn: string; desc: string
   }> = {
     'intraday': {
-      header: 'Intraday Research',
+      header: 'Intraday Research Picks',
       sub: 'Daily pre-market equity research for NSE stocks',
-      price: '₹2,499 / month',
-      features: [
-        'Daily intraday research picks',
-        'Entry zone, 2 targets, stop-loss',
-        'Written rationale on every pick',
-        'WhatsApp delivery before 9 AM',
-        'SEBI RA INH000026266',
-      ],
-      cta: 'Subscribe to Intraday →',
+      availableIn: 'Pro (₹6,999/mo) · Elite (₹12,499/mo)',
+      desc: 'Daily pre-market equity research. Entry zone, targets, stop-loss and written rationale — delivered before 9 AM.',
     },
     'stock-options': {
       header: 'Stock Options Research',
-      sub: 'Weekly F&O research on NSE-listed stocks',
-      price: '₹2,499 / month',
-      features: [
-        'Weekly F&O research recommendations',
-        'Strike selection, premium targets, max-risk',
-        'OI analysis, IV rank context',
-        'Written rationale every call',
-        'SEBI RA INH000026266',
-      ],
-      cta: 'Subscribe to Options →',
+      sub: 'Weekly F&O research with full context',
+      availableIn: 'Pro (₹6,999/mo) · Elite (₹12,499/mo)',
+      desc: 'Weekly F&O research with strike selection, OI analysis, IV rank context and written rationale.',
     },
     'index-options': {
       header: 'Index Options Research',
       sub: 'Nifty, BankNifty, Sensex, FinNifty setups',
-      price: '₹2,499 / month',
-      features: [
-        'Nifty, BankNifty, Sensex, FinNifty',
-        'Expiry-day plays + weekly setups',
-        'PCR, OI, multi-timeframe analysis',
-        'Written rationale every call',
-        'SEBI RA INH000026266',
-      ],
-      cta: 'Subscribe to Index Options →',
+      availableIn: 'Pro (₹6,999/mo) · Elite (₹12,499/mo)',
+      desc: 'Nifty, BankNifty, Sensex and FinNifty. Expiry plays and weekly setups with PCR and OI context.',
     },
     'swing': {
-      header: 'Swing Trade Research',
-      sub: '2–10 day positional setups for NSE stocks',
-      price: '₹999 / month',
-      features: [
-        '2–10 day positional setups',
-        'Entry zone, 2 targets, stop-loss',
-        'Cup-handle, flags, triangle breakouts',
-        'Weekly research digest',
-        'SEBI RA INH000026266',
-      ],
-      cta: 'Subscribe to Swing →',
+      header: 'Positional Research',
+      sub: '8–12 high-conviction setups per month',
+      availableIn: 'Positional (₹3,999/mo) and above',
+      desc: '8–12 high-conviction setups per month. Low risk, asymmetric reward. Full written rationale on every pick.',
     },
   }
 
@@ -122,24 +94,21 @@ function PricingPopupContent({ serviceKey }: { serviceKey: string }) {
         {cfg.header}
       </h2>
       <p style={{ fontSize: '13px', color: '#888888', marginBottom: '20px' }}>{cfg.sub}</p>
-      <div style={{ marginBottom: '20px' }}>
-        <span style={{ fontSize: '32px', fontWeight: 700, color: '#FF6B00' }}>{cfg.price}</span>
+
+      {/* Available in */}
+      <div style={{ background: 'rgba(255,107,0,0.08)', border: '1px solid rgba(255,107,0,0.2)', borderRadius: '10px', padding: '12px 16px', marginBottom: '20px' }}>
+        <p style={{ fontSize: '11px', fontWeight: 700, color: '#FF6B00', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '4px' }}>Available in</p>
+        <p style={{ fontSize: '13px', color: '#CCCCCC' }}>{cfg.availableIn}</p>
       </div>
-      <div style={{ marginBottom: '24px' }}>
-        {cfg.features.map((f) => <CheckRow key={f} text={f} />)}
-      </div>
+
+      <p style={{ fontSize: '14px', color: '#BBBBBB', lineHeight: 1.7, marginBottom: '24px' }}>{cfg.desc}</p>
+
       <Link
         href="/pricing"
         className="btn btn-primary btn-md"
         style={{ display: 'flex', justifyContent: 'center', textDecoration: 'none', width: '100%', marginBottom: '10px' }}
       >
-        {cfg.cta}
-      </Link>
-      <Link
-        href="/pricing"
-        style={{ display: 'block', textAlign: 'center', fontSize: '13px', color: '#666666', textDecoration: 'none' }}
-      >
-        View full pricing
+        View Plans →
       </Link>
       <p style={{ fontSize: '11px', color: '#555555', marginTop: '20px', borderTop: '1px solid #2A2A2A', paddingTop: '16px' }}>
         Research by Sahib Singh Hora, SEBI RA INH000026266. Investments subject to market risk. Past performance not indicative of future results. Not investment advice.
