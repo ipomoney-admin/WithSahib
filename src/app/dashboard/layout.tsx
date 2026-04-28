@@ -10,7 +10,7 @@ import {
   LayoutDashboard, TrendingUp, BarChart2, Target, RefreshCw,
   PieChart, Calendar, GraduationCap, FileText, Bell, Settings,
   LogOut, Menu, X, Sun, Moon, ChevronRight, User as UserIcon,
-  Crown, Shield, Check,
+  Crown, Shield, Check, FileEdit,
 } from 'lucide-react'
 import { LogoMark } from '@/components/ui/Logo'
 
@@ -631,6 +631,17 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         >
           <LayoutDashboard size={17} strokeWidth={1.5} style={{ flexShrink: 0, color: pathname === '/dashboard' ? '#FF6B00' : '#6A6A6A' }} />
           {(sidebarOpen || mobile) && <span>Dashboard</span>}
+        </Link>
+
+        {/* Letterhead — regular nav link */}
+        <Link
+          href="/dashboard/letterhead"
+          className={`sidebar-link ${pathname === '/dashboard/letterhead' ? 'active' : ''}`}
+          style={{ justifyContent: sidebarOpen || mobile ? 'flex-start' : 'center', marginBottom: '2px' }}
+          title={!sidebarOpen && !mobile ? 'Letterhead' : undefined}
+        >
+          <FileEdit size={17} strokeWidth={1.5} style={{ flexShrink: 0, color: pathname === '/dashboard/letterhead' ? '#FF6B00' : '#6A6A6A' }} />
+          {(sidebarOpen || mobile) && <span>Letterhead</span>}
         </Link>
 
         {/* Popup items */}
