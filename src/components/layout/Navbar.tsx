@@ -1,10 +1,11 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Menu, X } from 'lucide-react'
 import { LogoMark } from '@/components/ui/Logo'
+import { createClient } from '@/lib/supabase/client'
 
 // ─── HIRING BAR ───────────────────────────────────────────────────────────────
 function HiringBar() {
@@ -148,6 +149,8 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [dark, setDark] = useState(false)
+  const [firstName, setFirstName] = useState<string | null>(null)
+  const supabase = useMemo(() => createClient(), [])
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
@@ -162,6 +165,16 @@ export function Navbar() {
     obs.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
     return () => obs.disconnect()
   }, [])
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => {
+      if (data.user) {
+        const meta = data.user.user_metadata
+        const name = meta?.name || meta?.full_name || data.user.email?.split('@')[0] || ''
+        setFirstName(name.split(' ')[0] || null)
+      }
+    })
+  }, [supabase])
 
   const isActive = (href: string) =>
     pathname === href || pathname.startsWith(href.split('#')[0] + '/')
@@ -288,33 +301,46 @@ export function Navbar() {
             <ThemeToggle />
           </div>
 
-          {/* Login */}
-          <Link
-            href="/auth/login"
-            className="hide-mobile"
-            style={{
-              textDecoration: 'none',
-              padding: '8px 16px',
-              borderRadius: 'var(--r-sm)',
-              fontSize: '14px',
-              fontWeight: 400,
-              color: 'var(--text2)',
-              border: '1px solid var(--border2)',
-              transition: 'all 0.2s',
-              fontFamily: 'var(--font-body)',
-            }}
-          >
-            Log in
-          </Link>
+          {firstName ? (
+            /* Logged-in: personalised dashboard button */
+            <Link
+              href="/dashboard"
+              className="btn btn-primary btn-sm hide-mobile"
+              style={{ textDecoration: 'none' }}
+            >
+              {firstName}&apos;s Dashboard →
+            </Link>
+          ) : (
+            <>
+              {/* Login */}
+              <Link
+                href="/auth/login"
+                className="hide-mobile"
+                style={{
+                  textDecoration: 'none',
+                  padding: '8px 16px',
+                  borderRadius: 'var(--r-sm)',
+                  fontSize: '14px',
+                  fontWeight: 400,
+                  color: 'var(--text2)',
+                  border: '1px solid var(--border2)',
+                  transition: 'all 0.2s',
+                  fontFamily: 'var(--font-body)',
+                }}
+              >
+                Log in
+              </Link>
 
-          {/* CTA */}
-          <Link
-            href="/auth/register"
-            className="btn btn-primary btn-sm"
-            style={{ textDecoration: 'none' }}
-          >
-            Start Free
-          </Link>
+              {/* CTA */}
+              <Link
+                href="/auth/register"
+                className="btn btn-primary btn-sm"
+                style={{ textDecoration: 'none' }}
+              >
+                Start Free
+              </Link>
+            </>
+          )}
 
           {/* Mobile Menu Button */}
           <button
@@ -378,31 +404,44 @@ export function Navbar() {
             </Link>
           ))}
           <div style={{ marginTop: '24px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            <Link
-              href="/auth/login"
-              onClick={() => setMenuOpen(false)}
-              style={{
-                textDecoration: 'none',
-                padding: '14px',
-                borderRadius: 'var(--r-md)',
-                fontSize: '15px',
-                fontWeight: 400,
-                color: 'var(--text)',
-                border: '1px solid var(--border2)',
-                textAlign: 'center',
-                fontFamily: 'var(--font-body)',
-              }}
-            >
-              Log in
-            </Link>
-            <Link
-              href="/auth/register"
-              onClick={() => setMenuOpen(false)}
-              className="btn btn-primary btn-lg"
-              style={{ textDecoration: 'none', justifyContent: 'center' }}
-            >
-              Start Free
-            </Link>
+            {firstName ? (
+              <Link
+                href="/dashboard"
+                onClick={() => setMenuOpen(false)}
+                className="btn btn-primary btn-lg"
+                style={{ textDecoration: 'none', justifyContent: 'center' }}
+              >
+                {firstName}&apos;s Dashboard →
+              </Link>
+            ) : (
+              <>
+                <Link
+                  href="/auth/login"
+                  onClick={() => setMenuOpen(false)}
+                  style={{
+                    textDecoration: 'none',
+                    padding: '14px',
+                    borderRadius: 'var(--r-md)',
+                    fontSize: '15px',
+                    fontWeight: 400,
+                    color: 'var(--text)',
+                    border: '1px solid var(--border2)',
+                    textAlign: 'center',
+                    fontFamily: 'var(--font-body)',
+                  }}
+                >
+                  Log in
+                </Link>
+                <Link
+                  href="/auth/register"
+                  onClick={() => setMenuOpen(false)}
+                  className="btn btn-primary btn-lg"
+                  style={{ textDecoration: 'none', justifyContent: 'center' }}
+                >
+                  Start Free
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile social links */}

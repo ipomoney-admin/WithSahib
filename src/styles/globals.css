@@ -577,17 +577,42 @@ html.dark  .dark-section { background: #050505; }
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 10px 16px;
+  padding: 10px 14px;
   border-radius: var(--r-sm);
-  color: var(--text3);
+  color: #8A8A8A;
   font-size: 14px;
   font-weight: 400;
   text-decoration: none;
   transition: all 0.2s;
   font-family: var(--font-body);
+  border-left: 3px solid transparent;
+  cursor: pointer;
 }
-.sidebar-link:hover { background: var(--bg3); color: var(--text); }
-.sidebar-link.active { background: rgba(26, 122, 74, 0.08); color: var(--green); font-weight: 500; }
+.sidebar-link:hover { background: rgba(255,255,255,0.05); color: #FFFFFF; }
+.sidebar-link.active { background: rgba(255,107,0,0.12); color: #FF6B00; font-weight: 500; border-left: 3px solid #FF6B00; }
+
+/* ─── SOON BADGE GLOW ────────────────────────────────────────────────── */
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 4px rgba(255,107,0,0.3); }
+  50%       { box-shadow: 0 0 12px rgba(255,107,0,0.7); }
+}
+.badge-soon {
+  animation: glow-pulse 2s ease infinite;
+  background: rgba(255,107,0,0.15);
+  color: #FF6B00;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 100px;
+  border: 1px solid rgba(255,107,0,0.3);
+  letter-spacing: 0.5px;
+}
+
+/* ─── POPUP OVERLAY ──────────────────────────────────────────────────── */
+@keyframes popup-in {
+  from { opacity: 0; transform: scale(0.9); }
+  to   { opacity: 1; transform: scale(1); }
+}
 
 /* ─── SHIMMER LOADING ────────────────────────────────────────────────── */
 @keyframes shimmer {

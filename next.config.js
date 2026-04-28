@@ -42,6 +42,10 @@ const nextConfig = {
       },
       { source: '/track-record', destination: '/blog', permanent: true },
       { source: '/learn', destination: '/courses', permanent: true },
+      { source: '/dashboard/intraday', destination: '/dashboard', permanent: false },
+      { source: '/dashboard/stock-options', destination: '/dashboard', permanent: false },
+      { source: '/dashboard/index-options', destination: '/dashboard', permanent: false },
+      { source: '/dashboard/swing', destination: '/dashboard', permanent: false },
     ]
   },
 

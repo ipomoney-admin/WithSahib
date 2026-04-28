@@ -18,7 +18,7 @@ const TIME_SLOTS = [
   '14:00', '14:30', '15:00', '15:30', '16:00', '16:30',
 ]
 
-const APPOINTMENT_PRICES = { 15: 500, 30: 999 }
+const APPOINTMENT_PRICES = { 15: 1999, 30: 2999 }
 
 function getNextDays(n: number) {
   const days = []
