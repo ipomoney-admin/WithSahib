@@ -44,6 +44,15 @@ function tierColor(tier: string) {
          tier === 'basic' ? 'var(--sapphire)' : 'var(--text3)'
 }
 
+// DB tier 'basic' = Positional plan (user-facing name)
+// Pro gets all 4 services (their chosen one + swing); we default to showing all until pro_service is stored
+function hasServiceAccess(tier: string, service: string): boolean {
+  if (tier === 'elite') return true
+  if (tier === 'pro') return ['swing', 'intraday', 'stock-options', 'index-options'].includes(service)
+  if (tier === 'basic') return service === 'swing'
+  return false
+}
+
 // ─── POPUP CONTENT ────────────────────────────────────────────────────────
 
 function CheckRow({ text }: { text: string }) {
@@ -111,6 +120,63 @@ function PricingPopupContent({ serviceKey }: { serviceKey: string }) {
         View Plans →
       </Link>
       <p style={{ fontSize: '11px', color: '#555555', marginTop: '20px', borderTop: '1px solid #2A2A2A', paddingTop: '16px' }}>
+        Research by Sahib Singh Hora, SEBI RA INH000026266. Investments subject to market risk. Past performance not indicative of future results. Not investment advice.
+      </p>
+    </div>
+  )
+}
+
+// ─── CONTENT POPUP — shown when user already has access ──────────────────
+function ServiceContentPopup({ serviceKey }: { serviceKey: string }) {
+  const configs: Record<string, { header: string; desc: string }> = {
+    'intraday': {
+      header: 'Intraday Research Picks',
+      desc: 'Daily pre-market equity research. Entry zone, targets, stop-loss and written rationale — delivered before 9 AM.',
+    },
+    'stock-options': {
+      header: 'Stock Options Research',
+      desc: 'Weekly F&O research with strike selection, OI analysis, IV rank context and written rationale.',
+    },
+    'index-options': {
+      header: 'Index Options Research',
+      desc: 'Nifty, BankNifty, Sensex and FinNifty. Expiry plays and weekly setups with PCR and OI context.',
+    },
+    'swing': {
+      header: 'Positional Research',
+      desc: '8–12 high-conviction setups per month. Low risk, asymmetric reward. Full written rationale on every pick.',
+    },
+  }
+
+  const cfg = configs[serviceKey]
+  if (!cfg) return null
+
+  return (
+    <div>
+      {/* Access badge */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
+        <div style={{ width: '20px', height: '20px', borderRadius: '50%', background: 'rgba(26,122,74,0.15)', border: '1px solid rgba(26,122,74,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+          <Check size={11} style={{ color: '#1A7A4A' }} />
+        </div>
+        <span style={{ fontSize: '12px', fontWeight: 600, color: '#1A7A4A', letterSpacing: '0.5px' }}>Included in your plan</span>
+      </div>
+
+      <h2 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: '24px', fontWeight: 400, color: '#FFFFFF', marginBottom: '6px' }}>
+        {cfg.header}
+      </h2>
+      <p style={{ fontSize: '13px', color: '#888888', marginBottom: '24px' }}>{cfg.desc}</p>
+
+      {/* Status */}
+      <div style={{ background: '#1A1A1A', border: '1px solid #2A2A2A', borderRadius: '10px', padding: '16px', marginBottom: '24px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
+          <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#FF6B00', display: 'inline-block', flexShrink: 0 }} />
+          <span style={{ fontSize: '12px', fontWeight: 600, color: '#FF6B00', letterSpacing: '0.5px' }}>LIVE — publishes before 9 AM on trading days</span>
+        </div>
+        <p style={{ fontSize: '13px', color: '#888888', lineHeight: 1.6 }}>
+          Research for this service will appear here once published. You&apos;ll receive WhatsApp alerts before 9 AM on every trading day.
+        </p>
+      </div>
+
+      <p style={{ fontSize: '11px', color: '#555555', borderTop: '1px solid #2A2A2A', paddingTop: '16px' }}>
         Research by Sahib Singh Hora, SEBI RA INH000026266. Investments subject to market risk. Past performance not indicative of future results. Not investment advice.
       </p>
     </div>
@@ -352,9 +418,11 @@ function MentorshipPopup() {
 }
 
 // ─── POPUP MODAL WRAPPER ──────────────────────────────────────────────────
-function PopupModal({ popupKey, onClose }: { popupKey: PopupKey; onClose: () => void }) {
-  const isPricing = ['intraday', 'stock-options', 'index-options', 'swing'].includes(popupKey)
-  const isComingSoon = ['model-portfolio', 'research-reports'].includes(popupKey)
+const SERVICE_KEYS = ['intraday', 'stock-options', 'index-options', 'swing'] as const
+
+function PopupModal({ popupKey, onClose, userTier }: { popupKey: PopupKey; onClose: () => void; userTier: string }) {
+  const isService = (SERVICE_KEYS as readonly string[]).includes(popupKey)
+  const userHasAccess = isService && hasServiceAccess(userTier, popupKey)
 
   return (
     <div
@@ -392,7 +460,11 @@ function PopupModal({ popupKey, onClose }: { popupKey: PopupKey; onClose: () => 
           <X size={18} />
         </button>
 
-        {isPricing && <PricingPopupContent serviceKey={popupKey} />}
+        {/* Service items: content if user has access, pricing if not */}
+        {isService && userHasAccess && <ServiceContentPopup serviceKey={popupKey} />}
+        {isService && !userHasAccess && <PricingPopupContent serviceKey={popupKey} />}
+
+        {/* Non-service items — always show their own popup */}
         {popupKey === 'model-portfolio' && <ModelPortfolioPopup />}
         {popupKey === 'research-reports' && <ResearchReportsPopup />}
         {popupKey === 'appointments' && <AppointmentsPopup />}
@@ -456,6 +528,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   const userTierLevel = TIER_ORDER[user?.tier ?? 'free'] ?? 0
   const effectiveTierLevel = isAdminUser && !viewingAsUser ? 3 : (userTierLevel ?? 0)
+  // String tier for access checks — admins always get elite-level access
+  const effectiveTier = isAdminUser && !viewingAsUser ? 'elite' : (user?.tier ?? 'free')
 
   function canAccess(requiredTier: string) {
     return effectiveTierLevel >= (TIER_ORDER[requiredTier] ?? 0)
@@ -564,6 +638,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           const Icon = item.icon
           const accessible = canAccess(item.tier)
           const isSoon = item.badge === 'SOON'
+          const isServiceItem = (SERVICE_KEYS as readonly string[]).includes(item.key)
+          // Crown shown only when user lacks access to this specific service
+          const showCrown = isServiceItem
+            ? !hasServiceAccess(effectiveTier, item.key)
+            : !accessible
 
           return (
             <button
@@ -593,7 +672,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   {isSoon && (
                     <span className="badge-soon">{item.badge}</span>
                   )}
-                  {!accessible && <Crown size={12} style={{ color: 'var(--gold)', flexShrink: 0 }} />}
+                  {showCrown && <Crown size={12} style={{ color: 'var(--gold)', flexShrink: 0 }} />}
                 </>
               )}
             </button>
@@ -683,7 +762,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
       {/* Popup modal */}
       {activePopup && (
-        <PopupModal popupKey={activePopup} onClose={() => setActivePopup(null)} />
+        <PopupModal popupKey={activePopup} onClose={() => setActivePopup(null)} userTier={effectiveTier} />
       )}
 
       {/* Main area */}
