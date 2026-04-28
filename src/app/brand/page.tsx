@@ -1,5 +1,10 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { redirect } from 'next/navigation'
+import { createServerComponentClient } from '@/lib/supabase/server'
+import { isSuperAdmin } from '@/lib/admin-check'
+
+export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'Brand Assets — withSahib',
@@ -19,7 +24,13 @@ const COLORS = [
   { name: 'Border',  hex: '#E8E6E0', role: 'Borders (light mode)' },
 ]
 
-export default function BrandPage() {
+export default async function BrandPage() {
+  const supabase = createServerComponentClient()
+  const { data: { user } } = await supabase.auth.getUser()
+
+  if (!user) redirect('/auth/login')
+  if (!(await isSuperAdmin(user.id))) redirect('/dashboard')
+
   return (
     <div style={{ background: '#0A0A0A', color: '#FAFAF7', fontFamily: 'Inter, system-ui, -apple-system, sans-serif', minHeight: '100vh' }}>
       {/* Header */}

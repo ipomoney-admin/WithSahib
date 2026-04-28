@@ -98,6 +98,16 @@ export async function middleware(request: NextRequest) {
     // Admin role check is done in each page/API handler via isAdmin()
   }
 
+  // Brand page — requires login (super_admin check is done in the page itself)
+  if (pathname.startsWith('/brand')) {
+    if (!session) {
+      const url = request.nextUrl.clone()
+      url.pathname = '/auth/login'
+      url.searchParams.set('redirect', pathname)
+      return NextResponse.redirect(url)
+    }
+  }
+
   // Member-protected routes — only dashboard requires login
   const protectedPaths = [
     '/dashboard',
