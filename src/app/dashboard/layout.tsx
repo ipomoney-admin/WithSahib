@@ -491,7 +491,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <LogoMark size={24} animated={false} />
         {(sidebarOpen || mobile) && (
           <span style={{ fontSize: '16px', whiteSpace: 'nowrap' }}>
-            <span style={{ fontFamily: 'Inter, system-ui, sans-serif', fontWeight: 400, color: 'var(--text)' }}>with</span>
+            <span style={{ fontFamily: 'Inter, system-ui, sans-serif', fontWeight: 400, color: '#FFFFFF' }}>with</span>
             <span style={{ fontFamily: '"Playfair Display", Georgia, serif', fontStyle: 'italic', fontWeight: 700, color: '#FF6B00' }}>Sahib</span>
           </span>
         )}
