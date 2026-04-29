@@ -358,9 +358,33 @@ export default function AppointmentsPage() {
           </div>
         </div>
       )}
+      {/* Manual booking note */}
+      <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 20px 60px' }}>
+        <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '16px', padding: '24px 28px' }}>
+          <h3 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: '16px', fontWeight: 600, color: 'var(--text)', marginBottom: '14px' }}>
+            Booking process
+          </h3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '13px', color: 'var(--text2)', lineHeight: 1.7 }}>
+            <p>
+              <strong style={{ color: 'var(--text)' }}>Option 1 — Form above:</strong> Select your slot and submit. You&apos;ll receive a confirmation email with payment details within 24 hours.
+            </p>
+            <p>
+              <strong style={{ color: 'var(--text)' }}>Option 2 — Direct contact:</strong> Send a WhatsApp message or email to{' '}
+              <a href="mailto:connect@withsahib.com" style={{ color: 'var(--orange)', textDecoration: 'none' }}>connect@withsahib.com</a>{' '}
+              with your preferred date and time slot.
+            </p>
+            <p>
+              <strong style={{ color: 'var(--text)' }}>Payment:</strong> Via UPI or bank transfer before session confirmation. Details sent after booking request.
+            </p>
+            <p style={{ fontSize: '12px', color: 'var(--text3)' }}>
+              15 min — ₹1,999 · 30 min — ₹2,999 · Sessions via Google Meet or Zoom
+            </p>
+          </div>
+        </div>
       </div>
       <BookingBanner />
       <Footer />
+    </div>
     </div>
   )
 }

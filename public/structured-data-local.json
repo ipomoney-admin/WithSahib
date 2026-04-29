@@ -1,0 +1,26 @@
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "withSahib",
+  "description": "SEBI Registered Research Analyst platform — equity research, intraday calls, options strategies, and 1-on-1 advisory by Sahib Singh Hora (INH000026266)",
+  "url": "https://www.withsahib.com",
+  "email": "connect@withsahib.com",
+  "telephone": "+91-9981248888",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "86/2 Prem Nagar, Madan Mahal",
+    "addressLocality": "Jabalpur",
+    "addressRegion": "Madhya Pradesh",
+    "postalCode": "482001",
+    "addressCountry": "IN"
+  },
+  "founder": {
+    "@type": "Person",
+    "name": "Sahib Singh Hora",
+    "identifier": "INH000026266",
+    "jobTitle": "SEBI Registered Research Analyst"
+  },
+  "legalName": "Altitans Intelligence Private Limited",
+  "identifier": "CIN: U62011MP2026PTC083080",
+  "TODO": "Create Google Business Profile at https://business.google.com — use this data for the listing"
+}

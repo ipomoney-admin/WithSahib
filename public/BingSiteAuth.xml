@@ -1,4 +1,11 @@
 <?xml version="1.0"?>
 <users>
-  <user>BING_PLACEHOLDER_REPLACE_WITH_REAL_CODE</user>
+  <!-- TODO: Add Bing Webmaster verification code here.
+       Steps:
+       1. Go to https://www.bing.com/webmasters
+       2. Add site: https://www.withsahib.com
+       3. Choose "XML file" verification
+       4. Replace this comment with the actual <user> element Bing provides
+       Also submit sitemap: https://www.withsahib.com/sitemap.xml
+  -->
 </users>

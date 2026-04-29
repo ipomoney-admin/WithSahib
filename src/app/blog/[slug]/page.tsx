@@ -117,7 +117,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
 
         {/* Author card */}
         <div style={{ marginTop: 40, padding: 28, background: 'var(--surface)', border: '1px solid rgba(0,200,150,0.15)', borderRadius: 16, display: 'flex', gap: 20, alignItems: 'flex-start' }}>
-          <div style={{ position: 'relative', width: 56, height: 56, borderRadius: '50%', overflow: 'hidden', border: '2px solid rgba(0,200,150,0.2)', flexShrink: 0 }}>
+          <div style={{ position: 'relative', width: 56, height: 56, borderRadius: '50%', overflow: 'hidden', border: '2px solid rgba(26,122,74,0.2)', flexShrink: 0 }}>
             <Image src="/images/sahib-primary.jpg" alt="Sahib Singh Hora" fill sizes="56px" style={{ objectFit: 'cover', objectPosition: 'center top' }} />
           </div>
           <div>
@@ -164,7 +164,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 16 }}>
               {related.map((r) => (
                 <Link key={r.slug} href={`/blog/${r.slug}`} style={{ textDecoration: 'none', padding: 20, background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, display: 'block', transition: 'border-color 0.2s' }}>
-                  <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: 2, color: 'var(--emerald)', textTransform: 'uppercase' }}>{r.category}</span>
+                  <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: 2, color: 'var(--orange)', textTransform: 'uppercase' }}>{r.category}</span>
                   <p style={{ fontSize: 14, fontWeight: 500, color: 'var(--text)', lineHeight: 1.5, marginTop: 8, marginBottom: 8 }}>{r.title}</p>
                   <span style={{ fontSize: 12, color: 'var(--text3)' }}>{r.readTime}</span>
                 </Link>

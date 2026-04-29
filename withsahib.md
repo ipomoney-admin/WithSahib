@@ -1,6 +1,6 @@
 # withSahib — Project Context & Memory
 
-> Last updated: 2026-04-28
+> Last updated: 2026-04-28 (session 2)
 > This file is the authoritative context document for all AI-assisted work on this project.
 > Read this before making any changes to the codebase.
 
@@ -226,8 +226,16 @@ Sign out
 7. Logged-in user personalised navbar: show "Sahib's Dashboard →" instead of Login/Start Free
 8. Sidebar darker theme (#1A1A1A background — not too dark, not too light)
 9. `/services/swing` page — fix pricing to show ₹999/month Basic plan (currently shows wrong price)
-10. `/appointments` page — update to show ₹1,999 (15 min) and ₹2,999 (30 min)
-11. Redirects: `/dashboard/intraday`, `/dashboard/stock-options`, `/dashboard/index-options`, `/dashboard/swing` → redirect to `/dashboard` (these routes have no dedicated pages yet)
+10. Redirects: `/dashboard/intraday`, `/dashboard/stock-options`, `/dashboard/index-options`, `/dashboard/swing` → redirect to `/dashboard` (these routes have no dedicated pages yet)
+
+### Next phase — Revenue activation
+
+- **Razorpay**: Set `RAZORPAY_KEY_ID` + `RAZORPAY_KEY_SECRET` env vars. Uncomment implementation in `/api/payments/create-order/route.ts`. Create Razorpay account + activate subscription plans.
+- **AiSensy / WhatsApp**: Set `AISENSY_API_KEY` + `AISENSY_CAMPAIGN_NAME` env vars. Uncomment implementation in `/api/whatsapp/send/route.ts`.
+- **Anthropic blog cron**: Set `ANTHROPIC_API_KEY` env var. Cron job `/api/cron/blog-draft` runs Mon–Fri 2 AM. Blog drafts save to `blog_posts` table as `published_at: null` — admin must review + publish manually.
+- **Google Search Console**: Replace placeholder in `public/google-site-verification.html` with real verification content.
+- **Bing Webmaster Tools**: Replace placeholder in `public/BingSiteAuth.xml` with real auth key.
+- **Testimonials**: Replace placeholder cards in homepage `TestimonialsSection` with real testimonials when they arrive.
 
 ---
 
@@ -314,3 +322,31 @@ Sign out
 - `supabase/.temp/pooler-url` value is still in git history
 - Rotate the Supabase pooler connection string: Supabase dashboard → Settings → Database → Connection pooling → Reset
 - Consider BFG Repo Cleaner to scrub history if credential was sensitive
+
+### 2026-04-28 (session 2)
+
+**25 pending items completed:**
+
+- **Brand page** (`/brand`): protected with inline `admin_roles` query via `createServiceRoleClient`, redirects non-super-admins to `/dashboard`. Middleware updated with `/brand` session check. `ADMIN_SETUP.sql` created for granting roles.
+- **BASIC → POSITIONAL rename**: `TIER_ORDER`, `hasServiceAccess`, dashboard layout, pricing page — all renamed. DB value `'basic'` preserved for backwards-compat; display only.
+- **Sidebar logo white fix**: logo "with" text uses `var(--text)` (theme-aware), "Sahib" uses `#FF6B00` always.
+- **Brand page color/font overhaul**: uses CSS variables throughout, Playfair headings.
+- **Letterhead editor**: `/dashboard/letterhead` — live preview with SEBI fields, print/PDF export.
+- **Plan-based dashboard access control**: `hasServiceAccess(tier, service)` — elite: all; pro: all 4; positional: swing only. Admins get elite regardless.
+- **Methodology/about dark mode**: confirmed uses `.always-dark` class + CSS variables — no hardcoded hex.
+- **Blog improvements**: author byline in hero, CTA box at end, related posts section. Fixed `var(--emerald)` → `var(--orange)` in related posts category badge.
+- **Testimonials placeholder structure**: three cards in homepage `TestimonialsSection` with dashed borders, gold stars, per-plan labels.
+- **Social links updated**: Footer now has Twitter/X (`@WithSahib_`), Instagram (`@withsahib_`), LinkedIn (`sahibsinghhora`) + existing WhatsApp/Telegram.
+- **Telegram CTA**: already existed on homepage — verified correct `https://t.me/withsahib` link.
+- **Appointments manual booking flow**: booking process section added to `/appointments` page (Option 1: form, Option 2: email/WhatsApp, Payment: UPI before confirmation).
+- **Google Search Console**: placeholder `public/google-site-verification.html` with TODO instructions.
+- **Bing Webmaster Tools**: placeholder `public/BingSiteAuth.xml` with TODO instructions.
+- **Google Business JSON**: `public/structured-data-local.json` with ProfessionalService schema.
+- **Blog draft cron**: `src/app/api/cron/blog-draft/route.ts` — Anthropic API (`claude-sonnet-4-6`), saves to `blog_posts` table as draft. Vercel cron: Mon–Fri 2 AM.
+- **Appointments booking API**: `src/app/api/appointments/book/route.ts` — Resend emails (admin + user confirmation), validates 15/30 min, prices ₹1,999/₹2,999.
+- **Razorpay placeholder API**: `src/app/api/payments/create-order/route.ts` — placeholder with commented-out implementation, plan prices in paise.
+- **AiSensy WhatsApp placeholder API**: `src/app/api/whatsapp/send/route.ts` — admin-only, placeholder with commented-out AiSensy implementation.
+- **Admin publish flow**: `src/app/admin/publish/page.tsx` — form with stock/exchange/action/entry/targets/stop-loss/service/rationale + R:R calculator. `src/app/api/admin/publish-research/route.ts` inserts into `signals` table.
+- **Admin layout publish nav**: "Publish Research" added as first nav item with `Send` icon.
+- **llms.txt updated**: Basic → Positional rename, appointments section with prices.
+- **`withsahib.md` updated**: all 25 items marked complete, Next phase section added.

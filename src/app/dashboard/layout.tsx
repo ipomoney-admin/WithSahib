@@ -509,13 +509,30 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           }
         })
 
+      // Try public.users first; fall back to subscriptions table for tier
       supabase
         .from('users')
         .select('*')
         .eq('id', data.user.id)
         .single()
-        .then(({ data: profile }) => {
-          if (profile) setUser(profile)
+        .then(async ({ data: profile }) => {
+          if (profile) {
+            setUser(profile)
+          } else {
+            // public.users is empty — build a minimal profile from auth + subscriptions
+            const authMeta = data.user.user_metadata ?? {}
+            const name = authMeta.full_name ?? authMeta.name ?? data.user.email?.split('@')[0] ?? 'User'
+            const { data: sub } = await supabase
+              .from('subscriptions')
+              .select('tier, status')
+              .eq('user_id', data.user.id)
+              .eq('status', 'active')
+              .order('created_at', { ascending: false })
+              .limit(1)
+              .single()
+            const tier = sub?.tier ?? (authMeta.plan as string) ?? 'free'
+            setUser({ id: data.user.id, name, email: data.user.email ?? '', tier } as unknown as import('@/types').User)
+          }
           setAuthLoading(false)
         })
     })

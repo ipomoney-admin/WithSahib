@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { cookies, headers } from 'next/headers'
 import Link from 'next/link'
-import { Zap, BarChart2, Settings, Home, Eye, ScanSearch, ShieldCheck } from 'lucide-react'
+import { Zap, BarChart2, Settings, Home, Eye, ScanSearch, ShieldCheck, Send } from 'lucide-react'
 import { createServerComponentClient, createServiceRoleClient } from '@/lib/supabase/server'
 import { isAdmin, isSuperAdmin } from '@/lib/admin-check'
 import { isPasskeySessionValid } from '@/lib/webauthn'
@@ -14,6 +14,7 @@ export const metadata: Metadata = {
 }
 
 const NAV = [
+  { label: 'Publish Research', href: '/admin/publish', icon: Send },
   { label: 'Signals', href: '/admin/signals', icon: Zap },
   { label: 'Screener', href: '/admin/screener', icon: ScanSearch },
   { label: 'Intelligence', href: '/admin/intelligence', icon: BarChart2 },
