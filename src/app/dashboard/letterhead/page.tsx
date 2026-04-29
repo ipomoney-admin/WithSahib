@@ -209,9 +209,10 @@ export default function LetterheadPage() {
                 </div>
                 {/* SEBI details */}
                 <div style={{ textAlign: 'right' }}>
-                  <div style={{ fontSize: '10px', fontWeight: 700, color: '#B8975A', fontFamily: 'Courier New, monospace', letterSpacing: '1px', marginBottom: '2px' }}>SEBI RA · INH000026266</div>
-                  <div style={{ fontSize: '9px', color: '#6E6E73' }}>Sahib Singh Hora · connect@withsahib.com</div>
-                  <div style={{ fontSize: '9px', color: '#6E6E73' }}>withsahib.com · +91-9981248888</div>
+                  <div style={{ fontSize: '11px', fontWeight: 700, color: '#0A0A0A', fontFamily: 'Courier New, monospace', letterSpacing: '1px', marginBottom: '3px' }}>SEBI RA · INH000026266</div>
+                  <div style={{ fontSize: '11px', fontWeight: 500, color: '#0A0A0A', marginBottom: '1px' }}>Sahib Singh Hora</div>
+                  <div style={{ fontSize: '11px', color: '#333333', marginBottom: '1px' }}>connect@withsahib.com</div>
+                  <div style={{ fontSize: '11px', color: '#333333' }}>withsahib.com · +91-90988 87210</div>
                 </div>
               </div>
             </div>
@@ -244,8 +245,7 @@ export default function LetterheadPage() {
               }}
             >
               <p style={{ fontSize: '8px', color: '#6E6E73', lineHeight: 1.5, flex: 1 }}>
-                Research by Sahib Singh Hora, SEBI RA INH000026266. Altitans Intelligence Private Limited · CIN: U62011MP2026PTC083080.
-                Investments subject to market risk. Past performance not indicative of future results. Not investment advice.
+                Research by Sahib Singh Hora · SEBI RA INH000026266 · withsahib.com · Investments subject to market risk. Past performance not indicative of future results. Not investment advice.
               </p>
               <p style={{ fontSize: '8px', color: '#B8975A', whiteSpace: 'nowrap', fontFamily: 'Courier New, monospace' }}>withsahib.com</p>
             </div>
