@@ -8,6 +8,7 @@ import { Navbar } from '@/components/layout/Navbar'
 import { BookingBanner } from '@/components/layout/BookingBanner'
 import { Footer } from '@/components/layout/Footer'
 import { Linkedin, Twitter, Instagram, Facebook } from 'lucide-react'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 const PROCESS_STEPS = [
   {
@@ -76,6 +77,7 @@ function CountUp({ target, suffix = '', duration = 1800 }: { target: number; suf
 }
 
 export default function AboutPage() {
+  const { t } = useLanguage()
   return (
     <div style={{ background: 'var(--bg)' }}>
       <style>{`
@@ -195,7 +197,7 @@ export default function AboutPage() {
                 fontWeight: 600, color: '#FF6B00', letterSpacing: '1.5px',
                 marginBottom: '24px', fontFamily: 'var(--font-body)', textTransform: 'uppercase',
               }}>
-                The Analyst
+                {t('about.eyebrow')}
               </div>
 
               <h1
@@ -219,12 +221,12 @@ export default function AboutPage() {
                   INH000026266
                 </span>
                 <span className="about-hero-p2" style={{ fontSize: '13px', fontFamily: 'var(--font-body)' }}>
-                  SEBI Registered Research Analyst
+                  {t('about.sebi_title')}
                 </span>
               </div>
 
               <p className="about-hero-p1" style={{ fontSize: '16px', lineHeight: 1.85, marginBottom: '18px', fontFamily: 'var(--font-body)' }}>
-                I built withSahib to bring institutional-grade equity research to every serious market participant in India. Every recommendation I publish carries my SEBI registration number, my name, and my reasoning. That accountability is the foundation of everything here.
+                {t('about.bio')}
               </p>
               <p className="about-hero-p2" style={{ fontSize: '16px', lineHeight: 1.85, marginBottom: '18px', fontFamily: 'var(--font-body)' }}>
                 I became a SEBI Registered Research Analyst under INH000026266 to build something structurally different: a research house where every recommendation carries a name, a registration number, and a regulatory consequence. Not a channel. A firm.

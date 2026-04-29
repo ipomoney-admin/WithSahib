@@ -1,6 +1,10 @@
+'use client'
+
 import Link from 'next/link'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export function BookingBanner() {
+  const { t } = useLanguage()
   return (
     <div
       style={{
@@ -31,7 +35,7 @@ export function BookingBanner() {
               marginBottom: '6px',
             }}
           >
-            Book a 1-on-1 session with Sahib
+            {t('booking.text')}
           </p>
           <p
             style={{
@@ -62,7 +66,7 @@ export function BookingBanner() {
             transition: 'transform 0.15s, box-shadow 0.15s',
           }}
         >
-          Book Now →
+          {t('booking.cta')}
         </Link>
       </div>
     </div>

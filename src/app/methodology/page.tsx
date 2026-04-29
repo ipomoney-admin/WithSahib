@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/Button'
 import { Navbar } from '@/components/layout/Navbar'
 import { BookingBanner } from '@/components/layout/BookingBanner'
 import { Footer } from '@/components/layout/Footer'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 // ─── COUNT-UP ─────────────────────────────────────────────────────────────────
 function CountUp({ to, suffix = '', prefix = '', duration = 1600 }: {
@@ -100,6 +101,7 @@ const FRAMEWORKS = [
 
 // ─── PAGE ─────────────────────────────────────────────────────────────────────
 export default function MethodologyPage() {
+  const { t } = useLanguage()
   return (
     <div style={{ background: 'var(--bg)' }}>
       <style>{`
@@ -148,7 +150,7 @@ export default function MethodologyPage() {
               color: 'var(--orange)', textTransform: 'uppercase',
               fontFamily: 'Inter, system-ui, sans-serif',
             }}>
-              Research Methodology
+              {t('methodology.eyebrow')}
             </span>
           </div>
 
@@ -159,8 +161,8 @@ export default function MethodologyPage() {
             fontWeight: 700, lineHeight: 1.0,
             color: '#FAFAF7', marginBottom: '28px',
           }}>
-            Not instinct.<br />
-            <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>Process.</em>
+            {t('methodology.headline1')}<br />
+            <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>{t('methodology.headline2')}</em>
           </h1>
 
           {/* Lead */}
@@ -169,7 +171,7 @@ export default function MethodologyPage() {
             maxWidth: '640px', fontFamily: 'Inter, system-ui, sans-serif',
             marginBottom: '64px',
           }}>
-            Every recommendation published on withSahib passes through six sequential filters. A setup that fails any single filter is discarded — regardless of how compelling it looks on the surface.
+            {t('methodology.lead')}
           </p>
 
           {/* Stat counters */}
@@ -181,8 +183,8 @@ export default function MethodologyPage() {
             {[
               { display: null, to: 1500, suffix: '+', label: 'Instruments Screened Daily' },
               { display: '0.3%', label: 'Of Setups Published' },
-              { display: 'Every setup', label: 'Must pass 6 filters', small: true },
-              { display: 'Before open', label: 'Reports published before market', small: true },
+              { display: t('methodology.stat1_val'), label: t('methodology.stat1_label'), small: true },
+              { display: t('methodology.stat2_val'), label: t('methodology.stat2_label'), small: true },
             ].map((s, i) => (
               <div key={i} style={{ padding: '32px 28px', background: '#0D0D0D' }}>
                 <div style={{
@@ -249,11 +251,10 @@ export default function MethodologyPage() {
               </span>
             </div>
             <h2 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: 'clamp(32px,4.5vw,56px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.1, marginBottom: '16px' }}>
-              Six filters.{' '}
-              <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>Zero shortcuts.</em>
+              {t('methodology.process_title')}
             </h2>
             <p style={{ fontSize: '16px', color: 'var(--text3)', lineHeight: 1.75, fontFamily: 'Inter, system-ui, sans-serif', maxWidth: '520px' }}>
-              Each filter runs sequentially. A setup that fails Filter 2 never reaches Filter 3.
+              {t('methodology.process_sub')}
             </p>
           </div>
 
@@ -266,7 +267,9 @@ export default function MethodologyPage() {
             }} />
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
-              {FILTERS.map((f, i) => (
+              {FILTERS.map((f, i) => {
+                const filterKey = `methodology.filter${i + 1}` as const
+                return (
                 <div key={f.id} style={{ display: 'grid', gridTemplateColumns: '40px 1fr', gap: '28px', paddingBottom: '48px' }}>
                   {/* Dot */}
                   <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '20px' }}>
@@ -296,7 +299,7 @@ export default function MethodologyPage() {
                     </div>
 
                     <h3 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: '22px', fontWeight: 700, color: 'var(--text)', marginBottom: '12px', lineHeight: 1.3 }}>
-                      {f.title}
+                      {t(filterKey)}
                     </h3>
                     <p style={{ fontSize: '14px', color: 'var(--text2)', lineHeight: 1.8, marginBottom: '20px', fontFamily: 'Inter, system-ui, sans-serif' }}>
                       {f.body}
@@ -304,13 +307,13 @@ export default function MethodologyPage() {
 
                     {/* Tags */}
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '16px' }}>
-                      {f.tags.map(t => (
-                        <span key={t} style={{
+                      {f.tags.map(tag => (
+                        <span key={tag} style={{
                           padding: '3px 10px', background: 'var(--bg2)',
                           border: '1px solid var(--border2)', borderRadius: '20px',
                           fontSize: '11px', color: 'var(--text3)', fontFamily: 'Inter, system-ui, sans-serif',
                           fontWeight: 500,
-                        }}>{t}</span>
+                        }}>{tag}</span>
                       ))}
                     </div>
 
@@ -323,7 +326,8 @@ export default function MethodologyPage() {
                     </div>
                   </div>
                 </div>
-              ))}
+                )
+              })}
 
               {/* PUBLISHED step */}
               <div style={{ display: 'grid', gridTemplateColumns: '40px 1fr', gap: '28px' }}>
@@ -385,8 +389,7 @@ export default function MethodologyPage() {
               </span>
             </div>
             <h2 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: 'clamp(28px,4vw,48px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.15 }}>
-              Named methods.{' '}
-              <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>Proven foundations.</em>
+              {t('methodology.frameworks_title')}
             </h2>
           </div>
 
@@ -418,8 +421,7 @@ export default function MethodologyPage() {
         <div style={{ maxWidth: '860px', margin: '0 auto' }}>
           <div style={{ marginBottom: '56px', textAlign: 'center' }}>
             <h2 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: '#FAFAF7', lineHeight: 1.2 }}>
-              The one rule that{' '}
-              <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>overrides all others.</em>
+              {t('methodology.philosophy_title')}
             </h2>
           </div>
 
@@ -433,7 +435,7 @@ export default function MethodologyPage() {
               fontStyle: 'italic', fontSize: 'clamp(18px,2.5vw,26px)',
               color: '#D4A843', lineHeight: 1.7, marginBottom: '20px',
             }}>
-              &ldquo;Most analysts ask: why should I publish this recommendation? I ask: is there any reason not to. If one filter fails — it&apos;s out. Not reconsidered. Not adjusted. Out.&rdquo;
+              &ldquo;{t('methodology.quote')}&rdquo;
             </p>
             <p style={{ fontSize: '13px', color: '#6E6E73', fontFamily: 'Inter, system-ui, sans-serif', letterSpacing: '0.3px' }}>
               — Sahib Singh Hora, SEBI RA INH000026266

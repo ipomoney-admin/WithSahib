@@ -10,12 +10,16 @@
     "login": "Log in",
     "startFree": "Start Free",
     "dashboard": "Dashboard",
-    "hiring": "We're hiring"
+    "hiring": "We're hiring",
+    "hiring_bar": "We're hiring —",
+    "hiring_link": "Join the team"
   },
   "home": {
     "hero_headline": "Where conviction meets",
     "hero_headline_italic": "clarity.",
     "hero_sub": "Daily equity research from a SEBI Registered Analyst — with entry, targets, stop-loss, and written reasoning on every call. No black boxes. No anonymous tips.",
+    "hero_note": "No credit card required · Cancel anytime · SEBI regulated",
+    "hero_meets": "meets",
     "cta_start": "Start Free Today →",
     "cta_plans": "See Plans",
     "telegram": "Join free Telegram channel →",
@@ -132,6 +136,63 @@
     "view_plans": "View Plans",
     "close": "Close",
     "loading": "Loading..."
+  },
+  "booking": {
+    "text": "Book a 1-on-1 strategy session with Sahib Singh Hora, SEBI RA",
+    "cta": "Book Now →"
+  },
+  "services": {
+    "eyebrow": "SERVICES",
+    "headline": "Research built for",
+    "headline_italic": "every market.",
+    "intraday_name": "Intraday Research",
+    "intraday_desc": "Daily pre-market equity research for NSE stocks. Entry zone, two targets, stop-loss and written rationale — delivered before 9 AM.",
+    "options_name": "Stock Options Research",
+    "options_desc": "Weekly F&O research with strike selection, OI analysis, IV rank context and written rationale.",
+    "index_name": "Index Options Research",
+    "index_desc": "Nifty, BankNifty, Sensex and FinNifty. Expiry plays and weekly setups with PCR and OI context.",
+    "swing_name": "Positional Research",
+    "swing_desc": "8–12 high-conviction positional setups per month. Low risk, asymmetric reward."
+  },
+  "who": {
+    "eyebrow": "WHO IT'S FOR",
+    "headline": "Built for serious",
+    "headline_italic": "market participants.",
+    "retail": "Retail Traders",
+    "retail_desc": "Serious traders who want accountable, SEBI-registered research — not anonymous tips.",
+    "hni": "HNI & Family Offices",
+    "hni_desc": "High net-worth individuals who need institutional-quality independent research.",
+    "options": "Options Traders",
+    "options_desc": "Active F&O participants who want OI analysis, PCR, IV rank context alongside setups."
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "headline": "Frequently asked",
+    "headline_italic": "questions.",
+    "q1": "Is withSahib SEBI registered?",
+    "a1": "Yes. Sahib Singh Hora is a SEBI Registered Research Analyst with registration number INH000026266.",
+    "q2": "How many research notes are published per day?",
+    "a2": "1–3 research notes on most trading days. If no setup passes all six filters, nothing is published that day.",
+    "q3": "Can I cancel my subscription anytime?",
+    "a3": "Yes. All subscriptions can be cancelled anytime with no lock-in period.",
+    "q4": "What is the Flagship Mentorship?",
+    "a4": "The Flagship Mentorship is a complete 3-month personalised 1-on-1 mentorship with Sahib Singh Hora. Only one mentee per batch.",
+    "q5": "How do I verify the SEBI registration?",
+    "a5": "Visit sebi.gov.in and search for registration number INH000026266."
+  },
+  "contact": {
+    "eyebrow": "CONTACT",
+    "headline": "Get in",
+    "headline_italic": "touch.",
+    "sub": "Have a question? We'll get back to you within 24 hours.",
+    "name": "Your Name",
+    "email": "Email Address",
+    "phone": "Phone Number",
+    "subject": "Subject",
+    "message": "Your Message",
+    "submit": "Send Message →",
+    "success": "Message sent! We'll respond within 24 hours.",
+    "or": "Or reach us directly"
   },
   "language": {
     "select": "Select Language",

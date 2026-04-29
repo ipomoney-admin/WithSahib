@@ -9,6 +9,7 @@ import { BookingBanner } from '@/components/layout/BookingBanner'
 import { Footer } from '@/components/layout/Footer'
 import { Check } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 const FOOTER_LINE = 'Research by Sahib Singh Hora · 14+ Years Experience · SEBI RA'
 
@@ -81,6 +82,7 @@ const PLANS = [
 
 export default function PricingPage() {
   const router = useRouter()
+  const { t } = useLanguage()
   const [hasSession, setHasSession] = useState<boolean | null>(null)
   const [ctaLoading, setCtaLoading] = useState<string | null>(null)
   const [ctaError, setCtaError] = useState('')
@@ -125,7 +127,7 @@ export default function PricingPage() {
       {/* Hero */}
       <section style={{ padding: '40px 40px 0', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'relative', zIndex: 1, maxWidth: 640, margin: '0 auto' }}>
-          <div className="section-tag" style={{ justifyContent: 'center', marginBottom: '16px' }}>Pricing</div>
+          <div className="section-tag" style={{ justifyContent: 'center', marginBottom: '16px' }}>{t('pricing.eyebrow')}</div>
           <h1 style={{
             fontFamily: 'var(--font-heading)',
             fontSize: 'clamp(32px,5vw,56px)',
@@ -134,11 +136,11 @@ export default function PricingPage() {
             marginBottom: '12px',
             lineHeight: 1.15,
           }}>
-            Research that{' '}
-            <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>pays for itself.</em>
+            {t('pricing.headline')}{' '}
+            <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>{t('pricing.headline_italic')}</em>
           </h1>
           <p style={{ fontSize: '17px', color: 'var(--text2)', marginBottom: '32px', lineHeight: 1.6, fontFamily: 'var(--font-body)' }}>
-            Choose your coverage. Cancel anytime.
+            {t('pricing.subline')}
           </p>
         </div>
       </section>
@@ -180,7 +182,7 @@ export default function PricingPage() {
                     padding: '4px 16px', borderRadius: '20px', whiteSpace: 'nowrap',
                     fontFamily: 'var(--font-body)',
                   }}>
-                    {plan.badge.label}
+                    {plan.tier === 'pro' ? t('pricing.most_popular') : t('pricing.flagship_tier')}
                   </div>
                 )}
 
@@ -190,7 +192,7 @@ export default function PricingPage() {
                   color: plan.tier === 'elite' ? '#B8975A' : plan.tier === 'pro' ? '#1A7A4A' : 'var(--text3)',
                   textTransform: 'uppercase', marginBottom: '10px', fontFamily: 'var(--font-body)',
                 }}>
-                  {plan.name}
+                  {t('pricing.' + plan.tier)}
                 </div>
 
                 {/* Price */}
@@ -198,7 +200,7 @@ export default function PricingPage() {
                   <span style={{ fontFamily: 'var(--font-heading)', fontSize: '48px', fontWeight: 700, color: 'var(--text)', lineHeight: 1 }}>
                     ₹{plan.price.toLocaleString('en-IN')}
                   </span>
-                  <span style={{ fontSize: '14px', color: 'var(--text3)', fontFamily: 'var(--font-body)' }}>/mo</span>
+                  <span style={{ fontSize: '14px', color: 'var(--text3)', fontFamily: 'var(--font-body)' }}>{t('pricing.per_month')}</span>
                 </div>
 
                 {/* Sub */}
@@ -207,7 +209,7 @@ export default function PricingPage() {
                   paddingBottom: '20px', borderBottom: '1px solid var(--border)',
                   fontFamily: 'var(--font-body)', lineHeight: 1.5,
                 }}>
-                  {plan.sub}
+                  {t('pricing.' + plan.tier + '_tagline')}
                 </p>
 
                 {/* Features */}
@@ -267,7 +269,7 @@ export default function PricingPage() {
                     }),
                   }}
                 >
-                  {ctaLoading === plan.tier ? 'Starting…' : plan.ctaLabel}
+                  {ctaLoading === plan.tier ? t('common.loading') : t(plan.tier === 'positional' ? 'pricing.start_basic' : plan.tier === 'pro' ? 'pricing.go_pro' : 'pricing.go_elite')}
                 </button>
 
                 {/* Footer line */}
@@ -290,7 +292,7 @@ export default function PricingPage() {
 
         {/* Free line */}
         <p style={{ textAlign: 'center', fontSize: '12px', color: 'var(--text4)', marginTop: '20px', fontFamily: 'var(--font-body)' }}>
-          Free plan always available — no card required · cancel anytime
+          {t('pricing.free_note')}
         </p>
       </section>
 
@@ -306,14 +308,14 @@ export default function PricingPage() {
           }}>
             <div>
               <p style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '2px', color: '#B8975A', textTransform: 'uppercase', marginBottom: '8px', fontFamily: 'var(--font-body)' }}>
-                Specialised Research
+                {t('pricing.hni_title')}
               </p>
               <p style={{ fontSize: '18px', fontWeight: 600, color: '#FFFFFF', fontFamily: 'var(--font-heading)', fontStyle: 'italic', lineHeight: 1.3 }}>
-                Starting ₹9,999/mo — For family offices, listed companies & serious capital.
+                Starting ₹9,999/mo — {t('pricing.hni_sub')}
               </p>
             </div>
             <Button href="/contact" variant="gold" size="md" style={{ whiteSpace: 'nowrap', flexShrink: 0 }}>
-              Let&apos;s Discuss →
+              {t('pricing.hni_cta')}
             </Button>
           </div>
         </div>

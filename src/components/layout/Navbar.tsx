@@ -12,6 +12,7 @@ import { LanguagePicker } from '@/components/ui/LanguagePicker'
 // ─── HIRING BAR ───────────────────────────────────────────────────────────────
 function HiringBar() {
   const [dismissed, setDismissed] = useState<boolean | null>(null)
+  const { t } = useLanguage()
 
   useEffect(() => {
     setDismissed(localStorage.getItem('hiring_bar_dismissed') === '1')
@@ -30,12 +31,12 @@ function HiringBar() {
         fontFamily: 'Inter, system-ui, sans-serif', textAlign: 'center',
         whiteSpace: 'nowrap',
       }}>
-        We&apos;re hiring —{' '}
+        {t('nav.hiring_bar')}{' '}
         <Link href="/work-with-us" style={{
           color: '#FFFFFF', fontWeight: 700,
           textDecoration: 'underline', textUnderlineOffset: '3px',
         }}>
-          Join the team
+          {t('nav.hiring_link')}
         </Link>
       </p>
       <button

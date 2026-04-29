@@ -469,7 +469,7 @@ function HeroSection() {
             >
               {t('home.hero_headline')}{' '}
               <br />
-              meets <em style={{ fontStyle: 'italic', color: '#FF6B00', fontWeight: 400 }}>{t('home.hero_headline_italic')}</em>
+              <em style={{ fontStyle: 'italic', color: '#FF6B00', fontWeight: 400 }}>{t('home.hero_headline_italic')}</em>
             </h1>
 
             {/* Sub */}
