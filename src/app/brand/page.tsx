@@ -1,8 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import { createServerComponentClient } from '@/lib/supabase/server'
-import { isSuperAdmin } from '@/lib/admin-check'
+import { createServerComponentClient, createServiceRoleClient } from '@/lib/supabase/server'
 
 export const dynamic = 'force-dynamic'
 
@@ -25,11 +24,22 @@ const COLORS = [
 ]
 
 export default async function BrandPage() {
-  const supabase = createServerComponentClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  // Auth: anon client reads the user's session cookie
+  const authClient = createServerComponentClient()
+  const { data: { user } } = await authClient.auth.getUser()
+  if (!user) redirect('/auth/login?redirect=/brand')
 
-  if (!user) redirect('/auth/login')
-  if (!(await isSuperAdmin(user.id))) redirect('/dashboard')
+  // Role check: service role client bypasses RLS — queries admin_roles directly
+  // public.users is not used; role data lives exclusively in admin_roles
+  const db = createServiceRoleClient()
+  const { data: adminRole } = await db
+    .from('admin_roles')
+    .select('role')
+    .eq('user_id', user.id)
+    .eq('role', 'super_admin')
+    .single()
+
+  if (!adminRole) redirect('/dashboard')
 
   return (
     <div style={{ background: '#0A0A0A', color: '#FAFAF7', fontFamily: 'Inter, system-ui, -apple-system, sans-serif', minHeight: '100vh' }}>
