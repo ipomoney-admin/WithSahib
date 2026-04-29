@@ -56,7 +56,7 @@ export const STATE_LANGUAGE_MAP: Record<string, { primary: string; secondary: st
   'Odisha': { primary: 'en', secondary: 'en', label: 'English' },
 }
 
-export const AVAILABLE_LANGUAGES = ['en', 'hi', 'mr', 'gu'] as const
+export const AVAILABLE_LANGUAGES = ['en', 'hi', 'mr', 'gu', 'ta', 'te', 'kn', 'bn', 'pa', 'ml'] as const
 export type AvailableLocale = typeof AVAILABLE_LANGUAGES[number]
 
 export const ALL_LANGUAGES = [
