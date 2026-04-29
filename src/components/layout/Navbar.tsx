@@ -6,6 +6,8 @@ import { usePathname } from 'next/navigation'
 import { Menu, X } from 'lucide-react'
 import { LogoMark } from '@/components/ui/Logo'
 import { createClient } from '@/lib/supabase/client'
+import { useLanguage } from '@/contexts/LanguageContext'
+import { LanguagePicker } from '@/components/ui/LanguagePicker'
 
 // ─── HIRING BAR ───────────────────────────────────────────────────────────────
 function HiringBar() {
@@ -129,14 +131,14 @@ function ThemeToggle() {
   )
 }
 
-const NAV_LINKS = [
-  { label: 'Methodology', href: '/methodology' },
-  { label: 'Services', href: '/services' },
-  { label: 'The Analyst', href: '/about' },
-  { label: "Who It's For", href: '/who-its-for' },
-  { label: 'Pricing', href: '/pricing' },
-  { label: 'Blog', href: '/blog' },
-  { label: 'Learn', href: '/courses' },
+const NAV_LINK_DEFS = [
+  { key: 'nav.methodology', href: '/methodology' },
+  { key: 'nav.services', href: '/services' },
+  { key: 'nav.theAnalyst', href: '/about' },
+  { key: 'nav.whoItsFor', href: '/who-its-for' },
+  { key: 'nav.pricing', href: '/pricing' },
+  { key: 'nav.blog', href: '/blog' },
+  { key: 'nav.learn', href: '/courses' },
 ]
 
 const SOCIAL_LINKS = [
@@ -152,6 +154,9 @@ export function Navbar() {
   const [dark, setDark] = useState(false)
   const [firstName, setFirstName] = useState<string | null>(null)
   const supabase = useMemo(() => createClient(), [])
+  const { t } = useLanguage()
+
+  const NAV_LINKS = NAV_LINK_DEFS.map((d) => ({ label: t(d.key), href: d.href }))
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
@@ -297,6 +302,11 @@ export function Navbar() {
             ))}
           </div>
 
+          {/* Language picker */}
+          <div className="hide-mobile">
+            <LanguagePicker />
+          </div>
+
           {/* Theme toggle */}
           <div className="hide-mobile">
             <ThemeToggle />
@@ -329,7 +339,7 @@ export function Navbar() {
                   fontFamily: 'var(--font-body)',
                 }}
               >
-                Log in
+                {t('nav.login')}
               </Link>
 
               {/* CTA */}
@@ -338,7 +348,7 @@ export function Navbar() {
                 className="btn btn-primary btn-sm"
                 style={{ textDecoration: 'none' }}
               >
-                Start Free
+                {t('nav.startFree')}
               </Link>
             </>
           )}
@@ -431,7 +441,7 @@ export function Navbar() {
                     fontFamily: 'var(--font-body)',
                   }}
                 >
-                  Log in
+                  {t('nav.login')}
                 </Link>
                 <Link
                   href="/auth/register"
@@ -439,7 +449,7 @@ export function Navbar() {
                   className="btn btn-primary btn-lg"
                   style={{ textDecoration: 'none', justifyContent: 'center' }}
                 >
-                  Start Free
+                  {t('nav.startFree')}
                 </Link>
               </>
             )}

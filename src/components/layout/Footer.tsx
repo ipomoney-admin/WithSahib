@@ -2,10 +2,11 @@
 
 import Link from 'next/link'
 import { LogoMark } from '@/components/ui/Logo'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 interface FooterLink { label: string; href: string; target?: string }
 
-const FOOTER_LINKS: Record<string, FooterLink[]> = {
+const FOOTER_LINKS_DATA = {
   Research: [
     { label: 'Services', href: '/services' },
     { label: 'Intraday Research', href: '/services/intraday' },
@@ -42,6 +43,14 @@ const LEGAL_STRIP: FooterLink[] = [
 ]
 
 export function Footer() {
+  const { t } = useLanguage()
+
+  const FOOTER_LINKS: Record<string, FooterLink[]> = {
+    [t('footer.research')]: FOOTER_LINKS_DATA.Research,
+    [t('footer.company')]: FOOTER_LINKS_DATA.Company,
+    [t('footer.legal')]: FOOTER_LINKS_DATA.Legal,
+  }
+
   return (
     <footer
       aria-label="Site footer"
@@ -74,7 +83,7 @@ export function Footer() {
               </Link>
             </div>
             <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)', lineHeight: '1.7', maxWidth: '240px', marginBottom: '16px', fontFamily: 'var(--font-body)' }}>
-              Systematic equity research by SEBI RA Sahib Singh Hora. Accountable by regulation.
+              {t('footer.tagline')}
             </p>
             <a
               href="https://www.sebi.gov.in/sebiweb/other/OtherAction.do?doRecognisedFpi=yes&intmId=14"
@@ -228,7 +237,7 @@ export function Footer() {
             </p>
           </div>
           <p style={{ fontSize: '11px', color: '#48484A', marginTop: '8px', fontFamily: 'var(--font-body)' }}>
-            Compliance Officer: Sahib Singh Hora · sahib13singh13@gmail.com
+            {t('footer.compliance_officer')} · sahib13singh13@gmail.com
           </p>
           <div style={{ marginTop: '12px', display: 'flex', flexWrap: 'wrap', gap: '4px 0', alignItems: 'center' }}>
             {LEGAL_STRIP.map((link, i) => (

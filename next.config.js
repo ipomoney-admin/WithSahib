@@ -78,7 +78,7 @@ const nextConfig = {
               "style-src 'self' 'unsafe-inline'",
               "font-src 'self'",
               "img-src 'self' data: https: blob:",
-              "connect-src 'self' https://*.supabase.co https://*.clarity.ms",
+              "connect-src 'self' https://*.supabase.co https://*.clarity.ms https://ipapi.co",
               "worker-src 'self' blob:",
               "frame-ancestors 'none'",
             ].join('; '),

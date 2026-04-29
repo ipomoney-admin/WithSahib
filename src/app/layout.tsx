@@ -3,6 +3,7 @@ import { Inter, Playfair_Display } from 'next/font/google'
 import Script from 'next/script'
 import '@/styles/globals.css'
 import { ThemeProvider } from '@/components/layout/ThemeProvider'
+import { LanguageProvider } from '@/contexts/LanguageContext'
 import { WhatsAppButton } from '@/components/ui/WhatsAppButton'
 import { Toaster } from 'sonner'
 import { Analytics } from '@vercel/analytics/react'
@@ -345,6 +346,7 @@ export default function RootLayout({
       </head>
       <body className={`${inter.variable} ${playfair.variable}`}>
         <a href="#main-content" className="skip-to-content">Skip to main content</a>
+        <LanguageProvider>
         <ThemeProvider>
           <main id="main-content" style={{ display: 'contents' }}>
             {children}
@@ -362,6 +364,7 @@ export default function RootLayout({
             }}
           />
         </ThemeProvider>
+        </LanguageProvider>
         <Analytics />
         <SpeedInsights />
         <Script

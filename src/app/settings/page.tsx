@@ -6,17 +6,20 @@ import { useEffect, useState, useMemo } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { User as UserIcon, CreditCard, Bell, Shield, ChevronRight, Check, AlertCircle, Crown } from 'lucide-react'
+import { User as UserIcon, CreditCard, Bell, Shield, ChevronRight, Check, AlertCircle, Crown, Globe } from 'lucide-react'
 import type { User } from '@/types'
 import { toast } from 'sonner'
+import { useLanguage } from '@/contexts/LanguageContext'
+import type { AvailableLocale } from '@/lib/languageMapping'
 
 export default function SettingsPage() {
   const supabase = useMemo(() => createClient(), [])
   const router = useRouter()
   const [user, setUser] = useState<User | null>(null)
-  const [tab, setTab] = useState<'profile' | 'subscription' | 'notifications' | 'security'>('profile')
+  const [tab, setTab] = useState<'profile' | 'subscription' | 'notifications' | 'security' | 'language'>('profile')
   const [saving, setSaving] = useState(false)
   const [form, setForm] = useState({ name: '', phone: '' })
+  const { locale, setLocale, allLanguages, availableLanguages } = useLanguage()
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
@@ -42,6 +45,7 @@ export default function SettingsPage() {
     { id: 'subscription', label: 'Subscription', icon: CreditCard },
     { id: 'notifications', label: 'Notifications', icon: Bell },
     { id: 'security', label: 'Security', icon: Shield },
+    { id: 'language', label: 'Language', icon: Globe },
   ]
 
   return (
@@ -172,6 +176,48 @@ export default function SettingsPage() {
                   <NotifRow key={item.label} {...item} last={i === arr.length - 1} />
                 ))}
               </div>
+            </div>
+          )}
+
+          {/* LANGUAGE */}
+          {tab === 'language' && (
+            <div>
+              <h2 style={{ fontSize: '17px', fontWeight: 600, color: 'var(--text)', marginBottom: '6px' }}>Language & Region</h2>
+              <p style={{ fontSize: '13px', color: 'var(--text3)', marginBottom: '24px' }}>Choose your preferred language for withSahib. Hindi, Marathi, and Gujarati are fully available.</p>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+                {allLanguages.map((lang) => {
+                  const isAvailable = (availableLanguages as readonly string[]).includes(lang.code)
+                  const isActive = locale === lang.code
+                  return (
+                    <button
+                      key={lang.code}
+                      onClick={() => isAvailable && setLocale(lang.code as AvailableLocale)}
+                      disabled={!isAvailable}
+                      style={{
+                        padding: '12px 16px',
+                        border: isActive ? '2px solid #FF6B00' : '1px solid var(--border)',
+                        borderRadius: '10px',
+                        background: isActive ? 'rgba(255,107,0,0.06)' : 'var(--bg2)',
+                        cursor: isAvailable ? 'pointer' : 'default',
+                        textAlign: 'left',
+                        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                        transition: 'all 0.15s',
+                        opacity: isAvailable ? 1 : 0.55,
+                      }}
+                    >
+                      <div>
+                        <div style={{ fontSize: '14px', fontWeight: 600, color: isActive ? '#FF6B00' : 'var(--text)' }}>{lang.nativeLabel}</div>
+                        <div style={{ fontSize: '11px', color: 'var(--text3)', marginTop: '1px' }}>{lang.label}</div>
+                      </div>
+                      {isActive && <Check size={16} color="#FF6B00" />}
+                      {!isAvailable && <span style={{ fontSize: '10px', color: 'var(--text4)', fontWeight: 600 }}>Soon</span>}
+                    </button>
+                  )
+                })}
+              </div>
+              <p style={{ fontSize: '12px', color: 'var(--text4)', marginTop: '16px' }}>
+                More languages coming soon — Tamil, Telugu, Kannada, Bengali, Punjabi, Malayalam.
+              </p>
             </div>
           )}
 

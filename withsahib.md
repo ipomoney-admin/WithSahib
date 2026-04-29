@@ -236,7 +236,39 @@ Sign out
 - `src/app/blog/page.tsx`: blog card image placeholder upgraded — dark gradient `#0A0A0A→#1A1A1A` with "withSahib" Playfair watermark and category badge
 - `src/app/appointments/page.tsx`: simplified to clean booking form (Name, Email, Phone, Duration radio, Preferred Date, Message) that POSTs to `/api/appointments/book` — Razorpay calendar replaced with functional email-based flow
 
-### Next phase — Revenue activation
+### Multi-Language Support
+
+**Status:** LIVE
+**Languages available:** English, Hindi, Marathi, Gujarati
+**Languages coming soon:** Tamil, Telugu, Kannada, Bengali, Punjabi, Malayalam
+
+**Implementation:**
+- Context: `src/contexts/LanguageContext.tsx`
+- Translations: `/messages/*.json` (en, hi, mr, gu)
+- Language detection: `src/lib/detectLanguage.ts` (ipapi.co — 3s timeout, graceful fallback)
+- State-to-language mapping: `src/lib/languageMapping.ts` (all 36 Indian states/UTs)
+- Picker component: `src/components/ui/LanguagePicker.tsx` (globe icon in navbar)
+- Welcome modal: `src/components/ui/LanguageWelcomeModal.tsx` (bottom-of-screen, non-intrusive)
+- Dashboard greeting: `src/components/ui/DashboardGreeting.tsx` (client component wrapping server page)
+
+**Flow:**
+1. User visits site → IP detected via ipapi.co → state identified → language suggested
+2. Welcome modal appears (bottom of screen, only first visit, only if non-English locale detected)
+3. User picks language → saved to `localStorage` as `withsahib-locale`
+4. On return visits → saved preference applied immediately (no re-detection)
+5. Language picker always visible in navbar (globe icon, before dark mode toggle)
+6. Full control in Settings → Language tab
+
+**Adding a new language:**
+1. Create `messages/[code].json` with all keys matching `en.json`
+2. Add code to `AVAILABLE_LANGUAGES` array in `languageMapping.ts`
+3. Done — picker automatically shows it as available, "Soon" badge removed
+
+**CSP updated:** `https://ipapi.co` added to `connect-src` in `next.config.js`
+
+---
+
+## Next phase — Revenue activation
 
 - **Razorpay**: Set `RAZORPAY_KEY_ID` + `RAZORPAY_KEY_SECRET` env vars. Uncomment implementation in `/api/payments/create-order/route.ts`. Create Razorpay account + activate subscription plans.
 - **AiSensy / WhatsApp**: Set `AISENSY_API_KEY` + `AISENSY_CAMPAIGN_NAME` env vars. Uncomment implementation in `/api/whatsapp/send/route.ts`.

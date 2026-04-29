@@ -12,6 +12,7 @@ import {
   TrendingUp, TrendingDown, ArrowRight, Crown, Zap,
   FileText, Calendar, Target, CheckCircle, Clock, AlertCircle,
 } from 'lucide-react'
+import { DashboardGreeting } from '@/components/ui/DashboardGreeting'
 
 function StatCard({ label, value, sub, color = 'var(--emerald)' }: {
   label: string; value: string; sub?: string; color?: string
@@ -125,14 +126,14 @@ export default async function DashboardPage() {
     activeCount = recentSignals.filter(s => s.status === 'open').length
   }
 
-  // Time-based greeting in IST
+  // Time-based greeting in IST (emoji only — text handled by DashboardGreeting client component)
   const nowIST = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }))
   const h = nowIST.getHours()
-  const { text: greetingText, emoji: greetingEmoji } =
-    h >= 5 && h < 12 ? { text: 'Good morning', emoji: '☀️' } :
-    h >= 12 && h < 17 ? { text: 'Good afternoon', emoji: '🌤️' } :
-    h >= 17 && h < 21 ? { text: 'Good evening', emoji: '🌆' } :
-    { text: 'Good night', emoji: '🌙' }
+  const greetingEmoji =
+    h >= 5 && h < 12 ? '☀️' :
+    h >= 12 && h < 17 ? '🌤️' :
+    h >= 17 && h < 21 ? '🌆' :
+    '🌙'
 
   const initials = displayName.split(' ').filter(Boolean).slice(0, 2).map((n: string) => n[0]).join('').toUpperCase() || 'U'
   const isFounder = adminUser && !viewingAsUser
@@ -169,7 +170,7 @@ export default async function DashboardPage() {
 
       {/* Header */}
       <div style={{ marginBottom: '32px' }}>
-        <p style={{ fontSize: '13px', color: 'var(--text3)', marginBottom: '12px' }}>{greetingEmoji} {greetingText},</p>
+        <DashboardGreeting name={displayName} greetingEmoji={greetingEmoji} />
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '8px' }}>
           {/* Avatar */}
           <div style={{ position: 'relative', display: 'inline-block', flexShrink: 0 }}>

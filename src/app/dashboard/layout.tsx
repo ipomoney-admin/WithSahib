@@ -13,6 +13,7 @@ import {
   Crown, Shield, Check, FileEdit,
 } from 'lucide-react'
 import { LogoMark } from '@/components/ui/Logo'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 // ─── POPUP ITEMS (open modal, no navigation) ──────────────────────────────
 type PopupKey = 'intraday' | 'stock-options' | 'index-options' | 'swing' | 'model-portfolio' | 'research-reports' | 'appointments' | 'mentorship'
@@ -65,6 +66,7 @@ function CheckRow({ text }: { text: string }) {
 }
 
 function PricingPopupContent({ serviceKey }: { serviceKey: string }) {
+  const { t } = useLanguage()
   const configs: Record<string, {
     header: string; sub: string; availableIn: string; desc: string
   }> = {
@@ -117,7 +119,7 @@ function PricingPopupContent({ serviceKey }: { serviceKey: string }) {
         className="btn btn-primary btn-md"
         style={{ display: 'flex', justifyContent: 'center', textDecoration: 'none', width: '100%', marginBottom: '10px' }}
       >
-        View Plans →
+        {t('dashboard.view_plans')}
       </Link>
       <p style={{ fontSize: '11px', color: '#555555', marginTop: '20px', borderTop: '1px solid #2A2A2A', paddingTop: '16px' }}>
         Research by Sahib Singh Hora, SEBI RA INH000026266. Investments subject to market risk. Past performance not indicative of future results. Not investment advice.
@@ -481,6 +483,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const pathname = usePathname()
   const { theme, toggleTheme } = useTheme()
   const supabase = useMemo(() => createClient(), [])
+  const { t } = useLanguage()
 
   const [user, setUser] = useState<User | null>(null)
   const [authLoading, setAuthLoading] = useState(true)
