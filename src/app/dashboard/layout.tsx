@@ -509,7 +509,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           }
         })
 
-      // Try public.users first; fall back to subscriptions table for tier
+      // Try public.users first; fall back to user metadata then subscriptions table for tier
       supabase
         .from('users')
         .select('*')
@@ -519,9 +519,17 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           if (profile) {
             setUser(profile)
           } else {
-            // public.users is empty — build a minimal profile from auth + subscriptions
+            // public.users is empty — priority: user_metadata.plan → subscriptions table → free
             const authMeta = data.user.user_metadata ?? {}
             const name = authMeta.full_name ?? authMeta.name ?? data.user.email?.split('@')[0] ?? 'User'
+            // Check metadata first (Supabase admin can set plan directly on the user)
+            const metaPlan = authMeta.plan as string | undefined
+            if (metaPlan) {
+              setUser({ id: data.user.id, name, email: data.user.email ?? '', tier: metaPlan } as unknown as import('@/types').User)
+              setAuthLoading(false)
+              return
+            }
+            // Fallback: active subscriptions row
             const { data: sub } = await supabase
               .from('subscriptions')
               .select('tier, status')
@@ -530,7 +538,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               .order('created_at', { ascending: false })
               .limit(1)
               .single()
-            const tier = sub?.tier ?? (authMeta.plan as string) ?? 'free'
+            const tier = sub?.tier ?? 'free'
             setUser({ id: data.user.id, name, email: data.user.email ?? '', tier } as unknown as import('@/types').User)
           }
           setAuthLoading(false)
