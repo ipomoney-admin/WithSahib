@@ -1,6 +1,6 @@
 # withSahib — Project Context & Memory
 
-> Last updated: 2026-04-28 (session 2)
+> Last updated: 2026-04-29
 > This file is the authoritative context document for all AI-assisted work on this project.
 > Read this before making any changes to the codebase.
 
@@ -227,6 +227,14 @@ Sign out
 8. Sidebar darker theme (#1A1A1A background — not too dark, not too light)
 9. `/services/swing` page — fix pricing to show ₹999/month Basic plan (currently shows wrong price)
 10. Redirects: `/dashboard/intraday`, `/dashboard/stock-options`, `/dashboard/index-options`, `/dashboard/swing` → redirect to `/dashboard` (these routes have no dedicated pages yet)
+
+### 2026-04-29
+
+**Session 3 — remaining gaps closed:**
+- `terms-of-service/page.tsx`: "Basic, Pro, and Elite" → "Positional, Pro, and Elite"
+- `src/lib/data/posts.ts`: old pricing (₹999/₹2,499/₹5,999) in blog post body → current (₹3,999/₹6,999/₹12,499)
+- `src/app/blog/page.tsx`: blog card image placeholder upgraded — dark gradient `#0A0A0A→#1A1A1A` with "withSahib" Playfair watermark and category badge
+- `src/app/appointments/page.tsx`: simplified to clean booking form (Name, Email, Phone, Duration radio, Preferred Date, Message) that POSTs to `/api/appointments/book` — Razorpay calendar replaced with functional email-based flow
 
 ### Next phase — Revenue activation
 

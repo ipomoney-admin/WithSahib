@@ -97,11 +97,13 @@ export default function BlogPage() {
                   transition: 'border-color 0.2s, box-shadow 0.2s',
                 }}>
                   {/* Featured image placeholder */}
-                  <div style={{ height: 160, background: 'var(--bg2)', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <div style={{ fontFamily: 'var(--font-heading)', fontSize: 13, color: 'var(--text3)', letterSpacing: '1px', textTransform: 'uppercase' }}>
-                      {post.category}
+                  <div style={{ height: 160, background: 'linear-gradient(135deg, #0A0A0A, #1A1A1A)', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '16px 16px 0 0' }}>
+                    <span style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: 20, fontStyle: 'italic', color: 'rgba(255,107,0,0.18)', userSelect: 'none', letterSpacing: '-0.5px', pointerEvents: 'none' }}>withSahib</span>
+                    <div style={{ position: 'absolute', top: 12, left: 16 }}>
+                      <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: 1.5, color: catColor === 'var(--orange)' ? '#FF6B00' : catColor === 'var(--gold)' ? '#B8975A' : '#1A7A4A', textTransform: 'uppercase', background: 'rgba(0,0,0,0.4)', padding: '3px 8px', borderRadius: 4 }}>
+                        {post.category}
+                      </span>
                     </div>
-                    <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 40, background: 'linear-gradient(to top, var(--surface), transparent)' }} />
                   </div>
 
                   <div style={{ padding: '20px 24px 24px' }}>
