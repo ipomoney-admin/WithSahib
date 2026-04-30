@@ -14,7 +14,6 @@ import {
 import { FALLBACK_DATA, type TickerItem } from '@/lib/utils/marketData'
 import { Button } from '@/components/ui/Button'
 import { useLanguage } from '@/contexts/LanguageContext'
-import { LanguageWelcomeModal } from '@/components/ui/LanguageWelcomeModal'
 
 // ─── SERVICES DATA ────────────────────────────────────────────────────────────
 const SERVICES = [
@@ -318,7 +317,6 @@ export default function HomePage() {
       <BookingBanner />
       <Footer />
       <LearningPopup />
-      <LanguageWelcomeModal />
     </div>
   )
 }

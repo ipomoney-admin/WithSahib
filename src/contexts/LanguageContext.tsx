@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
 import { AVAILABLE_LANGUAGES, ALL_LANGUAGES, type AvailableLocale } from '@/lib/languageMapping'
-import { detectUserLanguage, saveLocalePreference, getSavedLocale } from '@/lib/detectLanguage'
+import { saveLocalePreference, getSavedLocale } from '@/lib/detectLanguage'
 
 type Translations = Record<string, unknown>
 
@@ -43,21 +43,16 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    const init = async () => {
+    const initLanguage = async () => {
       const saved = getSavedLocale()
-      if (saved) {
-        const msgs = await loadMessages(saved)
-        setTranslations(msgs)
-        setLocaleState(saved)
-      } else {
-        const { detectedLocale } = await detectUserLanguage()
-        const msgs = await loadMessages(detectedLocale)
-        setTranslations(msgs)
-        setLocaleState(detectedLocale)
-      }
+      const locale = saved || 'en'
+      const msgs = await loadMessages(locale)
+      setTranslations(msgs)
+      setLocaleState(locale)
+      document.documentElement.lang = locale
       setIsLoading(false)
     }
-    init()
+    initLanguage()
   }, [])
 
   const setLocale = async (newLocale: AvailableLocale) => {
