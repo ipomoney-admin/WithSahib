@@ -90,18 +90,33 @@ export function useRazorpay() {
         name: 'withSahib',
         description: options.planDisplayName,
         image: 'https://withsahib.com/logo.png',
+        method: undefined,
         prefill: {
           name: options.userName,
           email: options.userEmail,
           contact: options.userPhone || '',
         },
+        config: {
+          display: {
+            blocks: {
+              utib: {
+                name: 'Pay via UPI',
+                instruments: [{ method: 'upi' }],
+              },
+            },
+            sequence: ['block.utib'],
+            preferences: { show_default_blocks: true },
+          },
+        },
         theme: { color: '#FF6B00' },
         modal: {
+          confirm_close: true,
           ondismiss: () => {
             setLoading(false)
             options.onFailure('Payment cancelled')
           },
         },
+        retry: { enabled: true, max_count: 3 },
         handler: async (response: any) => {
           const verifyRes = await fetch('/api/payments/verify-payment', {
             method: 'POST',
