@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import Link from 'next/link'
 import { Navbar } from '@/components/layout/Navbar'
 import { StatutoryLetterhead } from '@/components/layout/StatutoryLetterhead'
 import { Footer } from '@/components/layout/Footer'
@@ -54,7 +55,11 @@ export default function DisclaimerPage() {
                   ].map(([label, value]) => (
                     <tr key={label} style={{ borderBottom: '1px solid var(--border)' }}>
                       <td style={{ padding: '10px 0', fontSize: '13px', color: 'var(--text3)', width: '200px' }}>{label}</td>
-                      <td style={{ padding: '10px 0', fontSize: '13px', color: 'var(--text)', fontWeight: 500, fontFamily: label === 'Registration No.' ? 'Courier New, monospace' : undefined }}>{value}</td>
+                      <td style={{ padding: '10px 0', fontSize: '13px', color: 'var(--text)', fontWeight: 500, fontFamily: label === 'Registration No.' ? 'Courier New, monospace' : undefined }}>
+                        {label === 'Registration No.' ? (
+                          <a href="/sebi-certificate" style={{ color: 'var(--orange)', textDecoration: 'none', fontFamily: 'Courier New, monospace', fontWeight: 600 }}>{value}</a>
+                        ) : value}
+                      </td>
                     </tr>
                   ))}
                 </tbody>

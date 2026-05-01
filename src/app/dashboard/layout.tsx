@@ -14,6 +14,7 @@ import {
 } from 'lucide-react'
 import { LogoMark } from '@/components/ui/Logo'
 import { useLanguage } from '@/contexts/LanguageContext'
+import { DashboardProtection } from '@/components/dashboard/DashboardProtection'
 
 // ─── POPUP ITEMS (open modal, no navigation) ──────────────────────────────
 type PopupKey = 'intraday' | 'stock-options' | 'index-options' | 'swing' | 'model-portfolio' | 'research-reports' | 'appointments' | 'mentorship'
@@ -89,10 +90,10 @@ function PricingPopupContent({ serviceKey }: { serviceKey: string }) {
       desc: 'Nifty, BankNifty, Sensex and FinNifty. Expiry plays and weekly setups with PCR and OI context.',
     },
     'swing': {
-      header: 'Positional Research',
-      sub: '8–12 high-conviction setups per month',
+      header: 'Swing Trades',
+      sub: '2–10 day NSE positional trade ideas — pattern-based, systematic',
       availableIn: 'Positional (₹3,999/mo) and above',
-      desc: '8–12 high-conviction setups per month. Low risk, asymmetric reward. Full written rationale on every pick.',
+      desc: '3–5 NSE swing trade setups per week. Each pick includes the chart pattern, sector context, entry range, two targets, and a stop-loss. Research by SEBI RA Sahib Singh Hora (INH000026266).',
     },
   }
 
@@ -144,8 +145,8 @@ function ServiceContentPopup({ serviceKey }: { serviceKey: string }) {
       desc: 'Nifty, BankNifty, Sensex and FinNifty. Expiry plays and weekly setups with PCR and OI context.',
     },
     'swing': {
-      header: 'Positional Research',
-      desc: '8–12 high-conviction setups per month. Low risk, asymmetric reward. Full written rationale on every pick.',
+      header: 'Swing Trades',
+      desc: '3–5 NSE swing trade setups per week. Each pick includes the chart pattern, sector context, entry range, two targets, and a stop-loss.',
     },
   }
 
@@ -352,69 +353,41 @@ function MentorshipPopup() {
   return (
     <div>
       <h2 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: '24px', fontWeight: 400, color: '#FFFFFF', marginBottom: '6px' }}>
-        Live 1-on-1 Mentorship
+        Flagship Mentorship
       </h2>
-      <p style={{ fontSize: '13px', color: '#888888', marginBottom: '24px' }}>Personalised. Live. Built around you.</p>
+      <p style={{ fontSize: '13px', color: '#888888', marginBottom: '24px' }}>
+        One mentee. Three months. Direct access to Sahib Singh Hora.
+      </p>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '20px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '24px' }}>
         {[
-          { name: 'Market Foundations', sub: 'Equity focus — for beginners & intermediates', price: '₹24,999' },
-          { name: 'Options Positioning System', sub: 'F&O strategy building from scratch', price: '₹34,999' },
-          { name: 'Research Framework', sub: 'Pro-level equity research skills', price: '₹44,999' },
-        ].map(({ name, sub, price }) => (
-          <div
-            key={name}
-            style={{
-              background: '#1A1A1A',
-              border: '1px solid #2A2A2A',
-              borderRadius: '10px',
-              padding: '14px 16px',
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}
-          >
-            <div>
-              <p style={{ fontSize: '13px', fontWeight: 600, color: '#FFFFFF', marginBottom: '2px' }}>{name}</p>
-              <p style={{ fontSize: '11px', color: '#888888' }}>{sub}</p>
-            </div>
-            <span style={{ fontSize: '14px', fontWeight: 700, color: '#FF6B00', whiteSpace: 'nowrap', marginLeft: '12px' }}>{price}</span>
+          '1-on-1 personalised mentorship — only 1 mentee per batch',
+          '3 months direct access to Sahib Singh Hora, SEBI RA',
+          'Covers research process, trade management, and market reading',
+        ].map((point) => (
+          <div key={point} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+            <span style={{ color: '#FF6B00', fontWeight: 700, flexShrink: 0, marginTop: 1 }}>•</span>
+            <span style={{ fontSize: '14px', color: '#CCCCCC', lineHeight: 1.6 }}>{point}</span>
           </div>
         ))}
       </div>
 
-      {/* Flagship */}
-      <div
-        style={{
-          background: 'rgba(184,151,90,0.08)',
-          border: '1px solid rgba(184,151,90,0.3)',
-          borderRadius: '12px',
-          padding: '16px',
-          marginBottom: '20px',
-        }}
-      >
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '6px' }}>
-          <div>
-            <p style={{ fontSize: '15px', fontWeight: 700, color: '#B8975A', marginBottom: '3px' }}>Flagship Mentorship</p>
-            <p style={{ fontSize: '11px', color: '#999999' }}>Only 1 mentee per batch · 3 months · Direct access</p>
-          </div>
-          <span style={{ fontSize: '16px', fontWeight: 700, color: '#B8975A' }}>₹74,999</span>
-        </div>
-        <a
-          href="mailto:connect@withsahib.com?subject=Flagship Mentorship Application"
-          className="btn btn-gold btn-sm"
-          style={{ textDecoration: 'none', display: 'flex', justifyContent: 'center', marginTop: '12px' }}
-        >
-          Apply Now →
-        </a>
+      <div style={{ background: 'rgba(255,107,0,0.08)', border: '1px solid rgba(255,107,0,0.2)', borderRadius: '10px', padding: '14px 16px', marginBottom: '24px' }}>
+        <p style={{ fontSize: '13px', color: '#FF6B00', fontWeight: 700, marginBottom: '2px' }}>Investment</p>
+        <p style={{ fontSize: '15px', color: '#CCCCCC' }}>₹74,999 one-time <span style={{ color: '#666', fontSize: '13px' }}>or 3 × ₹26,999 instalments</span></p>
       </div>
 
       <Link
-        href="/courses"
-        style={{ display: 'block', textAlign: 'center', fontSize: '13px', color: '#666666', textDecoration: 'none' }}
+        href="/work-with-us"
+        className="btn btn-primary btn-md"
+        style={{ display: 'flex', justifyContent: 'center', textDecoration: 'none', width: '100%', marginBottom: '10px' }}
       >
-        View all programs →
+        Apply for Mentorship →
       </Link>
+
+      <p style={{ fontSize: '11px', color: '#555555', marginTop: '16px', borderTop: '1px solid #2A2A2A', paddingTop: '16px' }}>
+        Research by Sahib Singh Hora, SEBI RA INH000026266. Investments subject to market risk. Past performance not indicative of future results. Not investment advice.
+      </p>
     </div>
   )
 }
@@ -661,16 +634,18 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           {(sidebarOpen || mobile) && <span>Dashboard</span>}
         </Link>
 
-        {/* Letterhead — regular nav link */}
-        <Link
-          href="/dashboard/letterhead"
-          className={`sidebar-link ${pathname === '/dashboard/letterhead' ? 'active' : ''}`}
-          style={{ justifyContent: sidebarOpen || mobile ? 'flex-start' : 'center', marginBottom: '2px' }}
-          title={!sidebarOpen && !mobile ? 'Letterhead' : undefined}
-        >
-          <FileEdit size={17} strokeWidth={1.5} style={{ flexShrink: 0, color: pathname === '/dashboard/letterhead' ? '#FF6B00' : '#6A6A6A' }} />
-          {(sidebarOpen || mobile) && <span>Letterhead</span>}
-        </Link>
+        {/* Letterhead — super admin only */}
+        {isAdminUser && !viewingAsUser && (
+          <Link
+            href="/dashboard/letterhead"
+            className={`sidebar-link ${pathname === '/dashboard/letterhead' ? 'active' : ''}`}
+            style={{ justifyContent: sidebarOpen || mobile ? 'flex-start' : 'center', marginBottom: '2px' }}
+            title={!sidebarOpen && !mobile ? 'Letterhead' : undefined}
+          >
+            <FileEdit size={17} strokeWidth={1.5} style={{ flexShrink: 0, color: pathname === '/dashboard/letterhead' ? '#FF6B00' : '#6A6A6A' }} />
+            {(sidebarOpen || mobile) && <span>Letterhead</span>}
+          </Link>
+        )}
 
         {/* Popup items */}
         {POPUP_ITEMS.map((item) => {
@@ -874,8 +849,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </div>
         </header>
 
-        <main style={{ flex: 1, overflowY: 'auto', padding: '32px' }}>
-          {children}
+        <main className="dash-main" style={{ flex: 1, overflowY: 'auto' }}>
+          <DashboardProtection>
+            {children}
+          </DashboardProtection>
         </main>
       </div>
 

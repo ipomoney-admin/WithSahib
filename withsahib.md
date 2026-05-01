@@ -390,3 +390,29 @@ Sign out
 - **Admin layout publish nav**: "Publish Research" added as first nav item with `Send` icon.
 - **llms.txt updated**: Basic → Positional rename, appointments section with prices.
 - **`withsahib.md` updated**: all 25 items marked complete, Next phase section added.
+
+---
+
+## SESSION UPDATE — April 30, 2026
+
+### Completed this session
+- Letterhead editor: Altitans Intelligence + CIN removed from footer, header text darkened, phone corrected to +91-90988 87210
+- Multi-language: 10 languages live (en, hi, mr, gu, ta, te, kn, bn, pa, ml)
+- Auto location detection: removed completely — language is manual choice only, default always English
+- Language picker: globe icon in navbar, dropdown on desktop, bottom sheet on mobile
+- Translation files: /messages/*.json — all 10 languages complete with all keys
+- Pages converted to client components using t() for translations
+- POSITIONAL rename from BASIC: complete across all pages
+- Dashboard ELITE PLAN badge: reads correctly from user_metadata.plan
+- /brand page: protected via admin_roles table (super_admin only)
+- Subscriptions table: uses 'tier' column not 'plan', has plan_id FK NOT NULL constraint
+- user plan stored in auth.users raw_user_meta_data->>'plan'
+- Both admins have plan: 'elite' set in user metadata
+- 25-item mega fix: brand overhaul, letterhead editor, plan access control, blog improvements, APIs
+
+### Still pending
+- PWA — not built yet
+- React Native — not built yet
+- ANTHROPIC_API_KEY, RAZORPAY keys, TWILIO keys — not added to Vercel yet
+- Google Search Console + Bing verification codes needed
+- Some pages may still have hardcoded English strings not using t()

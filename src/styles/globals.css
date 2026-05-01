@@ -24,7 +24,7 @@
   --green-hover: #166040;
 
   --orange: #FF6B00;
-  --orange-hover: #FF5500;
+  --orange-hover: #E55F00;
   --orange-light: #FFF3E8;
 
   /* Black / footer */
@@ -265,6 +265,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 .btn-primary:hover {
   background: var(--orange-hover);
+  color: #FFFFFF;
   transform: translateY(-2px);
   box-shadow: var(--orange-glow-lg);
   animation: none;
@@ -849,4 +850,16 @@ html.dark  .dark-section { background: #050505; }
 /* ─── PRINT ──────────────────────────────────────────────────────────── */
 @media print {
   .no-print { display: none !important; }
+}
+
+/* ─── DASHBOARD RESPONSIVE ───────────────────────────────────────────── */
+.dash-main { padding: 32px; }
+.dash-main-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 20px;
+}
+@media (max-width: 768px) {
+  .dash-main { padding: 16px; overflow-x: hidden; }
+  .dash-main-grid { grid-template-columns: 1fr; }
 }

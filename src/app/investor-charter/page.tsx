@@ -75,7 +75,10 @@ export default function InvestorCharterPage() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
               <p style={{ fontSize: 16, fontWeight: 700, color: 'var(--text)', fontFamily: 'var(--font-heading)' }}>withSahib</p>
               <p style={{ fontSize: 14, color: 'var(--text2)' }}>Operated by <strong>Sahib Singh Hora</strong></p>
-              <p style={{ fontSize: 13, color: 'var(--text3)', fontFamily: 'monospace', letterSpacing: 0.5 }}>SEBI RA Registration No. INH000026266</p>
+              <p style={{ fontSize: 13, color: 'var(--text3)', fontFamily: 'monospace', letterSpacing: 0.5 }}>
+                SEBI RA Registration No.{' '}
+                <Link href="/sebi-certificate" style={{ color: 'var(--orange)', textDecoration: 'none', fontWeight: 600 }}>INH000026266</Link>
+              </p>
               <p style={{ fontSize: 13, color: 'var(--text3)' }}>Valid: April 20, 2026 to April 19, 2031</p>
             </div>
           </div>

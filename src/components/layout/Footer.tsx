@@ -85,10 +85,8 @@ export function Footer() {
             <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)', lineHeight: '1.7', maxWidth: '240px', marginBottom: '16px', fontFamily: 'var(--font-body)' }}>
               {t('footer.tagline')}
             </p>
-            <a
-              href="https://www.sebi.gov.in/sebiweb/other/OtherAction.do?doRecognisedFpi=yes&intmId=14"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/sebi-certificate"
               style={{
                 display: 'inline-block',
                 fontSize: '10px',
@@ -103,8 +101,8 @@ export function Footer() {
                 textDecoration: 'none',
               }}
             >
-              INH000026266 · Verify on SEBI.gov.in →
-            </a>
+              INH000026266 · View Certificate →
+            </Link>
 
             {/* Social links */}
             <div style={{ display: 'flex', gap: '10px', marginTop: '16px' }}>
@@ -233,7 +231,13 @@ export function Footer() {
               © 2026 Sahib Singh Hora. All rights reserved. | withSahib.com
             </p>
             <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.25)', fontFamily: 'var(--font-mono)' }}>
-              SEBI RA · INH000026266
+              SEBI RA ·{' '}
+              <Link href="/sebi-certificate" style={{ color: 'rgba(255,255,255,0.25)', textDecoration: 'none', transition: 'color 0.2s' }}
+                onMouseEnter={(e) => { (e.target as HTMLElement).style.color = '#D4A843' }}
+                onMouseLeave={(e) => { (e.target as HTMLElement).style.color = 'rgba(255,255,255,0.25)' }}
+              >
+                INH000026266
+              </Link>
             </p>
           </div>
           <p style={{ fontSize: '11px', color: '#48484A', marginTop: '8px', fontFamily: 'var(--font-body)' }}>

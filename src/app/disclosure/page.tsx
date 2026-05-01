@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { Navbar } from '@/components/layout/Navbar'
 import { BookingBanner } from '@/components/layout/BookingBanner'
 import { Footer } from '@/components/layout/Footer'
@@ -74,7 +75,7 @@ export default function DisclosurePage() {
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 24 }}>
               <div>
                 <p style={{ fontSize: 11, color: 'var(--text3)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 4 }}>Registration No.</p>
-                <p style={{ fontSize: 14, fontWeight: 700, color: 'var(--text)', fontFamily: 'monospace' }}>INH000026266</p>
+                <Link href="/sebi-certificate" style={{ fontSize: 14, fontWeight: 700, color: 'var(--orange)', fontFamily: 'monospace', textDecoration: 'none' }}>INH000026266</Link>
               </div>
               <div>
                 <p style={{ fontSize: 11, color: 'var(--text3)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 4 }}>Analyst</p>

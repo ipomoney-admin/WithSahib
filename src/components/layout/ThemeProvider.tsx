@@ -37,7 +37,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   useEffect(() => {
-    setTheme('light')
+    const saved = localStorage.getItem('withsahib-theme') as Theme | null
+    setTheme(saved === 'dark' ? 'dark' : 'light')
   }, [setTheme])
 
   function toggleTheme() {
