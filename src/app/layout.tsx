@@ -325,6 +325,8 @@ export default function RootLayout({
         <meta name="format-detection" content="telephone=no" />
         <link rel="preconnect" href="https://trtoxawkeququfurddwr.supabase.co" />
         <link rel="dns-prefetch" href="https://trtoxawkeququfurddwr.supabase.co" />
+        <link rel="preconnect" href="https://checkout.razorpay.com" />
+        <link rel="dns-prefetch" href="https://checkout.razorpay.com" />
         <meta
           name="robots"
           content="max-snippet:-1, max-image-preview:large, max-video-preview:-1"

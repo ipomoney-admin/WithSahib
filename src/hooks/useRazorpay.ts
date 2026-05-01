@@ -14,12 +14,32 @@ interface RazorpayOptions {
 
 const loadScript = (): Promise<boolean> => {
   return new Promise((resolve) => {
-    if ((window as any).Razorpay) { resolve(true); return }
+    if (typeof (window as any).Razorpay !== 'undefined') {
+      resolve(true)
+      return
+    }
+
+    const existingScript = document.querySelector(
+      'script[src="https://checkout.razorpay.com/v1/checkout.js"]'
+    )
+    if (existingScript) {
+      existingScript.addEventListener('load', () => resolve(true))
+      existingScript.addEventListener('error', () => resolve(false))
+      return
+    }
+
     const script = document.createElement('script')
     script.src = 'https://checkout.razorpay.com/v1/checkout.js'
-    script.onload = () => resolve(true)
-    script.onerror = () => resolve(false)
-    document.body.appendChild(script)
+    script.crossOrigin = 'anonymous'
+    script.onload = () => {
+      console.log('[Razorpay] checkout.js loaded successfully')
+      resolve(true)
+    }
+    script.onerror = (e) => {
+      console.error('[Razorpay] checkout.js failed to load:', e)
+      resolve(false)
+    }
+    document.head.appendChild(script)
   })
 }
 
