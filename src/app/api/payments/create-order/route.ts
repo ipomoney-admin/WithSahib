@@ -1,36 +1,61 @@
 import { NextRequest, NextResponse } from 'next/server'
+import Razorpay from 'razorpay'
+import { createServerComponentClient } from '@/lib/supabase/server'
 
-// Amounts in paise (INR × 100)
 const PLAN_PRICES: Record<string, number> = {
   positional: 399900,
   pro: 699900,
   elite: 1249900,
+  hni: 999900,
+  appointment_15: 199900,
+  appointment_30: 299900,
+  course_foundations: 2499900,
+  course_options: 3499900,
+  course_research: 4499900,
+  mentorship: 7499900,
 }
 
 export async function POST(req: NextRequest) {
   try {
-    const { plan } = await req.json() as { plan: string }
+    const supabase = createServerComponentClient()
+    const { data: { session } } = await supabase.auth.getSession()
+    if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-    const amount = PLAN_PRICES[plan]
-    if (!amount) {
-      return NextResponse.json({ error: 'Invalid plan. Must be positional, pro, or elite.' }, { status: 400 })
+    const { amount, currency = 'INR', receipt, plan_name } = await req.json() as {
+      amount: number
+      currency?: string
+      receipt?: string
+      plan_name: string
     }
 
-    // TODO: Initialize Razorpay once keys are available
-    // import Razorpay from 'razorpay'
-    // const razorpay = new Razorpay({
-    //   key_id: process.env.RAZORPAY_KEY_ID!,
-    //   key_secret: process.env.RAZORPAY_KEY_SECRET!,
-    // })
-    // const order = await razorpay.orders.create({ amount, currency: 'INR', receipt: `order_${Date.now()}` })
-    // return NextResponse.json({ orderId: order.id, amount, currency: 'INR', plan })
+    const normalizedPlan = (plan_name as string ?? '').toLowerCase().trim()
+    if (!normalizedPlan || !PLAN_PRICES[normalizedPlan]) {
+      return NextResponse.json({ error: `Invalid plan: "${plan_name}". Valid plans: ${Object.keys(PLAN_PRICES).join(', ')}` }, { status: 400 })
+    }
+
+    if (!amount || amount < 100) {
+      return NextResponse.json({ error: 'Invalid amount. Must be at least 100 paise.' }, { status: 400 })
+    }
+
+    const razorpay = new Razorpay({
+      key_id: process.env.RAZORPAY_KEY_ID!,
+      key_secret: process.env.RAZORPAY_KEY_SECRET!,
+    })
+
+    const order = await razorpay.orders.create({
+      amount,
+      currency,
+      receipt: receipt || `rcpt_${Date.now()}`,
+      notes: {
+        plan_name: normalizedPlan,
+        user_id: session.user.id,
+      },
+    })
 
     return NextResponse.json({
-      message: 'Payment integration coming soon. Contact connect@withsahib.com to subscribe.',
-      plan,
-      amount,
-      currency: 'INR',
-      TODO: 'Add RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET to environment variables',
+      order_id: order.id,
+      amount: order.amount,
+      currency: order.currency,
     })
   } catch (error) {
     console.error('Payment order error:', error)
