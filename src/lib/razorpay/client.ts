@@ -35,7 +35,10 @@ export interface RazorpayResponse {
 
 declare global {
   interface Window {
-    Razorpay: new (options: RazorpayOptions) => { open: () => void }
+    Razorpay: new (options: Record<string, any>) => {
+      open(): void
+      on(event: string, handler: (response: any) => void): void
+    }
   }
 }
 

@@ -6,8 +6,15 @@ import { useState } from 'react'
 import { Navbar } from '@/components/layout/Navbar'
 import { BookingBanner } from '@/components/layout/BookingBanner'
 import { Footer } from '@/components/layout/Footer'
+import { PayButton } from '@/components/ui/PayButton'
 
 const PRICES = { '15': 1999, '30': 2999 }
+const AMOUNT_PAISE = { '15': 199900, '30': 299900 }
+const PLAN_DISPLAY_NAMES = {
+  '15': '15 Min Session with Sahib Singh Hora',
+  '30': '30 Min Session with Sahib Singh Hora',
+}
+const PLAN_NAMES = { '15': 'appointment_15', '30': 'appointment_30' }
 
 export default function AppointmentsPage() {
   const [duration, setDuration] = useState<'15' | '30'>('30')
@@ -16,32 +23,7 @@ export default function AppointmentsPage() {
   const [phone, setPhone] = useState('')
   const [preferredDate, setPreferredDate] = useState('')
   const [message, setMessage] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [success, setSuccess] = useState(false)
-  const [error, setError] = useState('')
-  const [refId, setRefId] = useState('')
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    if (!name.trim() || !email.trim()) { setError('Name and email are required.'); return }
-    setLoading(true); setError('')
-
-    try {
-      const res = await fetch('/api/appointments/book', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, phone, duration, preferredDate, message }),
-      })
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.error || 'Something went wrong')
-      setRefId(data.referenceId || '')
-      setSuccess(true)
-    } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Failed. Please email connect@withsahib.com directly.')
-    } finally {
-      setLoading(false)
-    }
-  }
+  const [error] = useState('')
 
   return (
     <div style={{ background: 'var(--bg)', minHeight: '100vh' }}>
@@ -73,23 +55,8 @@ export default function AppointmentsPage() {
           ))}
         </div>
 
-        {/* Booking form or success */}
-        {success ? (
-          <div style={{ background: 'var(--surface)', border: '1px solid rgba(26,122,74,0.25)', borderRadius: '16px', padding: '40px', textAlign: 'center' }}>
-            <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: 'rgba(26,122,74,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A7A4A" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            </div>
-            <h2 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: '24px', fontWeight: 400, color: 'var(--text)', marginBottom: '10px' }}>Request received!</h2>
-            <p style={{ fontSize: '14px', color: 'var(--text2)', lineHeight: 1.7, marginBottom: '8px' }}>
-              Sahib will confirm your {duration}-minute slot within 24 hours with payment details and meeting link.
-            </p>
-            {refId && <p style={{ fontSize: '11px', color: 'var(--text4)', fontFamily: '"Courier New", monospace', marginBottom: '20px' }}>Ref: {refId}</p>}
-            <button onClick={() => { setSuccess(false); setName(''); setEmail(''); setPhone(''); setPreferredDate(''); setMessage('') }} style={{ fontSize: '13px', color: 'var(--orange)', background: 'none', border: '1px solid var(--border2)', borderRadius: '8px', padding: '8px 16px', cursor: 'pointer', fontFamily: 'Inter, system-ui, sans-serif' }}>
-              Book another →
-            </button>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '16px', padding: '32px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        {/* Booking form */}
+        <form style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '16px', padding: '32px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
             <h2 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: '20px', fontWeight: 400, color: 'var(--text)', marginBottom: '4px' }}>Request your {duration}-minute session</h2>
 
             {/* Duration radio */}
@@ -137,27 +104,27 @@ export default function AppointmentsPage() {
 
             {error && <p style={{ fontSize: '13px', color: 'var(--coral)', background: 'rgba(239,68,68,0.06)', border: '1px solid rgba(239,68,68,0.15)', padding: '10px 14px', borderRadius: '8px' }}>{error}</p>}
 
-            <button
-              type="submit"
-              disabled={loading}
+            <PayButton
+              planName={PLAN_NAMES[duration]}
+              planDisplayName={PLAN_DISPLAY_NAMES[duration]}
+              amountPaise={AMOUNT_PAISE[duration]}
               style={{
                 padding: '14px 28px', borderRadius: '10px',
-                background: loading ? 'rgba(255,107,0,0.5)' : '#FF6B00',
-                color: '#FFFFFF', border: 'none', cursor: loading ? 'not-allowed' : 'pointer',
+                background: '#FF6B00',
+                color: '#FFFFFF', border: 'none',
                 fontSize: '15px', fontWeight: 700, fontFamily: 'Inter, system-ui, sans-serif',
-                boxShadow: loading ? 'none' : '0 6px 20px rgba(255,107,0,0.35)',
-                transition: 'all 0.2s',
+                boxShadow: '0 6px 20px rgba(255,107,0,0.35)',
+                transition: 'all 0.2s', width: '100%',
               }}
             >
-              {loading ? 'Sending request...' : `Request ${duration}-min session — ₹${PRICES[duration].toLocaleString('en-IN')} →`}
-            </button>
+              {`Pay & Book ${duration}-min session — ₹${PRICES[duration].toLocaleString('en-IN')} →`}
+            </PayButton>
 
             <p style={{ fontSize: '11px', color: 'var(--text4)', textAlign: 'center', lineHeight: 1.6 }}>
-              Payment via UPI/bank transfer — details sent after Sahib confirms your slot.<br />
+              Secure payment via Razorpay · All major cards, UPI, NetBanking accepted<br />
               Sessions Mon–Fri, 9 AM–5 PM IST · Google Meet or Zoom
             </p>
-          </form>
-        )}
+        </form>
 
         {/* Manual booking note */}
         <div style={{ marginTop: '24px', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '12px', padding: '20px 24px' }}>

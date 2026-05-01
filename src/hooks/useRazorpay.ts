@@ -29,6 +29,7 @@ export function useRazorpay() {
   const initiatePayment = useCallback(async (options: RazorpayOptions) => {
     setLoading(true)
     try {
+      console.log('[Razorpay] initiatePayment called:', { amount: options.amount, plan: options.planName })
       console.log('Razorpay key:', process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID ? 'present' : 'MISSING')
       const loaded = await loadScript()
       if (!loaded) {
@@ -45,17 +46,21 @@ export function useRazorpay() {
           currency: 'INR',
           receipt: `rcpt_${Date.now()}`,
           plan_name: options.planName,
+          planName: options.planName,
         }),
       })
 
+      console.log('[Razorpay] order response status:', orderRes.status)
+      const orderData = await orderRes.json()
+      console.log('[Razorpay] order data:', orderData)
+
       if (!orderRes.ok) {
-        const e = await orderRes.json()
-        options.onFailure(e.error || 'Order creation failed')
+        options.onFailure(orderData.error || 'Order creation failed')
         setLoading(false)
         return
       }
 
-      const { order_id, amount, currency } = await orderRes.json()
+      const { order_id, amount, currency } = orderData
 
       const rzp = new (window as any).Razorpay({
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,

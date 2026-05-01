@@ -24,11 +24,11 @@ export function PayButton({ planName, planDisplayName, amountPaise, className, s
       const supabase = createClient()
       const { data: { user } } = await supabase.auth.getUser()
       console.log('PayButton clicked, user:', user?.email, 'amount:', amountPaise)
-      if (!user) { router.push('/auth/login'); return }
+      if (!user) { router.push('/auth/login?redirect=/pricing'); return }
 
       await initiatePayment({
         amount: amountPaise,
-        planName,
+        planName: planName.toLowerCase().trim(),
         planDisplayName,
         userName: user.user_metadata?.full_name || user.email || '',
         userEmail: user.email || '',

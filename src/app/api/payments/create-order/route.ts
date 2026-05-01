@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import Razorpay from 'razorpay'
 import { createServerComponentClient } from '@/lib/supabase/server'
 
-const PLAN_PRICES: Record<string, number> = {
+const PLAN_AMOUNTS: Record<string, number> = {
   positional: 399900,
   pro: 699900,
   elite: 1249900,
@@ -21,20 +21,14 @@ export async function POST(req: NextRequest) {
     const { data: { session } } = await supabase.auth.getSession()
     if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-    const { amount, currency = 'INR', receipt, plan_name } = await req.json() as {
-      amount: number
-      currency?: string
-      receipt?: string
-      plan_name: string
-    }
-
-    const normalizedPlan = (plan_name as string ?? '').toLowerCase().trim()
-    if (!normalizedPlan || !PLAN_PRICES[normalizedPlan]) {
-      return NextResponse.json({ error: `Invalid plan: "${plan_name}". Valid plans: ${Object.keys(PLAN_PRICES).join(', ')}` }, { status: 400 })
-    }
+    const body = await req.json()
+    const planName = (body.plan_name || body.planName || '').toString().toLowerCase().trim()
+    const currency = body.currency || 'INR'
+    const receipt = body.receipt
+    const amount = body.amount || PLAN_AMOUNTS[planName]
 
     if (!amount || amount < 100) {
-      return NextResponse.json({ error: 'Invalid amount. Must be at least 100 paise.' }, { status: 400 })
+      return NextResponse.json({ error: 'Invalid plan or amount' }, { status: 400 })
     }
 
     const razorpay = new Razorpay({
@@ -47,7 +41,7 @@ export async function POST(req: NextRequest) {
       currency,
       receipt: receipt || `rcpt_${Date.now()}`,
       notes: {
-        plan_name: normalizedPlan,
+        plan_name: planName,
         user_id: session.user.id,
       },
     })

@@ -3,6 +3,7 @@ export const dynamic = 'force-dynamic'
 import type { Metadata } from 'next'
 export const metadata: Metadata = { robots: { index: false, follow: false } }
 
+import { Suspense } from 'react'
 import Link from 'next/link'
 import { cookies } from 'next/headers'
 import { createServerComponentClient, createServiceRoleClient } from '@/lib/supabase/server'
@@ -13,6 +14,7 @@ import {
   FileText, Calendar, Target, CheckCircle, Clock, AlertCircle,
 } from 'lucide-react'
 import { DashboardGreeting } from '@/components/ui/DashboardGreeting'
+import { PaymentSuccessToast } from '@/components/ui/PaymentSuccessToast'
 
 function StatCard({ label, value, sub, color = 'var(--emerald)' }: {
   label: string; value: string; sub?: string; color?: string
@@ -143,6 +145,9 @@ export default async function DashboardPage() {
 
   return (
     <div style={{ maxWidth: '1100px' }}>
+      <Suspense fallback={null}>
+        <PaymentSuccessToast />
+      </Suspense>
       {/* Admin "viewing as user" banner */}
       {adminUser && viewingAsUser && (
         <div style={{

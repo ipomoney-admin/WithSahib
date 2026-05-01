@@ -1,15 +1,14 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
-import { useRouter } from 'next/navigation'
 import { Navbar } from '@/components/layout/Navbar'
 import { BookingBanner } from '@/components/layout/BookingBanner'
 import { Footer } from '@/components/layout/Footer'
 import { Check } from 'lucide-react'
-import { createClient } from '@/lib/supabase/client'
 import { useLanguage } from '@/contexts/LanguageContext'
+import { PayButton } from '@/components/ui/PayButton'
 
 const FOOTER_LINE = 'Research by Sahib Singh Hora · 14+ Years Experience · SEBI RA'
 
@@ -18,6 +17,8 @@ const PLANS = [
     tier: 'positional',
     name: 'Positional',
     price: 3999,
+    planDisplayName: 'Positional Plan — ₹3,999/mo',
+    amountPaise: 399900,
     sub: 'For investors who want conviction, not noise.',
     badge: null,
     featured: false,
@@ -39,6 +40,8 @@ const PLANS = [
     tier: 'pro',
     name: 'Pro',
     price: 6999,
+    planDisplayName: 'Pro Plan — ₹6,999/mo',
+    amountPaise: 699900,
     sub: 'For active traders who demand depth and speed.',
     badge: { label: 'MOST POPULAR', bg: '#1A7A4A', color: '#FFFFFF' },
     featured: true,
@@ -61,6 +64,8 @@ const PLANS = [
     tier: 'elite',
     name: 'Elite',
     price: 12499,
+    planDisplayName: 'Elite Plan — ₹12,499/mo',
+    amountPaise: 1249900,
     sub: 'Maximum coverage. Personal access. No compromise.',
     badge: { label: 'FLAGSHIP TIER', bg: '#B8975A', color: '#FFFFFF' },
     featured: false,
@@ -81,44 +86,7 @@ const PLANS = [
 ]
 
 export default function PricingPage() {
-  const router = useRouter()
   const { t } = useLanguage()
-  const [hasSession, setHasSession] = useState<boolean | null>(null)
-  const [ctaLoading, setCtaLoading] = useState<string | null>(null)
-  const [ctaError, setCtaError] = useState('')
-
-  useEffect(() => {
-    const supabase = createClient()
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setHasSession(!!session)
-    })
-  }, [])
-
-  async function handlePlanClick(tier: string) {
-    setCtaError('')
-    if (!hasSession) {
-      router.push(`/auth/register?plan=${tier}`)
-      return
-    }
-    setCtaLoading(tier)
-    try {
-      const res = await fetch('/api/subscriptions/create', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ tier, billing: 'monthly' }),
-      })
-      const data = await res.json()
-      if (!res.ok || data.error) {
-        setCtaError(data.error ?? 'Could not start subscription. Please try again.')
-        return
-      }
-      router.push(`/settings?subscription=${data.subscription_id}&plan=${tier}`)
-    } catch {
-      setCtaError('Network error. Please try again.')
-    } finally {
-      setCtaLoading(null)
-    }
-  }
 
   return (
     <div style={{ background: 'var(--bg)' }}>
@@ -240,15 +208,14 @@ export default function PricingPage() {
                 )}
 
                 {/* CTA button */}
-                <button
-                  onClick={() => handlePlanClick(plan.tier)}
-                  disabled={ctaLoading === plan.tier}
+                <PayButton
+                  planName={plan.tier}
+                  planDisplayName={plan.planDisplayName}
+                  amountPaise={plan.amountPaise}
                   style={{
                     display: 'block', width: '100%', padding: '13px',
                     borderRadius: '12px', textAlign: 'center',
                     fontSize: '14px', fontWeight: 700,
-                    cursor: ctaLoading === plan.tier ? 'not-allowed' : 'pointer',
-                    opacity: ctaLoading === plan.tier ? 0.7 : 1,
                     transition: 'all 0.2s', outline: 'none',
                     fontFamily: 'var(--font-body)',
                     letterSpacing: '0.02em',
@@ -269,8 +236,8 @@ export default function PricingPage() {
                     }),
                   }}
                 >
-                  {ctaLoading === plan.tier ? t('common.loading') : t(plan.tier === 'positional' ? 'pricing.start_basic' : plan.tier === 'pro' ? 'pricing.go_pro' : 'pricing.go_elite')}
-                </button>
+                  {t(plan.tier === 'positional' ? 'pricing.start_basic' : plan.tier === 'pro' ? 'pricing.go_pro' : 'pricing.go_elite')}
+                </PayButton>
 
                 {/* Footer line */}
                 <p style={{
@@ -283,12 +250,6 @@ export default function PricingPage() {
             )
           })}
         </div>
-
-        {ctaError && (
-          <div style={{ maxWidth: 1060, margin: '16px auto 0', padding: '12px 16px', background: 'rgba(220,38,38,0.06)', border: '1px solid rgba(220,38,38,0.2)', borderRadius: 10, fontSize: 13, color: 'var(--coral)', textAlign: 'center', fontFamily: 'var(--font-body)' }}>
-            {ctaError}
-          </div>
-        )}
 
         {/* Free line */}
         <p style={{ textAlign: 'center', fontSize: '12px', color: 'var(--text4)', marginTop: '20px', fontFamily: 'var(--font-body)' }}>
