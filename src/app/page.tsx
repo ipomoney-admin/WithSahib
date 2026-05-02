@@ -311,7 +311,6 @@ export default function HomePage() {
       <WhoSection />
       <AnalystDarkSection />
       <PricingSection />
-      <TestimonialsSection />
       <ComplianceSection />
       <CTASection />
       <BookingBanner />
@@ -1167,80 +1166,6 @@ function PricingSection() {
             <Button href="/contact" variant="primary" size="lg">
               Contact for Custom Research
             </Button>
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-// ─── TESTIMONIALS ─────────────────────────────────────────────────────────────
-function TestimonialsSection() {
-  return (
-    <section style={{ padding: '80px 40px', background: 'var(--bg2)', borderTop: '1px solid var(--border)' }}>
-      <div className="container-narrow" style={{ padding: 0 }}>
-        <div className="section-tag" style={{ justifyContent: 'center', marginBottom: 16 }}>Subscribers</div>
-        <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: 'var(--text)', textAlign: 'center', marginBottom: '12px' }}>
-          What our{' '}
-          <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>subscribers say</em>
-        </h2>
-        <p style={{ textAlign: 'center', fontSize: '14px', color: 'var(--text3)', marginBottom: '48px', fontFamily: 'var(--font-body)' }}>
-          Genuine testimonials — published as they arrive.
-        </p>
-
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
-          {/* TESTIMONIAL_1 */}
-          <div style={{
-            border: '1.5px dashed var(--border)', borderRadius: '16px', padding: '28px',
-            display: 'flex', flexDirection: 'column', gap: '16px',
-            background: 'var(--surface)',
-          }}>
-            <div style={{ display: 'flex', gap: '4px' }}>
-              {[1,2,3,4,5].map((s) => <span key={s} style={{ color: 'var(--gold)', fontSize: '14px' }}>★</span>)}
-            </div>
-            <p style={{ fontSize: '14px', color: 'var(--text3)', lineHeight: 1.7, fontStyle: 'italic', fontFamily: 'var(--font-body)' }}>
-              &ldquo;Genuine testimonial coming soon.&rdquo;
-            </p>
-            <div style={{ borderTop: '1px solid var(--border)', paddingTop: '12px' }}>
-              <p style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text)', fontFamily: 'var(--font-body)' }}>— Subscriber</p>
-              <p style={{ fontSize: '11px', color: 'var(--text3)', fontFamily: 'var(--font-body)' }}>Positional Plan</p>
-            </div>
-          </div>
-
-          {/* TESTIMONIAL_2 */}
-          <div style={{
-            border: '1.5px dashed var(--border)', borderRadius: '16px', padding: '28px',
-            display: 'flex', flexDirection: 'column', gap: '16px',
-            background: 'var(--surface)',
-          }}>
-            <div style={{ display: 'flex', gap: '4px' }}>
-              {[1,2,3,4,5].map((s) => <span key={s} style={{ color: 'var(--gold)', fontSize: '14px' }}>★</span>)}
-            </div>
-            <p style={{ fontSize: '14px', color: 'var(--text3)', lineHeight: 1.7, fontStyle: 'italic', fontFamily: 'var(--font-body)' }}>
-              &ldquo;Genuine testimonial coming soon.&rdquo;
-            </p>
-            <div style={{ borderTop: '1px solid var(--border)', paddingTop: '12px' }}>
-              <p style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text)', fontFamily: 'var(--font-body)' }}>— Subscriber</p>
-              <p style={{ fontSize: '11px', color: 'var(--text3)', fontFamily: 'var(--font-body)' }}>Pro Plan</p>
-            </div>
-          </div>
-
-          {/* TESTIMONIAL_3 */}
-          <div style={{
-            border: '1.5px dashed var(--border)', borderRadius: '16px', padding: '28px',
-            display: 'flex', flexDirection: 'column', gap: '16px',
-            background: 'var(--surface)',
-          }}>
-            <div style={{ display: 'flex', gap: '4px' }}>
-              {[1,2,3,4,5].map((s) => <span key={s} style={{ color: 'var(--gold)', fontSize: '14px' }}>★</span>)}
-            </div>
-            <p style={{ fontSize: '14px', color: 'var(--text3)', lineHeight: 1.7, fontStyle: 'italic', fontFamily: 'var(--font-body)' }}>
-              &ldquo;Genuine testimonial coming soon.&rdquo;
-            </p>
-            <div style={{ borderTop: '1px solid var(--border)', paddingTop: '12px' }}>
-              <p style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text)', fontFamily: 'var(--font-body)' }}>— Subscriber</p>
-              <p style={{ fontSize: '11px', color: 'var(--text3)', fontFamily: 'var(--font-body)' }}>Elite Plan</p>
-            </div>
           </div>
         </div>
       </div>

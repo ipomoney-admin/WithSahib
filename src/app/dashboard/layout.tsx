@@ -8,8 +8,8 @@ import { useTheme } from '@/components/layout/ThemeProvider'
 import type { User } from '@/types'
 import {
   LayoutDashboard, TrendingUp, BarChart2, Target, RefreshCw,
-  PieChart, Calendar, GraduationCap, FileText, Bell, Settings,
-  LogOut, Menu, X, Sun, Moon, ChevronRight, User as UserIcon,
+  PieChart, Calendar, GraduationCap, FileText, Bell,
+  Menu, X, ChevronRight, User as UserIcon,
   Crown, Shield, Check, FileEdit,
 } from 'lucide-react'
 import { LogoMark } from '@/components/ui/Logo'
@@ -466,6 +466,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const [isAdminUser, setIsAdminUser] = useState(false)
   const [viewingAsUser, setViewingAsUser] = useState(false)
   const [activePopup, setActivePopup] = useState<PopupKey | null>(null)
+  const [profileOpen, setProfileOpen] = useState(false)
+
+  useEffect(() => {
+    if (!profileOpen) return
+    const close = () => setProfileOpen(false)
+    document.addEventListener('click', close)
+    return () => document.removeEventListener('click', close)
+  }, [profileOpen])
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
@@ -696,14 +704,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
       {/* Bottom actions */}
       <div style={{ padding: '8px 8px 16px', borderTop: '1px solid #2A2A2A' }}>
-        <Link
-          href="/settings"
-          className="sidebar-link"
-          style={{ justifyContent: sidebarOpen || mobile ? 'flex-start' : 'center', marginBottom: '2px' }}
-        >
-          <Settings size={17} strokeWidth={1.5} style={{ color: '#6A6A6A' }} />
-          {(sidebarOpen || mobile) && <span>Settings</span>}
-        </Link>
         {isAdminUser && !viewingAsUser && (
           <Link
             href="/admin"
@@ -715,18 +715,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             {(sidebarOpen || mobile) && <span>Admin Panel</span>}
           </Link>
         )}
-        <button
-          onClick={handleLogout}
-          className="sidebar-link"
-          style={{
-            width: '100%', background: 'none', border: 'none', cursor: 'pointer',
-            justifyContent: sidebarOpen || mobile ? 'flex-start' : 'center',
-            color: 'var(--coral)',
-          }}
-        >
-          <LogOut size={17} strokeWidth={1.5} />
-          {(sidebarOpen || mobile) && <span>Sign out</span>}
-        </button>
       </div>
     </div>
   )
@@ -817,13 +805,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </span>
 
           <button
-            onClick={toggleTheme}
-            style={{ background: 'none', border: '1px solid var(--border)', borderRadius: '8px', padding: '7px', cursor: 'pointer', color: 'var(--text2)', display: 'flex', alignItems: 'center' }}
-          >
-            {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
-          </button>
-
-          <button
             style={{ background: 'none', border: '1px solid var(--border)', borderRadius: '8px', padding: '7px', cursor: 'pointer', color: 'var(--text2)', display: 'flex', alignItems: 'center', position: 'relative' }}
           >
             <Bell size={15} />
@@ -832,19 +813,88 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             )}
           </button>
 
-          <div
-            style={{
-              width: '32px', height: '32px', borderRadius: '50%',
-              background: 'linear-gradient(135deg, #FF6B00, #FF8C33)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: '13px', fontWeight: 700, color: '#FFFFFF',
-              cursor: 'pointer',
-              position: 'relative',
-            }}
-          >
-            {user?.name?.[0]?.toUpperCase() ?? <UserIcon size={14} />}
-            {(isAdminUser && !viewingAsUser) && (
-              <span style={{ position: 'absolute', top: '-5px', right: '-5px', fontSize: '10px' }}>👑</span>
+          {/* Profile avatar + dropdown */}
+          <div style={{ position: 'relative' }}>
+            <div
+              onClick={(e) => { e.stopPropagation(); setProfileOpen((v) => !v) }}
+              style={{
+                width: '32px', height: '32px', borderRadius: '50%',
+                background: 'linear-gradient(135deg, #FF6B00, #FF8C33)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: '13px', fontWeight: 700, color: '#FFFFFF',
+                cursor: 'pointer',
+                position: 'relative',
+              }}
+            >
+              {user?.name?.[0]?.toUpperCase() ?? <UserIcon size={14} />}
+              {(isAdminUser && !viewingAsUser) && (
+                <span style={{ position: 'absolute', top: '-5px', right: '-5px', fontSize: '10px' }}>👑</span>
+              )}
+            </div>
+
+            {profileOpen && (
+              <div
+                onClick={(e) => e.stopPropagation()}
+                style={{
+                  position: 'absolute', top: 'calc(100% + 10px)', right: 0,
+                  width: '220px',
+                  background: 'var(--bg2)',
+                  border: '1px solid var(--border)',
+                  borderRadius: '12px',
+                  boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
+                  zIndex: 500,
+                  overflow: 'hidden',
+                }}
+              >
+                {/* User info */}
+                <div style={{ padding: '14px 16px', borderBottom: '1px solid var(--border)' }}>
+                  <p style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text)', margin: 0 }}>{user?.name ?? 'User'}</p>
+                  <p style={{ fontSize: '11px', color: 'var(--text3)', margin: '2px 0 0', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user?.email ?? ''}</p>
+                </div>
+
+                {/* Menu items */}
+                <div style={{ padding: '6px' }}>
+                  <Link
+                    href="/settings?tab=language"
+                    onClick={() => setProfileOpen(false)}
+                    style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '9px 10px', borderRadius: '8px', fontSize: '13px', color: 'var(--text2)', textDecoration: 'none', cursor: 'pointer' }}
+                    onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--bg3, rgba(255,255,255,0.05))')}
+                    onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
+                  >
+                    <span>🌐</span> Language
+                  </Link>
+
+                  <button
+                    onClick={(e) => { e.stopPropagation(); toggleTheme() }}
+                    style={{ display: 'flex', alignItems: 'center', gap: '10px', width: '100%', padding: '9px 10px', borderRadius: '8px', fontSize: '13px', color: 'var(--text2)', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left' }}
+                    onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--bg3, rgba(255,255,255,0.05))')}
+                    onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
+                  >
+                    <span>{theme === 'dark' ? '☀️' : '🌙'}</span> {theme === 'dark' ? 'Light mode' : 'Dark mode'}
+                  </button>
+
+                  <Link
+                    href="/settings"
+                    onClick={() => setProfileOpen(false)}
+                    style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '9px 10px', borderRadius: '8px', fontSize: '13px', color: 'var(--text2)', textDecoration: 'none', cursor: 'pointer' }}
+                    onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--bg3, rgba(255,255,255,0.05))')}
+                    onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
+                  >
+                    <span>⚙️</span> Settings
+                  </Link>
+                </div>
+
+                <div style={{ borderTop: '1px solid var(--border)', padding: '6px' }}>
+                  <button
+                    onClick={handleLogout}
+                    style={{ display: 'flex', alignItems: 'center', gap: '10px', width: '100%', padding: '9px 10px', borderRadius: '8px', fontSize: '13px', color: '#FF5555', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left' }}
+                    onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(255,85,85,0.08)')}
+                    onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
+                  >
+                    <span>🚪</span> Sign out
+                  </button>
+                </div>
+              </div>
             )}
           </div>
         </header>

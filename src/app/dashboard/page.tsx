@@ -15,6 +15,7 @@ import {
 } from 'lucide-react'
 import { DashboardGreeting } from '@/components/ui/DashboardGreeting'
 import { PaymentSuccessToast } from '@/components/ui/PaymentSuccessToast'
+import { TradingQuote } from '@/components/ui/TradingQuote'
 
 function StatCard({ label, value, sub, color = 'var(--emerald)' }: {
   label: string; value: string; sub?: string; color?: string
@@ -174,42 +175,15 @@ export default async function DashboardPage() {
       )}
 
       {/* Header */}
-      <div style={{ marginBottom: '32px' }}>
-        <DashboardGreeting name={displayName} greetingEmoji={greetingEmoji} />
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '8px' }}>
-          {/* Avatar */}
-          <div style={{ position: 'relative', display: 'inline-block', flexShrink: 0 }}>
-            <div style={{
-              width: 48, height: 48, borderRadius: '50%',
-              background: 'linear-gradient(135deg, #FF6B00, #C45200)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              boxShadow: '0 0 16px rgba(255,107,0,0.35)',
-            }}>
-              <span style={{ color: 'white', fontFamily: 'Inter, system-ui, sans-serif', fontWeight: 700, fontSize: 16 }}>{initials}</span>
-            </div>
-            {isFounder && (
-              <div style={{ position: 'absolute', top: -6, right: -4, fontSize: 14 }}>👑</div>
-            )}
-          </div>
-          <h1 style={{ fontFamily: 'Playfair Display, serif', fontSize: '32px', fontWeight: 400, color: 'var(--text)', margin: 0 }}>
-            {displayName}
-          </h1>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
-          <span style={{
-            fontSize: '11px', fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase',
-            padding: '4px 10px', borderRadius: '6px',
-            background: userTier === 'elite' ? 'rgba(212,168,67,0.1)' : userTier === 'pro' ? 'rgba(0,200,150,0.1)' : 'rgba(100,160,255,0.1)',
-            color: userTier === 'elite' ? 'var(--gold)' : userTier === 'pro' ? 'var(--emerald)' : 'var(--sapphire)',
-          }}>
-            {userTier} plan
-          </span>
-          {userTier !== 'elite' && (
-            <Link href="/pricing" style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '12px', color: 'var(--gold)', textDecoration: 'none', fontWeight: 500 }}>
-              <Crown size={12} /> Upgrade
-            </Link>
-          )}
-        </div>
+      <div style={{ marginBottom: '28px' }}>
+        <DashboardGreeting
+          name={displayName}
+          greetingEmoji={greetingEmoji}
+          userTier={userTier}
+          initials={initials}
+          isFounder={isFounder}
+        />
+        <TradingQuote />
       </div>
 
       {/* Upgrade banner for free/basic */}
@@ -224,7 +198,7 @@ export default async function DashboardPage() {
             <Zap size={18} color="var(--emerald)" />
             <div>
               <p style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text)', marginBottom: '2px' }}>Unlock live intraday calls & research reports</p>
-              <p style={{ fontSize: '12px', color: 'var(--text3)' }}>Upgrade to Pro for ₹2,499/month — everything you need to trade actively.</p>
+              <p style={{ fontSize: '12px', color: 'var(--text3)' }}>Upgrade to Pro for ₹6,999/month — everything you need to trade actively.</p>
             </div>
           </div>
           <div style={{ display: 'flex', gap: '8px', flexShrink: 0, flexWrap: 'wrap' }}>
