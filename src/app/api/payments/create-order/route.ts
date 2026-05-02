@@ -17,6 +17,10 @@ const PLAN_AMOUNTS: Record<string, number> = {
 
 export async function POST(req: NextRequest) {
   try {
+    console.log('[DEBUG] RAZORPAY_KEY_ID starts with:', process.env.RAZORPAY_KEY_ID?.substring(0, 15))
+    console.log('[DEBUG] RAZORPAY_KEY_SECRET length:', process.env.RAZORPAY_KEY_SECRET?.length)
+    console.log('[DEBUG] KEY_SECRET starts with:', process.env.RAZORPAY_KEY_SECRET?.substring(0, 5))
+
     const supabase = createServerComponentClient()
     const { data: { session } } = await supabase.auth.getSession()
     if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
