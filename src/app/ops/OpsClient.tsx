@@ -53,6 +53,42 @@ interface FeedItem {
   agents?: { name: string }
 }
 
+interface OrchestratorJob {
+  id: string
+  job_type: string
+  status: string
+  departments: string[] | null
+  created_at: string
+}
+
+interface AgentMessage {
+  id: string
+  from_agent_id: string
+  to_agent_id: string
+  message: string
+  created_at: string
+  from_agent_name: string
+  to_agent_name: string
+}
+
+interface AgentMemory {
+  id: string
+  agent_id: string
+  key: string
+  value: string
+  weight: number
+  created_at: string
+}
+
+interface LeadSummary {
+  total: number
+  hot: number
+  warm: number
+  cold: number
+  converted: number
+  by_stage: Record<string, number>
+}
+
 interface Metrics {
   running: number
   doneToday: number
@@ -134,8 +170,27 @@ function timeAgo(iso: string | null) {
 
 // ─── AGENT CARD ───────────────────────────────────────────────────────────────
 
-function AgentCard({ agent }: { agent: Agent }) {
+function AgentCard({ agent, recentMessages }: { agent: Agent; recentMessages: AgentMessage[] }) {
+  const [memoryOpen, setMemoryOpen] = useState(false)
+  const [memories, setMemories] = useState<AgentMemory[]>([])
+  const [memLoading, setMemLoading] = useState(false)
+
+  const agentMessages = recentMessages
+    .filter((m) => m.from_agent_id === agent.id || m.to_agent_id === agent.id)
+    .slice(0, 2)
+
+  async function openMemory() {
+    setMemoryOpen(true)
+    if (memories.length === 0 && !memLoading) {
+      setMemLoading(true)
+      const data = await apiFetch<AgentMemory[]>(`/api/ops/memory/${agent.id}`)
+      setMemories(data ?? [])
+      setMemLoading(false)
+    }
+  }
+
   return (
+    <>
     <div style={{
       background: '#111111',
       border: `1px solid ${agent.status === 'running' ? 'rgba(0,200,150,0.25)' : '#222222'}`,
@@ -215,16 +270,103 @@ function AgentCard({ agent }: { agent: Agent }) {
         )}
       </div>
 
+      {/* Recent Messages */}
+      <div style={{ paddingTop: 8, borderTop: '1px solid #1A1A1A' }}>
+        <p style={{ fontSize: 9, color: '#444444', textTransform: 'uppercase', letterSpacing: 1, margin: '0 0 6px' }}>
+          Recent Messages
+        </p>
+        {agentMessages.length === 0 ? (
+          <p style={{ fontSize: 10, color: '#333333', margin: 0 }}>No messages — agent idle</p>
+        ) : (
+          agentMessages.map((msg) => (
+            <div key={msg.id} style={{ marginBottom: 5 }}>
+              <div style={{ display: 'flex', gap: 4, alignItems: 'center', marginBottom: 2 }}>
+                <span style={{ fontSize: 9, color: '#555555', background: '#1A1A1A', padding: '1px 5px', borderRadius: 3, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '100%' }}>
+                  {msg.from_agent_name} → {msg.to_agent_name}
+                </span>
+              </div>
+              <p style={{ fontSize: 10, color: '#888888', margin: 0, lineHeight: 1.4, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
+                {msg.message}
+              </p>
+            </div>
+          ))
+        )}
+      </div>
+
       {/* Footer */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: 8, borderTop: '1px solid #1A1A1A' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: 8, borderTop: '1px solid #1A1A1A' }}>
         <span style={{ fontSize: 10, color: '#555555', fontFamily: 'Courier New, monospace' }}>
           {agent.model}
         </span>
-        <span style={{ fontSize: 10, color: '#555555' }}>
-          {agent.api_calls_today} calls · {timeAgo(agent.last_active)}
-        </span>
+        <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+          <button
+            onClick={openMemory}
+            style={{
+              fontSize: 9, color: '#666666', background: '#1A1A1A',
+              border: '1px solid #2A2A2A', borderRadius: 4, padding: '2px 6px',
+              cursor: 'pointer', fontFamily: 'Inter, system-ui, sans-serif',
+            }}
+          >
+            📝 MEM
+          </button>
+          <span style={{ fontSize: 10, color: '#555555' }}>
+            {agent.api_calls_today} calls · {timeAgo(agent.last_active)}
+          </span>
+        </div>
       </div>
     </div>
+
+    {/* Memory modal */}
+    {memoryOpen && (
+      <div
+        style={{
+          position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.8)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          zIndex: 1000,
+        }}
+        onClick={() => setMemoryOpen(false)}
+      >
+        <div
+          style={{
+            background: '#111111', border: '1px solid #2A2A2A',
+            borderRadius: 12, padding: 24, width: 420, maxHeight: '75vh',
+            overflowY: 'auto',
+          }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+            <h3 style={{ margin: 0, fontFamily: '"Playfair Display", Georgia, serif', color: '#FFFFFF', fontSize: 16, fontWeight: 400 }}>
+              {agent.name} — Memory
+            </h3>
+            <button
+              onClick={() => setMemoryOpen(false)}
+              style={{ background: 'none', border: 'none', color: '#666666', cursor: 'pointer', fontSize: 18, lineHeight: 1 }}
+            >
+              ✕
+            </button>
+          </div>
+          {memLoading ? (
+            <p style={{ color: '#555555', fontSize: 13 }}>Loading…</p>
+          ) : memories.length === 0 ? (
+            <div style={{ textAlign: 'center', padding: '24px 0', color: '#444444' }}>
+              <span style={{ fontSize: 24, display: 'block', marginBottom: 8 }}>🧠</span>
+              <p style={{ fontSize: 13, margin: 0 }}>No memories stored yet</p>
+            </div>
+          ) : (
+            memories.map((mem) => (
+              <div key={mem.id} style={{ marginBottom: 10, padding: '10px 12px', background: '#0D0D0D', borderRadius: 8 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
+                  <span style={{ fontSize: 11, fontWeight: 600, color: '#CCCCCC' }}>{mem.key}</span>
+                  <span style={{ fontSize: 9, color: '#555555', fontFamily: 'Courier New, monospace' }}>w: {mem.weight}</span>
+                </div>
+                <p style={{ fontSize: 11, color: '#888888', margin: 0, lineHeight: 1.5 }}>{mem.value}</p>
+              </div>
+            ))
+          )}
+        </div>
+      </div>
+    )}
+    </>
   )
 }
 
@@ -273,15 +415,23 @@ function MetricsRow({ metrics }: { metrics: Metrics }) {
 
 // ─── COMMAND BAR ─────────────────────────────────────────────────────────────
 
+const DIGITAL_MARKETING_GROUPS = [
+  { value: 'all_digital', label: '📣 All Digital Marketing' },
+  { value: 'social_media_head', label: '📱 Social Media Head' },
+  { value: 'seo_head', label: '🔍 SEO Head' },
+  { value: 'content_head', label: '✍️ Content Head' },
+]
+
 function CommandBar({ agents, departments, onCommandSent }: {
   agents: Agent[]
   departments: Department[]
   onCommandSent: (cmd: string) => void
 }) {
   const [command, setCommand] = useState('')
-  const [targetType, setTargetType] = useState<'all' | 'department' | 'agent'>('all')
+  const [targetType, setTargetType] = useState<'all' | 'department' | 'agent' | 'group'>('all')
   const [targetDept, setTargetDept] = useState('')
   const [targetAgent, setTargetAgent] = useState('')
+  const [targetGroup, setTargetGroup] = useState('')
   const [sending, setSending] = useState(false)
 
   async function send() {
@@ -291,6 +441,7 @@ function CommandBar({ agents, departments, onCommandSent }: {
       const body: Record<string, string> = { command }
       if (targetType === 'department' && targetDept) body.target_department = targetDept
       if (targetType === 'agent' && targetAgent) body.target_agent_id = targetAgent
+      if (targetType === 'group' && targetGroup) body.target_group = targetGroup
 
       const res = await fetch('/api/ops/command', {
         method: 'POST',
@@ -332,6 +483,7 @@ function CommandBar({ agents, departments, onCommandSent }: {
         <option value="all">→ All Agents</option>
         <option value="department">→ Department</option>
         <option value="agent">→ Agent</option>
+        <option value="group">→ Digital Marketing</option>
       </select>
 
       {targetType === 'department' && (
@@ -364,6 +516,23 @@ function CommandBar({ agents, departments, onCommandSent }: {
           <option value="">Pick agent</option>
           {agents.map((a) => (
             <option key={a.id} value={a.id}>{a.name}</option>
+          ))}
+        </select>
+      )}
+
+      {targetType === 'group' && (
+        <select
+          value={targetGroup}
+          onChange={(e) => setTargetGroup(e.target.value)}
+          style={{
+            background: '#1A1A1A', border: '1px solid #333333', color: '#AAAAAA',
+            borderRadius: 8, padding: '8px 10px', fontSize: 12, cursor: 'pointer',
+            outline: 'none', flexShrink: 0,
+          }}
+        >
+          <option value="">Pick group</option>
+          {DIGITAL_MARKETING_GROUPS.map((g) => (
+            <option key={g.value} value={g.value}>{g.label}</option>
           ))}
         </select>
       )}
@@ -614,6 +783,183 @@ function SetupBanner({ onSeed }: { onSeed: () => void }) {
   )
 }
 
+// ─── LEAD PIPELINE ────────────────────────────────────────────────────────────
+
+function LeadPipeline({ summary }: { summary: LeadSummary | null }) {
+  if (!summary) {
+    return (
+      <div style={{ color: '#444444', textAlign: 'center', paddingTop: 60 }}>
+        <span style={{ fontSize: 28, display: 'block', marginBottom: 8 }}>📊</span>
+        <p style={{ fontSize: 13 }}>Loading lead data…</p>
+      </div>
+    )
+  }
+
+  const stages = ['new', 'contacted', 'engaged', 'trial', 'converted']
+  const stageLabels: Record<string, string> = {
+    new: 'New', contacted: 'Contacted', engaged: 'Engaged', trial: 'Trial', converted: 'Converted',
+  }
+  const stageColors: Record<string, string> = {
+    new: '#555555', contacted: '#FF6B00', engaged: '#D4A843', trial: '#00C896', converted: '#1A7A4A',
+  }
+  const maxCount = Math.max(...stages.map((s) => summary.by_stage[s] ?? 0), 1)
+
+  return (
+    <div>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 16 }}>
+        {[
+          { label: 'Total Leads', value: summary.total, color: '#FFFFFF' },
+          { label: 'Hot Leads', value: summary.hot, color: '#FF5555' },
+          { label: 'Warm Leads', value: summary.warm, color: '#D4A843' },
+          { label: 'Converted', value: summary.converted, color: '#1A7A4A' },
+        ].map(({ label, value, color }) => (
+          <div key={label} style={{ background: '#111111', border: '1px solid #222222', borderRadius: 8, padding: '10px 12px' }}>
+            <p style={{ fontSize: 9, color: '#555555', margin: '0 0 4px', textTransform: 'uppercase', letterSpacing: 1 }}>{label}</p>
+            <p style={{ fontSize: 22, fontWeight: 700, color, margin: 0, fontFamily: '"Playfair Display", Georgia, serif' }}>{value}</p>
+          </div>
+        ))}
+      </div>
+
+      <p style={{ fontSize: 9, color: '#444444', textTransform: 'uppercase', letterSpacing: 2, margin: '16px 0 10px', padding: '0 2px' }}>
+        FUNNEL
+      </p>
+
+      {stages.map((stage) => {
+        const count = summary.by_stage[stage] ?? 0
+        const pct = Math.round((count / maxCount) * 100)
+        return (
+          <div key={stage} style={{ marginBottom: 10 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 3 }}>
+              <span style={{ fontSize: 11, color: stageColors[stage] }}>{stageLabels[stage]}</span>
+              <span style={{ fontSize: 11, fontWeight: 700, color: '#CCCCCC' }}>{count}</span>
+            </div>
+            <div style={{ height: 6, background: '#1A1A1A', borderRadius: 100, overflow: 'hidden' }}>
+              <div style={{
+                height: '100%', width: `${pct}%`,
+                background: stageColors[stage],
+                borderRadius: 100, transition: 'width 0.5s ease',
+              }} />
+            </div>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
+// ─── ORCHESTRATOR VIEW ────────────────────────────────────────────────────────
+
+function OrchestratorView({ jobs, onNewJob }: { jobs: OrchestratorJob[]; onNewJob: () => void }) {
+  const [creating, setCreating] = useState(false)
+  const [jobType, setJobType] = useState('')
+
+  async function createJob() {
+    if (!jobType.trim()) return
+    setCreating(true)
+    try {
+      await fetch('/api/ops/orchestrator', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          job_type: jobType,
+          departments: ['Social Media', 'SEO', 'Content & Strategy'],
+        }),
+      })
+      setJobType('')
+      onNewJob()
+    } finally {
+      setCreating(false)
+    }
+  }
+
+  const statusColor: Record<string, string> = {
+    pending: '#D4A843', running: '#00C896', completed: '#1A7A4A', failed: '#FF5555',
+  }
+
+  return (
+    <div>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
+        <h2 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: 18, fontWeight: 400, color: '#FFFFFF', margin: 0 }}>
+          Brand Orchestrator
+          <span style={{ fontSize: 13, color: '#444444', fontFamily: 'Inter, system-ui, sans-serif', marginLeft: 10 }}>
+            {jobs.length} jobs
+          </span>
+        </h2>
+      </div>
+
+      <div style={{ display: 'flex', gap: 8, marginBottom: 20 }}>
+        <input
+          value={jobType}
+          onChange={(e) => setJobType(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && createJob()}
+          placeholder="New cross-department job…"
+          style={{
+            flex: 1, background: '#1A1A1A', border: '1px solid #333333', color: '#FFFFFF',
+            borderRadius: 8, padding: '8px 14px', fontSize: 12, outline: 'none',
+            fontFamily: 'Inter, system-ui, sans-serif',
+          }}
+        />
+        <button
+          onClick={createJob}
+          disabled={creating || !jobType.trim()}
+          style={{
+            background: creating || !jobType.trim() ? '#2A2A2A' : '#FF6B00',
+            color: creating || !jobType.trim() ? '#555555' : '#FFFFFF',
+            border: 'none', borderRadius: 8, padding: '8px 16px',
+            fontSize: 12, fontWeight: 700, cursor: creating ? 'wait' : 'pointer',
+            fontFamily: 'Inter, system-ui, sans-serif', flexShrink: 0,
+          }}
+        >
+          {creating ? '…' : '+ Job'}
+        </button>
+      </div>
+
+      {jobs.length === 0 ? (
+        <div style={{ textAlign: 'center', padding: '60px 20px', color: '#333333' }}>
+          <span style={{ fontSize: 32, display: 'block', marginBottom: 10 }}>🎯</span>
+          <p style={{ fontSize: 13 }}>No orchestrator jobs yet</p>
+          <p style={{ fontSize: 11, marginTop: 6, lineHeight: 1.6 }}>
+            Create a cross-department job to coordinate Social Media, SEO, and Content.
+          </p>
+        </div>
+      ) : (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          {jobs.map((job) => (
+            <div key={job.id} style={{
+              background: '#111111', border: '1px solid #222222', borderRadius: 10, padding: 14,
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                <span style={{ fontSize: 13, fontWeight: 600, color: '#FFFFFF' }}>{job.job_type}</span>
+                <span style={{
+                  fontSize: 9, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1,
+                  color: statusColor[job.status] ?? '#555555',
+                  background: `${statusColor[job.status] ?? '#555555'}18`,
+                  border: `1px solid ${statusColor[job.status] ?? '#555555'}44`,
+                  borderRadius: 4, padding: '2px 8px',
+                }}>
+                  {job.status}
+                </span>
+              </div>
+              {job.departments && job.departments.length > 0 && (
+                <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap', marginBottom: 6 }}>
+                  {job.departments.map((d) => (
+                    <span key={d} style={{ fontSize: 9, color: '#888888', background: '#1A1A1A', border: '1px solid #2A2A2A', borderRadius: 4, padding: '2px 6px' }}>
+                      {d}
+                    </span>
+                  ))}
+                </div>
+              )}
+              <p style={{ fontSize: 10, color: '#444444', margin: 0, fontFamily: 'Courier New, monospace' }}>
+                {timeAgo(job.created_at)}
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
 // ─── MAIN COMPONENT ──────────────────────────────────────────────────────────
 
 export function OpsClient() {
@@ -627,7 +973,10 @@ export function OpsClient() {
   const [metrics, setMetrics] = useState<Metrics>({ running: 0, doneToday: 0, pendingApprovals: 0, tokensToday: 0, tokenLimit: 1_000_000, tokenPct: 0 })
   const [approvals, setApprovals] = useState<ApprovalItem[]>([])
   const [feedItems, setFeedItems] = useState<FeedItem[]>([])
-  const [rightTab, setRightTab] = useState<'feed' | 'approvals' | 'schedule'>('feed')
+  const [orchestratorJobs, setOrchestratorJobs] = useState<OrchestratorJob[]>([])
+  const [recentMessages, setRecentMessages] = useState<AgentMessage[]>([])
+  const [leadSummary, setLeadSummary] = useState<LeadSummary | null>(null)
+  const [rightTab, setRightTab] = useState<'feed' | 'approvals' | 'schedule' | 'leads'>('feed')
   const [feedLog, setFeedLog] = useState<string[]>([])
   const [loading, setLoading] = useState(true)
   const [needsSeed, setNeedsSeed] = useState(false)
@@ -667,9 +1016,27 @@ export function OpsClient() {
     if (data !== null) setFeedItems(data)
   }, [])
 
+  const fetchOrchestrator = useCallback(async () => {
+    const data = await apiFetch<OrchestratorJob[]>('/api/ops/orchestrator')
+    if (data !== null) setOrchestratorJobs(data)
+  }, [])
+
+  const fetchMessages = useCallback(async () => {
+    const data = await apiFetch<AgentMessage[]>('/api/ops/messages')
+    if (data !== null) setRecentMessages(data)
+  }, [])
+
+  const fetchLeads = useCallback(async () => {
+    const data = await apiFetch<LeadSummary>('/api/ops/leads')
+    if (data !== null) setLeadSummary(data)
+  }, [])
+
   const refreshAll = useCallback(async () => {
-    await Promise.all([fetchDepartments(), fetchAgents(), fetchMetrics(), fetchApprovals(), fetchFeed()])
-  }, [fetchDepartments, fetchAgents, fetchMetrics, fetchApprovals, fetchFeed])
+    await Promise.all([
+      fetchDepartments(), fetchAgents(), fetchMetrics(), fetchApprovals(),
+      fetchFeed(), fetchOrchestrator(), fetchMessages(), fetchLeads(),
+    ])
+  }, [fetchDepartments, fetchAgents, fetchMetrics, fetchApprovals, fetchFeed, fetchOrchestrator, fetchMessages, fetchLeads])
 
   // ── Mount ──
 
@@ -722,9 +1089,9 @@ export function OpsClient() {
     fetchMetrics()
   }
 
-  const visibleAgents = activeDept
+  const visibleAgents = activeDept && activeDept !== '__orchestrator__'
     ? agents.filter((a) => a.department_id === activeDept)
-    : agents
+    : activeDept === '__orchestrator__' ? [] : agents
 
   const deptAgentCount = (deptId: string) => agents.filter((a) => a.department_id === deptId).length
 
@@ -828,8 +1195,36 @@ export function OpsClient() {
           display: 'flex', flexDirection: 'column',
           background: '#0D0D0D',
         }}>
-          <div style={{ padding: '16px 12px 8px', flexShrink: 0 }}>
-            <p style={{ fontSize: 9, color: '#444444', textTransform: 'uppercase', letterSpacing: 2, margin: '0 0 10px', padding: '0 4px' }}>
+          {/* Brand Orchestrator */}
+          <div style={{ padding: '12px 8px 8px', flexShrink: 0 }}>
+            <button
+              onClick={() => setActiveDept('__orchestrator__')}
+              style={{
+                width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                padding: '10px 12px', borderRadius: 8, border: 'none', cursor: 'pointer',
+                background: activeDept === '__orchestrator__'
+                  ? 'rgba(212,168,67,0.15)'
+                  : 'rgba(212,168,67,0.05)',
+                color: activeDept === '__orchestrator__' ? '#D4A843' : '#888888',
+                fontSize: 13, fontFamily: 'Inter, system-ui, sans-serif',
+                transition: 'all 0.15s',
+                borderLeft: `2px solid ${activeDept === '__orchestrator__' ? '#D4A843' : 'rgba(212,168,67,0.3)'}`,
+              }}
+            >
+              <span style={{ fontWeight: activeDept === '__orchestrator__' ? 700 : 400 }}>🎯 Brand Orchestrator</span>
+              <span style={{
+                fontSize: 10, fontWeight: 700,
+                background: activeDept === '__orchestrator__' ? 'rgba(212,168,67,0.25)' : '#1A1A1A',
+                color: activeDept === '__orchestrator__' ? '#D4A843' : '#666666',
+                borderRadius: 10, padding: '1px 7px', flexShrink: 0,
+              }}>
+                {orchestratorJobs.filter((j) => j.status === 'running' || j.status === 'pending').length}
+              </span>
+            </button>
+          </div>
+
+          <div style={{ padding: '8px 12px 6px', flexShrink: 0 }}>
+            <p style={{ fontSize: 9, color: '#444444', textTransform: 'uppercase', letterSpacing: 2, margin: 0 }}>
               DEPARTMENTS
             </p>
           </div>
@@ -918,6 +1313,8 @@ export function OpsClient() {
 
             {needsSeed ? (
               <SetupBanner onSeed={refreshAll} />
+            ) : activeDept === '__orchestrator__' ? (
+              <OrchestratorView jobs={orchestratorJobs} onNewJob={fetchOrchestrator} />
             ) : (
               <>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
@@ -949,7 +1346,7 @@ export function OpsClient() {
                     gap: 12,
                   }}>
                     {visibleAgents.map((agent) => (
-                      <AgentCard key={agent.id} agent={agent} />
+                      <AgentCard key={agent.id} agent={agent} recentMessages={recentMessages} />
                     ))}
                   </div>
                 )}
@@ -969,16 +1366,16 @@ export function OpsClient() {
         }}>
           {/* Tabs */}
           <div style={{ display: 'flex', borderBottom: '1px solid #1E1E1E', flexShrink: 0 }}>
-            {(['feed', 'approvals', 'schedule'] as const).map((tab) => (
+            {(['feed', 'approvals', 'leads', 'schedule'] as const).map((tab) => (
               <button
                 key={tab}
                 onClick={() => setRightTab(tab)}
                 style={{
-                  flex: 1, padding: '12px 4px',
+                  flex: 1, padding: '12px 2px',
                   background: 'none', border: 'none', cursor: 'pointer',
-                  fontSize: 11, fontWeight: rightTab === tab ? 700 : 400,
+                  fontSize: 10, fontWeight: rightTab === tab ? 700 : 400,
                   color: rightTab === tab ? '#FF6B00' : '#555555',
-                  textTransform: 'capitalize', letterSpacing: '0.5px',
+                  textTransform: 'capitalize', letterSpacing: '0.3px',
                   borderBottom: `2px solid ${rightTab === tab ? '#FF6B00' : 'transparent'}`,
                   transition: 'all 0.15s',
                   fontFamily: 'Inter, system-ui, sans-serif',
@@ -986,7 +1383,10 @@ export function OpsClient() {
               >
                 {tab === 'approvals' && metrics.pendingApprovals > 0 && rightTab !== 'approvals'
                   ? <><span>Approvals</span> <span style={{ color: '#D4A843' }}>({metrics.pendingApprovals})</span></>
-                  : tab === 'feed' ? 'Live Feed' : tab === 'approvals' ? 'Approvals' : 'Schedule'}
+                  : tab === 'feed' ? 'Live Feed'
+                  : tab === 'approvals' ? 'Approvals'
+                  : tab === 'leads' ? 'Leads'
+                  : 'Schedule'}
               </button>
             ))}
           </div>
@@ -1014,6 +1414,10 @@ export function OpsClient() {
 
             {rightTab === 'approvals' && (
               <ApprovalsPanel approvals={approvals} onAction={handleApprovalAction} />
+            )}
+
+            {rightTab === 'leads' && (
+              <LeadPipeline summary={leadSummary} />
             )}
 
             {rightTab === 'schedule' && (
