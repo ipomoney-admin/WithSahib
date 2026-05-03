@@ -16,6 +16,7 @@ import { Button } from '@/components/ui/Button'
 import { PayButton } from '@/components/ui/PayButton'
 import { BillingSelector, BILLING_OPTIONS, type BillingValue } from '@/components/ui/BillingSelector'
 import { CouponInput } from '@/components/ui/CouponInput'
+import { TypewriterHero } from '@/components/ui/TypewriterHero'
 
 // ─── PRICING DATA ─────────────────────────────────────────────────────────────
 const PLANS = [
@@ -202,21 +203,7 @@ function HeroSection() {
               </span>
             </div>
 
-            <h1
-              className="animate-fade-up-1"
-              style={{
-                fontFamily: 'var(--font-heading)',
-                fontSize: 'clamp(40px, 5.2vw, 70px)',
-                fontWeight: 700,
-                lineHeight: 1.05,
-                color: 'var(--text)',
-                marginBottom: '24px',
-                letterSpacing: '-0.02em',
-              }}
-            >
-              Structured Trade Ideas.<br />
-              <em style={{ fontStyle: 'italic', color: 'var(--orange)', fontWeight: 400 }}>Before the Market Opens.</em>
-            </h1>
+            <TypewriterHero />
 
             <p
               className="animate-fade-up-2"
@@ -259,22 +246,26 @@ function HeroSection() {
               SEBI RA · INH000026266 · Sahib Singh Hora · 14+ years market experience
             </p>
 
-            <a
-              href="https://t.me/withsahib"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: 'inline-flex', alignItems: 'center', gap: '6px',
-                fontSize: '13px', color: '#0088cc', textDecoration: 'none',
-                marginTop: '16px', fontFamily: 'var(--font-body)',
-                transition: 'opacity 0.2s',
-              }}
-              onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.opacity = '0.7' }}
-              onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.opacity = '1' }}
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-              Join free Telegram channel →
-            </a>
+            {/* Telegram CTA */}
+            <div style={{ marginTop: '20px', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '10px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <div style={{ width: '40px', height: '1px', background: 'var(--border2)' }} />
+                <span style={{ fontSize: '11px', color: 'var(--text4)', fontFamily: 'var(--font-body)' }}>or</span>
+                <div style={{ width: '40px', height: '1px', background: 'var(--border2)' }} />
+              </div>
+              <span className="telegram-badge">🔔 Free signals &amp; market updates</span>
+              <a
+                href="https://t.me/withsahib"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="telegram-cta"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
+                </svg>
+                Join Free on Telegram →
+              </a>
+            </div>
           </div>
 
           {/* Right — Sample Research Card */}
@@ -1023,28 +1014,29 @@ function DifferentiatorSection() {
             }}
           >
             <p style={{
-              fontSize: '11px', fontWeight: 700, letterSpacing: '2px',
-              color: 'var(--text4)', textTransform: 'uppercase',
-              fontFamily: 'var(--font-body)', marginBottom: '20px',
+              fontSize: '20px', fontWeight: 600,
+              color: 'var(--text3)',
+              fontFamily: 'var(--font-body)', marginBottom: '24px',
+              lineHeight: 1.2,
             }}>
               What you&apos;re used to
             </p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               {left.map((item, i) => (
-                <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+                <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
                   <span style={{
-                    width: '16px', height: '16px', borderRadius: '50%',
-                    background: 'rgba(220,38,38,0.08)',
-                    border: '1px solid rgba(220,38,38,0.2)',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    flexShrink: 0, marginTop: '1px', fontSize: '9px', color: 'var(--coral)', fontWeight: 700,
+                    fontSize: '18px', color: 'var(--muted)',
+                    fontWeight: 700, lineHeight: 1, flexShrink: 0, marginTop: '2px',
                   }}>
                     ✕
                   </span>
                   <span style={{
-                    fontSize: '14px', color: 'var(--text3)',
-                    fontFamily: 'var(--font-body)', lineHeight: 1.5,
-                    textDecoration: 'line-through', textDecorationColor: 'rgba(0,0,0,0.15)',
+                    fontSize: '18px', color: 'var(--text3)',
+                    fontFamily: 'var(--font-body)', lineHeight: 1.8,
+                    textDecoration: 'line-through',
+                    textDecorationColor: 'var(--muted)',
+                    textDecorationThickness: '2px',
+                    opacity: 0.7,
                   }}>
                     {item}
                   </span>
@@ -1064,27 +1056,25 @@ function DifferentiatorSection() {
             }}
           >
             <p style={{
-              fontSize: '11px', fontWeight: 700, letterSpacing: '2px',
-              color: 'var(--orange)', textTransform: 'uppercase',
-              fontFamily: 'var(--font-body)', marginBottom: '20px',
+              fontSize: '20px', fontWeight: 600,
+              color: 'var(--text)',
+              fontFamily: 'var(--font-body)', marginBottom: '24px',
+              lineHeight: 1.2,
             }}>
               withSahib
             </p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               {right.map((item, i) => (
-                <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+                <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
                   <span style={{
-                    width: '16px', height: '16px', borderRadius: '50%',
-                    background: 'rgba(26,122,74,0.12)',
-                    border: '1.5px solid var(--green)',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    flexShrink: 0, marginTop: '1px',
+                    fontSize: '18px', color: 'var(--color-orange)',
+                    fontWeight: 700, lineHeight: 1, flexShrink: 0, marginTop: '2px',
                   }}>
-                    <Check size={9} color="var(--green)" strokeWidth={3} />
+                    ✓
                   </span>
                   <span style={{
-                    fontSize: '14px', color: 'var(--text)',
-                    fontFamily: 'var(--font-body)', lineHeight: 1.5, fontWeight: 500,
+                    fontSize: '18px', color: 'var(--text)',
+                    fontFamily: 'var(--font-body)', lineHeight: 1.8, fontWeight: 500,
                   }}>
                     {item}
                   </span>
@@ -1459,22 +1449,22 @@ function PricingSection() {
                   {plan.sub}
                 </p>
 
-                <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '24px' }}>
+                <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '24px', paddingLeft: '4px' }}>
                   {plan.features.map((f, j) => (
                     <li key={j} style={{
-                      display: 'flex', alignItems: 'flex-start', gap: '8px',
-                      fontSize: '13px',
-                      color: isFeatured ? 'rgba(255,255,255,0.8)' : 'var(--text2)',
+                      display: 'flex', alignItems: 'flex-start', gap: '10px',
+                      fontSize: '16px',
+                      color: isFeatured ? 'rgba(255,255,255,0.85)' : 'var(--text2)',
                       fontFamily: 'var(--font-body)',
-                      lineHeight: 1.45,
+                      lineHeight: 1.7,
                     }}>
                       <span style={{
-                        width: '16px', height: '16px', borderRadius: '50%', flexShrink: 0, marginTop: '1px',
+                        width: '18px', height: '18px', borderRadius: '50%', flexShrink: 0, marginTop: '3px',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                         background: 'rgba(26,122,74,0.12)',
                         border: '1.5px solid var(--green)',
                       }}>
-                        <Check size={9} color="var(--green)" strokeWidth={3} />
+                        <Check size={10} color="var(--green)" strokeWidth={3} />
                       </span>
                       {f}
                     </li>
