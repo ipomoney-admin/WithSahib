@@ -489,6 +489,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const [mobileOpen, setMobileOpen] = useState(false)
   const [notifications, setNotifications] = useState(3)
   const [isAdminUser, setIsAdminUser] = useState(false)
+  const [isSuperAdminUser, setIsSuperAdminUser] = useState(false)
   const [viewingAsUser, setViewingAsUser] = useState(false)
   const [activePopup, setActivePopup] = useState<PopupKey | null>(null)
   const [profileOpen, setProfileOpen] = useState(false)
@@ -506,13 +507,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
       supabase
         .from('admin_roles')
-        .select('id')
+        .select('id, role')
         .eq('user_id', data.user.id)
         .limit(1)
         .single()
         .then(({ data: adminRow }) => {
           if (adminRow) {
             setIsAdminUser(true)
+            if (adminRow.role === 'super_admin') setIsSuperAdminUser(true)
             const cookie = document.cookie.split(';').find((c) => c.trim().startsWith('admin_view_mode='))
             setViewingAsUser(cookie?.split('=')[1]?.trim() === 'user')
           }
@@ -740,6 +742,17 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           >
             <Shield size={17} strokeWidth={1.5} style={{ color: 'var(--gold)' }} />
             {(sidebarOpen || mobile) && <span>Admin Panel</span>}
+          </Link>
+        )}
+        {isSuperAdminUser && !viewingAsUser && (
+          <Link
+            href="/ops"
+            className="sidebar-link"
+            style={{ justifyContent: sidebarOpen || mobile ? 'flex-start' : 'center', marginBottom: '2px', color: '#FF6B00' }}
+            title={!sidebarOpen && !mobile ? 'Ops' : undefined}
+          >
+            <span style={{ fontSize: 16, lineHeight: 1, flexShrink: 0 }}>◈</span>
+            {(sidebarOpen || mobile) && <span style={{ fontSize: 13 }}>Ops</span>}
           </Link>
         )}
       </div>
