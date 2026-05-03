@@ -7,80 +7,13 @@ import { Navbar } from '@/components/layout/Navbar'
 import { BookingBanner } from '@/components/layout/BookingBanner'
 import { Footer } from '@/components/layout/Footer'
 import {
-  TrendingUp, BarChart2, Target, RefreshCw, BookOpen, Calendar,
-  Brain, Shield, ArrowRight, Check,
+  TrendingUp, BarChart2, Target, RefreshCw,
+  Shield, ArrowRight, Check,
   Linkedin, Twitter, Instagram, Facebook,
+  FileText, ChevronDown, ChevronUp,
 } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
-import { useLanguage } from '@/contexts/LanguageContext'
-
-// ─── SERVICES DATA ────────────────────────────────────────────────────────────
-const SERVICES = [
-  {
-    icon: TrendingUp,
-    title: 'Intraday Research',
-    desc: 'Pre-market equity research for NSE stocks — setup rationale, entry zone, risk levels, and sector context documented and published before 9 AM every trading session.',
-    badge: 'Daily · Before 9 AM',
-    badgeColor: 'green',
-    href: '/services/intraday',
-  },
-  {
-    icon: RefreshCw,
-    title: 'Swing Trades',
-    desc: 'Positional research for 2–10 day NSE equity setups. Chart structure, volume confirmation, target levels, and documented invalidation criteria on every pick.',
-    badge: '3–5 per week',
-    badgeColor: 'green',
-    href: '/services/swing',
-  },
-  {
-    icon: BarChart2,
-    title: 'Options Research',
-    desc: 'Nifty, BankNifty, and stock options research — strike selection, OI analysis, IV rank, PCR signals, and full written rationale. Weekly and expiry-week setups.',
-    badge: 'Weekly',
-    badgeColor: 'gold',
-    href: '/services/stock-options',
-  },
-  {
-    icon: BookOpen,
-    title: 'Model Portfolio',
-    desc: 'A conviction-based NSE equity portfolio, quarterly-rebalanced. Every holding is supported by a documented valuation thesis and published rebalancing logic.',
-    badge: 'Long Term',
-    badgeColor: 'blue',
-    href: '/pricing',
-  },
-  {
-    icon: Brain,
-    title: 'Research Reports',
-    desc: 'Equity research notes published on BSE/NSE results filings — DCF analysis, earnings quality, management commentary, and a formal Buy/Hold/Sell recommendation.',
-    badge: 'On Filing',
-    badgeColor: 'green',
-    href: '/research',
-  },
-  {
-    icon: Calendar,
-    title: '1-on-1 Sessions',
-    desc: 'Scheduled sessions with a SEBI Registered Analyst. Portfolio review, stock-specific research, and options strategy — 15 or 30-minute structured consultations.',
-    badge: 'Book a Slot',
-    badgeColor: 'blue',
-    href: '/appointments',
-  },
-  {
-    icon: Target,
-    title: 'Index Options',
-    desc: 'Nifty and Bank Nifty derivatives research built on open interest, PCR signals, and multi-timeframe structure. Expiry-day plays with full written rationale.',
-    badge: 'Expiry Plays',
-    badgeColor: 'gold',
-    href: '/services/index-options',
-  },
-  {
-    icon: Shield,
-    title: 'Courses',
-    desc: 'Structured learning on technical analysis methodology, options frameworks, and systematic research process — taught by a SEBI Registered Research Analyst.',
-    badge: 'Self-Paced',
-    badgeColor: 'gold',
-    href: '/courses',
-  },
-]
+import { PayButton } from '@/components/ui/PayButton'
 
 // ─── PRICING DATA ─────────────────────────────────────────────────────────────
 const PLANS = [
@@ -88,17 +21,14 @@ const PLANS = [
     tier: 'positional',
     name: 'Positional',
     monthly: 3999,
-    yearlyMonthly: 3679,
-    yearlyTotal: 44148,
-    discount: 8,
+    amountPaise: 399900,
     sub: 'Swing and positional research with full written rationale.',
     features: [
-      { text: '8–12 high-conviction positional setups per month', ok: true },
-      { text: 'Entry zone, 2 targets, stop-loss on every pick', ok: true },
-      { text: 'Written research rationale on every recommendation', ok: true },
-      { text: 'Sector context and market conditions included', ok: true },
-      { text: 'Weekly digest with closed-trade performance summary', ok: true },
-      { text: 'Full research archive access', ok: true },
+      '8–12 positional setups per month',
+      'Entry zone, 2 targets, stop-loss on every pick',
+      'Written research rationale on every idea',
+      'Sector context included',
+      'Full research archive access',
     ],
     cta: 'Start Positional',
     color: 'default',
@@ -107,17 +37,14 @@ const PLANS = [
     tier: 'pro',
     name: 'Pro',
     monthly: 6999,
-    yearlyMonthly: 6159,
-    yearlyTotal: 73908,
-    discount: 12,
+    amountPaise: 699900,
     sub: 'Active trading coverage with direct analyst access.',
     features: [
-      { text: 'All Positional features — full swing & positional research', ok: true },
-      { text: 'WhatsApp research delivery before market opens (9 AM)', ok: true },
-      { text: 'Your specialisation: Intraday · Stock Options · Index Options', ok: true },
-      { text: '3 institutional research reports per month', ok: true },
-      { text: 'Direct WhatsApp access to Sahib Singh Hora', ok: true },
-      { text: '1 × 15-min strategy session with Sahib every month', ok: true },
+      'All Positional features included',
+      'WhatsApp delivery before 9 AM',
+      'Intraday · Stock Options · Index Options (pick one)',
+      'Direct WhatsApp access to Sahib Singh Hora',
+      '1 × 15-min strategy session per month',
     ],
     cta: 'Go Pro',
     color: 'emerald',
@@ -127,24 +54,43 @@ const PLANS = [
     tier: 'elite',
     name: 'Elite',
     monthly: 12499,
-    yearlyMonthly: 10624,
-    yearlyTotal: 127488,
-    discount: 15,
+    amountPaise: 1249900,
     sub: 'Full coverage, all three services, maximum analyst access.',
     features: [
-      { text: 'All three services: Intraday + Stock Options + Index Options', ok: true },
-      { text: '4 × 15-min weekly strategy calls with Sahib (₹7,996 standalone value)', ok: true },
-      { text: 'Monthly portfolio review and personalised trade feedback', ok: true },
-      { text: 'One bespoke research note per month — commissioned exclusively for you', ok: true },
-      { text: 'Direct call + WhatsApp access to Sahib Singh Hora', ok: true },
-      { text: '🎁 Market Foundations course (₹24,999 value) for annual members', ok: true },
+      'All three services: Intraday + Options + Index',
+      '4 × 15-min weekly strategy calls',
+      'Monthly portfolio review',
+      'Bespoke research note per month',
+      'Direct call + WhatsApp access',
     ],
     cta: 'Go Elite',
     color: 'gold',
   },
 ]
 
-// ─── ANIMATION HOOK ───────────────────────────────────────────────────────────
+const FAQ_ITEMS = [
+  {
+    q: 'Is this guaranteed profit?',
+    a: 'No. Research ideas are not guaranteed to result in profits. All investments carry risk. withSahib provides structured research — the decision to act is always yours.',
+  },
+  {
+    q: 'How are research ideas delivered?',
+    a: 'Published on the dashboard before 9 AM on every trading day. Pro and Elite subscribers also receive WhatsApp delivery.',
+  },
+  {
+    q: 'Is this suitable for beginners?',
+    a: 'Yes — each idea includes a written rationale explaining the structural basis. However, understanding basic market concepts is recommended.',
+  },
+  {
+    q: 'What risk management approach is followed?',
+    a: 'Every idea includes a defined stop-loss and two targets. Position sizing and risk-per-trade decisions remain with the subscriber.',
+  },
+  {
+    q: 'Is Sahib Singh Hora SEBI registered?',
+    a: 'Yes. Registration number INH000026266 under SEBI (Research Analysts) Regulations, 2014. Verify at sebi.gov.in.',
+  },
+]
+
 function useInView(_threshold = 0.15) {
   const ref = useRef<HTMLDivElement>(null)
   return { ref, inView: true }
@@ -177,11 +123,15 @@ export default function HomePage() {
       <Navbar />
       <HeroSection />
       <StatsStrip />
-      <DifferentiatorSection />
-      <ServicesSection />
+      <MissedOpportunitySection />
       <HowItWorksSection />
+      <TrustBlockSection />
+      <ServicesSection />
+      <DifferentiatorSection />
       <AnalystDarkSection />
       <PricingSection />
+      <UrgencySection />
+      <FAQSection />
       <CTASection />
       <BookingBanner />
       <Footer />
@@ -189,7 +139,7 @@ export default function HomePage() {
   )
 }
 
-// ─── HERO ─────────────────────────────────────────────────────────────────────
+// ─── SECTION 1: HERO ─────────────────────────────────────────────────────────
 function HeroSection() {
   return (
     <section
@@ -199,7 +149,6 @@ function HeroSection() {
         overflow: 'hidden',
       }}
     >
-      {/* Restrained background — single subtle orb, not two loud ones */}
       <div
         style={{
           position: 'absolute',
@@ -217,7 +166,6 @@ function HeroSection() {
         <div className="hero-grid">
           {/* Left — copy */}
           <div>
-            {/* Eyebrow */}
             <div
               className="animate-fade-up-1"
               style={{
@@ -241,7 +189,6 @@ function HeroSection() {
               </span>
             </div>
 
-            {/* H1 */}
             <h1
               className="animate-fade-up-1"
               style={{
@@ -258,7 +205,6 @@ function HeroSection() {
               <em style={{ fontStyle: 'italic', color: 'var(--orange)', fontWeight: 400 }}>Before the Market Opens.</em>
             </h1>
 
-            {/* Sub */}
             <p
               className="animate-fade-up-2"
               style={{
@@ -274,7 +220,6 @@ function HeroSection() {
               Daily equity research from a SEBI Registered Analyst — with defined entry zones, two targets, and a stop-loss on every idea. No random tips. No noise.
             </p>
 
-            {/* CTAs */}
             <div
               className="animate-fade-up-3 hero-ctas"
               style={{
@@ -286,10 +231,11 @@ function HeroSection() {
               }}
             >
               <Button href="/auth/register" variant="primary" size="lg">
-                Get Today&apos;s Research →
+                Start Free Today
+                <ArrowRight size={16} />
               </Button>
               <Button href="/methodology" variant="secondary" size="lg">
-                See How It Works
+                See the Process
               </Button>
             </div>
 
@@ -329,7 +275,6 @@ function HeroSection() {
                 boxShadow: '0 8px 48px rgba(0,0,0,0.07)',
               }}
             >
-              {/* Card header */}
               <div
                 style={{
                   background: 'var(--black)',
@@ -349,7 +294,7 @@ function HeroSection() {
                     fontSize: '10px', fontWeight: 700, color: 'rgba(255,255,255,0.65)',
                     letterSpacing: '1.5px', fontFamily: 'var(--font-body)', textTransform: 'uppercase',
                   }}>
-                    Sample Research Call
+                    Sample Research Report
                   </span>
                 </div>
                 <span style={{ fontSize: '10px', color: 'rgba(255,255,255,0.3)', fontFamily: 'var(--font-mono)' }}>
@@ -357,7 +302,6 @@ function HeroSection() {
                 </span>
               </div>
 
-              {/* Card body */}
               <div style={{ padding: '24px' }}>
                 <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '16px' }}>
                   <div>
@@ -382,12 +326,11 @@ function HeroSection() {
                   </span>
                 </div>
 
-                {/* Levels */}
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '10px', marginBottom: '16px' }}>
                   {[
-                    { label: 'Entry', value: '₹2,840–2,855', color: 'var(--text)' },
+                    { label: 'Entry Zone', value: '₹2,840–2,855', color: 'var(--text)' },
                     { label: 'Target', value: '₹2,920', color: 'var(--green)' },
-                    { label: 'Stop Loss', value: '₹2,810', color: '#DC2626' },
+                    { label: 'Stop Loss', value: '₹2,810', color: 'var(--coral)' },
                   ].map(({ label, value, color }) => (
                     <div key={label} style={{ background: 'var(--bg2)', borderRadius: 'var(--r-sm)', padding: '10px 12px' }}>
                       <div style={{
@@ -403,7 +346,6 @@ function HeroSection() {
                   ))}
                 </div>
 
-                {/* R:R */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px' }}>
                   <div style={{ height: '3px', flex: 1, background: 'var(--bg2)', borderRadius: '2px', overflow: 'hidden' }}>
                     <div style={{ height: '100%', width: '67%', background: 'var(--green)', borderRadius: '2px' }} />
@@ -413,7 +355,6 @@ function HeroSection() {
                   </span>
                 </div>
 
-                {/* Rationale */}
                 <p style={{
                   fontSize: '12px', color: 'var(--text3)', lineHeight: 1.65,
                   fontFamily: 'var(--font-body)', borderTop: '1px solid var(--border)',
@@ -427,7 +368,7 @@ function HeroSection() {
               textAlign: 'center', fontSize: '11px', color: 'var(--text4)',
               marginTop: '10px', fontFamily: 'var(--font-body)',
             }}>
-              For illustration only. Not investment advice. Past performance is not indicative of future results.
+              For illustration only · Not investment advice · Past performance is not indicative of future results.
             </p>
           </div>
         </div>
@@ -487,234 +428,194 @@ function StatsStrip() {
   )
 }
 
-// ─── DIFFERENTIATOR SECTION ───────────────────────────────────────────────────
-function DifferentiatorSection() {
-  const items = [
+// ─── SECTION 2: MISSED OPPORTUNITY ───────────────────────────────────────────
+function MissedOpportunitySection() {
+  const cards = [
     {
-      label: 'SEBI RA INH000026266',
-      desc: 'Individually registered. Publicly verifiable on the SEBI intermediary portal. Every call carries a regulatory consequence.',
+      symbol: 'RELIANCE',
+      exchange: 'NSE · Swing',
+      timeLabel: 'Levels shared: Pre-market, 8:47 AM',
+      sessionNote: 'Zone respected during session',
     },
     {
-      label: 'No quota. No deadline.',
-      desc: 'Research is only published when a setup survives all six filters. If nothing qualifies on a given day, nothing is published.',
+      symbol: 'HDFCBANK',
+      exchange: 'NSE · Intraday',
+      timeLabel: 'Levels shared: Pre-market, 8:51 AM',
+      sessionNote: 'Zone respected during session',
     },
     {
-      label: 'Full outcome logging',
-      desc: 'Every signal is logged with its result — wins and losses both. A complete, SEBI-compliant audit trail from the first call.',
-    },
-    {
-      label: 'Written rationale on every call',
-      desc: 'Not a number. A document. Pattern, catalyst, sector context, entry logic, and risk level — in writing, every time.',
+      symbol: 'NIFTY',
+      exchange: 'NSE · Index Options',
+      timeLabel: 'Levels shared: Pre-market, 8:55 AM',
+      sessionNote: 'Zone respected during session',
     },
   ]
 
   return (
-    <section style={{ padding: '72px 40px', background: 'var(--bg)' }}>
+    <section
+      id="missed-opportunity"
+      style={{ padding: '80px 40px', background: 'var(--bg)', borderTop: '1px solid var(--border)' }}
+    >
       <div className="container-wide" style={{ padding: 0 }}>
+        <div style={{ textAlign: 'center', marginBottom: '52px' }}>
+          <div
+            className="section-tag"
+            style={{
+              justifyContent: 'center',
+              color: 'var(--orange)',
+            }}
+          >
+            Why Timing Matters
+          </div>
+          <h2
+            style={{
+              fontFamily: 'var(--font-heading)',
+              fontSize: 'clamp(28px, 4vw, 48px)',
+              fontWeight: 700,
+              color: 'var(--text)',
+              lineHeight: 1.15,
+              letterSpacing: '-0.01em',
+              marginBottom: 0,
+            }}
+          >
+            The setup was there.<br />
+            The levels were shared.<br />
+            <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>Did you have them?</em>
+          </h2>
+        </div>
+
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'minmax(0, 2fr) minmax(0, 3fr)',
-            gap: 'clamp(40px, 6vw, 88px)',
-            alignItems: 'start',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: '20px',
+            marginBottom: '32px',
           }}
         >
-          {/* Left — strong statement */}
-          <div>
-            <div className="section-tag">What makes this different</div>
-            <h2
+          {cards.map((card, i) => (
+            <div
+              key={i}
               style={{
-                fontFamily: 'var(--font-heading)',
-                fontSize: 'clamp(28px, 3.5vw, 44px)',
-                fontWeight: 700,
-                color: 'var(--text)',
-                lineHeight: 1.15,
-                marginBottom: '20px',
-                letterSpacing: '-0.01em',
+                background: 'var(--surface)',
+                border: '1px solid var(--border2)',
+                borderRadius: 'var(--r-lg)',
+                padding: '28px 24px',
+                position: 'relative',
+                overflow: 'hidden',
               }}
             >
-              Not a signal channel.{' '}
-              <em style={{ fontStyle: 'italic', color: 'var(--orange)', fontWeight: 400 }}>A research record.</em>
-            </h2>
-            <p style={{
-              fontSize: '15px',
-              color: 'var(--text2)',
-              lineHeight: 1.75,
-              fontFamily: 'var(--font-body)',
-              maxWidth: '340px',
-              marginBottom: '28px',
-            }}>
-              The difference between withSahib and every anonymous Telegram channel is not the quality of the calls — it is the accountability behind them. A registered analyst. A named record. A legal standard.
-            </p>
-            <Link
-              href="/methodology"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '6px',
-                fontSize: '14px',
-                fontWeight: 500,
-                color: 'var(--text2)',
-                textDecoration: 'none',
-                borderBottom: '1px solid var(--border2)',
-                paddingBottom: '2px',
-                transition: 'color 0.15s, border-color 0.15s',
-                fontFamily: 'var(--font-body)',
-              }}
-              onMouseEnter={(e) => {
-                const el = e.currentTarget as HTMLAnchorElement
-                el.style.color = 'var(--orange)'
-                el.style.borderColor = 'var(--orange)'
-              }}
-              onMouseLeave={(e) => {
-                const el = e.currentTarget as HTMLAnchorElement
-                el.style.color = 'var(--text2)'
-                el.style.borderColor = 'var(--border2)'
-              }}
-            >
-              Read the full methodology →
-            </Link>
-          </div>
-
-          {/* Right — 4 specific differentiators */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
-            {items.map((item, i) => (
               <div
-                key={i}
                 style={{
-                  padding: '24px 0',
-                  borderBottom: i < items.length - 1 ? '1px solid var(--border)' : 'none',
-                  display: 'grid',
-                  gridTemplateColumns: '1fr 1.6fr',
-                  gap: '24px',
-                  alignItems: 'start',
+                  position: 'absolute',
+                  top: 0, left: 0, right: 0,
+                  height: '2px',
+                  background: 'linear-gradient(90deg, var(--green), var(--green-bright))',
                 }}
-              >
-                <div style={{
-                  fontSize: '13px',
-                  fontWeight: 600,
-                  color: 'var(--text)',
-                  fontFamily: 'var(--font-body)',
-                  paddingTop: '2px',
+              />
+              <div style={{ marginBottom: '16px' }}>
+                <p style={{
+                  fontSize: '10px', fontWeight: 700, letterSpacing: '2px',
+                  color: 'var(--text4)', textTransform: 'uppercase',
+                  fontFamily: 'var(--font-body)', marginBottom: '6px',
                 }}>
-                  {item.label}
+                  {card.exchange}
+                </p>
+                <h3 style={{
+                  fontFamily: 'var(--font-heading)',
+                  fontSize: '28px', fontWeight: 700, color: 'var(--text)',
+                  lineHeight: 1,
+                }}>
+                  {card.symbol}
+                </h3>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '20px' }}>
+                <div style={{
+                  display: 'flex', alignItems: 'center', gap: '8px',
+                  fontSize: '13px', color: 'var(--text2)', fontFamily: 'var(--font-body)',
+                }}>
+                  <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--orange)', flexShrink: 0 }} />
+                  {card.timeLabel}
                 </div>
                 <div style={{
-                  fontSize: '13px',
-                  color: 'var(--text2)',
-                  lineHeight: 1.65,
-                  fontFamily: 'var(--font-body)',
+                  display: 'flex', alignItems: 'center', gap: '8px',
+                  fontSize: '13px', color: 'var(--text2)', fontFamily: 'var(--font-body)',
                 }}>
-                  {item.desc}
+                  <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--text4)', flexShrink: 0 }} />
+                  {card.sessionNote}
                 </div>
               </div>
-            ))}
-          </div>
+
+              <div style={{
+                display: 'inline-flex', alignItems: 'center', gap: '6px',
+                background: 'rgba(26,122,74,0.07)',
+                border: '1px solid rgba(26,122,74,0.2)',
+                borderRadius: '20px',
+                padding: '5px 12px',
+              }}>
+                <span style={{
+                  width: '6px', height: '6px', borderRadius: '50%',
+                  background: 'var(--green-bright)',
+                }} />
+                <span style={{
+                  fontSize: '11px', fontWeight: 700, letterSpacing: '0.5px',
+                  color: 'var(--green)', fontFamily: 'var(--font-body)',
+                }}>
+                  Move initiated
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div style={{ textAlign: 'center' }}>
+          <p style={{
+            fontSize: '14px', color: 'var(--text3)', fontStyle: 'italic',
+            fontFamily: 'var(--font-heading)', marginBottom: '28px', lineHeight: 1.6,
+          }}>
+            All research is published before 9 AM on every trading day.
+          </p>
+          <Button href="/auth/register" variant="primary" size="lg">
+            Don&apos;t Miss the Next Setup →
+          </Button>
+          <p style={{
+            marginTop: '16px', fontSize: '11px', color: 'var(--text4)',
+            fontFamily: 'var(--font-body)',
+          }}>
+            Past setups shown for illustrative purposes only. Not indicative of future results.
+          </p>
         </div>
       </div>
     </section>
   )
 }
 
-// ─── SERVICES ─────────────────────────────────────────────────────────────────
-function ServicesSection() {
-  const { ref, inView } = useInView()
-  return (
-    <section ref={ref} style={{ padding: '72px 40px', background: 'var(--bg2)', borderTop: '1px solid var(--border)' }}>
-      <div className="container-wide" style={{ padding: 0 }}>
-        <div className="section-tag">Research Coverage</div>
-        <h2
-          style={{
-            fontFamily: 'var(--font-heading)',
-            fontSize: 'clamp(28px, 4vw, 48px)',
-            fontWeight: 700,
-            color: 'var(--text)',
-            lineHeight: 1.15,
-            marginBottom: '12px',
-            letterSpacing: '-0.01em',
-          }}
-        >
-          Eight categories.{' '}
-          <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>One registered analyst behind all of them.</em>
-        </h2>
-        <p style={{ fontSize: '16px', color: 'var(--text2)', marginBottom: '48px', fontFamily: 'var(--font-body)', maxWidth: '560px' }}>
-          From pre-market intraday research to long-term portfolio construction — every recommendation published under SEBI RA INH000026266 with full written rationale.
-        </p>
-
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1px', background: 'var(--border)', border: '1px solid var(--border)', borderRadius: 'var(--r-lg)', overflow: 'hidden' }}>
-          {SERVICES.map((svc, i) => {
-            const Icon = svc.icon
-            return (
-              <Link key={i} href={svc.href} style={{ textDecoration: 'none', display: 'block' }}>
-                <div
-                  style={{
-                    padding: '28px 24px',
-                    background: 'var(--surface)',
-                    position: 'relative',
-                    cursor: 'pointer',
-                    height: '100%',
-                    opacity: inView ? 1 : 0,
-                    transition: `opacity 0.4s ease ${i * 0.06}s, background 0.2s`,
-                  }}
-                  onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.background = 'var(--bg2)' }}
-                  onMouseLeave={(e) => { (e.currentTarget as HTMLDivElement).style.background = 'var(--surface)' }}
-                >
-                  <div style={{
-                    width: '36px', height: '36px',
-                    background: 'rgba(26,122,74,0.07)',
-                    borderRadius: '8px',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    marginBottom: '16px',
-                  }}>
-                    <Icon size={18} strokeWidth={1.5} color="var(--green)" />
-                  </div>
-                  <h3 style={{
-                    fontSize: '15px', fontWeight: 600, color: 'var(--text)',
-                    marginBottom: '8px', fontFamily: 'var(--font-body)',
-                  }}>
-                    {svc.title}
-                  </h3>
-                  <p style={{
-                    fontSize: '13px', color: 'var(--text2)',
-                    lineHeight: 1.6, marginBottom: '14px', fontFamily: 'var(--font-body)',
-                  }}>
-                    {svc.desc}
-                  </p>
-                  <span className={`badge badge-${svc.badgeColor}`} style={{ fontSize: '10px' }}>
-                    {svc.badge}
-                  </span>
-                </div>
-              </Link>
-            )
-          })}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-// ─── HOW IT WORKS ─────────────────────────────────────────────────────────────
+// ─── SECTION 3: HOW IT WORKS ──────────────────────────────────────────────────
 function HowItWorksSection() {
   const { ref, inView } = useInView()
   const steps = [
     {
       n: '01',
-      title: 'The market is scanned every morning before 9 AM',
-      desc: '1,500+ Nifty 500 equities are reviewed against overnight global cues, FII/DII data, and technical setups before the Indian session opens. Not a shortcut. A process.',
+      title: 'Pre-Market Scanning',
+      desc: 'Every trading day, 200+ charts are reviewed before the market opens — against overnight global cues, FII/DII data, and technical structure.',
     },
     {
       n: '02',
-      title: 'Only the highest-conviction setups make the cut',
-      desc: 'Not every setup qualifies. One to three research notes per day, maximum. If nothing earns publication, nothing is published. Quality over output.',
+      title: 'Setup Selection',
+      desc: 'Only high-probability, structurally sound setups are selected — with clear invalidation levels. If nothing qualifies, nothing is published.',
     },
     {
       n: '03',
-      title: 'You receive the reasoning — not just the numbers',
-      desc: 'Entry range, two targets, stop loss, and written rationale. You understand why the trade was selected before you decide whether to act on it.',
+      title: 'Research Published',
+      desc: 'Entry zone, two targets, and stop-loss — with written rationale. Delivered before 9 AM. You decide whether to act.',
     },
   ]
   return (
-    <section ref={ref} style={{ padding: '72px 40px', background: 'var(--bg)', borderTop: '1px solid var(--border)' }}>
+    <section
+      id="how-it-works"
+      ref={ref}
+      style={{ padding: '80px 40px', background: 'var(--bg2)', borderTop: '1px solid var(--border)' }}
+    >
       <div className="container-wide" style={{ padding: 0 }}>
         <div className="section-tag">How It Works</div>
         <h2
@@ -731,7 +632,7 @@ function HowItWorksSection() {
           <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>follow and understand</em>
         </h2>
         <p style={{ fontSize: '16px', color: 'var(--text2)', maxWidth: '480px', marginBottom: '52px', fontFamily: 'var(--font-body)' }}>
-          Every call on withSahib has a named person behind it — not a black box, not a committee.
+          Every research note on withSahib has a named person behind it — not a black box, not a committee.
         </p>
         <div className="how-grid">
           {steps.map((step, i) => (
@@ -772,12 +673,419 @@ function HowItWorksSection() {
             </div>
           ))}
         </div>
+        <p style={{
+          marginTop: '28px',
+          fontSize: '12px', color: 'var(--text4)',
+          fontFamily: 'var(--font-body)', textAlign: 'center',
+        }}>
+          Research ideas are not buy/sell recommendations. Exercise your own judgment.
+        </p>
       </div>
     </section>
   )
 }
 
-// ─── ANALYST DARK SECTION ─────────────────────────────────────────────────────
+// ─── SECTION 4: TRUST BLOCK ───────────────────────────────────────────────────
+function TrustBlockSection() {
+  const pillars = [
+    {
+      icon: Shield,
+      title: 'SEBI Registered',
+      desc: 'Registered Research Analyst under SEBI (Research Analysts) Regulations, 2014.',
+      detail: 'Registration No: INH000026266',
+      link: { text: 'Verify on SEBI →', href: 'https://www.sebi.gov.in/sebiweb/other/OtherAction.do?doRecognisedFpi=yes&intmId=14' },
+      accentColor: 'var(--green)',
+      accentBg: 'rgba(26,122,74,0.08)',
+      accentBorder: 'rgba(26,122,74,0.2)',
+    },
+    {
+      icon: Target,
+      title: 'Risk-First Approach',
+      desc: 'Every research idea includes a defined stop-loss. Capital preservation is the first priority.',
+      detail: 'No idea published without a defined exit.',
+      accentColor: 'var(--orange)',
+      accentBg: 'rgba(255,107,0,0.06)',
+      accentBorder: 'rgba(255,107,0,0.18)',
+    },
+    {
+      icon: FileText,
+      title: 'No Tips, Only Research',
+      desc: 'No Telegram forwards. No anonymous calls. Structured research with written rationale on every idea.',
+      detail: 'One analyst. One standard. Every time.',
+      accentColor: 'var(--text2)',
+      accentBg: 'rgba(0,0,0,0.03)',
+      accentBorder: 'var(--border2)',
+    },
+  ]
+
+  return (
+    <section
+      id="trust"
+      className="always-dark"
+      style={{ padding: '80px 40px' }}
+    >
+      <div className="container-wide" style={{ padding: 0 }}>
+        <div style={{ textAlign: 'center', marginBottom: '52px' }}>
+          <div
+            className="section-tag"
+            style={{ justifyContent: 'center', color: 'rgba(255,255,255,0.4)' }}
+          >
+            Why It Matters
+          </div>
+          <h2
+            style={{
+              fontFamily: 'var(--font-heading)',
+              fontSize: 'clamp(28px, 4vw, 48px)',
+              fontWeight: 700,
+              color: '#FAFAF7',
+              lineHeight: 1.15,
+              letterSpacing: '-0.01em',
+            }}
+          >
+            Regulated.{' '}
+            <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>Accountable.</em>{' '}
+            Structured.
+          </h2>
+        </div>
+
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: '24px',
+          }}
+        >
+          {pillars.map((p, i) => {
+            const Icon = p.icon
+            return (
+              <div
+                key={i}
+                style={{
+                  background: '#111111',
+                  border: '1px solid rgba(255,255,255,0.07)',
+                  borderRadius: 'var(--r-lg)',
+                  padding: '32px 28px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
+              >
+                <div
+                  style={{
+                    width: '44px', height: '44px',
+                    background: p.accentBg,
+                    border: `1px solid ${p.accentBorder}`,
+                    borderRadius: 'var(--r-sm)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    marginBottom: '20px',
+                    flexShrink: 0,
+                  }}
+                >
+                  <Icon size={20} strokeWidth={1.5} color={p.accentColor} />
+                </div>
+
+                <h3 style={{
+                  fontFamily: 'var(--font-body)',
+                  fontSize: '16px', fontWeight: 700,
+                  color: '#FAFAF7',
+                  marginBottom: '10px', lineHeight: 1.3,
+                }}>
+                  {p.title}
+                </h3>
+
+                <p style={{
+                  fontSize: '14px', color: 'rgba(255,255,255,0.55)',
+                  lineHeight: 1.7, fontFamily: 'var(--font-body)',
+                  marginBottom: '12px', flex: 1,
+                }}>
+                  {p.desc}
+                </p>
+
+                <p style={{
+                  fontSize: '12px', color: 'rgba(255,255,255,0.3)',
+                  fontFamily: 'var(--font-mono)', letterSpacing: '0.3px',
+                  marginBottom: p.link ? '14px' : 0,
+                }}>
+                  {p.detail}
+                </p>
+
+                {p.link && (
+                  <a
+                    href={p.link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      fontSize: '13px', fontWeight: 600,
+                      color: 'var(--green)', textDecoration: 'none',
+                      fontFamily: 'var(--font-body)',
+                      transition: 'opacity 0.2s',
+                    }}
+                    onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.opacity = '0.7' }}
+                    onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.opacity = '1' }}
+                  >
+                    {p.link.text}
+                  </a>
+                )}
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ─── SECTION 5: SERVICES ──────────────────────────────────────────────────────
+function ServicesSection() {
+  const services = [
+    {
+      icon: RefreshCw,
+      title: 'Swing Trades',
+      desc: '2–10 day positional ideas. Pattern-based, systematic. Entry zone, two targets, and stop-loss on every setup.',
+      badge: 'New',
+      badgeClass: 'badge-orange',
+      href: '/services/swing',
+    },
+    {
+      icon: TrendingUp,
+      title: 'Intraday Research',
+      desc: 'Pre-market levels for the day\'s session. Reviewed and published in before 9 AM every trading day.',
+      badge: 'Live',
+      badgeClass: 'badge-green',
+      href: '/services/intraday',
+    },
+    {
+      icon: BarChart2,
+      title: 'Stock Options',
+      desc: 'Weekly F&O research with strike selection, OI analysis, IV rank, and PCR context. Full written rationale.',
+      badge: 'Live',
+      badgeClass: 'badge-green',
+      href: '/services/stock-options',
+    },
+    {
+      icon: Target,
+      title: 'Index Options',
+      desc: 'Nifty, BankNifty, FinNifty. Expiry plays with PCR signals and multi-timeframe structure — before the open.',
+      badge: 'Live',
+      badgeClass: 'badge-green',
+      href: '/services/index-options',
+    },
+  ]
+
+  return (
+    <section style={{ padding: '80px 40px', background: 'var(--bg)', borderTop: '1px solid var(--border)' }}>
+      <div className="container-wide" style={{ padding: 0 }}>
+        <div className="section-tag">Research Coverage</div>
+        <h2
+          style={{
+            fontFamily: 'var(--font-heading)',
+            fontSize: 'clamp(28px, 4vw, 48px)',
+            fontWeight: 700,
+            color: 'var(--text)',
+            lineHeight: 1.15,
+            marginBottom: '12px',
+            letterSpacing: '-0.01em',
+          }}
+        >
+          Research across{' '}
+          <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>every timeframe.</em>
+        </h2>
+        <p style={{ fontSize: '16px', color: 'var(--text2)', marginBottom: '48px', fontFamily: 'var(--font-body)', maxWidth: '520px' }}>
+          From pre-market intraday levels to weekly options setups — every research note published under SEBI RA INH000026266.
+        </p>
+
+        <div
+          className="who-grid"
+          style={{
+            gap: '20px',
+            marginBottom: '32px',
+          }}
+        >
+          {services.map((svc, i) => {
+            const Icon = svc.icon
+            return (
+              <Link key={i} href={svc.href} style={{ textDecoration: 'none' }}>
+                <div
+                  className="card card-hover"
+                  style={{
+                    padding: '28px 24px',
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                  }}
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.background = 'var(--bg2)' }}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLDivElement).style.background = 'var(--surface)' }}
+                >
+                  <div style={{
+                    width: '40px', height: '40px',
+                    background: 'rgba(26,122,74,0.07)',
+                    borderRadius: 'var(--r-sm)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    marginBottom: '16px', flexShrink: 0,
+                  }}>
+                    <Icon size={20} strokeWidth={1.5} color="var(--green)" />
+                  </div>
+                  <h3 style={{
+                    fontSize: '16px', fontWeight: 700, color: 'var(--text)',
+                    marginBottom: '8px', fontFamily: 'var(--font-body)',
+                  }}>
+                    {svc.title}
+                  </h3>
+                  <p style={{
+                    fontSize: '14px', color: 'var(--text2)',
+                    lineHeight: 1.65, marginBottom: '16px', fontFamily: 'var(--font-body)',
+                    flex: 1,
+                  }}>
+                    {svc.desc}
+                  </p>
+                  <span className={`badge ${svc.badgeClass}`}>
+                    {svc.badge}
+                  </span>
+                </div>
+              </Link>
+            )
+          })}
+        </div>
+
+        <div style={{ textAlign: 'center' }}>
+          <Button href="/services" variant="ghost">
+            Explore All Services →
+          </Button>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ─── SECTION 6: DIFFERENTIATION ──────────────────────────────────────────────
+function DifferentiatorSection() {
+  const left = [
+    'Anonymous tips on Telegram',
+    'No stop-loss mentioned',
+    'Entry after the move already happened',
+    'No written rationale',
+    'Unregulated, unaccountable',
+  ]
+  const right = [
+    'Structured research with written reasoning',
+    'Stop-loss on every idea, always',
+    'Levels published before market opens',
+    'Full rationale — sector context, pattern, risk',
+    'SEBI Registered Research Analyst',
+  ]
+
+  return (
+    <section style={{ padding: '80px 40px', background: 'var(--bg2)', borderTop: '1px solid var(--border)' }}>
+      <div className="container-wide" style={{ padding: 0 }}>
+        <div className="section-tag">The Difference</div>
+        <h2
+          style={{
+            fontFamily: 'var(--font-heading)',
+            fontSize: 'clamp(28px, 4vw, 48px)',
+            fontWeight: 700,
+            color: 'var(--text)',
+            lineHeight: 1.15,
+            marginBottom: '48px',
+            letterSpacing: '-0.01em',
+          }}
+        >
+          Research,{' '}
+          <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>not noise.</em>
+        </h2>
+
+        <div
+          className="resp-2col"
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gap: '24px',
+          }}
+        >
+          {/* Left — what you're used to */}
+          <div
+            style={{
+              background: 'var(--surface)',
+              border: '1px solid var(--border2)',
+              borderRadius: 'var(--r-lg)',
+              padding: '32px 28px',
+            }}
+          >
+            <p style={{
+              fontSize: '11px', fontWeight: 700, letterSpacing: '2px',
+              color: 'var(--text4)', textTransform: 'uppercase',
+              fontFamily: 'var(--font-body)', marginBottom: '20px',
+            }}>
+              What you&apos;re used to
+            </p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+              {left.map((item, i) => (
+                <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+                  <span style={{
+                    width: '16px', height: '16px', borderRadius: '50%',
+                    background: 'rgba(220,38,38,0.08)',
+                    border: '1px solid rgba(220,38,38,0.2)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    flexShrink: 0, marginTop: '1px', fontSize: '9px', color: 'var(--coral)', fontWeight: 700,
+                  }}>
+                    ✕
+                  </span>
+                  <span style={{
+                    fontSize: '14px', color: 'var(--text3)',
+                    fontFamily: 'var(--font-body)', lineHeight: 1.5,
+                    textDecoration: 'line-through', textDecorationColor: 'rgba(0,0,0,0.15)',
+                  }}>
+                    {item}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right — withSahib */}
+          <div
+            style={{
+              background: 'var(--surface)',
+              border: '1px solid rgba(26,122,74,0.3)',
+              borderTop: '2px solid var(--green)',
+              borderRadius: 'var(--r-lg)',
+              padding: '32px 28px',
+            }}
+          >
+            <p style={{
+              fontSize: '11px', fontWeight: 700, letterSpacing: '2px',
+              color: 'var(--orange)', textTransform: 'uppercase',
+              fontFamily: 'var(--font-body)', marginBottom: '20px',
+            }}>
+              withSahib
+            </p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+              {right.map((item, i) => (
+                <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+                  <span style={{
+                    width: '16px', height: '16px', borderRadius: '50%',
+                    background: 'rgba(26,122,74,0.12)',
+                    border: '1.5px solid var(--green)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    flexShrink: 0, marginTop: '1px',
+                  }}>
+                    <Check size={9} color="var(--green)" strokeWidth={3} />
+                  </span>
+                  <span style={{
+                    fontSize: '14px', color: 'var(--text)',
+                    fontFamily: 'var(--font-body)', lineHeight: 1.5, fontWeight: 500,
+                  }}>
+                    {item}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ─── SECTION 7: THE ANALYST ───────────────────────────────────────────────────
 function AnalystDarkSection() {
   const { ref, inView } = useInView()
   return (
@@ -906,22 +1214,21 @@ function AnalystDarkSection() {
               fontWeight: 700, color: 'rgba(255,255,255,0.95)',
               lineHeight: 1.2, marginBottom: '20px',
             }}>
-              Accountability by name and by regulation
+              Who publishes this research?
             </h2>
             <p style={{
               fontSize: '15px', color: 'rgba(255,255,255,0.6)',
               lineHeight: 1.8, marginBottom: '16px', fontFamily: 'var(--font-body)',
             }}>
-              I&apos;m Sahib Singh Hora — a SEBI Registered Research Analyst (INH000026266), licensed under SEBI (Research Analysts) Regulations, 2014. Every recommendation on withSahib is published under that registration — individually named, publicly verifiable, and legally accountable.
+              Sahib Singh Hora is a SEBI Registered Research Analyst (INH000026266) with 14+ years of active market experience. NISM certified. Every research note published on withSahib is authored, reviewed, and accountable.
             </p>
             <p style={{
               fontSize: '15px', color: 'rgba(255,255,255,0.6)',
               lineHeight: 1.8, marginBottom: '32px', fontFamily: 'var(--font-body)',
             }}>
-              That is the structural difference between a registered research house and an unregistered Telegram channel: the name on the call has a regulatory consequence.
+              This is not a team of anonymous analysts. This is one person, one voice, one standard.
             </p>
 
-            {/* Proof items */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '32px' }}>
               {[
                 'Cannot recommend stocks without disclosing any personal positions',
@@ -949,24 +1256,20 @@ function AnalystDarkSection() {
               ))}
             </div>
 
-            <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-              <Link
-                href="/about"
-                style={{
-                  textDecoration: 'none', padding: '11px 24px',
-                  borderRadius: 'var(--r-sm)',
-                  border: '1px solid rgba(255,255,255,0.2)',
-                  color: 'rgba(255,255,255,0.7)',
-                  fontSize: '14px', fontWeight: 600,
-                  transition: 'all 0.2s', fontFamily: 'var(--font-body)',
-                }}
-              >
-                Read my story →
-              </Link>
-              <Button href="/appointments" variant="primary">
-                Book a session →
-              </Button>
-            </div>
+            <Link
+              href="/about"
+              style={{
+                textDecoration: 'none', padding: '11px 24px',
+                borderRadius: 'var(--r-sm)',
+                border: '1px solid rgba(255,255,255,0.2)',
+                color: 'rgba(255,255,255,0.7)',
+                fontSize: '14px', fontWeight: 600,
+                transition: 'all 0.2s', fontFamily: 'var(--font-body)',
+                display: 'inline-block',
+              }}
+            >
+              Read the full story →
+            </Link>
           </div>
         </div>
       </div>
@@ -974,13 +1277,10 @@ function AnalystDarkSection() {
   )
 }
 
-// ─── PRICING ──────────────────────────────────────────────────────────────────
+// ─── SECTION 8: PRICING PREVIEW ───────────────────────────────────────────────
 function PricingSection() {
-  const { ref, inView } = useInView()
-  const [billing, setBilling] = useState<'monthly' | 'yearly'>('monthly')
-
   return (
-    <section ref={ref} id="pricing" style={{ padding: '80px 40px', background: 'var(--bg)', borderTop: '1px solid var(--border)' }}>
+    <section id="pricing" style={{ padding: '80px 40px', background: 'var(--bg)', borderTop: '1px solid var(--border)' }}>
       <div className="container-wide" style={{ padding: 0 }}>
         <div style={{ textAlign: 'center', marginBottom: '48px' }}>
           <div className="section-tag" style={{ justifyContent: 'center' }}>Research Access</div>
@@ -993,47 +1293,14 @@ function PricingSection() {
             Transparent pricing,{' '}
             <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>zero surprises</em>
           </h2>
-          <p style={{ fontSize: '16px', color: 'var(--text2)', marginBottom: '28px', fontFamily: 'var(--font-body)' }}>
-            Start free. Upgrade when the research proves its worth. Cancel anytime.
+          <p style={{ fontSize: '16px', color: 'var(--text2)', fontFamily: 'var(--font-body)' }}>
+            Start free. Upgrade when the research proves its worth.
           </p>
-          <p style={{ fontSize: '12px', color: 'var(--text4)', fontFamily: 'var(--font-body)', marginBottom: '16px' }}>
-            Free plan always available — no card required
-          </p>
-          {/* Billing toggle */}
-          <div style={{
-            display: 'inline-flex',
-            background: 'var(--surface)',
-            border: '1px solid var(--border)',
-            borderRadius: 'var(--r-sm)',
-            padding: '4px', gap: '4px',
-          }}>
-            {(['monthly', 'yearly'] as const).map((b) => (
-              <button
-                key={b}
-                onClick={() => setBilling(b)}
-                style={{
-                  padding: '8px 20px',
-                  borderRadius: 'var(--r-sm)',
-                  border: 'none',
-                  fontFamily: 'var(--font-body)',
-                  fontSize: '13px',
-                  fontWeight: 500,
-                  cursor: 'pointer',
-                  background: billing === b ? 'var(--orange)' : 'transparent',
-                  color: billing === b ? '#FFFFFF' : 'var(--text2)',
-                  transition: 'all 0.2s',
-                }}
-              >
-                {b === 'monthly' ? 'Monthly' : 'Yearly — save up to 15%'}
-              </button>
-            ))}
-          </div>
         </div>
 
         <div className="pricing-grid" style={{ alignItems: 'start' }}>
           {PLANS.map((plan, i) => {
-            const displayPrice = billing === 'yearly' ? plan.yearlyMonthly : plan.monthly
-            const isFeatured = !!('featured' in plan && plan.featured)
+            const isFeatured = !!plan.featured
             const isElite = plan.color === 'gold'
 
             return (
@@ -1057,9 +1324,7 @@ function PricingSection() {
                   transform: isFeatured ? 'translateY(-8px)' : undefined,
                   boxShadow: isFeatured
                     ? '0 20px 60px rgba(26,122,74,0.12)'
-                    : isElite
-                      ? '0 0 0 1px rgba(212,160,23,0.06)'
-                      : 'none',
+                    : 'none',
                 }}
               >
                 {isFeatured && (
@@ -1074,26 +1339,13 @@ function PricingSection() {
                   </div>
                 )}
 
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
-                  <div style={{
-                    fontSize: '11px', fontWeight: 700, letterSpacing: '2px',
-                    color: isFeatured ? 'rgba(255,255,255,0.5)' : 'var(--text3)',
-                    textTransform: 'uppercase', fontFamily: 'var(--font-body)',
-                  }}>
-                    {plan.name}
-                  </div>
-                  {billing === 'yearly' && plan.discount > 0 && (
-                    <span style={{
-                      fontSize: '10px', fontWeight: 700, padding: '2px 7px',
-                      borderRadius: '4px',
-                      background: isFeatured ? 'rgba(255,107,0,0.2)' : 'rgba(255,107,0,0.08)',
-                      color: 'var(--orange)',
-                      border: '1px solid rgba(255,107,0,0.2)',
-                      fontFamily: 'var(--font-body)',
-                    }}>
-                      SAVE {plan.discount}%
-                    </span>
-                  )}
+                <div style={{
+                  fontSize: '11px', fontWeight: 700, letterSpacing: '2px',
+                  color: isFeatured ? 'rgba(255,255,255,0.5)' : 'var(--text3)',
+                  textTransform: 'uppercase', fontFamily: 'var(--font-body)',
+                  marginBottom: '10px',
+                }}>
+                  {plan.name}
                 </div>
 
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px', marginBottom: '4px' }}>
@@ -1103,18 +1355,12 @@ function PricingSection() {
                     fontFamily: 'var(--font-body)',
                     letterSpacing: '-1px',
                   }}>
-                    {`₹${displayPrice.toLocaleString('en-IN')}`}
+                    {`₹${plan.monthly.toLocaleString('en-IN')}`}
                   </span>
                   <span style={{ fontSize: '13px', color: isFeatured ? 'rgba(255,255,255,0.4)' : 'var(--text3)', fontFamily: 'var(--font-body)' }}>
                     /mo
                   </span>
                 </div>
-
-                {billing === 'yearly' && plan.yearlyTotal > 0 && (
-                  <p style={{ fontSize: '11px', color: isFeatured ? 'rgba(255,107,0,0.8)' : 'var(--text3)', marginBottom: '4px', fontFamily: 'var(--font-body)' }}>
-                    ₹{plan.yearlyTotal.toLocaleString('en-IN')} billed annually
-                  </p>
-                )}
 
                 <p style={{
                   fontSize: '12px',
@@ -1143,17 +1389,19 @@ function PricingSection() {
                       }}>
                         <Check size={9} color="var(--green)" strokeWidth={3} />
                       </span>
-                      {f.text}
+                      {f}
                     </li>
                   ))}
                 </ul>
 
-                <Link
-                  href={`/pricing?tier=${plan.tier}`}
+                <PayButton
+                  planName={plan.tier}
+                  planDisplayName={`${plan.name} Plan — withSahib`}
+                  amountPaise={plan.amountPaise}
                   style={{
                     display: 'block', width: '100%', padding: '12px',
                     borderRadius: 'var(--r-sm)', textAlign: 'center',
-                    textDecoration: 'none', fontSize: '14px', fontWeight: 700,
+                    fontSize: '14px', fontWeight: 700,
                     cursor: 'pointer', transition: 'all 0.2s',
                     fontFamily: 'var(--font-body)',
                     background: isFeatured
@@ -1175,37 +1423,144 @@ function PricingSection() {
                   }}
                 >
                   {plan.cta}
-                </Link>
+                </PayButton>
               </div>
             )
           })}
         </div>
 
-        {/* HNI Band */}
-        <div className="hni-band" style={{ marginTop: '48px' }}>
-          <div>
-            <div style={{
-              fontSize: '11px', fontWeight: 600, letterSpacing: '2px',
-              color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase',
-              marginBottom: '8px', fontFamily: 'var(--font-body)',
-            }}>
-              HNI &amp; Corporate
-            </div>
-            <div className="hni-title">Looking for custom research coverage?</div>
-            <div className="hni-sub">For HNI investors, family offices, and corporate treasuries requiring bespoke equity research — contact directly.</div>
-          </div>
-          <div style={{ flexShrink: 0 }}>
-            <Button href="/contact" variant="primary" size="lg">
-              Contact for Custom Research
-            </Button>
-          </div>
+        <p style={{
+          textAlign: 'center', marginTop: '28px',
+          fontSize: '12px', color: 'var(--text4)',
+          fontFamily: 'var(--font-body)', maxWidth: '560px', margin: '28px auto 0',
+        }}>
+          Fees are for research and analyst access services only. Subscribing does not guarantee profits or returns.
+        </p>
+
+        <div style={{ textAlign: 'center', marginTop: '24px' }}>
+          <Button href="/pricing" variant="ghost">
+            See Full Plan Details →
+          </Button>
         </div>
       </div>
     </section>
   )
 }
 
-// ─── CTA ──────────────────────────────────────────────────────────────────────
+// ─── SECTION 9: URGENCY ───────────────────────────────────────────────────────
+function UrgencySection() {
+  return (
+    <section
+      className="always-dark"
+      style={{ padding: '80px 40px', textAlign: 'center' }}
+    >
+      <div style={{ maxWidth: '640px', margin: '0 auto' }}>
+        <h2 style={{
+          fontFamily: 'var(--font-heading)',
+          fontSize: 'clamp(28px, 4vw, 48px)',
+          fontWeight: 700,
+          color: '#FAFAF7',
+          lineHeight: 1.15,
+          marginBottom: '16px',
+          letterSpacing: '-0.01em',
+        }}>
+          Tomorrow&apos;s research is being{' '}
+          <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>prepared tonight.</em>
+        </h2>
+        <p style={{
+          fontSize: '17px', color: 'rgba(255,255,255,0.55)',
+          lineHeight: 1.75, marginBottom: '36px',
+          fontFamily: 'var(--font-body)', maxWidth: '500px', margin: '0 auto 36px',
+        }}>
+          Every trading day, levels are published before the market opens. Once the session begins, that window closes.
+        </p>
+        <Button href="/auth/register" variant="primary" size="lg">
+          Get Access Before Market Opens →
+        </Button>
+        <p style={{
+          marginTop: '16px', fontSize: '12px', color: 'rgba(255,255,255,0.3)',
+          fontFamily: 'var(--font-body)',
+        }}>
+          Free plan available. No credit card required to start.
+        </p>
+      </div>
+    </section>
+  )
+}
+
+// ─── SECTION 10: FAQ ─────────────────────────────────────────────────────────
+function FAQSection() {
+  const [open, setOpen] = useState<number | null>(null)
+
+  return (
+    <section
+      id="faq"
+      style={{ padding: '80px 40px', background: 'var(--bg)', borderTop: '1px solid var(--border)' }}
+    >
+      <div className="container-narrow" style={{ padding: 0 }}>
+        <div className="section-tag">Common Questions</div>
+        <h2 style={{
+          fontFamily: 'var(--font-heading)',
+          fontSize: 'clamp(28px, 4vw, 44px)',
+          fontWeight: 700,
+          color: 'var(--text)',
+          marginBottom: '40px',
+          letterSpacing: '-0.01em',
+        }}>
+          Frequently asked questions
+        </h2>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1px', background: 'var(--border)', border: '1px solid var(--border)', borderRadius: 'var(--r-lg)', overflow: 'hidden' }}>
+          {FAQ_ITEMS.map((item, i) => (
+            <div
+              key={i}
+              style={{ background: 'var(--surface)' }}
+            >
+              <button
+                onClick={() => setOpen(open === i ? null : i)}
+                style={{
+                  width: '100%', textAlign: 'left',
+                  padding: '20px 24px',
+                  background: 'transparent', border: 'none',
+                  cursor: 'pointer',
+                  display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                  gap: '16px',
+                }}
+              >
+                <span style={{
+                  fontSize: '15px', fontWeight: 600, color: 'var(--text)',
+                  fontFamily: 'var(--font-body)', lineHeight: 1.4,
+                }}>
+                  {item.q}
+                </span>
+                {open === i
+                  ? <ChevronUp size={18} strokeWidth={2} color="var(--orange)" style={{ flexShrink: 0 }} />
+                  : <ChevronDown size={18} strokeWidth={2} color="var(--text3)" style={{ flexShrink: 0 }} />
+                }
+              </button>
+              {open === i && (
+                <div style={{ padding: '0 24px 20px' }}>
+                  <p style={{
+                    fontSize: '14px', color: 'var(--text2)',
+                    lineHeight: 1.75, fontFamily: 'var(--font-body)',
+                  }}>
+                    {item.a}
+                  </p>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        <div className="sebi-disclaimer" style={{ marginTop: '32px' }}>
+          Research by Sahib Singh Hora, SEBI RA INH000026266. Investments subject to market risk. Past performance not indicative of future results. Not investment advice.
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ─── SECTION 11: FINAL CTA ────────────────────────────────────────────────────
 function CTASection() {
   return (
     <section style={{ padding: '80px 40px', background: 'var(--bg2)', borderTop: '1px solid var(--border)', textAlign: 'center' }}>
@@ -1236,14 +1591,14 @@ function CTASection() {
             marginBottom: '14px', lineHeight: 1.15,
             letterSpacing: '-0.01em',
           }}>
-            Start with what you&apos;re{' '}
-            <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>ready for.</em>
+            Be prepared before{' '}
+            <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>the market opens.</em>
           </h2>
           <p style={{
             color: 'rgba(255,255,255,0.55)', fontSize: '16px',
             marginBottom: '32px', lineHeight: 1.7, fontFamily: 'var(--font-body)',
           }}>
-            The free plan gives you signal previews, sample reports, and market data — enough to see how the research is structured before you commit. Upgrade when the quality speaks for itself.
+            Join traders who start their day with structured research — not noise.
           </p>
           <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
             <Button href="/auth/register" variant="primary" size="lg">
@@ -1259,7 +1614,7 @@ function CTASection() {
             color: 'rgba(255,255,255,0.25)',
             fontFamily: 'var(--font-mono)', letterSpacing: '1px',
           }}>
-            SEBI RA · INH000026266 · No credit card required for free plan
+            SEBI RA INH000026266 · No spam · Cancel anytime
           </p>
         </div>
       </div>
