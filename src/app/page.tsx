@@ -9,7 +9,7 @@ import { Footer } from '@/components/layout/Footer'
 import {
   TrendingUp, BarChart2, Target, RefreshCw,
   Shield, ArrowRight, Check,
-  Linkedin, Twitter, Instagram, Facebook,
+  Linkedin, Twitter, Instagram,
   FileText, ChevronDown, ChevronUp,
 } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
@@ -158,7 +158,7 @@ function HeroSection() {
   return (
     <section
       style={{
-        padding: 'clamp(64px, 8vw, 100px) 40px clamp(56px, 7vw, 80px)',
+        padding: '48px 40px clamp(48px, 6vw, 72px)',
         position: 'relative',
         overflow: 'hidden',
       }}
@@ -239,37 +239,46 @@ function HeroSection() {
               </Button>
             </div>
 
-            <p style={{
-              fontSize: '12px', color: 'var(--text4)',
-              fontFamily: 'var(--font-body)', letterSpacing: '0.3px',
-            }}>
-              SEBI RA · INH000026266 · Sahib Singh Hora · 14+ years market experience
-            </p>
-
             {/* Telegram CTA */}
-            <div style={{ marginTop: '20px', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '10px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <div style={{ width: '40px', height: '1px', background: 'var(--border2)' }} />
-                <span style={{ fontSize: '11px', color: 'var(--text4)', fontFamily: 'var(--font-body)' }}>or</span>
-                <div style={{ width: '40px', height: '1px', background: 'var(--border2)' }} />
+            <div style={{ marginTop: '20px', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '8px' }}>
+              <div style={{
+                animation: 'badgeBounce 1.5s ease-in-out infinite',
+                display: 'inline-flex', alignItems: 'center', gap: '6px',
+                background: 'rgba(0,136,204,0.10)', border: '1px solid rgba(0,136,204,0.3)',
+                borderRadius: '999px', padding: '4px 12px',
+                fontSize: '12px', color: '#0088CC', fontWeight: 500,
+                fontFamily: 'var(--font-body)',
+              }}>
+                🔔 Free signals &amp; market updates daily
               </div>
-              <span className="telegram-badge">🔔 Free signals &amp; market updates</span>
               <a
                 href="https://t.me/withsahib"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="telegram-cta"
+                style={{
+                  display: 'inline-flex', alignItems: 'center', gap: '10px',
+                  background: 'linear-gradient(135deg, #0088CC, #006BA6)',
+                  color: '#FFFFFF', padding: '14px 32px', borderRadius: '999px',
+                  fontWeight: 600, fontSize: '16px', textDecoration: 'none',
+                  animation: 'telegramPulse 2s ease-in-out infinite',
+                  boxShadow: '0 4px 20px rgba(0,136,204,0.4)',
+                  transition: 'transform 0.2s ease',
+                  fontFamily: 'var(--font-body)',
+                }}
               >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="white">
+                  <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L8.32 13.617l-2.96-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.828.942z"/>
                 </svg>
                 Join Free on Telegram →
               </a>
+              <p style={{ fontSize: '12px', color: 'var(--text3)', fontFamily: 'var(--font-body)', marginTop: '2px' }}>
+                5,000+ traders · No spam · Exit anytime
+              </p>
             </div>
           </div>
 
           {/* Right — Sample Research Card */}
-          <div className="animate-fade-up-2">
+          <div className="animate-fade-up-2" style={{ alignSelf: 'flex-start' }}>
             <div
               style={{
                 background: 'var(--surface)',
@@ -381,53 +390,51 @@ function HeroSection() {
   )
 }
 
-// ─── STATS STRIP ─────────────────────────────────────────────────────────────
+// ─── SEBI BELT ────────────────────────────────────────────────────────────────
 function StatsStrip() {
-  const stats = [
-    { num: 'INH000026266', label: 'SEBI Registration No.' },
-    { num: 'NISM Certified', label: 'Registered Analyst' },
-    { num: '14+ Years', label: 'Market Experience' },
+  const items = [
+    { icon: '🛡️', text: 'SEBI Registered RA' },
+    { icon: '📋', text: 'INH000026266' },
+    { icon: '🎓', text: 'NISM Certified' },
+    { icon: '📈', text: '14+ Years Market Experience' },
+    { icon: '✅', text: 'Regulated & Accountable' },
   ]
   return (
     <div
       style={{
-        background: 'var(--bg2)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexWrap: 'wrap',
+        gap: 0,
         borderTop: '1px solid var(--border)',
         borderBottom: '1px solid var(--border)',
-        padding: '20px 40px',
+        background: 'var(--bg2)',
+        padding: '16px 24px',
+        overflow: 'hidden',
       }}
     >
-      <div
-        className="container-wide"
-        style={{
-          padding: 0,
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: '24px',
-        }}
-      >
-        {stats.map((s, i) => (
-          <div key={i} style={{ textAlign: 'center' }}>
-            <div style={{
-              fontFamily: s.num.length > 10 ? 'var(--font-mono)' : 'var(--font-heading)',
-              fontSize: s.num.length > 10 ? '12px' : '22px',
-              fontWeight: 700,
-              color: 'var(--text)',
-              letterSpacing: s.num.length > 10 ? '0.5px' : 'normal',
-              marginBottom: '3px',
-            }}>
-              {s.num}
-            </div>
-            <div style={{
-              fontSize: '11px', color: 'var(--text3)',
-              letterSpacing: '1px', textTransform: 'uppercase',
-              fontFamily: 'var(--font-body)',
-            }}>
-              {s.label}
-            </div>
+      {items.map((item, i) => (
+        <div key={i} style={{ display: 'flex', alignItems: 'center' }}>
+          <div style={{
+            display: 'flex', alignItems: 'center', gap: '8px',
+            padding: '0 20px',
+            fontFamily: 'var(--font-body)',
+            fontWeight: 600,
+            fontSize: '13px',
+            letterSpacing: '0.05em',
+            color: 'var(--text)',
+            textTransform: 'uppercase',
+            whiteSpace: 'nowrap',
+          }}>
+            <span style={{ fontSize: '15px' }}>{item.icon}</span>
+            {item.text}
           </div>
-        ))}
-      </div>
+          {i < items.length - 1 && (
+            <div style={{ width: '1px', height: '20px', background: 'var(--border2)', flexShrink: 0 }} />
+          )}
+        </div>
+      ))}
     </div>
   )
 }
@@ -878,7 +885,7 @@ function ServicesSection() {
   return (
     <section style={{ padding: '80px 40px', background: 'var(--bg)', borderTop: '1px solid var(--border)' }}>
       <div className="container-wide" style={{ padding: 0 }}>
-        <div className="section-tag">Research Coverage</div>
+        <div className="section-tag" style={{ justifyContent: 'center' }}>Research Coverage</div>
         <h2
           style={{
             fontFamily: 'var(--font-heading)',
@@ -888,12 +895,13 @@ function ServicesSection() {
             lineHeight: 1.15,
             marginBottom: '12px',
             letterSpacing: '-0.01em',
+            textAlign: 'center',
           }}
         >
           Research across{' '}
           <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>every timeframe.</em>
         </h2>
-        <p style={{ fontSize: '16px', color: 'var(--text2)', marginBottom: '48px', fontFamily: 'var(--font-body)', maxWidth: '520px' }}>
+        <p style={{ fontSize: '16px', color: 'var(--text2)', marginBottom: '48px', fontFamily: 'var(--font-body)', maxWidth: '640px', margin: '0 auto 48px', textAlign: 'center' }}>
           From pre-market intraday levels to weekly options setups — every research note published under SEBI RA INH000026266.
         </p>
 
@@ -1025,18 +1033,17 @@ function DifferentiatorSection() {
               {left.map((item, i) => (
                 <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
                   <span style={{
-                    fontSize: '18px', color: 'var(--muted)',
+                    fontSize: '18px', color: '#EF4444',
                     fontWeight: 700, lineHeight: 1, flexShrink: 0, marginTop: '2px',
                   }}>
                     ✕
                   </span>
                   <span style={{
-                    fontSize: '18px', color: 'var(--text3)',
+                    fontSize: '18px', color: 'var(--text)',
                     fontFamily: 'var(--font-body)', lineHeight: 1.8,
                     textDecoration: 'line-through',
-                    textDecorationColor: 'var(--muted)',
+                    textDecorationColor: '#EF4444',
                     textDecorationThickness: '2px',
-                    opacity: 0.7,
                   }}>
                     {item}
                   </span>
@@ -1067,7 +1074,7 @@ function DifferentiatorSection() {
               {right.map((item, i) => (
                 <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
                   <span style={{
-                    fontSize: '18px', color: 'var(--color-orange)',
+                    fontSize: '18px', color: '#22C55E',
                     fontWeight: 700, lineHeight: 1, flexShrink: 0, marginTop: '2px',
                   }}>
                     ✓
@@ -1184,7 +1191,16 @@ function AnalystDarkSection() {
                 { href: 'https://www.linkedin.com/in/sahibsinghhora/', icon: <Linkedin size={16} />, label: 'LinkedIn' },
                 { href: 'https://x.com/WithSahib_', icon: <Twitter size={16} />, label: 'Twitter' },
                 { href: 'https://www.instagram.com/withsahib_/', icon: <Instagram size={16} />, label: 'Instagram' },
-                { href: 'https://www.facebook.com/sahib1313', icon: <Facebook size={16} />, label: 'Facebook' },
+                {
+                  href: 'https://t.me/withsahib',
+                  label: 'Telegram',
+                  icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L8.32 13.617l-2.96-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.828.942z"/></svg>,
+                },
+                {
+                  href: 'https://wa.me/919981248888',
+                  label: 'WhatsApp',
+                  icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>,
+                },
               ].map(({ href, icon, label }) => (
                 <a
                   key={href} href={href} target="_blank" rel="noopener noreferrer" aria-label={label}

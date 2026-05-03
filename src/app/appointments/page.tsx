@@ -2,11 +2,13 @@
 
 export const dynamic = 'force-dynamic'
 
-import { useState } from 'react'
+import { useState, useEffect, useMemo } from 'react'
+import Link from 'next/link'
 import { Navbar } from '@/components/layout/Navbar'
 import { BookingBanner } from '@/components/layout/BookingBanner'
 import { Footer } from '@/components/layout/Footer'
 import { PayButton } from '@/components/ui/PayButton'
+import { createClient } from '@/lib/supabase/client'
 
 const PRICES = { '15': 1999, '30': 2999 }
 const AMOUNT_PAISE = { '15': 199900, '30': 299900 }
@@ -16,7 +18,12 @@ const PLAN_DISPLAY_NAMES = {
 }
 const PLAN_NAMES = { '15': 'appointment_15', '30': 'appointment_30' }
 
+interface LoggedInUser { name: string; email: string; phone?: string }
+
 export default function AppointmentsPage() {
+  const supabase = useMemo(() => createClient(), [])
+  const [loggedInUser, setLoggedInUser] = useState<LoggedInUser | null>(null)
+
   const [duration, setDuration] = useState<'15' | '30'>('30')
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -27,9 +34,22 @@ export default function AppointmentsPage() {
   const [booked, setBooked] = useState(false)
   const [bookingLoading, setBookingLoading] = useState(false)
 
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => {
+      if (!data.user) return
+      const meta = data.user.user_metadata ?? {}
+      const resolvedName = meta.full_name ?? meta.name ?? data.user.email?.split('@')[0] ?? ''
+      setLoggedInUser({ name: resolvedName, email: data.user.email ?? '', phone: meta.phone ?? '' })
+    })
+  }, [supabase])
+
+  const effectiveName  = loggedInUser ? loggedInUser.name  : name
+  const effectiveEmail = loggedInUser ? loggedInUser.email : email
+  const effectivePhone = loggedInUser ? (loggedInUser.phone ?? '') : phone
+
   const validateForm = () => {
-    if (!name.trim()) return 'Please enter your full name.'
-    if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return 'Please enter a valid email address.'
+    if (!effectiveName.trim()) return 'Please enter your full name.'
+    if (!effectiveEmail.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(effectiveEmail)) return 'Please enter a valid email address.'
     return null
   }
 
@@ -40,9 +60,9 @@ export default function AppointmentsPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name: name.trim(),
-          email: email.trim(),
-          phone: phone.trim(),
+          name: effectiveName.trim(),
+          email: effectiveEmail.trim(),
+          phone: effectivePhone.trim(),
           duration,
           preferred_date: preferredDate,
           message: message.trim(),
@@ -145,25 +165,37 @@ export default function AppointmentsPage() {
               </div>
             </div>
 
-            {/* Name + Email */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-              <div>
-                <label htmlFor="appt-name" style={{ fontSize: '12px', fontWeight: 600, letterSpacing: '1px', color: 'var(--text3)', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>Full Name *</label>
-                <input id="appt-name" className="input" type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Rahul Sharma" required />
+            {/* Identity — auto-filled if logged in, manual if not */}
+            {loggedInUser ? (
+              <div style={{ background: 'rgba(255,107,0,0.05)', border: '1px solid rgba(255,107,0,0.2)', borderRadius: '10px', padding: '14px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
+                <div>
+                  <p style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text)', margin: 0 }}>Booking as {loggedInUser.name}</p>
+                  <p style={{ fontSize: '12px', color: 'var(--text3)', margin: '2px 0 0' }}>{loggedInUser.email}</p>
+                </div>
+                <Link href="/auth/login" style={{ fontSize: '12px', color: 'var(--text3)', textDecoration: 'underline' }}>Not you? Sign out</Link>
               </div>
-              <div>
-                <label htmlFor="appt-email" style={{ fontSize: '12px', fontWeight: 600, letterSpacing: '1px', color: 'var(--text3)', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>Email *</label>
-                <input id="appt-email" className="input" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="rahul@example.com" required />
-              </div>
-            </div>
+            ) : (
+              <>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                  <div>
+                    <label htmlFor="appt-name" style={{ fontSize: '12px', fontWeight: 600, letterSpacing: '1px', color: 'var(--text3)', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>Full Name *</label>
+                    <input id="appt-name" className="input" type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Rahul Sharma" required />
+                  </div>
+                  <div>
+                    <label htmlFor="appt-email" style={{ fontSize: '12px', fontWeight: 600, letterSpacing: '1px', color: 'var(--text3)', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>Email *</label>
+                    <input id="appt-email" className="input" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="rahul@example.com" required />
+                  </div>
+                </div>
+                <div>
+                  <label htmlFor="appt-phone" style={{ fontSize: '12px', fontWeight: 600, letterSpacing: '1px', color: 'var(--text3)', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>Phone</label>
+                  <input id="appt-phone" className="input" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+91 98765 43210" />
+                </div>
+              </>
+            )}
 
-            {/* Phone + Date */}
+            {/* Date */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-              <div>
-                <label htmlFor="appt-phone" style={{ fontSize: '12px', fontWeight: 600, letterSpacing: '1px', color: 'var(--text3)', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>Phone</label>
-                <input id="appt-phone" className="input" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+91 98765 43210" />
-              </div>
-              <div>
+              <div style={{ gridColumn: loggedInUser ? '1 / -1' : undefined }}>
                 <label htmlFor="appt-date" style={{ fontSize: '12px', fontWeight: 600, letterSpacing: '1px', color: 'var(--text3)', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>Preferred Date</label>
                 <input id="appt-date" className="input" type="date" value={preferredDate} onChange={(e) => setPreferredDate(e.target.value)} min={new Date().toISOString().split('T')[0]} />
               </div>

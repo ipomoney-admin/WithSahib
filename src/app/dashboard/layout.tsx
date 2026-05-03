@@ -13,6 +13,7 @@ import {
   Crown, Shield, Check, FileEdit,
 } from 'lucide-react'
 import { LogoMark } from '@/components/ui/Logo'
+import { PayButton } from '@/components/ui/PayButton'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { DashboardProtection } from '@/components/dashboard/DashboardProtection'
 
@@ -115,14 +116,27 @@ function PricingPopupContent({ serviceKey }: { serviceKey: string }) {
 
       <p style={{ fontSize: '14px', color: '#BBBBBB', lineHeight: 1.7, marginBottom: '24px' }}>{cfg.desc}</p>
 
+      <PayButton
+        planName="pro"
+        planDisplayName="Pro Plan — Unlock This Service"
+        amountPaise={699900}
+        style={{
+          display: 'block', width: '100%', padding: '11px 22px',
+          borderRadius: '8px', background: '#FF6B00', color: '#FFFFFF',
+          border: 'none', fontSize: '14px', fontWeight: 700,
+          cursor: 'pointer', marginBottom: '10px',
+          fontFamily: 'var(--font-body)',
+        }}
+      >
+        Upgrade to Pro — ₹6,999/mo →
+      </PayButton>
       <Link
         href="/pricing"
-        className="btn btn-primary btn-md"
-        style={{ display: 'flex', justifyContent: 'center', textDecoration: 'none', width: '100%', marginBottom: '10px' }}
+        style={{ display: 'block', textAlign: 'center', fontSize: '12px', color: '#888888', textDecoration: 'none', marginBottom: '10px' }}
       >
-        {t('dashboard.view_plans')}
+        See all plans →
       </Link>
-      <p style={{ fontSize: '11px', color: '#555555', marginTop: '20px', borderTop: '1px solid #2A2A2A', paddingTop: '16px' }}>
+      <p style={{ fontSize: '11px', color: '#555555', marginTop: '12px', borderTop: '1px solid #2A2A2A', paddingTop: '16px' }}>
         Research by Sahib Singh Hora, SEBI RA INH000026266. Investments subject to market risk. Past performance not indicative of future results. Not investment advice.
       </p>
     </div>
@@ -298,15 +312,19 @@ function AppointmentsPopup() {
             duration: '15 Min',
             price: '₹1,999',
             lines: ['Strategy review or Q&A', 'One specific topic / trade', 'Via Google Meet / Zoom'],
-            cta: 'Book 15 Min →',
+            cta: 'Book 15 Min — ₹1,999',
+            planName: 'appointment_15',
+            amountPaise: 199900,
           },
           {
             duration: '30 Min',
             price: '₹2,999',
             lines: ['Portfolio review or deep-dive', 'Multiple topics covered', 'Via Google Meet / Zoom'],
-            cta: 'Book 30 Min →',
+            cta: 'Book 30 Min — ₹2,999',
+            planName: 'appointment_30',
+            amountPaise: 299900,
           },
-        ].map(({ duration, price, lines, cta }) => (
+        ].map(({ duration, price, lines, cta, planName, amountPaise }) => (
           <div
             key={duration}
             style={{
@@ -328,13 +346,20 @@ function AppointmentsPopup() {
                 <p key={l} style={{ fontSize: '12px', color: '#888888', marginBottom: '4px' }}>· {l}</p>
               ))}
             </div>
-            <Link
-              href="/appointments"
-              className="btn btn-primary btn-sm"
-              style={{ textDecoration: 'none', justifyContent: 'center', display: 'flex' }}
+            <PayButton
+              planName={planName}
+              planDisplayName={cta}
+              amountPaise={amountPaise}
+              style={{
+                display: 'block', width: '100%', padding: '8px 12px',
+                borderRadius: '8px', background: '#FF6B00', color: '#FFFFFF',
+                border: 'none', fontSize: '13px', fontWeight: 700,
+                cursor: 'pointer', textAlign: 'center',
+                fontFamily: 'var(--font-body)',
+              }}
             >
               {cta}
-            </Link>
+            </PayButton>
           </div>
         ))}
       </div>
@@ -571,13 +596,15 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           background: '#111111',
         }}
       >
-        <LogoMark size={24} animated={false} />
-        {(sidebarOpen || mobile) && (
-          <span style={{ fontSize: '16px', whiteSpace: 'nowrap' }}>
-            <span style={{ fontFamily: 'Inter, system-ui, sans-serif', fontWeight: 400, color: '#FFFFFF' }}>with</span>
-            <span style={{ fontFamily: '"Playfair Display", Georgia, serif', fontStyle: 'italic', fontWeight: 700, color: '#FF6B00' }}>Sahib</span>
-          </span>
-        )}
+        <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <LogoMark size={24} animated={false} />
+          {(sidebarOpen || mobile) && (
+            <span style={{ fontSize: '16px', whiteSpace: 'nowrap' }}>
+              <span style={{ fontFamily: 'Inter, system-ui, sans-serif', fontWeight: 400, color: '#FFFFFF' }}>with</span>
+              <span style={{ fontFamily: '"Playfair Display", Georgia, serif', fontStyle: 'italic', fontWeight: 700, color: '#FF6B00' }}>Sahib</span>
+            </span>
+          )}
+        </Link>
       </div>
 
       {/* User tier badge */}
@@ -777,6 +804,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             borderBottom: '1px solid var(--border)',
             display: 'flex', alignItems: 'center',
             padding: '0 24px', gap: '12px',
+            position: 'relative',
           }}
         >
           <button
@@ -796,6 +824,22 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </button>
 
           <div style={{ flex: 1 }} />
+
+          {/* Centered analyst identity — absolute so it doesn't push right-side actions */}
+          <div
+            className="hide-mobile"
+            style={{
+              position: 'absolute', left: '50%', transform: 'translateX(-50%)',
+              textAlign: 'center', pointerEvents: 'none',
+            }}
+          >
+            <p style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text)', fontFamily: 'Inter, system-ui, sans-serif', margin: 0, lineHeight: 1.25 }}>
+              Sahib Singh Hora
+            </p>
+            <p style={{ fontSize: '10px', color: 'var(--text3)', fontFamily: 'Courier New, monospace', letterSpacing: '0.5px', margin: 0 }}>
+              SEBI Regd. RA · INH000026266
+            </p>
+          </div>
 
           <span
             className="hide-mobile"

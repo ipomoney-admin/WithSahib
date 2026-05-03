@@ -60,7 +60,7 @@ export default function LoginPage() {
         .login-dot { animation: loginDotPop 0.45s cubic-bezier(0.34,1.56,0.64,1) 0.65s both; }
         @media (max-width: 768px) {
           .login-left-col { display: none !important; }
-          .login-right-col { width: 100% !important; max-width: 100% !important; }
+          .login-right-col { width: 100% !important; max-width: 100% !important; flex: 1 1 100% !important; padding: 32px 20px !important; }
         }
       `}</style>
 
