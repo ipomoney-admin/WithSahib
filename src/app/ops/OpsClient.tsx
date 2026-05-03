@@ -1,5 +1,6 @@
 'use client'
 // Access: super_admin role only — enforced server-side in layout.tsx
+// Data fetching: all via API routes (service-role client) — never direct browser Supabase
 
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import Link from 'next/link'
@@ -79,6 +80,16 @@ function useISTClock() {
   return time
 }
 
+async function apiFetch<T>(url: string): Promise<T | null> {
+  try {
+    const res = await fetch(url)
+    if (!res.ok) return null
+    return res.json()
+  } catch {
+    return null
+  }
+}
+
 const STATUS_COLOR: Record<string, string> = {
   running: '#00C896',
   idle: '#6A6A6A',
@@ -135,7 +146,7 @@ function AgentCard({ agent }: { agent: Agent }) {
       gap: 10,
       transition: 'border-color 0.3s',
     }}>
-      {/* Header row */}
+      {/* Header */}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 8 }}>
         <div style={{ flex: 1, minWidth: 0 }}>
           <p style={{ fontSize: 14, fontWeight: 700, color: '#FFFFFF', margin: 0, fontFamily: '"Playfair Display", Georgia, serif' }}>
@@ -167,7 +178,7 @@ function AgentCard({ agent }: { agent: Agent }) {
         )}
       </div>
 
-      {/* Progress bar */}
+      {/* Progress bar — only when running */}
       {agent.status === 'running' && (
         <div>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
@@ -204,7 +215,7 @@ function AgentCard({ agent }: { agent: Agent }) {
         )}
       </div>
 
-      {/* Footer row */}
+      {/* Footer */}
       <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: 8, borderTop: '1px solid #1A1A1A' }}>
         <span style={{ fontSize: 10, color: '#555555', fontFamily: 'Courier New, monospace' }}>
           {agent.model}
@@ -251,7 +262,7 @@ function MetricsRow({ metrics }: { metrics: Metrics }) {
           <p style={{ fontSize: 24, fontWeight: 700, color: card.color, margin: 0, fontFamily: '"Playfair Display", Georgia, serif' }}>
             {card.value}
           </p>
-          {card.sub && (
+          {'sub' in card && card.sub && (
             <p style={{ fontSize: 10, color: '#555555', margin: '2px 0 0' }}>{card.sub}</p>
           )}
         </div>
@@ -309,7 +320,6 @@ function CommandBar({ agents, departments, onCommandSent }: {
       alignItems: 'center',
       flexShrink: 0,
     }}>
-      {/* Target selector */}
       <select
         value={targetType}
         onChange={(e) => setTargetType(e.target.value as 'all' | 'department' | 'agent')}
@@ -362,7 +372,7 @@ function CommandBar({ agents, departments, onCommandSent }: {
         value={command}
         onChange={(e) => setCommand(e.target.value)}
         onKeyDown={handleKey}
-        placeholder="Enter command... (⌘+Enter to send)"
+        placeholder="Enter command… (⌘+Enter to send)"
         style={{
           flex: 1,
           background: '#1A1A1A', border: '1px solid #333333', color: '#FFFFFF',
@@ -536,9 +546,78 @@ function LiveFeed({ items }: { items: FeedItem[] }) {
   )
 }
 
+// ─── EMPTY / ERROR STATES ─────────────────────────────────────────────────────
+
+function SetupBanner({ onSeed }: { onSeed: () => void }) {
+  const [seeding, setSeeding] = useState(false)
+  const [result, setResult] = useState<string | null>(null)
+
+  async function runSeed() {
+    setSeeding(true)
+    setResult(null)
+    try {
+      const res = await fetch('/api/ops/seed', { method: 'POST' })
+      const json = await res.json()
+      if (res.ok) {
+        setResult(`✅ Seeded ${json.departments} departments + ${json.agents} agents`)
+        setTimeout(onSeed, 1000)
+      } else {
+        setResult(`❌ ${json.error}`)
+      }
+    } catch {
+      setResult('❌ Network error')
+    } finally {
+      setSeeding(false)
+    }
+  }
+
+  return (
+    <div style={{
+      margin: '40px auto', maxWidth: 560,
+      background: '#111111', border: '1px solid rgba(255,107,0,0.25)',
+      borderRadius: 16, padding: '32px',
+      textAlign: 'center',
+    }}>
+      <span style={{ fontSize: 36, display: 'block', marginBottom: 16 }}>🤖</span>
+      <h2 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: 22, fontWeight: 400, color: '#FFFFFF', margin: '0 0 8px' }}>
+        Agent system not initialised
+      </h2>
+      <p style={{ fontSize: 13, color: '#666666', marginBottom: 24, lineHeight: 1.6 }}>
+        The Supabase tables exist but have no data yet.<br />
+        Click below to seed the 7 departments and 19 agents.
+      </p>
+
+      {result && (
+        <p style={{ fontSize: 13, color: result.startsWith('✅') ? '#00C896' : '#FF5555', marginBottom: 16 }}>
+          {result}
+        </p>
+      )}
+
+      <button
+        onClick={runSeed}
+        disabled={seeding}
+        style={{
+          background: seeding ? '#2A2A2A' : '#FF6B00',
+          color: seeding ? '#666666' : '#FFFFFF',
+          border: 'none', borderRadius: 10, padding: '12px 28px',
+          fontSize: 14, fontWeight: 700, cursor: seeding ? 'wait' : 'pointer',
+          fontFamily: 'Inter, system-ui, sans-serif',
+        }}
+      >
+        {seeding ? 'Seeding…' : 'Seed Departments + Agents →'}
+      </button>
+
+      <p style={{ fontSize: 11, color: '#333333', marginTop: 20 }}>
+        Or run <code style={{ fontFamily: 'Courier New, monospace', color: '#555555' }}>supabase/migrations/006_agent_system.sql</code> + <code style={{ fontFamily: 'Courier New, monospace', color: '#555555' }}>007_agent_rls_fix.sql</code> in the Supabase SQL Editor.
+      </p>
+    </div>
+  )
+}
+
 // ─── MAIN COMPONENT ──────────────────────────────────────────────────────────
 
 export function OpsClient() {
+  // Supabase client used ONLY for realtime channel subscriptions
   const supabase = createClient()
   const clock = useISTClock()
 
@@ -550,57 +629,56 @@ export function OpsClient() {
   const [feedItems, setFeedItems] = useState<FeedItem[]>([])
   const [rightTab, setRightTab] = useState<'feed' | 'approvals' | 'schedule'>('feed')
   const [feedLog, setFeedLog] = useState<string[]>([])
+  const [loading, setLoading] = useState(true)
+  const [needsSeed, setNeedsSeed] = useState(false)
   const feedRef = useRef<HTMLDivElement>(null)
 
+  // ── Data fetchers (all use API routes → service-role client, bypasses RLS) ──
+
+  const fetchDepartments = useCallback(async () => {
+    const data = await apiFetch<Department[]>('/api/ops/departments')
+    if (data === null) return
+    setDepartments(data)
+    if (data.length === 0) {
+      setNeedsSeed(true)
+    } else {
+      setNeedsSeed(false)
+      if (!activeDept) setActiveDept(data[0]?.id ?? null)
+    }
+  }, [activeDept])
+
+  const fetchAgents = useCallback(async () => {
+    const data = await apiFetch<Agent[]>('/api/ops/agents')
+    if (data !== null) setAgents(data)
+  }, [])
+
   const fetchMetrics = useCallback(async () => {
-    const res = await fetch('/api/ops/status')
-    if (res.ok) setMetrics(await res.json())
+    const data = await apiFetch<Metrics>('/api/ops/status')
+    if (data !== null) setMetrics(data)
   }, [])
 
   const fetchApprovals = useCallback(async () => {
-    const { data } = await supabase
-      .from('approval_queue')
-      .select('*, agents(name)')
-      .eq('status', 'pending')
-      .order('created_at', { ascending: false })
-      .limit(20)
-    setApprovals((data as ApprovalItem[]) ?? [])
-  }, [supabase])
+    const data = await apiFetch<ApprovalItem[]>('/api/ops/approvals')
+    if (data !== null) setApprovals(data)
+  }, [])
 
   const fetchFeed = useCallback(async () => {
-    const { data } = await supabase
-      .from('agent_tasks')
-      .select('*, agents(name)')
-      .order('created_at', { ascending: false })
-      .limit(50)
-    setFeedItems((data as FeedItem[]) ?? [])
-  }, [supabase])
+    const data = await apiFetch<FeedItem[]>('/api/ops/feed')
+    if (data !== null) setFeedItems(data)
+  }, [])
+
+  const refreshAll = useCallback(async () => {
+    await Promise.all([fetchDepartments(), fetchAgents(), fetchMetrics(), fetchApprovals(), fetchFeed()])
+  }, [fetchDepartments, fetchAgents, fetchMetrics, fetchApprovals, fetchFeed])
+
+  // ── Mount ──
 
   useEffect(() => {
-    // Load departments and agents
-    supabase
-      .from('agent_departments')
-      .select('*')
-      .order('name')
-      .then(({ data }) => {
-        setDepartments((data as Department[]) ?? [])
-        if (data?.length) setActiveDept((data as Department[])[0]?.id ?? null)
-      })
+    refreshAll().finally(() => setLoading(false))
 
-    supabase
-      .from('agents')
-      .select('*')
-      .order('name')
-      .then(({ data }) => setAgents((data as Agent[]) ?? []))
-
-    fetchMetrics()
-    fetchApprovals()
-    fetchFeed()
-
-    // Refresh metrics every 30s
     const metricsInterval = setInterval(fetchMetrics, 30_000)
 
-    // Realtime: agent_tasks changes
+    // Realtime: use events as triggers to re-fetch via API routes (not direct DB reads)
     const channel = supabase
       .channel('ops-live')
       .on('postgres_changes', { event: '*', schema: 'public', table: 'agent_tasks' }, () => {
@@ -608,9 +686,7 @@ export function OpsClient() {
         fetchMetrics()
       })
       .on('postgres_changes', { event: '*', schema: 'public', table: 'agents' }, () => {
-        supabase.from('agents').select('*').order('name').then(({ data }) => {
-          setAgents((data as Agent[]) ?? [])
-        })
+        fetchAgents()
         fetchMetrics()
       })
       .on('postgres_changes', { event: '*', schema: 'public', table: 'approval_queue' }, () => {
@@ -623,9 +699,9 @@ export function OpsClient() {
       clearInterval(metricsInterval)
       supabase.removeChannel(channel)
     }
-  }, [supabase, fetchMetrics, fetchApprovals, fetchFeed])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-  // Auto-scroll feed log
   useEffect(() => {
     if (feedRef.current) feedRef.current.scrollTop = feedRef.current.scrollHeight
   }, [feedLog])
@@ -652,6 +728,25 @@ export function OpsClient() {
 
   const deptAgentCount = (deptId: string) => agents.filter((a) => a.department_id === deptId).length
 
+  // ── Loading skeleton ──
+
+  if (loading) {
+    return (
+      <div style={{ height: '100vh', background: '#0A0A0A', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ textAlign: 'center', color: '#444444' }}>
+          <div style={{
+            width: 40, height: 40, border: '3px solid #2A2A2A', borderTopColor: '#FF6B00',
+            borderRadius: '50%', animation: 'spin 0.8s linear infinite', margin: '0 auto 16px',
+          }} />
+          <p style={{ fontSize: 13 }}>Loading Agent Command Center…</p>
+        </div>
+        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+      </div>
+    )
+  }
+
+  // ── Full render ──
+
   return (
     <div style={{
       height: '100vh', overflow: 'hidden', display: 'flex', flexDirection: 'column',
@@ -662,6 +757,7 @@ export function OpsClient() {
           0%, 100% { opacity: 1; box-shadow: 0 0 6px #00C896; }
           50% { opacity: 0.6; box-shadow: 0 0 12px #00C896; }
         }
+        @keyframes spin { to { transform: rotate(360deg); } }
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #2A2A2A; border-radius: 2px; }
@@ -684,7 +780,7 @@ export function OpsClient() {
           </span>
         </Link>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginLeft: 4 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
           <span style={{ fontSize: 10, color: '#555555' }}>·</span>
           <span style={{
             fontSize: 11, fontWeight: 700, letterSpacing: 2,
@@ -705,7 +801,6 @@ export function OpsClient() {
 
         <div style={{ flex: 1 }} />
 
-        {/* IST Clock */}
         <span style={{
           fontSize: 13, fontFamily: 'Courier New, monospace', color: '#555555',
           border: '1px solid #1E1E1E', borderRadius: 6, padding: '4px 10px',
@@ -713,7 +808,6 @@ export function OpsClient() {
           {clock} IST
         </span>
 
-        {/* Super Admin pill */}
         <span style={{
           fontSize: 10, fontWeight: 700, letterSpacing: 1,
           color: '#D4A843', background: 'rgba(212,168,67,0.1)',
@@ -819,52 +913,51 @@ export function OpsClient() {
 
         {/* CENTER */}
         <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', minWidth: 0 }}>
-          {/* Scrollable area */}
           <div style={{ flex: 1, overflowY: 'auto', padding: '20px' }}>
             <MetricsRow metrics={metrics} />
 
-            {/* Section header */}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
-              <h2 style={{
-                fontFamily: '"Playfair Display", Georgia, serif',
-                fontSize: 18, fontWeight: 400, color: '#FFFFFF', margin: 0,
-              }}>
-                {activeDept
-                  ? departments.find((d) => d.id === activeDept)?.name ?? 'Agents'
-                  : 'All Agents'}
-                <span style={{ fontSize: 13, color: '#444444', fontFamily: 'Inter, system-ui, sans-serif', marginLeft: 10 }}>
-                  {visibleAgents.length} agents
-                </span>
-              </h2>
-              <span style={{ fontSize: 11, color: '#444444' }}>
-                {visibleAgents.filter((a) => a.status === 'running').length} running
-              </span>
-            </div>
-
-            {/* Agent cards grid */}
-            {visibleAgents.length === 0 ? (
-              <div style={{ textAlign: 'center', padding: '60px 20px', color: '#333333' }}>
-                <p style={{ fontSize: 13 }}>Loading agents…</p>
-              </div>
+            {needsSeed ? (
+              <SetupBanner onSeed={refreshAll} />
             ) : (
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
-                gap: 12,
-              }}>
-                {visibleAgents.map((agent) => (
-                  <AgentCard key={agent.id} agent={agent} />
-                ))}
-              </div>
+              <>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
+                  <h2 style={{
+                    fontFamily: '"Playfair Display", Georgia, serif',
+                    fontSize: 18, fontWeight: 400, color: '#FFFFFF', margin: 0,
+                  }}>
+                    {activeDept
+                      ? departments.find((d) => d.id === activeDept)?.name ?? 'Agents'
+                      : 'All Agents'}
+                    <span style={{ fontSize: 13, color: '#444444', fontFamily: 'Inter, system-ui, sans-serif', marginLeft: 10 }}>
+                      {visibleAgents.length} agents
+                    </span>
+                  </h2>
+                  <span style={{ fontSize: 11, color: '#444444' }}>
+                    {visibleAgents.filter((a) => a.status === 'running').length} running
+                  </span>
+                </div>
+
+                {visibleAgents.length === 0 ? (
+                  <div style={{ textAlign: 'center', padding: '60px 20px', color: '#333333' }}>
+                    <span style={{ fontSize: 32, display: 'block', marginBottom: 10 }}>🤖</span>
+                    <p style={{ fontSize: 13 }}>No agents in this department</p>
+                  </div>
+                ) : (
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
+                    gap: 12,
+                  }}>
+                    {visibleAgents.map((agent) => (
+                      <AgentCard key={agent.id} agent={agent} />
+                    ))}
+                  </div>
+                )}
+              </>
             )}
           </div>
 
-          {/* COMMAND BAR — pinned at bottom */}
-          <CommandBar
-            agents={agents}
-            departments={departments}
-            onCommandSent={handleCommandSent}
-          />
+          <CommandBar agents={agents} departments={departments} onCommandSent={handleCommandSent} />
         </main>
 
         {/* RIGHT PANEL */}
@@ -891,18 +984,16 @@ export function OpsClient() {
                   fontFamily: 'Inter, system-ui, sans-serif',
                 }}
               >
-                {tab === 'approvals' && metrics.pendingApprovals > 0 && rightTab !== 'approvals' ? (
-                  <>Approvals <span style={{ color: '#D4A843' }}>({metrics.pendingApprovals})</span></>
-                ) : tab === 'feed' ? 'Live Feed' : tab === 'approvals' ? 'Approvals' : 'Schedule'}
+                {tab === 'approvals' && metrics.pendingApprovals > 0 && rightTab !== 'approvals'
+                  ? <><span>Approvals</span> <span style={{ color: '#D4A843' }}>({metrics.pendingApprovals})</span></>
+                  : tab === 'feed' ? 'Live Feed' : tab === 'approvals' ? 'Approvals' : 'Schedule'}
               </button>
             ))}
           </div>
 
-          {/* Panel content */}
           <div style={{ flex: 1, overflowY: 'auto', padding: '14px 12px' }}>
             {rightTab === 'feed' && (
               <>
-                {/* Command echo log */}
                 {feedLog.length > 0 && (
                   <div
                     ref={feedRef}
