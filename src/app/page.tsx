@@ -14,14 +14,16 @@ import {
 } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { PayButton } from '@/components/ui/PayButton'
+import { BillingSelector, BILLING_OPTIONS, type BillingValue } from '@/components/ui/BillingSelector'
+import { CouponInput } from '@/components/ui/CouponInput'
 
 // ─── PRICING DATA ─────────────────────────────────────────────────────────────
 const PLANS = [
   {
     tier: 'positional',
     name: 'Positional',
-    monthly: 3999,
-    amountPaise: 399900,
+    monthlyPaise: 399900,
+    originalMonthly: 7998,
     sub: 'Swing and positional research with full written rationale.',
     features: [
       '8–12 positional setups per month',
@@ -36,8 +38,8 @@ const PLANS = [
   {
     tier: 'pro',
     name: 'Pro',
-    monthly: 6999,
-    amountPaise: 699900,
+    monthlyPaise: 699900,
+    originalMonthly: 13998,
     sub: 'Active trading coverage with direct analyst access.',
     features: [
       'All Positional features included',
@@ -53,8 +55,8 @@ const PLANS = [
   {
     tier: 'elite',
     name: 'Elite',
-    monthly: 12499,
-    amountPaise: 1249900,
+    monthlyPaise: 1249900,
+    originalMonthly: 24998,
     sub: 'Full coverage, all three services, maximum analyst access.',
     features: [
       'All three services: Intraday + Options + Index',
@@ -67,6 +69,17 @@ const PLANS = [
     color: 'gold',
   },
 ]
+
+function calcFinalPaise(monthlyPaise: number, months: number, billingDiscount: number, couponDiscount: number) {
+  const total = monthlyPaise * months
+  const afterBilling = total * (1 - billingDiscount / 100)
+  const afterCoupon = afterBilling * (1 - couponDiscount / 100)
+  return Math.round(afterCoupon)
+}
+
+function fmtINR(paise: number) {
+  return `₹${Math.round(paise / 100).toLocaleString('en-IN')}`
+}
 
 const FAQ_ITEMS = [
   {
@@ -1279,10 +1292,16 @@ function AnalystDarkSection() {
 
 // ─── SECTION 8: PRICING PREVIEW ───────────────────────────────────────────────
 function PricingSection() {
+  const [billing, setBilling] = useState<BillingValue>('monthly')
+  const [couponCode, setCouponCode] = useState('')
+  const [couponDiscount, setCouponDiscount] = useState(0)
+
+  const billingOpt = BILLING_OPTIONS.find((o) => o.value === billing)!
+
   return (
     <section id="pricing" style={{ padding: '80px 40px', background: 'var(--bg)', borderTop: '1px solid var(--border)' }}>
       <div className="container-wide" style={{ padding: 0 }}>
-        <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '32px' }}>
           <div className="section-tag" style={{ justifyContent: 'center' }}>Research Access</div>
           <h2 style={{
             fontFamily: 'var(--font-heading)',
@@ -1293,15 +1312,48 @@ function PricingSection() {
             Transparent pricing,{' '}
             <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>zero surprises</em>
           </h2>
-          <p style={{ fontSize: '16px', color: 'var(--text2)', fontFamily: 'var(--font-body)' }}>
+          <p style={{ fontSize: '16px', color: 'var(--text2)', fontFamily: 'var(--font-body)', marginBottom: '20px' }}>
             Start free. Upgrade when the research proves its worth.
           </p>
+
+          {/* 50% OFF badge */}
+          <div style={{
+            display: 'inline-flex', alignItems: 'center', gap: '8px',
+            background: 'rgba(255,107,0,0.08)',
+            border: '1px solid rgba(255,107,0,0.22)',
+            borderRadius: '20px', padding: '5px 14px', marginBottom: '20px',
+          }}>
+            <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--orange)', letterSpacing: '1px', fontFamily: 'var(--font-body)' }}>
+              🎉 LIMITED OFFER — 50% OFF all plans
+            </span>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
+            <BillingSelector value={billing} onChange={setBilling} />
+            <CouponInput
+              onApplied={(code, pct) => { setCouponCode(code); setCouponDiscount(pct) }}
+              onRemoved={() => { setCouponCode(''); setCouponDiscount(0) }}
+              appliedCode={couponCode}
+              appliedDiscount={couponDiscount}
+            />
+          </div>
         </div>
 
         <div className="pricing-grid" style={{ alignItems: 'start' }}>
           {PLANS.map((plan, i) => {
             const isFeatured = !!plan.featured
             const isElite = plan.color === 'gold'
+            const finalPaise = calcFinalPaise(plan.monthlyPaise, billingOpt.months, billingOpt.discount, couponDiscount)
+            const perMonthPaise = Math.round(finalPaise / billingOpt.months)
+            const planNameWithBilling = billing === 'monthly' ? plan.tier : `${plan.tier}_${billing}`
+            const displayName = `${plan.name} Plan — ${billingOpt.label} — ${fmtINR(finalPaise)}`
+
+            const showBreakdown = billingOpt.months > 1 || couponDiscount > 0
+            const baseTotal = plan.monthlyPaise * billingOpt.months
+            const breakdownParts: string[] = [fmtINR(baseTotal)]
+            if (billingOpt.discount > 0) breakdownParts.push(`${billingOpt.discount}% off`)
+            if (couponDiscount > 0) breakdownParts.push(`${couponDiscount}% off`)
+            breakdownParts.push(`${fmtINR(finalPaise)} total`)
 
             return (
               <div
@@ -1322,9 +1374,7 @@ function PricingSection() {
                   padding: '28px',
                   position: 'relative',
                   transform: isFeatured ? 'translateY(-8px)' : undefined,
-                  boxShadow: isFeatured
-                    ? '0 20px 60px rgba(26,122,74,0.12)'
-                    : 'none',
+                  boxShadow: isFeatured ? '0 20px 60px rgba(26,122,74,0.12)' : 'none',
                 }}
               >
                 {isFeatured && (
@@ -1348,19 +1398,56 @@ function PricingSection() {
                   {plan.name}
                 </div>
 
-                <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px', marginBottom: '4px' }}>
-                  <span style={{
-                    fontSize: '42px', fontWeight: 800,
-                    color: isFeatured ? '#FFFFFF' : 'var(--text)',
-                    fontFamily: 'var(--font-body)',
-                    letterSpacing: '-1px',
-                  }}>
-                    {`₹${plan.monthly.toLocaleString('en-IN')}`}
-                  </span>
-                  <span style={{ fontSize: '13px', color: isFeatured ? 'rgba(255,255,255,0.4)' : 'var(--text3)', fontFamily: 'var(--font-body)' }}>
-                    /mo
-                  </span>
+                {/* Strike-through + 50% OFF + current price */}
+                <div style={{ marginBottom: '4px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                    <span style={{
+                      fontSize: '14px',
+                      color: isFeatured ? 'rgba(255,255,255,0.35)' : 'var(--text4)',
+                      textDecoration: 'line-through',
+                      fontFamily: 'var(--font-body)',
+                    }}>
+                      ₹{plan.originalMonthly.toLocaleString('en-IN')}
+                    </span>
+                    <span style={{
+                      background: 'rgba(255,107,0,0.15)',
+                      color: 'var(--orange)',
+                      fontSize: '10px', fontWeight: 700,
+                      padding: '2px 7px', borderRadius: '4px',
+                      fontFamily: 'var(--font-body)', letterSpacing: '0.5px',
+                    }}>
+                      50% OFF
+                    </span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px' }}>
+                    <span style={{
+                      fontSize: '42px', fontWeight: 800,
+                      color: isFeatured ? '#FFFFFF' : 'var(--text)',
+                      fontFamily: 'var(--font-body)',
+                      letterSpacing: '-1px',
+                    }}>
+                      {fmtINR(perMonthPaise)}
+                    </span>
+                    <span style={{ fontSize: '13px', color: isFeatured ? 'rgba(255,255,255,0.4)' : 'var(--text3)', fontFamily: 'var(--font-body)' }}>
+                      /mo
+                    </span>
+                  </div>
+                  {billingOpt.months > 1 && (
+                    <p style={{ fontSize: '12px', color: 'var(--orange)', fontFamily: 'var(--font-body)', marginTop: '2px', fontWeight: 500 }}>
+                      {fmtINR(finalPaise)} billed {billingOpt.label.toLowerCase()}
+                    </p>
+                  )}
                 </div>
+
+                {/* Price breakdown */}
+                {showBreakdown && (
+                  <p style={{
+                    fontSize: '11px', color: isFeatured ? 'rgba(255,255,255,0.3)' : 'var(--text4)',
+                    fontFamily: 'var(--font-body)', marginBottom: '8px', lineHeight: 1.5,
+                  }}>
+                    {breakdownParts.join(' → ')}
+                  </p>
+                )}
 
                 <p style={{
                   fontSize: '12px',
@@ -1395,9 +1482,10 @@ function PricingSection() {
                 </ul>
 
                 <PayButton
-                  planName={plan.tier}
-                  planDisplayName={`${plan.name} Plan — withSahib`}
-                  amountPaise={plan.amountPaise}
+                  planName={planNameWithBilling}
+                  planDisplayName={displayName}
+                  amountPaise={finalPaise}
+                  couponCode={couponCode || undefined}
                   style={{
                     display: 'block', width: '100%', padding: '12px',
                     borderRadius: 'var(--r-sm)', textAlign: 'center',
@@ -1424,20 +1512,27 @@ function PricingSection() {
                 >
                   {plan.cta}
                 </PayButton>
+
+                <p style={{
+                  fontSize: '11px', color: isFeatured ? 'rgba(255,255,255,0.3)' : 'var(--text4)',
+                  textAlign: 'center', marginTop: '8px', fontFamily: 'var(--font-body)',
+                }}>
+                  💳 No-cost EMI available on credit cards
+                </p>
               </div>
             )
           })}
         </div>
 
         <p style={{
-          textAlign: 'center', marginTop: '28px',
+          textAlign: 'center', marginTop: '24px',
           fontSize: '12px', color: 'var(--text4)',
-          fontFamily: 'var(--font-body)', maxWidth: '560px', margin: '28px auto 0',
+          fontFamily: 'var(--font-body)', maxWidth: '560px', margin: '24px auto 0',
         }}>
           Fees are for research and analyst access services only. Subscribing does not guarantee profits or returns.
         </p>
 
-        <div style={{ textAlign: 'center', marginTop: '24px' }}>
+        <div style={{ textAlign: 'center', marginTop: '20px' }}>
           <Button href="/pricing" variant="ghost">
             See Full Plan Details →
           </Button>

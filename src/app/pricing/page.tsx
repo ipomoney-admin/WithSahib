@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
 import { Navbar } from '@/components/layout/Navbar'
 import { BookingBanner } from '@/components/layout/BookingBanner'
@@ -9,22 +8,20 @@ import { Footer } from '@/components/layout/Footer'
 import { Check } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { PayButton } from '@/components/ui/PayButton'
+import { BillingSelector, BILLING_OPTIONS, type BillingValue } from '@/components/ui/BillingSelector'
+import { CouponInput } from '@/components/ui/CouponInput'
 
-const FOOTER_LINE = 'Research by Sahib Singh Hora · 14+ Years Experience · SEBI RA'
-
+// ─── PLAN DATA ────────────────────────────────────────────────────────────────
 const PLANS = [
   {
     tier: 'positional',
     name: 'Positional',
-    price: 3999,
-    planDisplayName: 'Positional Plan — ₹3,999/mo',
-    amountPaise: 399900,
-    sub: 'For investors who want conviction, not noise.',
+    monthlyPaise: 399900,
+    originalMonthly: 7998,
     badge: null,
     featured: false,
     cardBorder: 'var(--border2)',
     cardBg: 'var(--surface)',
-    ctaLabel: 'Start Positional',
     ctaStyle: 'ghost' as const,
     features: [
       '8–12 high-conviction positional setups per month — low risk, asymmetric reward',
@@ -39,22 +36,19 @@ const PLANS = [
   {
     tier: 'pro',
     name: 'Pro',
-    price: 6999,
-    planDisplayName: 'Pro Plan — ₹6,999/mo',
-    amountPaise: 699900,
-    sub: 'For active traders who demand depth and speed.',
+    monthlyPaise: 699900,
+    originalMonthly: 13998,
     badge: { label: 'MOST POPULAR', bg: '#1A7A4A', color: '#FFFFFF' },
     featured: true,
     cardBorder: '#1A7A4A',
     cardBorderWidth: 2,
     cardBg: 'var(--surface)',
-    ctaLabel: 'Go Pro',
     ctaStyle: 'primary' as const,
     features: [
-      'Everything in Positional',
-      'Real-time WhatsApp research delivery before market opens (9 AM)',
-      'Your choice of one: Intraday Research · Stock Options Research · Index Options Research',
-      '3 institutional-quality research reports per month',
+      '8–12 swing setups/month + entry zone, 2 targets, stop-loss on every pick',
+      'WhatsApp research delivery before market opens — before 9 AM',
+      'Your specialisation: Intraday Research · Stock Options · Index Options (pick one)',
+      '3 institutional research reports per month',
       'Direct WhatsApp access to Sahib Singh Hora',
       '1 × 15-minute strategy session with Sahib every month',
     ],
@@ -63,30 +57,62 @@ const PLANS = [
   {
     tier: 'elite',
     name: 'Elite',
-    price: 12499,
-    planDisplayName: 'Elite Plan — ₹12,499/mo',
-    amountPaise: 1249900,
-    sub: 'Maximum coverage. Personal access. No compromise.',
+    monthlyPaise: 1249900,
+    originalMonthly: 24998,
     badge: { label: 'FLAGSHIP TIER', bg: '#B8975A', color: '#FFFFFF' },
     featured: false,
     cardBorder: '#B8975A',
     cardBorderWidth: 2,
     cardBg: 'var(--bg2)',
-    ctaLabel: 'Go Elite',
     ctaStyle: 'gold' as const,
     features: [
-      'Everything in Pro — with all three services (Intraday + Stock Options + Index Options)',
-      '4 × 15-minute weekly strategy calls with Sahib (worth ₹7,996 independently)',
-      'Monthly personalised trade feedback and portfolio review session',
+      'All three services: Intraday + Stock Options + Index Options — full coverage',
+      'WhatsApp delivery before 9 AM + full swing/positional research archive',
+      '4 × 15-minute weekly strategy calls with Sahib (₹7,996 standalone value)',
+      'Monthly portfolio review and personalised trade feedback',
       'One bespoke research note per month — commissioned exclusively for you',
-      'Direct call access to Sahib, in addition to WhatsApp',
+      'Direct call + WhatsApp access to Sahib Singh Hora',
     ],
     highlightBox: '🎁 Annual Elite members receive the Market Foundations course at no charge (₹24,999 value) — accessible within the first 3 months',
   },
 ]
 
+const FOOTER_LINE = 'Research by Sahib Singh Hora · 14+ Years Experience · SEBI RA'
+
+// ─── PRICE UTILS ──────────────────────────────────────────────────────────────
+function calcFinalPaise(
+  monthlyPaise: number,
+  months: number,
+  billingDiscount: number,
+  couponDiscount: number,
+): number {
+  const total = monthlyPaise * months
+  const afterBilling = total * (1 - billingDiscount / 100)
+  const afterCoupon = afterBilling * (1 - couponDiscount / 100)
+  return Math.round(afterCoupon)
+}
+
+function formatINR(paise: number) {
+  return `₹${Math.round(paise / 100).toLocaleString('en-IN')}`
+}
+
+// ─── PAGE ─────────────────────────────────────────────────────────────────────
 export default function PricingPage() {
   const { t } = useLanguage()
+  const [billing, setBilling] = useState<BillingValue>('monthly')
+  const [couponCode, setCouponCode] = useState('')
+  const [couponDiscount, setCouponDiscount] = useState(0)
+
+  const billingOpt = BILLING_OPTIONS.find((o) => o.value === billing)!
+
+  const handleCouponApplied = (code: string, discount: number) => {
+    setCouponCode(code)
+    setCouponDiscount(discount)
+  }
+  const handleCouponRemoved = () => {
+    setCouponCode('')
+    setCouponDiscount(0)
+  }
 
   return (
     <div style={{ background: 'var(--bg)' }}>
@@ -107,9 +133,36 @@ export default function PricingPage() {
             {t('pricing.headline')}{' '}
             <em style={{ color: 'var(--orange)', fontStyle: 'italic', fontWeight: 400 }}>{t('pricing.headline_italic')}</em>
           </h1>
-          <p style={{ fontSize: '17px', color: 'var(--text2)', marginBottom: '32px', lineHeight: 1.6, fontFamily: 'var(--font-body)' }}>
+          <p style={{ fontSize: '17px', color: 'var(--text2)', marginBottom: '24px', lineHeight: 1.6, fontFamily: 'var(--font-body)' }}>
             {t('pricing.subline')}
           </p>
+
+          {/* 50% OFF badge */}
+          <div style={{
+            display: 'inline-flex', alignItems: 'center', gap: '8px',
+            background: 'rgba(255,107,0,0.08)',
+            border: '1px solid rgba(255,107,0,0.25)',
+            borderRadius: '20px',
+            padding: '6px 16px',
+            marginBottom: '16px',
+          }}>
+            <span style={{ fontSize: '12px', fontWeight: 700, color: 'var(--orange)', letterSpacing: '1px', fontFamily: 'var(--font-body)' }}>
+              🎉 LIMITED OFFER — 50% OFF all plans
+            </span>
+          </div>
+        </div>
+      </section>
+
+      {/* Billing + Coupon Controls */}
+      <section style={{ padding: '20px 40px 0', textAlign: 'center' }}>
+        <div style={{ maxWidth: 1060, margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
+          <BillingSelector value={billing} onChange={setBilling} />
+          <CouponInput
+            onApplied={handleCouponApplied}
+            onRemoved={handleCouponRemoved}
+            appliedCode={couponCode}
+            appliedDiscount={couponDiscount}
+          />
         </div>
       </section>
 
@@ -122,6 +175,21 @@ export default function PricingPage() {
         }}>
           {PLANS.map((plan) => {
             const borderWidth = ('cardBorderWidth' in plan ? plan.cardBorderWidth : undefined) ?? 1
+            const finalPaise = calcFinalPaise(plan.monthlyPaise, billingOpt.months, billingOpt.discount, couponDiscount)
+            const perMonthPaise = Math.round(finalPaise / billingOpt.months)
+            const planNameWithBilling = billing === 'monthly' ? plan.tier : `${plan.tier}_${billing}`
+            const displayName = `${plan.name} Plan — ${billingOpt.label} — ${formatINR(finalPaise)}`
+
+            // Price breakdown string
+            const showBreakdown = billingOpt.months > 1 || couponDiscount > 0
+            const baseTotal = plan.monthlyPaise * billingOpt.months
+            const afterBillingPaise = Math.round(baseTotal * (1 - billingOpt.discount / 100))
+            const breakdownParts: string[] = [formatINR(baseTotal)]
+            if (billingOpt.discount > 0) breakdownParts.push(`${billingOpt.discount}% off`)
+            if (couponDiscount > 0) breakdownParts.push(`${couponDiscount}% off`)
+            breakdownParts.push(`${formatINR(finalPaise)} total`)
+            const breakdownStr = breakdownParts.join(' → ')
+
             return (
               <div
                 key={plan.tier}
@@ -163,15 +231,54 @@ export default function PricingPage() {
                   {t('pricing.' + plan.tier)}
                 </div>
 
-                {/* Price */}
-                <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px', marginBottom: '4px' }}>
-                  <span style={{ fontFamily: 'var(--font-heading)', fontSize: '48px', fontWeight: 700, color: 'var(--text)', lineHeight: 1 }}>
-                    ₹{plan.price.toLocaleString('en-IN')}
-                  </span>
-                  <span style={{ fontSize: '14px', color: 'var(--text3)', fontFamily: 'var(--font-body)' }}>{t('pricing.per_month')}</span>
+                {/* Price display: strike-through + 50% OFF badge + current price */}
+                <div style={{ marginBottom: '4px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                    <span style={{
+                      fontFamily: 'var(--font-body)',
+                      fontSize: '14px',
+                      color: 'var(--text4)',
+                      textDecoration: 'line-through',
+                    }}>
+                      ₹{plan.originalMonthly.toLocaleString('en-IN')}
+                    </span>
+                    <span style={{
+                      background: 'rgba(255,107,0,0.1)',
+                      color: 'var(--orange)',
+                      fontSize: '11px',
+                      fontWeight: 700,
+                      padding: '2px 7px',
+                      borderRadius: '4px',
+                      fontFamily: 'var(--font-body)',
+                      letterSpacing: '0.5px',
+                    }}>
+                      50% OFF
+                    </span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px' }}>
+                    <span style={{ fontFamily: 'var(--font-heading)', fontSize: '48px', fontWeight: 700, color: 'var(--text)', lineHeight: 1 }}>
+                      {formatINR(perMonthPaise)}
+                    </span>
+                    <span style={{ fontSize: '14px', color: 'var(--text3)', fontFamily: 'var(--font-body)' }}>{t('pricing.per_month')}</span>
+                  </div>
+                  {billingOpt.months > 1 && (
+                    <p style={{ fontSize: '12px', color: 'var(--orange)', fontFamily: 'var(--font-body)', marginTop: '2px', fontWeight: 500 }}>
+                      {formatINR(finalPaise)} billed {billingOpt.label.toLowerCase()}
+                    </p>
+                  )}
                 </div>
 
-                {/* Sub */}
+                {/* Price breakdown */}
+                {showBreakdown && (
+                  <p style={{
+                    fontSize: '11px', color: 'var(--text4)', fontFamily: 'var(--font-body)',
+                    marginBottom: '8px', lineHeight: 1.5,
+                  }}>
+                    {breakdownStr}
+                  </p>
+                )}
+
+                {/* Sub / tagline */}
                 <p style={{
                   fontSize: '13px', color: 'var(--text3)', marginBottom: '24px',
                   paddingBottom: '20px', borderBottom: '1px solid var(--border)',
@@ -209,9 +316,10 @@ export default function PricingPage() {
 
                 {/* CTA button */}
                 <PayButton
-                  planName={plan.tier}
-                  planDisplayName={plan.planDisplayName}
-                  amountPaise={plan.amountPaise}
+                  planName={planNameWithBilling}
+                  planDisplayName={displayName}
+                  amountPaise={finalPaise}
+                  couponCode={couponCode || undefined}
                   style={{
                     display: 'block', width: '100%', padding: '13px',
                     borderRadius: '12px', textAlign: 'center',
@@ -239,10 +347,18 @@ export default function PricingPage() {
                   {t(plan.tier === 'positional' ? 'pricing.start_basic' : plan.tier === 'pro' ? 'pricing.go_pro' : 'pricing.go_elite')}
                 </PayButton>
 
+                {/* EMI note */}
+                <p style={{
+                  fontSize: '11px', color: 'var(--text4)', textAlign: 'center',
+                  marginTop: '8px', fontFamily: 'var(--font-body)', lineHeight: 1.5,
+                }}>
+                  💳 No-cost EMI available on credit cards · Interest borne by withSahib
+                </p>
+
                 {/* Footer line */}
                 <p style={{
                   fontSize: '10px', color: 'var(--text4)', textAlign: 'center',
-                  marginTop: '12px', fontFamily: 'var(--font-body)', lineHeight: 1.5,
+                  marginTop: '6px', fontFamily: 'var(--font-body)', lineHeight: 1.5,
                 }}>
                   {FOOTER_LINE}
                 </p>
@@ -254,6 +370,9 @@ export default function PricingPage() {
         {/* Free line */}
         <p style={{ textAlign: 'center', fontSize: '12px', color: 'var(--text4)', marginTop: '20px', fontFamily: 'var(--font-body)' }}>
           {t('pricing.free_note')}
+        </p>
+        <p style={{ textAlign: 'center', fontSize: '11px', color: 'var(--text4)', marginTop: '6px', fontFamily: 'var(--font-body)' }}>
+          Fees are for research and analyst access services only. Subscribing does not guarantee profits or returns.
         </p>
       </section>
 
@@ -305,6 +424,7 @@ export default function PricingPage() {
             { q: 'How are research picks delivered?', a: 'Via your dashboard in real time. Pro and Elite subscribers also get WhatsApp delivery before 9 AM for intraday calls.' },
             { q: 'Is Sahib SEBI registered?', a: "Yes. Sahib Singh Hora is a SEBI Registered Research Analyst (INH000026266). Verify on SEBI's official portal at sebi.gov.in." },
             { q: 'Are returns guaranteed?', a: 'No. All investments in securities are subject to market risk. Past performance does not guarantee future returns.' },
+            { q: 'Is no-cost EMI really free?', a: 'Yes. No-cost EMI means the interest is borne by withSahib, not you. You pay only the plan amount in instalments with zero extra charges.' },
           ].map((faq, i) => (
             <FAQItem key={i} q={faq.q} a={faq.a} />
           ))}

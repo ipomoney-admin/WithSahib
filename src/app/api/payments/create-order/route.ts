@@ -29,7 +29,9 @@ export async function POST(req: NextRequest) {
     const planName = (body.plan_name || body.planName || '').toString().toLowerCase().trim()
     const currency = body.currency || 'INR'
     const receipt = body.receipt
-    const amount = body.amount || PLAN_AMOUNTS[planName]
+    // Frontend calculates final amount (billing period + coupon discounts applied)
+    // Fall back to plan map only if no amount is provided
+    const amount = body.amount && body.amount >= 100 ? body.amount : PLAN_AMOUNTS[planName]
 
     if (!amount || amount < 100) {
       return NextResponse.json({ error: 'Invalid plan or amount' }, { status: 400 })

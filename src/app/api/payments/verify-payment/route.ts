@@ -11,12 +11,14 @@ export async function POST(req: NextRequest) {
       razorpay_signature,
       plan_name,
       amount_paise,
+      coupon_code,
     } = await req.json() as {
       razorpay_order_id: string
       razorpay_payment_id: string
       razorpay_signature: string
       plan_name: string
       amount_paise: number
+      coupon_code?: string | null
     }
 
     if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature || !plan_name) {
@@ -51,6 +53,15 @@ export async function POST(req: NextRequest) {
     if (insertError) {
       console.error('Payment insert error:', insertError)
       return NextResponse.json({ success: false, error: 'Failed to record payment' }, { status: 500 })
+    }
+
+    // Record coupon use if a coupon was applied
+    if (coupon_code) {
+      await serviceClient.from('coupon_uses').insert({
+        coupon_code: coupon_code.toUpperCase().trim(),
+        user_id: session.user.id,
+        payment_id: razorpay_payment_id,
+      })
     }
 
     return NextResponse.json({ success: true, payment_id: razorpay_payment_id })

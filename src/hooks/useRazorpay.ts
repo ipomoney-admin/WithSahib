@@ -8,6 +8,7 @@ interface RazorpayOptions {
   userName: string
   userEmail: string
   userPhone?: string
+  couponCode?: string
   onSuccess: (paymentId: string) => void
   onFailure: (error: string) => void
 }
@@ -99,13 +100,22 @@ export function useRazorpay() {
         config: {
           display: {
             blocks: {
-              utib: {
-                name: 'Pay via UPI',
-                instruments: [{ method: 'upi' }],
+              emi: {
+                name: 'No Cost EMI',
+                instruments: [{ method: 'emi' }],
+              },
+              other: {
+                name: 'Other Payment Methods',
+                instruments: [
+                  { method: 'card' },
+                  { method: 'netbanking' },
+                  { method: 'upi' },
+                  { method: 'wallet' },
+                ],
               },
             },
-            sequence: ['block.utib'],
-            preferences: { show_default_blocks: true },
+            sequence: ['block.emi', 'block.other'],
+            preferences: { show_default_blocks: false },
           },
         },
         theme: { color: '#FF6B00' },
@@ -127,6 +137,7 @@ export function useRazorpay() {
               razorpay_signature: response.razorpay_signature,
               plan_name: options.planName,
               amount_paise: options.amount,
+              coupon_code: options.couponCode || null,
             }),
           })
           const result = await verifyRes.json()
