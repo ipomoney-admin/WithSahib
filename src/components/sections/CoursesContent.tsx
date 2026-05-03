@@ -1,11 +1,11 @@
 'use client'
 
-import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
 import { Navbar } from '@/components/layout/Navbar'
 import { BookingBanner } from '@/components/layout/BookingBanner'
 import { Footer } from '@/components/layout/Footer'
 import { useLanguage } from '@/contexts/LanguageContext'
+import { PayButton } from '@/components/ui/PayButton'
 
 const COURSES = [
   {
@@ -15,6 +15,8 @@ const COURSES = [
     badgeBg: 'var(--bg2)',
     title: 'Market Foundations (Equity Focus)',
     price: '₹24,999',
+    planName: 'course_foundations',
+    amountPaise: 2499900,
     desc: 'Structured learning for anyone starting from scratch. Chart reading, price action, volume, and how to identify high-probability equity setups — built systematically, not randomly.',
     includes: [
       '3-month live handholding',
@@ -32,6 +34,8 @@ const COURSES = [
     badgeBg: 'var(--orange)',
     title: 'Options Positioning System',
     price: '₹34,999',
+    planName: 'course_options',
+    amountPaise: 3499900,
     desc: 'Specialised options training — OI analysis, IV rank, PCR, expiry-week strategies, structured position building, and risk management in F&O markets.',
     includes: [
       '3-month live handholding',
@@ -49,6 +53,8 @@ const COURSES = [
     badgeBg: 'var(--bg2)',
     title: 'Research Framework (Pro)',
     price: '₹44,999',
+    planName: 'course_research',
+    amountPaise: 4499900,
     desc: 'The complete withSahib research methodology — from pre-market scan to published research note. Learn to build, filter, and risk-calibrate equity recommendations the way a SEBI RA does.',
     includes: [
       '3-month live handholding',
@@ -155,19 +161,21 @@ export function CoursesContent() {
                 ))}
               </ul>
 
-              <Link
-                href="/appointments"
+              <PayButton
+                planName={course.planName}
+                planDisplayName={course.title}
+                amountPaise={course.amountPaise}
                 style={{
-                  display: 'block', textAlign: 'center', padding: '13px',
+                  display: 'block', width: '100%', textAlign: 'center', padding: '13px',
                   borderRadius: 12, fontSize: 14, fontWeight: 700,
-                  textDecoration: 'none', fontFamily: 'var(--font-body)',
+                  fontFamily: 'var(--font-body)',
                   background: 'transparent', color: 'var(--text2)',
                   border: '1px solid var(--border2)', transition: 'all 0.2s',
                   letterSpacing: '0.02em',
                 }}
               >
                 {t('courses.enrol')} →
-              </Link>
+              </PayButton>
             </div>
           ))}
         </div>
@@ -290,10 +298,13 @@ export function CoursesContent() {
                 </div>
               </div>
 
-              <Link
-                href="/contact"
+              <PayButton
+                planName="mentorship"
+                planDisplayName="withSahib Flagship Mentorship (1:1)"
+                amountPaise={7499900}
                 style={{
                   display: 'block',
+                  width: '100%',
                   textAlign: 'center',
                   padding: '17px 40px',
                   background: 'var(--orange)',
@@ -301,7 +312,6 @@ export function CoursesContent() {
                   borderRadius: '12px',
                   fontSize: '16px',
                   fontWeight: 700,
-                  textDecoration: 'none',
                   fontFamily: 'var(--font-body)',
                   letterSpacing: '0.02em',
                   textShadow: '0 1px 2px rgba(0,0,0,0.15)',
@@ -310,7 +320,7 @@ export function CoursesContent() {
                 }}
               >
                 {t('courses.apply_flagship')}
-              </Link>
+              </PayButton>
               <p style={{ textAlign: 'center', fontSize: '12px', color: 'rgba(255,255,255,0.35)', marginTop: '12px', fontFamily: 'var(--font-body)' }}>
                 Applications reviewed personally by Sahib · Response within 48 hours
               </p>

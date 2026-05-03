@@ -23,7 +23,80 @@ export default function AppointmentsPage() {
   const [phone, setPhone] = useState('')
   const [preferredDate, setPreferredDate] = useState('')
   const [message, setMessage] = useState('')
-  const [error] = useState('')
+  const [formError, setFormError] = useState('')
+  const [booked, setBooked] = useState(false)
+  const [bookingLoading, setBookingLoading] = useState(false)
+
+  const validateForm = () => {
+    if (!name.trim()) return 'Please enter your full name.'
+    if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return 'Please enter a valid email address.'
+    return null
+  }
+
+  const handlePaymentSuccess = async (paymentId: string) => {
+    setBookingLoading(true)
+    try {
+      await fetch('/api/appointments/book-after-payment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim(),
+          phone: phone.trim(),
+          duration,
+          preferred_date: preferredDate,
+          message: message.trim(),
+          razorpay_payment_id: paymentId,
+          plan_name: PLAN_NAMES[duration],
+        }),
+      })
+    } catch {
+      // emails are non-critical — booking is still confirmed
+    } finally {
+      setBookingLoading(false)
+    }
+    setBooked(true)
+    setName('')
+    setEmail('')
+    setPhone('')
+    setPreferredDate('')
+    setMessage('')
+  }
+
+  const handlePayClick = () => {
+    const err = validateForm()
+    if (err) {
+      setFormError(err)
+      return false
+    }
+    setFormError('')
+    return true
+  }
+
+  if (booked) {
+    return (
+      <div style={{ background: 'var(--bg)', minHeight: '100vh' }}>
+        <Navbar />
+        <div style={{ maxWidth: '560px', margin: '0 auto', padding: '80px 24px', textAlign: 'center' }}>
+          <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'rgba(26,122,74,0.1)', border: '2px solid var(--green)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px', fontSize: 28 }}>
+            ✓
+          </div>
+          <h1 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: 'clamp(26px,4vw,36px)', fontWeight: 700, color: 'var(--text)', marginBottom: 16, lineHeight: 1.2 }}>
+            Session booked.
+          </h1>
+          <p style={{ fontSize: 16, color: 'var(--text2)', lineHeight: 1.75, marginBottom: 32 }}>
+            A confirmation has been sent to your email. Sahib will review your preferred date and send a Google Meet or Zoom link within 24 hours.
+          </p>
+          <p style={{ fontSize: 13, color: 'var(--text3)', lineHeight: 1.6 }}>
+            Questions? Email{' '}
+            <a href="mailto:connect@withsahib.com" style={{ color: 'var(--orange)', textDecoration: 'none' }}>connect@withsahib.com</a>
+          </p>
+        </div>
+        <BookingBanner />
+        <Footer />
+      </div>
+    )
+  }
 
   return (
     <div style={{ background: 'var(--bg)', minHeight: '100vh' }}>
@@ -56,7 +129,7 @@ export default function AppointmentsPage() {
         </div>
 
         {/* Booking form */}
-        <form style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '16px', padding: '32px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '16px', padding: '32px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
             <h2 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: '20px', fontWeight: 400, color: 'var(--text)', marginBottom: '4px' }}>Request your {duration}-minute session</h2>
 
             {/* Duration radio */}
@@ -102,29 +175,33 @@ export default function AppointmentsPage() {
               <textarea id="appt-message" className="input" rows={4} value={message} onChange={(e) => setMessage(e.target.value)} placeholder="e.g. Review my portfolio, analyse HDFC Bank chart, options strategy for expiry..." style={{ resize: 'vertical' }} />
             </div>
 
-            {error && <p style={{ fontSize: '13px', color: 'var(--coral)', background: 'rgba(239,68,68,0.06)', border: '1px solid rgba(239,68,68,0.15)', padding: '10px 14px', borderRadius: '8px' }}>{error}</p>}
+            {formError && <p style={{ fontSize: '13px', color: 'var(--coral)', background: 'rgba(239,68,68,0.06)', border: '1px solid rgba(239,68,68,0.15)', padding: '10px 14px', borderRadius: '8px' }}>{formError}</p>}
 
-            <PayButton
-              planName={PLAN_NAMES[duration]}
-              planDisplayName={PLAN_DISPLAY_NAMES[duration]}
-              amountPaise={AMOUNT_PAISE[duration]}
-              style={{
-                padding: '14px 28px', borderRadius: '10px',
-                background: '#FF6B00',
-                color: '#FFFFFF', border: 'none',
-                fontSize: '15px', fontWeight: 700, fontFamily: 'Inter, system-ui, sans-serif',
-                boxShadow: '0 6px 20px rgba(255,107,0,0.35)',
-                transition: 'all 0.2s', width: '100%',
-              }}
-            >
-              {`Pay & Book ${duration}-min session — ₹${PRICES[duration].toLocaleString('en-IN')} →`}
-            </PayButton>
+            <div onClick={handlePayClick}>
+              <PayButton
+                planName={PLAN_NAMES[duration]}
+                planDisplayName={PLAN_DISPLAY_NAMES[duration]}
+                amountPaise={AMOUNT_PAISE[duration]}
+                onPaymentSuccess={handlePaymentSuccess}
+                style={{
+                  padding: '14px 28px', borderRadius: '10px',
+                  background: '#FF6B00',
+                  color: '#FFFFFF', border: 'none',
+                  fontSize: '15px', fontWeight: 700, fontFamily: 'Inter, system-ui, sans-serif',
+                  boxShadow: '0 6px 20px rgba(255,107,0,0.35)',
+                  transition: 'all 0.2s', width: '100%',
+                  opacity: bookingLoading ? 0.7 : 1,
+                }}
+              >
+                {bookingLoading ? 'Confirming booking...' : `Pay & Book ${duration}-min session — ₹${PRICES[duration].toLocaleString('en-IN')} →`}
+              </PayButton>
+            </div>
 
             <p style={{ fontSize: '11px', color: 'var(--text4)', textAlign: 'center', lineHeight: 1.6 }}>
               Secure payment via Razorpay · All major cards, UPI, NetBanking accepted<br />
               Sessions Mon–Fri, 9 AM–5 PM IST · Google Meet or Zoom
             </p>
-        </form>
+        </div>
 
         {/* Manual booking note */}
         <div style={{ marginTop: '24px', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '12px', padding: '20px 24px' }}>

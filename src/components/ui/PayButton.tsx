@@ -11,9 +11,10 @@ interface PayButtonProps {
   className?: string
   style?: React.CSSProperties
   children?: React.ReactNode
+  onPaymentSuccess?: (paymentId: string) => void
 }
 
-export function PayButton({ planName, planDisplayName, amountPaise, className, style, children }: PayButtonProps) {
+export function PayButton({ planName, planDisplayName, amountPaise, className, style, children, onPaymentSuccess }: PayButtonProps) {
   const { initiatePayment, loading } = useRazorpay()
   const [error, setError] = useState<string | null>(null)
   const router = useRouter()
@@ -32,8 +33,12 @@ export function PayButton({ planName, planDisplayName, amountPaise, className, s
         planDisplayName,
         userName: user.user_metadata?.full_name || user.email || '',
         userEmail: user.email || '',
-        onSuccess: () => {
-          router.push(`/dashboard?payment=success&plan=${planName}`)
+        onSuccess: (paymentId: string) => {
+          if (onPaymentSuccess) {
+            onPaymentSuccess(paymentId)
+          } else {
+            router.push(`/dashboard?payment=success&plan=${planName}`)
+          }
         },
         onFailure: (err) => {
           if (err !== 'Payment cancelled') setError(err)
