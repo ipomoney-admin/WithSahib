@@ -1,6 +1,6 @@
 # withSahib — Project Context & Memory
 
-> Last updated: 2026-04-29
+> Last updated: 2026-05-04
 > This file is the authoritative context document for all AI-assisted work on this project.
 > Read this before making any changes to the codebase.
 
@@ -159,7 +159,8 @@ Appointments
 Mentorship
 ─────────────
 Settings
-Admin Panel  ← super admin only, Shield icon, gold color
+Admin Panel  ← admin only, Shield icon, gold color
+◈ Ops        ← super_admin only, orange, links to /ops
 Sign out
 ```
 
@@ -178,6 +179,9 @@ Sign out
 
 ### Admin (`noindex`, super admin only)
 `/admin`
+
+### Ops (`noindex`, super_admin only — NOT in sitemap or robots.txt)
+`/ops` — Agent Command Center. Full-screen internal dashboard. Never link from any public page.
 
 ---
 
@@ -333,6 +337,8 @@ Sign out
 | No dark/light mode toggle for always-dark sections | `.always-dark` class keeps them dark regardless of user preference |
 | Complaints form wired to Resend → sahib13singh13@gmail.com | Compliance requirement, SEBI 30-day response rule |
 | supabase/.temp/ gitignored + removed from tracking | Security — credentials must not be in git. Rotate pooler URL in Supabase dashboard |
+| /ops never added to sitemap.xml or robots.txt | Internal super-admin tool — zero public discoverability intentional |
+| All /ops data fetched via API routes (service-role), not browser Supabase client | Browser client + RLS + admin_roles subquery = silent empty results. Service-role API routes are the only reliable pattern for super-admin-only data |
 
 ---
 
@@ -416,3 +422,83 @@ Sign out
 - ANTHROPIC_API_KEY, RAZORPAY keys, TWILIO keys — not added to Vercel yet
 - Google Search Console + Bing verification codes needed
 - Some pages may still have hardcoded English strings not using t()
+
+---
+
+## SESSION UPDATE — May 4, 2026
+
+### Agent Command Center — /ops (built + fixed)
+
+#### What was built
+
+**Route + auth guard**
+- `src/app/ops/layout.tsx` — server component, queries `admin_roles` with `createServiceRoleClient`, redirects non-super-admins to `/dashboard`. Zero public access.
+- `src/app/ops/page.tsx` — thin server wrapper (exports metadata, `noindex`)
+- `src/app/ops/OpsClient.tsx` — full-screen dark dashboard UI (`'use client'`)
+
+**Database** (`supabase/migrations/006_agent_system.sql`)
+- 6 new tables: `agent_departments`, `agents`, `agent_tasks`, `approval_queue`, `agent_commands`, `token_usage`
+- RLS enabled on all tables
+- Seed data: 7 departments + 19 named agents
+
+**7 departments and 19 agents:**
+| Department | Agents |
+|---|---|
+| 🔬 Research (4) | MarketScout, SectorSage, ChartMind, NewsRadar |
+| 📡 Distribution (3) | TeleBot, WhatsAppBeam, MailCraft |
+| 📈 Chart Reading (3) | PatternHunter, LevelMapper, TrendOracle |
+| 💼 Sales (3) | LeadSense, ConvertMax, UpgradeNudge |
+| 🎧 Support (2) | QueryBot, EscalateAI |
+| 💰 Finance (2) | RevenueTrack, TaxBot |
+| 👥 HR (2) | OnboardBot, FeedbackLens |
+
+**Dashboard UI features**
+- Top bar: withSahib logo + `AGENT COMMAND CENTER` badge + live IST clock + `SUPER ADMIN` pill
+- Left sidebar (220px): department list with agent count badges + token budget mini-gauge
+- Center: 4-card metrics row (Running / Done Today / Pending Approvals / Tokens Today) → agent card grid → pinned command bar
+- Agent cards: name, role, skills tags, progress bar (running only), status dot with pulse animation, model + calls footer
+- Command bar: free-text input, target selector (All / Department / Agent), `POST /api/ops/command`, ⌘+Enter to send, echoes sent commands to live feed log
+- Right panel (300px): Live Feed tab (realtime agent_tasks events) + Approvals tab (approve/edit/reject) + Schedule tab (placeholder)
+- Approvals panel: inline edit mode, approve/edit/reject buttons, `POST /api/ops/approve`
+- Setup banner: shown if tables are empty, "Seed Departments + Agents →" button calls `POST /api/ops/seed`
+
+**API routes (all service-role, super_admin auth checked on every call)**
+- `GET  /api/ops/departments` — returns all departments
+- `GET  /api/ops/agents` — returns all agents
+- `GET  /api/ops/approvals` — returns pending approval_queue items (with agent name join)
+- `GET  /api/ops/feed` — returns last 50 agent_tasks (with agent name join)
+- `GET  /api/ops/status` — returns live metrics: running, doneToday, pendingApprovals, tokensToday, tokenLimit, tokenPct
+- `POST /api/ops/command` — inserts into agent_commands
+- `POST /api/ops/approve` — updates approval_queue, marks linked task completed on approve
+- `POST /api/ops/seed` — idempotent seed: inserts 7 departments + 19 agents (skips if already seeded)
+
+**Token budget module** (`src/lib/agents/tokenBudget.ts`)
+- Tracks Gemini Flash free quota: 1,000,000 tokens/day from `token_usage` table
+- `getTokenBudgetStatus()` — returns usage, limit, pct, status (healthy/warning/critical)
+- `checkBudgetAllowsRun(agentId, priority)` — at 80% idles low-priority agents; at 95% halts all non-critical + fires Telegram alert via `TELEGRAM_BOT_TOKEN` + `TELEGRAM_CHAT_ID`
+
+**Dashboard sidebar link**
+- `src/app/dashboard/layout.tsx` updated: fetches `role` column alongside `id` from `admin_roles`
+- Added `isSuperAdminUser` state (true when `role === 'super_admin'`)
+- `◈ Ops` link shown only when `isSuperAdminUser && !viewingAsUser`
+
+#### Bug fixed — "Loading agents…" with 0 departments
+
+**Root cause:** OpsClient used `createClient()` (browser Supabase, anon key + user JWT). The RLS policies did:
+```sql
+USING (auth.uid() IN (SELECT user_id FROM admin_roles WHERE role = 'super_admin'))
+```
+`admin_roles` is itself RLS-protected and unreadable by the anon client → subquery returns `∅` → `auth.uid() IN ∅` = false → every query silently returned []. Also `agent_departments` had no RLS policy at all.
+
+**Fix applied:**
+- All data fetching in OpsClient moved to `fetch('/api/ops/…')` — server-side service-role client, bypasses RLS entirely
+- Supabase browser client kept only for realtime channel subscriptions (used as re-fetch triggers, not direct reads)
+- `supabase/migrations/007_agent_rls_fix.sql`: creates `is_super_admin()` as a `SECURITY DEFINER` function (runs as DB owner, can always read `admin_roles`); enables RLS on `agent_departments` (was missing); drops all old broken policies; creates new policies using the function
+
+#### Supabase setup checklist (run once if starting fresh)
+1. Run `supabase/migrations/006_agent_system.sql` in SQL Editor → creates tables + initial RLS + seed
+2. Run `supabase/migrations/007_agent_rls_fix.sql` in SQL Editor → fixes RLS with SECURITY DEFINER
+3. If seed didn't run from the DO block: open `/ops` → click **"Seed Departments + Agents →"**
+
+#### Architecture rule learned
+> **Never query Supabase directly from a browser client (`createClient()`) for data that is protected by RLS policies that reference `admin_roles`.** The anon client cannot read `admin_roles` (it's RLS-protected), so all subqueries against it return empty → access silently denied. Always use API routes with `createServiceRoleClient()` for super-admin-only data.
