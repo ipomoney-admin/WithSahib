@@ -733,7 +733,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
       {/* Bottom actions */}
       <div style={{ padding: '8px 8px 16px', borderTop: '1px solid #2A2A2A' }}>
-        {isAdminUser && !viewingAsUser && (
+        {isSuperAdminUser && !viewingAsUser && (
           <Link
             href="/admin"
             className="sidebar-link"

@@ -18,6 +18,7 @@ const NAV = [
   { label: 'Signals', href: '/admin/signals', icon: Zap },
   { label: 'Screener', href: '/admin/screener', icon: ScanSearch },
   { label: 'Intelligence', href: '/admin/intelligence', icon: BarChart2 },
+  { label: 'Post Tracker', href: '/admin/post-tracker', icon: BarChart2 },
   { label: 'Settings', href: '/admin/settings', icon: Settings },
 ]
 
